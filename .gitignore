@@ -1,0 +1,16 @@
+# 原始快照：每日全量覆蓋，100MB+，沒有 diff 價值
+ingest/raw/
+ingest/catalog/*.csv
+
+# 建置產物
+dist/
+.astro/
+node_modules/
+
+# 系統
+.DS_Store
+*.log
+.tmp-sample.json
+
+# data/observation/ 進版控（append-only，git log 就是變更軌跡，見 STORAGE.md §3）
+

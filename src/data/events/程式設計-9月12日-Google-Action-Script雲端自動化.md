@@ -1,0 +1,33 @@
+---
+clusterId: "evt_ncl-events_0Q187603685297429750"
+slug: "程式設計-9月12日-Google-Action-Script雲端自動化"
+title: "[程式設計] 9月12日 Google Action Script雲端自動化"
+category: "研習課程"
+categoryRaw: "研習課程"
+status: "scheduled"
+description: "[程式設計] 9月12日 Google Action Script雲端自動化,地點：國家圖書館多媒體創意實驗中心「多功能活動室」（臺北市中正區秀山街4號14樓）時間：2026/9/12(六) 14:00-16:00講師：李俊德活動對象：1.需自備有webcam筆電，並充電滿2小時2.需有英文閱讀及英..."
+sessions: 
+  - startAt: "2026-09-12T14:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-12T16:00:00+08:00"
+    venueNameRaw: "國家圖書館多媒體創意實驗中心「多功能活動室」"
+    city: "臺北市"
+    district: "中正區"
+    address: "臺北市中正區秀山街4號14樓"
+    addressPrecision: "street"
+    venueId: "ven_derived_國家圖書館多媒體創意實驗中心多功能活動室"
+    venueSlug: "國家圖書館多媒體創意實驗中心多功能活動室"
+sources: 
+  - id: "ncl-events"
+    recordId: "0Q187603685297429750"
+    sourceName: "國家圖書館 活動報名系統"
+    url: "https://web.ncl.edu.tw/event/FMEvents/Cont?SId=0Q187603685297429750"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+      - "sourceUpdatedAt"
+---

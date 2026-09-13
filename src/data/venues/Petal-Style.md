@@ -1,0 +1,14 @@
+---
+venueId: "ent_moc-emap-poi_F-3786"
+slug: "Petal-Style"
+name: "Petal Style"
+origin: "registry"
+city: "宜蘭縣"
+district: "宜蘭市"
+address: "宜蘭縣  宜蘭市縣政西路137號"
+addressPrecision: "street"
+lat: 24.729622
+lng: 121.759241
+eventCount: 0
+eventClusterIds: []
+---

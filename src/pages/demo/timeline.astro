@@ -1,0 +1,247 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="方案 A：時間軸密度" noindex={true}>
+  <main class="page">
+    <header class="hd">
+      <p class="label">seh.tw</p>
+      <h1>正在發生的台灣文化</h1>
+    </header>
+
+    <section class="viz">
+      <svg id="tl" preserveAspectRatio="none" role="img" aria-label="今日活動時間分布"></svg>
+    </section>
+
+    <footer class="ft">
+      <dl class="figs">
+        <div><dt class="label">時刻</dt><dd class="fig-v tabular" id="clock">00:00</dd></div>
+        <div><dt class="label">已開始</dt><dd class="fig-v tabular" id="started">0</dd></div>
+        <div><dt class="label">今日總場次</dt><dd class="fig-v tabular">116</dd></div>
+      </dl>
+      <div class="detail">
+        <p class="label" id="d-head">此刻</p>
+        <ul class="dlist" id="d-list"></ul>
+      </div>
+      <div class="bar"><div class="bar-fill" id="bar"></div></div>
+    </footer>
+  </main>
+</Base>
+
+<script>
+  import { select } from 'd3-selection';
+  import { scaleLinear } from 'd3-scale';
+  import { timer } from 'd3-timer';
+
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const data = await (await fetch('/today.json')).json();
+  const evs = data
+    .filter((d) => /^\d{2}:\d{2}$/.test(d.start))
+    .map((d) => ({ ...d, mins: +d.start.slice(0, 2) * 60 + +d.start.slice(3) }))
+    .sort((a, b) => a.mins - b.mins);
+
+  const W = 1000, H = 336, PAD = { t: 52, b: 46 };
+  const svg = select('#tl').attr('viewBox', `0 0 ${W} ${H}`);
+  const x = scaleLinear().domain([0, 1440]).range([0, W]);
+
+  const byHour = new Map();
+  evs.forEach((d) => {
+    const h = Math.floor(d.mins / 60);
+    if (!byHour.has(h)) byHour.set(h, []);
+    d.stack = byHour.get(h).length;
+    byHour.get(h).push(d);
+  });
+  const maxStack = Math.max(...[...byHour.values()].map((v) => v.length));
+  const cellH = (H - PAD.t - PAD.b) / maxStack;
+  const colW = W / 24;
+
+  svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', H - PAD.b).attr('y2', H - PAD.b)
+    .attr('stroke', css('--border-subtle'));
+  const axis = svg.append('g');
+  for (let h = 0; h <= 24; h += 2) {
+    axis.append('text').attr('x', x(h * 60)).attr('y', H - PAD.b + 30)
+      .attr('text-anchor', h === 0 ? 'start' : h === 24 ? 'end' : 'middle')
+      .attr('fill', css('--text-muted')).attr('font-size', 19)
+      .attr('font-family', 'IBM Plex Mono, monospace').text(String(h).padStart(2, '0'));
+  }
+
+  const now = new Date();
+  const nowMins = now.getHours() * 60 + now.getMinutes();
+
+  const bars = svg.append('g').selectAll('rect').data(evs).join('rect')
+    .attr('x', (d) => Math.floor(d.mins / 60) * colW + 2)
+    .attr('width', colW - 4)
+    .attr('y', (d) => H - PAD.b - (d.stack + 1) * cellH + 1.5)
+    .attr('height', cellH - 3)
+    .attr('fill', css('--border-subtle'))
+    .attr('opacity', 0.55);
+
+  // 現在時刻的固定標記
+  svg.append('line').attr('id', 'nowline')
+    .attr('x1', x(nowMins)).attr('x2', x(nowMins)).attr('y1', PAD.t - 14).attr('y2', H - PAD.b)
+    .attr('stroke', css('--text-muted')).attr('stroke-width', 1).attr('stroke-dasharray', '3 3');
+
+  // 掃描游標
+  const cursor = svg.append('line')
+    .attr('y1', PAD.t - 20).attr('y2', H - PAD.b)
+    .attr('stroke', css('--color-link')).attr('stroke-width', 2);
+  const cursorCap = svg.append('rect')
+    .attr('y', PAD.t - 30).attr('width', 8).attr('height', 8).attr('fill', css('--color-link'));
+
+  const clockEl = document.getElementById('clock');
+  const startedEl = document.getElementById('started');
+  const dHead = document.getElementById('d-head');
+  const dList = document.getElementById('d-list');
+  const barEl = document.getElementById('bar');
+
+  function paint(mins) {
+    const px = x(mins);
+    cursor.attr('x1', px).attr('x2', px);
+    cursorCap.attr('x', px - 4);
+    clockEl.textContent = `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(Math.floor(mins % 60)).padStart(2, '0')}`;
+    barEl.style.width = `${(mins / 1440) * 100}%`;
+
+    let n = 0, latest = null;
+    bars.each(function (d) {
+      const on = d.mins <= mins;
+      if (on) { n++; if (!latest || d.mins > latest.mins) latest = d; }
+      const fresh = on && mins - d.mins < 40;
+      select(this)
+        .attr('fill', on ? (fresh ? css('--color-pass') : css('--color-link')) : css('--border-subtle'))
+        .attr('opacity', on ? (fresh ? 0.95 : 0.62) : 0.4);
+    });
+    startedEl.textContent = String(n);
+  }
+
+  // ── 查詢：hover 單場看該場，hover 時段看整個小時 ──────────
+  function row(d) {
+    const state = d.mins <= nowMins ? '已開始' : '尚未開始';
+    return `<li><time class="tabular">${d.start}</time><span class="t">${d.title}</span>` +
+           `<span class="v">${d.venue || ''}</span><span class="s">${state}</span></li>`;
+  }
+  function showNow() {
+    const soon = evs
+      .filter((d) => Math.abs(d.mins - nowMins) <= 120)
+      .sort((a, b) => Math.abs(a.mins - nowMins) - Math.abs(b.mins - nowMins))
+      .slice(0, 3);
+    dHead.textContent = '此刻前後兩小時';
+    dList.innerHTML = soon.map(row).join('') || '<li class="empty">這個時段沒有活動</li>';
+  }
+  function showHour(h) {
+    const rows = evs.filter((d) => Math.floor(d.mins / 60) === h);
+    dHead.textContent = `${String(h).padStart(2, '0')}:00–${String(h + 1).padStart(2, '0')}:00　共 ${rows.length} 場`;
+    dList.innerHTML = rows.slice(0, 3).map(row).join('') || '<li class="empty">這個時段沒有活動</li>';
+  }
+  function showOne(d) {
+    dHead.textContent = `${d.cat}　單場`;
+    dList.innerHTML = row(d);
+  }
+
+  bars.style('cursor', 'pointer')
+    .on('mouseenter', (e, d) => showOne(d))
+    .on('click', (e, d) => showOne(d));
+  bars.append('title').text((d) => `${d.start}　${d.title}`);
+
+  // 小時熱區：滑過看整個時段
+  const hit = svg.append('g');
+  for (let h = 0; h < 24; h++) {
+    hit.append('rect')
+      .attr('x', h * colW).attr('y', PAD.t - 20)
+      .attr('width', colW).attr('height', H - PAD.b - PAD.t + 20)
+      .attr('fill', 'transparent').style('cursor', 'pointer')
+      .on('mouseenter', function () {
+        select(this).attr('fill', css('--bg-surface')).attr('opacity', 0.5);
+        showHour(h);
+      })
+      .on('mouseleave', function () { select(this).attr('fill', 'transparent'); });
+  }
+  svg.on('dblclick', play);
+
+  const DUR = 4200;
+  let t = null;
+  function play() {
+    t?.stop();
+    t = timer((el) => {
+      const k = Math.min(1, el / DUR);
+      paint(k * 1440);
+      if (k === 1) {
+        t.stop();
+        flashNow();
+      }
+    });
+  }
+  // 掃完整天後，「現在」標記閃爍，然後定格在現在時刻
+  function flashNow() {
+    const mark = svg.append('g').attr('id', 'flash');
+    const line = mark.append('line')
+      .attr('x1', x(nowMins)).attr('x2', x(nowMins)).attr('y1', PAD.t - 24).attr('y2', H - PAD.b)
+      .attr('stroke', css('--color-link')).attr('stroke-width', 3);
+    const cap = mark.append('rect')
+      .attr('x', x(nowMins) - 30).attr('y', PAD.t - 44).attr('width', 60).attr('height', 24)
+      .attr('fill', css('--color-link'));
+    const txt = mark.append('text')
+      .attr('x', x(nowMins)).attr('y', PAD.t - 27).attr('text-anchor', 'middle')
+      .attr('fill', css('--bg-base')).attr('font-size', 18).attr('font-weight', 700)
+      .attr('font-family', 'IBM Plex Mono, monospace').text('現在');
+
+    const FLASH = 1500;
+    const f = timer((el) => {
+      const o = 0.25 + 0.75 * Math.abs(Math.cos((el / FLASH) * Math.PI * 3));
+      line.attr('opacity', o); cap.attr('opacity', o); txt.attr('opacity', o);
+      if (el >= FLASH) {
+        f.stop();
+        line.attr('opacity', 1); cap.attr('opacity', 1); txt.attr('opacity', 1);
+        paint(nowMins);          // 定格在現在，不倒轉
+        cursor.attr('opacity', 0); cursorCap.attr('opacity', 0);
+        showNow();
+      }
+    });
+  }
+
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { paint(nowMins); showNow(); }
+  else play();
+</script>
+
+<style>
+  .page {
+    height: 100vh; height: 100dvh;
+    display: grid; grid-template-rows: 16% 1fr 38%;
+    padding-inline: 4%;
+    overflow: hidden;
+  }
+  .hd { align-self: end; padding-bottom: 2%; }
+  .hd h1 { font-size: clamp(1.75rem, 4.2vw, 3.5rem); margin-top: 0.6%; }
+  .viz { min-height: 0; display: flex; }
+  #tl { width: 100%; height: 100%; }
+  .ft { align-self: start; padding-top: 1.6rem; }
+  .figs {
+    display: grid; grid-template-columns: repeat(3, minmax(0, 10rem));
+    gap: 2%; margin: 0; border-top: var(--hairline) solid var(--border-subtle);
+    padding-top: 1.4rem;
+  }
+  .fig-v {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(1.75rem, 3.2vw, 3rem); line-height: 1; margin: 0.4rem 0 0;
+  }
+  .fig-t {
+    font-size: var(--text-sm); color: var(--text-secondary);
+    margin: 0.9rem 0 0; line-height: 1.35;
+  }
+  .peak { min-width: 0; }
+  .detail { margin-top: 1.2rem; min-height: 0; overflow: hidden; }
+  .dlist { list-style: none; margin: 0.5rem 0 0; padding: 0; }
+  /* li 由 JS 插入，沒有 scope 屬性，必須用 :global 才會套到 */
+  .dlist :global(li) {
+    display: grid; grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 16rem) 6.5rem;
+    gap: 1.5rem; align-items: baseline;
+    padding-block: 0.45rem;
+    border-top: var(--hairline) solid var(--border-subtle);
+    font-size: var(--text-sm);
+  }
+  .dlist :global(time) { color: var(--text-secondary); font-family: var(--font-mono); }
+  .dlist :global(.t) { color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dlist :global(.v) { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .dlist :global(.s) { color: var(--text-secondary); font-size: var(--text-xs); text-align: right; }
+  .dlist :global(.empty) { display: block; color: var(--text-muted); }
+  .bar { height: 3px; background: var(--bg-surface); margin-top: 1.2rem; }
+  .bar-fill { height: 100%; width: 0; background: var(--color-link); }
+</style>

@@ -1,0 +1,23 @@
+---
+clusterId: "evt_taichung-culture-events_56"
+slug: "上楓分館1-3-DYTC-大雅國際英文演講會"
+title: "【上楓分館】1/3 DYTC 大雅國際英文演講會"
+status: "scheduled"
+sessions: 
+  - startAt: "2025-01-03T19:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2025-01-03T21:00:00+08:00"
+    venueNameRaw: "上楓分館大雅區  三樓多功能室"
+    city: "臺中市"
+    district: "館大雅區"
+    addressPrecision: "district"
+    venueId: "ent_national-public-libraries_97e9bb3eb071cb5f"
+    venueSlug: "臺中市立圖書館上楓分館"
+sources: 
+  - id: "taichung-culture-events"
+    recordId: "56"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "sessions"
+---

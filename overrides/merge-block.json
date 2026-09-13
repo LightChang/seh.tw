@@ -1,0 +1,18 @@
+{
+  "_comment": "人工確認「這兩筆不是同一個東西」。cluster.mjs 一律不併，即使 confidence 是 1.0。",
+  "pairs": {
+    "taipei-culture-events:9e6ea09b-b8f5-429a-bd3a-ebbdae9027e0 | taipei-culture-events:d62b943a-6315-4ffb-bb3f-bc0a6dd2a0d3": {
+      "decidedAt": "2026-09-13",
+      "note": "同一個 KKTIX 系列底下的不同講座"
+    },
+    "taipei-culture-events:9e6ea09b-b8f5-429a-bd3a-ebbdae9027e0 | taipei-culture-events:e2486a31-b6ad-4032-a44e-89678f2446ed": {
+      "decidedAt": "2026-09-13"
+    },
+    "taipei-culture-events:d62b943a-6315-4ffb-bb3f-bc0a6dd2a0d3 | taipei-culture-events:e2486a31-b6ad-4032-a44e-89678f2446ed": {
+      "decidedAt": "2026-09-13"
+    },
+    "taipei-culture-events:1b055697-bb3a-4dcb-b936-21292f7e0f83 | taipei-culture-events:44b596d0-a90a-4462-8f73-ad22ae4abd0b": {
+      "decidedAt": "2026-09-13"
+    }
+  }
+}

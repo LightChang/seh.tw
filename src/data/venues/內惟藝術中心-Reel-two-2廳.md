@@ -1,0 +1,28 @@
+---
+venueId: "ven_derived_內惟藝術中心-Reel-two-2廳"
+slug: "內惟藝術中心-Reel-two-2廳"
+name: "內惟藝術中心 Reel two 2廳"
+origin: "derived"
+city: "高雄市"
+district: "鼓山區"
+address: "高雄市鼓山區馬卡道路329號"
+addressPrecision: "street"
+eventCount: 16
+eventClusterIds: 
+  - "evt_moc-events_6a83722826b32427d0604408"
+  - "evt_moc-events_6a83722826b32427d0604409"
+  - "evt_moc-events_6a83722826b32427d060440a"
+  - "evt_moc-events_6a83722826b32427d060440f"
+  - "evt_moc-events_6a84c8f026b32427d060443e"
+  - "evt_moc-events_6a84c8f026b32427d060443f"
+  - "evt_moc-events_6a84c8f026b32427d0604440"
+  - "evt_moc-events_6a86283826b32427d0604448"
+  - "evt_moc-events_6a86283826b32427d060444b"
+  - "evt_moc-events_6a86283826b32427d060444c"
+  - "evt_moc-events_6a86283926b32427d060444d"
+  - "evt_moc-events_6a86283926b32427d060444e"
+  - "evt_moc-events_6a8cc23226b32434f4358044"
+  - "evt_moc-events_6a8cc23426b32434f4358045"
+  - "evt_moc-events_6a8cc23426b32434f4358046"
+  - "evt_moc-events_6a8cc23426b32434f4358047"
+---

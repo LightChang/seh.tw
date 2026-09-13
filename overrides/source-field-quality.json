@@ -1,0 +1,61 @@
+{
+  "_comment": [
+    "來源 × 欄位的基礎品質分。查找順序：bySourceName[sourceName][field] → _default[field] → 全域 0.5。",
+    "base = 0 的欄位永不採用。數字都是實測覆蓋率與正確性的編碼，不是主觀評分——",
+    "改任何一個值之前，先量一次再改，並在該行註記依據。"
+  ],
+  "_globalDefault": 0.5,
+
+  "moc-events": {
+    "_default": {
+      "sessions": 1.0,
+      "performers": 1.0,
+      "popularity": 1.0,
+      "images": 0.1,
+      "priceText": 0.3,
+      "sourceUpdatedAt": 0.02
+    },
+    "bySourceName": {
+      "OPENTIX兩廳院文化生活": {
+        "lat": 1.0, "lng": 1.0,
+        "description": 0.0, "organizers": 0.0, "performers": 0.05
+      },
+      "全國藝文活動資訊系統": {
+        "description": 1.0, "organizers": 1.0, "performers": 1.0,
+        "lat": 0.3, "lng": 0.3
+      },
+      "年代": { "description": 0.0, "organizers": 0.0, "performers": 0.0, "lat": 0.45 }
+    }
+  },
+
+  "taipei-culture-events": {
+    "_default": {
+      "isFree": 1.0,
+      "images": 1.0, "description": 1.0, "priceText": 1.0, "ticketUrl": 1.0,
+      "lat": 1.0, "lng": 1.0,
+      "address": 0.2,
+      "sessions": 0.3,
+      "performers": 0.6,
+      "sourceUpdatedAt": 0.0
+    }
+  },
+
+  "twtourism-events": {
+    "_default": {
+      "lat": 1.0, "lng": 1.0,
+      "city": 1.0, "district": 1.0,
+      "images": 0.9,
+      "sourceUpdatedAt": 1.0,
+      "isFree": 0.0
+    }
+  },
+
+  "ntt-programs": { "_default": { "priceText": 0.9 } },
+  "ntch-programs": { "_default": { "minimumAge": 1.0, "isFree": 0.0, "sessions": 0.4 } },
+  "tpac-programs": { "_default": { "sessions": 0.6 } },
+  "taichung-culture-events": { "_default": { "isFree": 0.0 } },
+  "ntpc-culture-events": { "_default": { "description": 0.2 } },
+  "moc-emap-poi": { "_default": { "lat": 0.9, "lng": 0.9, "address": 0.8 } },
+  "boch-heritage": { "_default": { "history": 1.0, "level": 1.0, "lat": 0.95, "lng": 0.95 } },
+  "tcmb-culture": { "_default": { "lat": 0.0, "lng": 0.0, "address": 0.0 } }
+}

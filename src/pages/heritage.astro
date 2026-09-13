@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import raw from '../../public/heritage-index.json';
+// [name, city, level, slug]。slug 是空字串代表沒有建頁（沿革不足 200 字）
+const heritage = raw.map(([name, city, type, slug]) => ({ name, city, type, slug, rich: !!slug }));
+const rich = heritage.filter((h) => h.rich);
+const byCity = [...heritage.reduce((m, h) => (h.city ? m.set(h.city, (m.get(h.city) ?? 0) + 1) : m), new Map())]
+  .sort((a, b) => b[1] - a[1]);
+const byType = [...heritage.reduce((m, h) => (h.type ? m.set(h.type, (m.get(h.type) ?? 0) + 1) : m), new Map())]
+  .sort((a, b) => b[1] - a[1]).slice(0, 10);
+---
+<Base title="文化資產｜seh" description={`台灣 ${heritage.length} 項文化資產：古蹟、歷史建築、民俗與傳統工藝。`}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <h1>文化資產</h1>
+      <p class="sub"><strong class="tabular">{heritage.length.toLocaleString('en-US')}</strong> 項，其中 {rich.length.toLocaleString('en-US')} 項有詳細沿革</p>
+    </header>
+
+    <h2 class="h-sm">類別</h2>
+    <ul class="tagrow">{byType.map(([t, n]) => <li><span>{t}<b class="tabular">{n}</b></span></li>)}</ul>
+
+    <h2 class="h-sm">縣市</h2>
+    <ul class="tagrow">{byCity.map(([c, n]) => <li><a href={`/city/${c}`}>{c}<b class="tabular">{n}</b></a></li>)}</ul>
+
+    <h2 class="h-sm">有詳細沿革的</h2>
+    <ol class="ev-list">
+      {rich.slice(0, 40).map((h) => (
+        <li><a href={`/heritage/${h.slug}`}>
+          <span class="ev-lead tabular">{h.reg ? h.reg.slice(0, 4) : ''}</span>
+          <span class="ev-body"><span class="ev-t">{h.name}</span>
+            <span class="ev-m">{[h.city, h.dist].filter(Boolean).join('')}</span></span>
+          <span class="ev-cat">{h.level ?? h.type ?? ''}</span>
+        </a></li>
+      ))}
+    </ol>
+  </div>
+</Base>
+<style>
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+          color: var(--text-secondary); margin-top: var(--space-7); }
+  .tagrow { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .tagrow a, .tagrow span { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
+  .tagrow a:hover { color: var(--color-link); }
+  .tagrow b { color: var(--text-muted); font-weight: 400; }
+</style>

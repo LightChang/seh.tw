@@ -1,0 +1,58 @@
+---
+clusterId: "ent_boch-heritage-folklore_20190225000001"
+slug: "Lmuhuw-na-Tayal-“Sbtunux”泰雅族口述傳統-大嵙崁群"
+name: "Lmuhuw na Tayal “Sbtunux”(泰雅族口述傳統－大嵙崁群)"
+level: "口述傳統"
+heritageTypes: 
+  - code: "J2"
+    name: "神話"
+  - code: "J3"
+    name: "傳說"
+  - code: "J6"
+    name: "俗諺"
+  - code: "J4"
+    name: "祭歌"
+  - code: "J5"
+    name: "祭詞"
+  - code: "J1"
+    name: "史詩"
+categoryRaw: "口述傳統"
+registeredAt: "2012-01-10"
+govInstitution: "桃園市政府"
+city: "桃園市"
+district: "復興區"
+address: "桃園市復興區"
+addressPrecision: "district"
+images: 
+  - url: "https://data.boch.gov.tw/upload/representImageFile/2022-04-01/8c34c414-c1e5-4da2-83c0-085deac6b4d2/1081112  桃園市無形文化資產授證_191114_0048林明福.jpg"
+    caption: "1081112  桃園市無形文化資產授證_191114_0048林明福"
+history: |-
+  (一)Lmuhuw是泰雅族語言智慧的結晶，係以口說或吟唱的方式，在開會、談判、提親、結婚、祖靈祭、交誼等各種場合，將所欲傳遞的訊息以象徵、比喻的手法呈現。透過吟唱傳承族群歷史、慣習與生態環境，其中Msgamil 史詩吟唱保留了族群起源、族群遷徙、祖先遺訓等族群認同要素，具高度文化資產價值。
+  (二)Watan Tanga係大嵙崁流域少數能吟唱Lmuhuw泰雅古謠，其Msgamil(史詩吟唱)更為Lmuhuw精髓，並熟稔泰雅傳統樂器縱笛、口簧琴的製作及吹奏，為族群保留傳統技藝與文化，且戮力傳承其傳統文化與技藝。
+sources: 
+  - id: "boch-heritage-folklore"
+    recordId: "20190225000001"
+    sourceName: "國家文化資產網"
+    url: "http://nchdb.boch.gov.tw/assets/advanceSearch/ote/20190225000001"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "name"
+      - "images"
+      - "categoryRaw"
+      - "address"
+      - "addressPrecision"
+      - "city"
+      - "district"
+      - "sourceUrl"
+      - "heritageTypes"
+      - "registeredAt"
+      - "govInstitution"
+  - id: "boch-heritage"
+    recordId: "20190225000001"
+    sourceName: "國家文化資產網"
+    url: "http://nchdb.boch.gov.tw/assets/advanceSearch/ote/20190225000001"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "level"
+      - "history"
+---

@@ -1,0 +1,31 @@
+---
+clusterId: "evt_ysnp-activities_5b6597885c4ce79d"
+slug: "2025年玉山國家公園Youth-Camp拉庫拉庫蕨之旅-11-1開放報名"
+title: "2025年玉山國家公園Youth Camp「拉庫拉庫蕨之旅」 11/1開放報名"
+categoryRaw: "活動列車"
+status: "scheduled"
+description: "內政部國家公園署玉山國家公園管理處 (以下簡稱玉管處)2025年玉山國家公園Youth Camp「拉庫拉庫蕨之旅」賡續攜手南安在地部落及達娜分享文化有限公司，共同籌辦「拉庫拉庫蕨之旅」營隊活動，透過夜..."
+sessions: 
+  - startAt: "2025-01-21"
+    granularity: "date"
+    endAt: "2025-02-07"
+    venueNameRaw: "玉山國家公園管理處"
+    city: "南投縣"
+    district: "水里鄉"
+    address: "南投縣水里鄉中山路一段515號"
+    addressPrecision: "street"
+    venueId: "ven_derived_玉山國家公園管理處"
+    venueSlug: "玉山國家公園管理處"
+sources: 
+  - id: "ysnp-activities"
+    recordId: "f0311daa-fd02-4e38-ad2d-63283f2c0ea9"
+    sourceName: "玉山國家公園管理處 活動列車"
+    url: "https://www.ysnp.gov.tw/ActivityInfo/C002000?ID=f0311daa-fd02-4e38-ad2d-63283f2c0ea9&PageIndex=3&PageType=1"
+    lastVerifiedAt: "2026-09-13"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+---

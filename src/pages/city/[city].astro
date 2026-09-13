@@ -1,0 +1,77 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { catVar } from '../../lib/format.mjs';
+import { flatSessions, countBy, builtCategories } from '../../lib/build-data.mjs';
+
+export async function getStaticPaths() {
+  const all = await flatSessions();
+  // 一個活動可能有多個場次落在同一縣市，縣市頁的「活動數」要算 cluster 不是場次
+  // （ARCHITECTURE.md §3：一個電影院一天排十幾場就能讓某個城市頁面「達標」）
+  return countBy(all, 'city').map(([city]) => {
+    const rows = all.filter((d) => d.city === city);
+    return { params: { city }, props: { city, rows, n: new Set(rows.map((d) => d.slug)).size } };
+  });
+}
+const { city, n, rows } = Astro.props;
+const catPages = await builtCategories();
+const cats = [...rows.reduce((m, d) => m.set(d.cat, (m.get(d.cat) ?? 0) + 1), new Map())]
+  .sort((a, b) => b[1] - a[1]).slice(0, 8);
+const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venue) ?? 0) + 1) : m), new Map())]
+  .sort((a, b) => b[1] - a[1]).slice(0, 8);
+---
+<Base title={`${city}有什麼文化活動｜seh`} description={`${city}正在發生的文化活動、展覽與演出，共 ${n} 個活動。`}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <nav class="crumb"><a href="/city">全部縣市</a></nav>
+      <h1>{city}</h1>
+      <p class="sub"><strong class="tabular">{n}</strong> 個活動正在或即將發生</p>
+    </header>
+
+    <div class="cols">
+      <section>
+        <h2 class="h-sm">近期活動</h2>
+        <ol class="ev-list">
+          {rows.slice(0, 12).map((d) => (
+            <li><a href={`/event/${d.slug}`}>
+              <time class="ev-lead tabular" datetime={d.at}>{d.at.slice(5, 10).replace('-', '/')} {d.at.slice(11, 16)}</time>
+              <span class="ev-body"><span class="ev-t">{d.title}</span><span class="ev-m">{d.venue}</span></span>
+              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+            </a></li>
+          ))}
+        </ol>
+        {rows.length === 0 && <p class="empty-note">目前沒有收錄到{city}的活動。</p>}
+      </section>
+
+      <aside class="side">
+        <h2 class="h-sm">類型</h2>
+        <ul class="tags">
+          {cats.filter(([c]) => catPages.has(c)).map(([c, v]) => (
+            <li><a href={`/category/${c}`} style={`color:var(${catVar(c)})`}>{c}<span class="tabular">{v}</span></a></li>
+          ))}
+        </ul>
+        <h2 class="h-sm" style="margin-top:2rem">常見場地</h2>
+        <ul class="tags">
+          {venues.map(([v, k]) => (<li><span class="vn">{v}<span class="tabular">{k}</span></span></li>))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 5%; padding-bottom: var(--space-9); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .ev-list { margin-top: var(--space-4); }
+  .tags { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
+  .tags li { border-top: var(--hairline) solid var(--border-subtle); }
+  .tags a, .tags .vn {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: 0.55rem 0; text-decoration: none; font-size: var(--text-sm);
+  }
+  .tags .tabular { color: var(--text-muted); }
+  .tags .vn { color: var(--text-secondary); }
+  @media (max-width: 900px) { .cols { grid-template-columns: 1fr; gap: var(--space-7); } }
+</style>
+

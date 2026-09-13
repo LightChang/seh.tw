@@ -1,0 +1,211 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
+import { allEvents, isIndexable, builtCategories } from '../../lib/build-data.mjs';
+
+export async function getStaticPaths() {
+  return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
+}
+
+const { e } = Astro.props;
+const sessions = e.sessions;
+const first = sessions[0];
+const last = sessions[sessions.length - 1];
+const primary = sessions.find((s) => s.venueNameRaw) ?? first;
+
+// 只有 street 精度才輸出 streetAddress。臺北那批的 Address 欄位等於行政區，
+// 照填會產出與頁面可見內容不符的 structured data（規格 §24）。
+const addr = primary.city ? {
+  '@type': 'PostalAddress',
+  addressCountry: 'TW',
+  addressRegion: primary.city,
+  ...(primary.district ? { addressLocality: primary.district } : {}),
+  ...(primary.addressPrecision === 'street' && primary.address ? { streetAddress: primary.address } : {}),
+} : undefined;
+
+const ld = {
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: e.title,
+  ...(e.description ? { description: e.description.slice(0, 500) } : {}),
+  startDate: first.startAt,
+  ...(last.endAt ?? last.startAt !== first.startAt ? { endDate: last.endAt ?? last.startAt } : {}),
+  eventStatus: e.status === 'cancelled'
+    ? 'https://schema.org/EventCancelled' : 'https://schema.org/EventScheduled',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  ...(primary.venueNameRaw || primary.city ? {
+    location: {
+      '@type': 'Place',
+      name: primary.venueNameRaw || primary.city,
+      ...(addr ? { address: addr } : {}),
+      ...(primary.lat && primary.lng
+        ? { geo: { '@type': 'GeoCoordinates', latitude: primary.lat, longitude: primary.lng } } : {}),
+    },
+  } : {}),
+  ...(e.performers?.length ? {
+    performer: e.performers.map((p) => ({ '@type': 'PerformingGroup', name: p.nameRaw })),
+  } : {}),
+  ...(e.organizers?.length ? {
+    organizer: e.organizers.filter((o) => o.role === 'master')
+      .map((o) => ({ '@type': 'Organization', name: o.nameRaw })),
+  } : {}),
+  ...(e.isFree === true || e.ticketUrl ? {
+    offers: {
+      '@type': 'Offer',
+      ...(e.isFree === true ? { price: '0', priceCurrency: 'TWD' } : {}),
+      ...(e.ticketUrl ? { url: e.ticketUrl } : {}),
+      availability: sessions.some((s) => s.onSales) ? 'https://schema.org/InStock' : undefined,
+    },
+  } : {}),
+  ...(e.images?.length ? { image: e.images.map((i) => i.url) } : {}),
+};
+
+const srcUrl = e.sources.find((x) => x.url)?.url;
+const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
+const shown = sessions.slice(0, 20);
+// 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
+const indexable = await isIndexable(`/event/${e.slug}`);
+// 分類頁有 ≥5 場的門檻，不檢查就會連到不存在的頁（實測「綜藝」只有 4 場）
+const hasCatPage = e.category && (await builtCategories()).has(e.category);
+---
+<Base
+  title={`${e.title}｜seh`}
+  description={`${e.title}。${[primary.venueNameRaw, primary.city].filter(Boolean).join('、')}，${dateLabel(first.startAt)} 起。`}
+  noindex={!indexable}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
+  <div class="shell">
+    <Nav />
+    <article class="ev">
+      <nav class="crumb" aria-label="麵包屑">
+        <a href="/today">今天</a>
+        {primary.city && <><span>/</span><a href={`/city/${primary.city}`}>{primary.city}</a></>}
+        {hasCatPage && <><span>/</span><a href={`/category/${e.category}`}>{e.category}</a></>}
+      </nav>
+
+      <h1>{e.title}</h1>
+
+      <dl class="facts">
+        <div><dt>時間</dt><dd class="tabular">
+          {dateLabel(first.startAt)}{!first.granularity.startsWith('date') || first.granularity === 'datetime' ? ` ${hhmm(first.startAt)}` : ''}
+          {sessions.length > 1 && <span class="n">　共 {sessions.length} 場次</span>}
+        </dd></div>
+        {primary.venueNameRaw && <div><dt>地點</dt><dd>
+          {primary.venueSlug
+            ? <a href={`/venue/${primary.venueSlug}`}>{primary.venueNameRaw}</a>
+            : primary.venueNameRaw}
+          {primary.address && primary.addressPrecision === 'street' && <span class="n">　{primary.address}</span>}
+        </dd></div>}
+        {primary.city && <div><dt>縣市</dt><dd>
+          <a href={`/city/${primary.city}`}>{primary.city}</a>{primary.district && <span class="n">　{primary.district}</span>}
+        </dd></div>}
+        {(e.category || e.categoryRaw) && <div><dt>類型</dt><dd>
+          {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，
+              連原始值（「2」「特展」）會連到不存在的頁 */}
+          {hasCatPage
+            ? <a href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
+            : <span class="raw" style={e.category ? `color:var(${catVar(e.category)})` : undefined}>
+                {e.category ?? e.categoryRaw}{!e.category && <span class="n">　（尚未對照）</span>}
+              </span>}
+        </dd></div>}
+        {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
+          {e.isFree === true ? '免費' : e.priceText || '售票'}
+        </dd></div>}
+        {e.minimumAge !== undefined && <div><dt>年齡</dt><dd>{e.minimumAge} 歲以上</dd></div>}
+        {e.performers?.length > 0 && <div><dt>演出者</dt><dd>
+          {e.performers.map((p) => p.nameRaw).join('、')}
+        </dd></div>}
+        {e.organizers?.length > 0 && <div><dt>主辦</dt><dd>
+          {e.organizers.filter((o) => o.role === 'master').map((o) => o.nameRaw).join('、')
+            || e.organizers.map((o) => o.nameRaw).join('、')}
+        </dd></div>}
+      </dl>
+
+      {e.description && <div class="desc">{e.description}</div>}
+
+      {sessions.length > 1 && (
+        <section class="sessions">
+          <h2>所有場次</h2>
+          <ul>{shown.map((t) => (
+            <li>
+              <time class="tabular" datetime={t.startAt}>
+                {dateLabel(t.startAt)}{t.granularity === 'datetime' ? ` ${hhmm(t.startAt)}` : ''}
+              </time>
+              {t.venueNameRaw && t.venueNameRaw !== primary.venueNameRaw && <span class="sv">{t.venueNameRaw}</span>}
+            </li>
+          ))}</ul>
+          {sessions.length > shown.length && <p class="more">另有 {sessions.length - shown.length} 場次</p>}
+        </section>
+      )}
+
+      {srcUrl && (
+        <p class="cta"><a class="btn" href={srcUrl} target="_blank" rel="noopener">前往原始出處</a>
+        <span class="src">{srcNames[0]}</span></p>
+      )}
+
+      <footer class="prov">
+        <h2>資料來源</h2>
+        <p class="pnote">這一頁由 {e.sources.length} 個來源整理而成。每個欄位各自挑品質最高的來源，落選值也留著。</p>
+        <ul class="slist">{e.sources.map((s) => (
+          <li>
+            <span class="sid">{s.sourceName || s.id}</span>
+            <span class="sp">{s.provides.length ? `提供 ${s.provides.join('、')}` : '未被採用'}</span>
+            <time class="tabular sd">{s.lastVerifiedAt}</time>
+          </li>
+        ))}</ul>
+        <p>活動內容以原始出處為準。<a href="/about">資料怎麼來的</a></p>
+      </footer>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .ev { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
+  .crumb { display: flex; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-5); }
+  .crumb a { text-decoration: none; }
+  .crumb a:hover { color: var(--color-link); }
+  h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); line-height: 1.35; letter-spacing: 0; }
+  .facts { margin: var(--space-6) 0 0; display: grid; gap: 0; border-top: var(--hairline) solid var(--border-subtle); }
+  .facts > div {
+    display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1.5rem;
+    padding: 0.9rem 0; border-bottom: var(--hairline) solid var(--border-subtle);
+  }
+  .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
+  .facts dd { margin: 0; font-size: var(--text-base); }
+  .facts .n { color: var(--text-muted); font-size: var(--text-sm); }
+  .raw { color: var(--text-secondary); }
+  .sessions { margin-top: var(--space-7); }
+  .sessions h2 { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; }
+  .sessions ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.35rem; }
+  .sessions li { font-size: var(--text-sm); color: var(--text-secondary); }
+  .more { margin-top: 0.6rem; font-size: var(--text-sm); color: var(--text-muted); }
+  .cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: var(--space-7); }
+  .btn {
+    display: inline-block; text-decoration: none; font-weight: 700;
+    background: var(--color-link); color: var(--bg-base);
+    padding: 0.7rem 1.4rem; font-size: var(--text-base);
+  }
+  .src { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); }
+  .prov {
+    margin-top: var(--space-8); padding-top: var(--space-5);
+    border-top: var(--hairline) solid var(--border-subtle);
+    font-size: var(--text-sm); color: var(--text-muted); display: grid; gap: 0.5rem;
+  }
+  .prov strong { color: var(--text-secondary); }
+
+  .desc { margin-top: var(--space-6); white-space: pre-wrap; line-height: 1.75; color: var(--text-secondary); }
+  .sessions li { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .sv { color: var(--text-muted); }
+  .prov h2 { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; margin: 0; }
+  .pnote { margin: 0; }
+  .slist { list-style: none; margin: 0.4rem 0; padding: 0; display: grid; gap: 0.3rem; }
+  .slist li {
+    display: grid; grid-template-columns: minmax(0, 14rem) minmax(0, 1fr) auto;
+    gap: 1rem; align-items: baseline;
+  }
+  .sid { color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sd { font-family: var(--font-mono); font-size: var(--text-xs); }
+</style>
+

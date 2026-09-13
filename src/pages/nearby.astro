@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="附近｜seh" description="用你的位置找附近正在發生的文化活動。" noindex={true}>
+  <div class="shell">
+    <Nav current="nearby" />
+    <header class="page-hd">
+      <h1>附近</h1>
+      <p class="sub" id="sub">需要你的位置才能算距離。位置只在瀏覽器裡使用，不會傳給任何人。</p>
+      <div class="ctl">
+        <button type="button" id="ask">用我的位置</button>
+        <div class="radii chips" id="radii" hidden style="margin-top:0">
+          <button type="button" class="chip on" data-r="1">1 公里</button>
+          <button type="button" class="chip" data-r="3">3 公里</button>
+          <button type="button" class="chip" data-r="5">5 公里</button>
+          <button type="button" class="chip" data-r="10">10 公里</button>
+        </div>
+      </div>
+    </header>
+    <ol class="ev-list cols-4" id="list"></ol>
+  </div>
+</Base>
+
+<script>
+  import { relTime, catVar } from '../lib/format.mjs';
+  import { loadSessions } from '../lib/index-client.mjs';
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const all = (await loadSessions())
+    .filter((d) => d.lat && d.lng).map((d) => ({ ...d, ts: new Date(d.at).getTime() }));
+  const now = Date.now();
+  let me = null, radius = 1;
+
+  const km = (a, b, c, d) => {
+    const R = 6371, p = Math.PI / 180;
+    const x = (c - a) * p, y = (d - b) * p;
+    const h = Math.sin(x / 2) ** 2 + Math.cos(a * p) * Math.cos(c * p) * Math.sin(y / 2) ** 2;
+    return 2 * R * Math.asin(Math.sqrt(h));
+  };
+
+  function draw() {
+    if (!me) return;
+    const rows = all.map((d) => ({ ...d, km: km(me[0], me[1], d.lat, d.lng) }))
+      .filter((d) => d.km <= radius && d.ts >= now - 3 * 3600000)
+      .sort((a, b) => a.km - b.km);
+    document.getElementById('sub').innerHTML = rows.length
+      ? `${radius} 公里內有 <strong class="tabular">${rows.length}</strong> 個活動`
+      : `${radius} 公里內沒有活動，試試更大的範圍`;
+    document.getElementById('list').innerHTML = rows.slice(0, 30).map((d) => `
+      <li><a href="/event/${encodeURIComponent(d.slug)}">
+        <span class="ev-lead tabular">${d.km < 1 ? Math.round(d.km * 1000) + ' m' : d.km.toFixed(1) + ' km'}</span>
+        <span class="ev-body"><span class="ev-t">${d.title}</span><span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+        <span class="ev-x">${relTime(d.ts, now)}</span>
+        <span class="ev-cat" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
+      </a></li>`).join('');
+  }
+
+  document.getElementById('ask').addEventListener('click', () => {
+    if (!navigator.geolocation) {
+      document.getElementById('sub').textContent = '這個瀏覽器不支援定位。';
+      return;
+    }
+    document.getElementById('sub').textContent = '取得位置中⋯';
+    navigator.geolocation.getCurrentPosition(
+      (p) => {
+        me = [p.coords.latitude, p.coords.longitude];
+        document.getElementById('radii').hidden = false;
+        document.getElementById('ask').hidden = true;
+        draw();
+      },
+      (err) => {
+        document.getElementById('sub').textContent =
+          err.code === 1 ? '你拒絕了定位。可以改用「地圖」瀏覽全台活動。' : '取不到位置，請稍後再試。';
+      },
+      { enableHighAccuracy: false, timeout: 10000 }
+    );
+  });
+
+  document.querySelectorAll('#radii .chip').forEach((b) =>
+    b.addEventListener('click', () => {
+      radius = +b.dataset.r;
+      document.querySelectorAll('#radii .chip').forEach((x) => x.classList.toggle('on', x === b));
+      draw();
+    }));
+</script>
+
+<style>
+  .ctl { margin-top: var(--space-5); display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+  #ask {
+    font: inherit; font-size: var(--text-base); font-weight: 700; cursor: pointer;
+    background: var(--color-link); color: var(--bg-base);
+    border: var(--hairline) solid var(--color-link); padding: 0.7rem 1.4rem;
+  }
+  .radii { display: flex; gap: 0.45rem; flex-wrap: wrap; }
+</style>
+

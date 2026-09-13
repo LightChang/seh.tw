@@ -1,0 +1,33 @@
+---
+clusterId: "evt_ncl-events_0Q162570350733911999"
+slug: "多媒體創作-9月13日-Gemini-NotebookLM-製作精準多頁簡報"
+title: "[多媒體創作] 9月13日 Gemini +NotebookLM 製作精準多頁簡報"
+category: "研習課程"
+categoryRaw: "研習課程"
+status: "scheduled"
+description: "[多媒體創作] 9月13日 Gemini +NotebookLM 製作精準多頁簡報,地點：國家圖書館多媒體創意實驗中心「多功能活動室」（臺北市中正區秀山街4號14樓）時間：2026/9/13(日)10:00-12:00講師：鄭景純活動對象：年滿11歲以上，具基本電腦操作能力，並持有本人之國家圖書館閲..."
+sessions: 
+  - startAt: "2026-09-13T10:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-13T12:00:00+08:00"
+    venueNameRaw: "國家圖書館多媒體創意實驗中心「多功能活動室」"
+    city: "臺北市"
+    district: "中正區"
+    address: "臺北市中正區秀山街4號14樓"
+    addressPrecision: "street"
+    venueId: "ven_derived_國家圖書館多媒體創意實驗中心多功能活動室"
+    venueSlug: "國家圖書館多媒體創意實驗中心多功能活動室"
+sources: 
+  - id: "ncl-events"
+    recordId: "0Q162570350733911999"
+    sourceName: "國家圖書館 活動報名系統"
+    url: "https://web.ncl.edu.tw/event/FMEvents/Cont?SId=0Q162570350733911999"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+      - "sourceUpdatedAt"
+---

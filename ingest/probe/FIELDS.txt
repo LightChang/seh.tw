@@ -1,0 +1,564 @@
+## boch-heritage-arts-crafts  (n=355)
+  caseId                                    355 100.0%  20120622000001
+  caseName                                  355 100.0%  舞蹈—民族舞蹈
+  assetsClassifyCode                        355 100.0%  4.1.1
+  assetsClassifyName                        355 100.0%  傳統表演藝術
+  assetsTypes[]                             355 100.0%  [{'code': 'E2.3', 'name': '舞蹈'}]
+  judgeCriteria[]                           355 100.0%  ['藝術性:具有藝術價值者', '特殊性:構成傳統藝術之特殊藝能表現,其技法優秀者', '地方性:傳統藝術領域有價值與地
+  registerReason                            355 100.0%  天主教蘭陽青年會：蘭陽舞蹈團融合地方傳統舞蹈精髓不斷創新，成為宜蘭民族舞蹈保存及人才訓練基地，其組織健全、師資佳，藉由世
+  lawsReference                             355 100.0%  「傳統藝術民俗及有關文物登錄指定及廢止審查辦法」第2條規定審查登錄為本縣傳統藝術。
+  govInstitutionName                        355 100.0%  宜蘭縣政府
+  addresses[]                               355 100.0%  [{'itemNo': 1, 'cityName': '宜蘭縣', 'distName': '羅東鎮', 'addres
+  representImage.ext                        355 100.0%  jpg
+  representImage.transform.c                355 100.0%  https://data.boch.gov.tw/upload/representImageFile/2021-05-1
+  representImage.original                   355 100.0%  https://data.boch.gov.tw/upload/representImageFile/2021-05-1
+  representImage.name                       355 100.0%  水
+  recorder                                  355 100.0%  天主教蘭陽青年會
+  announcementList[]                        355 100.0%  [{'classification': '變更/修正', 'officialDocNo': '府文資字第10800002
+  caseUrl                                   355 100.0%  http://nchdb.boch.gov.tw/assets/advanceSearch/traditionalPer
+  repImgId                                  355 100.0%  109787
+  representImageSource                      349  98.3%  天主教蘭陽青年會
+  documents[]                               346  97.5%  ['https://data.boch.gov.tw/upload/documents/2019-10-21/9c646
+  govInstitution                            346  97.5%  宜蘭縣政府文化局
+  govDeptName                               346  97.5%  文化資產科
+  govDeptAddress                            346  97.5%  宜蘭縣宜蘭市復興路二段101號
+  govDeptPhone                              346  97.5%  03-9322440#605
+  computeType[]                             344  96.9%  [{'type': '漢民族', 'name': '福佬'}]
+  historyDevelopment                        336  94.6%  1966年由義大利籍秘克琳神父創立天主教羅東青年育樂中心(後改名為天主教蘭陽青年會)，該中心致力於民族文化的推廣與傳承，
+  mediaImageList[]                           97  27.3%  [{'mediaName': '閩南第一樂團1', 'url': 'https://data.boch.gov.tw/u
+  mediaVideoList[]                           45  12.7%  [{'mediaName': '人間國寶簡介—賴碧霞女士', 'url': 'https://imedia.cultur
+
+## boch-heritage-folklore  (n=288)
+  caseId                                    288 100.0%  20071008000004
+  caseName                                  288 100.0%  鷄籠中元祭
+  assetsClassifyCode                        288 100.0%  5.1.1
+  assetsClassifyName                        288 100.0%  民俗
+  assetsTypes[]                             288 100.0%  [{'code': 'F5', 'name': '儀式、祭典、節慶'}]
+  judgeCriteria[]                           288 100.0%  ['傳統性：具有古昔生活傳承，風俗形成與發展者', '地方性：民俗其形成與發展具地方特色，或與其他地區有顯著差異者', 
+  registerReason                            288 100.0%  (一)鷄籠中元祭具有特殊歷史背景、文化價值及藝術價值，完整保存先民拓墾過程及文化內涵，並具有悲天憫人的情懷與普及外邦的國
+  lawsReference                             288 100.0%  依據文化資產保存法第59條、傅統藝術民俗及有關文物登錄指定及廢止審查辦法第5條。
+  govInstitutionName                        288 100.0%  基隆市政府
+  addresses[]                               288 100.0%  [{'itemNo': 1, 'cityName': '基隆市', 'distName': '中正區', 'addres
+  representImage.ext                        288 100.0%  jpg
+  representImage.transform.c                288 100.0%  https://data.boch.gov.tw/upload/representImageFile/2017-11-2
+  representImage.original                   288 100.0%  https://data.boch.gov.tw/upload/representImageFile/2017-11-2
+  representImage.name                       288 100.0%  雞籠中元祭25
+  announcementList[]                        288 100.0%  [{'classification': '指定/登錄', 'officialDocNo': '府授文資壹字第111033
+  caseUrl                                   288 100.0%  http://nchdb.boch.gov.tw/assets/advanceSearch/folklore/20071
+  repImgId                                  288 100.0%  46981
+  representImageSource                      286  99.3%  趙守彥
+  historyDevelopment                        284  98.6%  鷄籠中元祭起源於清咸豐元年（1851）8月之漳泉械鬥，雙方死傷眾多；挑釁報仇將發生的時候，漳泉地方人士出面調解，再次械鬥
+  documents[]                               284  98.6%  ['https://data.boch.gov.tw/upload/documents/2022-11-08/4355c
+  govInstitution                            284  98.6%  基隆市文化觀光局
+  govDeptName                               283  98.3%  文化資產科
+  computeType[]                             281  97.6%  [{'type': '漢民族'}]
+  govDeptPhone                              281  97.6%  (02)2422-4170
+  ceremonyFeature                           280  97.2%  1.開龕門儀式  2.立燈篙儀式  3.主普壇開燈放彩儀式  4.放水燈及遊行  5.關龕門儀式
+  holdCalendarType                          276  95.8%  農曆
+  govDeptAddress                            275  95.5%  基隆市中正區信一路181號
+  recorder                                  271  94.1%  基隆主普壇管理委員會
+  holdPeriod                                255  88.5%  每年
+  mediaImageList[]                          160  55.6%  [{'mediaName': '鷄籠中元祭科儀1', 'url': 'https://data.boch.gov.tw/
+  hostUnitName                              136  47.2%  淡水清水巖管理委員會
+  hostContactorAddress                      104  36.1%  新北市淡水區清水街87號
+  hostContactorPhone                         90  31.2%  2621-2236、2623-3643、2620-6459(Fax)
+  hostContactorName                          82  28.5%  林安吉總幹事
+  holdStartMonth                             72  25.0%  5
+  holdStartDay                               72  25.0%  5
+  holdEndMonth                               69  24.0%  5
+  holdEndDay                                 69  24.0%  6
+  mediaVideoList[]                           45  15.6%  [{'mediaName': '2009鷄籠中元祭張廖簡姓實錄計畫', 'takePhotoDate': '', 'de
+  activities[]                               32  11.1%  [{'name': '2019鷄籠中元祭', 'holdStart': '2019-08-01', 'holdEnd':
+  ceremonies[]                               31  10.8%  [{'name': '拜訪四大廟、老大公廟', 'schedule': '農曆六月二十五日', 'holdDay': '
+  features[]                                 25   8.7%  [{'name': '輪值主普', 'description': '主普是號召、整合新舊宗親，以展現社會實力的最重要的表
+  taboos[]                                   22   7.6%  ['遶境過程中，通常沒有特殊禁忌，但若有遇到喪家，則會採取偃旗息鼓方式，靜靜地從喪家門前走過，通常陣頭隊伍也會停止各種聲
+  lops[]                                     16   5.6%  [{'name': '交換陣', 'description': '北管音樂分成「西皮」、「福祿」兩大系統，基隆地區的西皮
+  occurrences[]                               1   0.3%  [{'name': '芳苑牛車', 'timeDescription': '早在日治時期，彰化芳苑就已有牛車載著遊客到沙
+
+## boch-heritage-preservers  (n=1044)
+  preserverType                            1044 100.0%  個人
+  name                                     1044 100.0%  蔡青源(歿)
+  isOpenDownload                           1044 100.0%  是
+  caseName                                 1044 100.0%  南管音樂
+  govInstitutionName                       1044 100.0%  嘉義市政府
+  caseUrl                                  1044 100.0%  http://nchdb.boch.gov.tw/assets/advanceSearch/traditionalPer
+  relateCaseId                             1044 100.0%  2364
+  relateClassifyCode                       1044 100.0%  4.1
+  relateClassifyName                       1044 100.0%  傳統表演藝術
+  relateAssetsClassifyCode                 1044 100.0%  4.1.1
+  relateAssetsClassifyName                 1044 100.0%  傳統表演藝術
+  lawsReference                            1018  97.5%  <<傳統表演藝術登錄認定及廢止審查辦法>>第4條第1、2、3款
+  judgeCriteria[]                           998  95.6%  ['熟知並能正確體現該登錄項目之知識、技藝與文化表現形式，並具代表性', '具該登錄項目之傳習能力與意願', '在文化脈
+  registerReason                            996  95.4%  (一)具藝術價值。 (二)具傳統藝術之特殊藝能表現,其技法優秀。 (三)具傳統藝術領域價值與地位,具有地方色彩及流派特色
+  representImage.ext                        993  95.1%  jpg
+  representImage.transform.c                993  95.1%  https://data.boch.gov.tw/upload/representImageFile/2021-05-1
+  representImage.original                   993  95.1%  https://data.boch.gov.tw/upload/representImageFile/2021-05-1
+  representImage.name                       993  95.1%  蔡青源
+  repImgId                                  993  95.1%  110640
+  representImageSource                      981  94.0%  嘉義市政府文化局
+  relateAssetsTypes[]                       958  91.8%  [{'code': 'E2.2', 'name': '音樂'}]
+  reserverRegCity                           581  55.7%  嘉義市西區
+  reserverRegAddress                        418  40.0%  永安街364號
+  patentNo                                  365  35.0%  府授文資第10251009732號
+  mediaImageList[]                          277  26.5%  [{'mediaName': '閩南第一樂團1', 'url': 'https://data.boch.gov.tw/u
+  mediaVideoList[]                          185  17.7%  [{'mediaName': '951210訪查閩南第一樂團1', 'url': 'https://imedia.cul
+  memberStatus                              146  14.0%  退休
+  url                                        90   8.6%  someone1934@yahoo.co
+  artistList[]                               31   3.0%  [{'sex': '男', 'name': '黃武山', 'bornYear': '1974', 'closingYea
+
+## boch-heritage  (n=6412)
+  caseId                                   6412 100.0%  19980430000001
+  caseName                                 6412 100.0%  嘉義仁武宮
+  registerReason                           6412 100.0%  1.具有保存價值。
+  govInstitutionName                       6412 100.0%  嘉義市政府
+  addresses[]                              6412 100.0%  [{'itemNo': 1, 'cityName': '嘉義市', 'distName': '東區', 'address
+  caseUrl                                  6412 100.0%  http://nchdb.boch.gov.tw/assets/advanceSearch/monument/19980
+  announcementList[]                       6412 100.0%  [{'classification': '指定/登錄', 'officialDocNo': '八七府民禮字第31251號
+  judgeCriteria[]                          6411 100.0%  ['具歷史、文化、藝術價值']
+  representImage.ext                       6411 100.0%  jpg
+  representImage.original                  6411 100.0%  https://data.boch.gov.tw/upload/representImageFile/2021-04-0
+  representImage.name                      6411 100.0%  P_20210319_144805
+  repImgId                                 6411 100.0%  104972
+  representImage.transform.c               6406  99.9%  https://data.boch.gov.tw/upload/representImageFile/2021-04-0
+  lawsReference                            6382  99.5%  《文化資產保存法》第二十七條。
+  documents[]                              6374  99.4%  ['https://data.boch.gov.tw/upload/documents/2021-01-29/8499d
+  assetsTypes[]                            6353  99.1%  [{'code': 'A2', 'name': '寺廟'}]
+  govInstitution                           6316  98.5%  嘉義市政府文化局
+  govDeptPhone                             6312  98.4%  2788225#502
+  govDeptName                              6310  98.4%  文化資產科
+  govDeptAddress                           6302  98.3%  嘉義市東區忠孝路275號
+  assetsClassifyName                       4602  71.8%  縣(市)定古蹟
+  assetsClassifyCode                       4516  70.4%  1.1.3
+  pastHistorySource                        4042  63.0%  1.95年嘉義市火車站及嘉義舊酒廠文化園區周邊景觀設計。 2.舊酒廠文化園區建築整修再利用及景觀工程〈第一期第二階段〉施
+  representImageSource                     3346  52.2%  中央研究院歷史語言研究所.國立台灣史前文化博物館提供
+  longitude                                3042  47.4%  120.45083109561618
+  latitude                                 3042  47.4%  23.481521309412692
+  pastHistory                              2927  45.6%  「嘉義仁武宮」位於現今嘉義市東區中央里13鄰北榮街54號，創建於1701年（清康熙40年）。「嘉義仁武宮」主祀「保生大帝
+  cadasters[]                              2862  44.6%  ['https://data.boch.gov.tw/old_upload/_upload/Assets_new/bui
+  mediaImageList[]                         2852  44.5%  [{'mediaName': '嘉義仁武宮左側近景圖', 'author': '嘉義市政府文化局', 'takePhot
+  caseOwnership[]                          2809  43.8%  [{'ownerType': '土地所有人', 'ownerName': '仁OO'}, {'ownerType': '
+  landlotList[]                            2761  43.1%  [{'itemNo': 1, 'cityName': '嘉義市', 'distName': '東區', 'landNo'
+  keepDepts[]                              2725  42.5%  [{'name': '新竹縣政府文化局'}]
+  amount                                   2725  42.5%  1
+  keepPlaces[]                             2710  42.3%  [{'name': '新竹縣政府文化局', 'saveSpace': '博物館、圖書館', 'saveSpaceIden
+  reserveStatus                            2697  42.1%  完整良好 
+  environment                              2660  41.5%  庫房或展覽空間
+  reserveStatusDesc                        2651  41.3%  古物製作史與特徵 采田福地為道卡斯族竹塹社奉祀七姓之歷代祖先之祠堂，祠堂於清道光十八（1838）年增祀地神富媼（番仔王爺
+  descMaterial                             2646  41.3%  石材
+  descSize                                 2645  41.3%  直徑40公分、高28公分
+  descAge                                  2631  41.0%  清道光十八年(1838年)
+  reservationCode                          2621  40.9%  2008.009.0001.00
+  buildingFeatures                         2282  35.6%  「嘉義仁武宮」古蹟本體為三開間、兩進、兩廊的格局。建築本體為鋼筋混凝土構造，屋架為木構造，座向採坐北朝南向。爾後增建後殿
+  buildingActualState                      2108  32.9%  「嘉義仁武宮」曾於2005年5月完成修復工程，2018年完成門神彩繪修復，目前保存狀況良好。
+  openVisitType                            2009  31.3%  2
+  openVisitTypeText                        2009  31.3%  部分開放參觀
+  buildingUsage                            1924  30.0%  「嘉義仁武宮」由嘉義仁武宮管理委員會負責管理維護，本建築全年開放參觀。
+  inHouseFeatures                          1888  29.4%  「嘉義仁武宮」依中軸做左、右對稱的配置，主要入口由三川殿進出。三川殿屋架規模為8步架楹，前點金柱因外簷廊需寬闊空間，而退
+  isOpenVisit                              1764  27.5%  True
+  buildingKeyMaintainItem                  1676  26.1%  木構建築，建材易受蟲害，需定期養護
+  openUpTime                               1650  25.7%  上午6時至晚上9時
+  isCharge                                 1467  22.9%  False
+  pastHistorySourceNotes                    942  14.7%  新竹縣文化中心時期，采田福地贈
+  descCreator                               790  12.3%  蔡草如
+  wenSitename                               631   9.8%  國家第三級古蹟~新竹長和宮
+  recorder                                  626   9.8%  天主教蘭陽青年會
+  computeType[]                             625   9.7%  [{'type': '漢民族', 'name': '福佬'}]
+  historyDevelopment                        620   9.7%  1966年由義大利籍秘克琳神父創立天主教羅東青年育樂中心(後改名為天主教蘭陽青年會)，該中心致力於民族文化的推廣與傳承，
+  wenSiteaddress                            613   9.6%  https://www.facebook.com/%E5%9C%8B%E5%AE%B6%E7%AC%AC%E4%B8%8
+  buildingSiteList[]                        599   9.3%  [{'cityName': '臺北市', 'distName': '中正區', 'landNo': '中正段一小段', 
+  ceremonyFeature                           280   4.4%  1.開龕門儀式  2.立燈篙儀式  3.主普壇開燈放彩儀式  4.放水燈及遊行  5.關龕門儀式
+  mediaVideoList[]                          277   4.3%  [{'mediaName': '新竹市役所點雲掃描影片', 'author': '新竹市文化局', 'takePhoto
+  holdCalendarType                          276   4.3%  農曆
+  holdPeriod                                255   4.0%  每年
+  notes                                     176   2.7%  國立臺北藝術大學林會承於1980 年代，前往花宅進行田野調查，並陸續發表學術研究成果。2003 年納入世界文化紀念物守護
+  hostUnitName                              136   2.1%  淡水清水巖管理委員會
+  manageMaintain                            110   1.7%  納入「牛罵頭遺址文化園區」管理維護計畫。
+  hostContactorAddress                      104   1.6%  新北市淡水區清水街87號
+  hostContactorPhone                         90   1.4%  2621-2236、2623-3643、2620-6459(Fax)
+  landUsage                                  86   1.3%  (一)南關里東遺址位於水1、公4、公5及公14用地內。
+ (二)右先方遺址上方現規劃為綠地、公園、停車場、高鐵路線。
+  briefDescribe                              86   1.3%  阿里山森林鐵道規劃始於1904年（明治37年）；後年由營造商藤田組取得森林經營權，施工後因財務緊縮轉為官營。1910年（
+  hostContactorName                          82   1.3%  林安吉總幹事
+  landScope                                  81   1.3%  臺北市中正區福和段二小段690、694、695-1、695-2、691地號等5筆土地 
+  holdStartMonth                             72   1.1%  5
+  holdStartDay                               72   1.1%  5
+  holdEndMonth                               69   1.1%  5
+  holdEndDay                                 69   1.1%  6
+  content                                    56   0.9%  原登錄位置、範圍：由國營臺灣鐵路股份有限公司嘉義站阿里山窄軌鐵道起，經嘉義車庫園區、北門車站至崎頂平交道，計4公里460
+  actualState                                51   0.8%  一、原登錄位置、範圍(由國營臺灣鐵路股份有限公司嘉義站阿里山窄軌鐵道起，經嘉義車庫園區、北門車站至崎頂平交道)：現由農業
+  actualStatus                               49   0.8%  (一)管理人1：南部科學工業園區管理局。
+ 臺南市善化區善科段62-0、63-0、74-0、75-0、65-0、71-0
+  usageStatus                                49   0.8%  現地保存，由南部科學工業園區管理局及交通部高速鐵路工程局管理。
+  feature                                    45   0.7%  展現因阿里山鐵路開發而影響嘉義市區城市紋理及林業發展之文史脈絡。 
+  cultralMean                                43   0.7%  (一)南關里東遺址：
+ 1.遺址保存環境極佳，木質、植物等標本亦能保存下來，且因 埋藏深，幾未被破壞。
+ 2.文化內涵豐
+  nearbyArcheologyCheck                      42   0.7%  位於或鄰近列冊遺址
+  nearbyArcheologyBrief                      38   0.6%  南關里遺址(鄰近南關里東遺址)
+ 東經120º16'35”；北緯23º6'58”
+ 2 ºTM：E175869×N255
+  landscapeRelated                           37   0.6%  有關研究阿里山林業鐵路及車站、嘉義製材場設施遺構及製材過程、嘉義林業發展史、建築類林業文化資產、林業行政組織演變之各項調
+  specialValue                               36   0.6%  　　嘉南大圳灌溉系統，是利用天然地理條件，與人工設施所創造的水利灌溉系統，改變區域內農業生產環境。嘉南大圳之烏山頭貯水池
+  activities[]                               32   0.5%  [{'name': '2019鷄籠中元祭', 'holdStart': '2019-08-01', 'holdEnd':
+  ceremonies[]                               31   0.5%  [{'name': '拜訪四大廟、老大公廟', 'schedule': '農曆六月二十五日', 'holdDay': '
+  communityDevelop                           25   0.4%  1.戰後違建聚落之代表。
+ 2.非正式營造過程形成的自然聚落，風格獨特且無法重現。
+  historyValue                               25   0.4%  1.民國93年2月19日以「寶藏巖歷史聚落為非正式營造過程所形成之自然聚落，風格獨特且無法重現，為戰後弱勢者自力造屋聚落
+  architecturehFeature                       25   0.4%  建築物興築方式為都市弱勢族群自力營造搭架，結構多為木造、磚造、加強磚造、少部分為混凝土構造。
+  features[]                                 25   0.4%  [{'name': '輪值主普', 'description': '主普是號召、整合新舊宗親，以展現社會實力的最重要的表
+  taboos[]                                   22   0.3%  ['遶境過程中，通常沒有特殊禁忌，但若有遇到喪家，則會採取偃旗息鼓方式，靜靜地從喪家門前走過，通常陣頭隊伍也會停止各種聲
+  relativePosition                           20   0.3%  南科園區第一高架水塔北側
+  neighborPosition                           19   0.3%  南科園區第一高架水塔
+  discoveryDescription                       17   0.3%  民國四十四年（1957）四月十七日，（盛清沂先生）既發現（新北市土城區）虎子山遺址，當日天色已晚，擬取公路賦歸，遙望大安
+  lops[]                                     16   0.2%  [{'name': '交換陣', 'description': '北管音樂分成「西皮」、「福祿」兩大系統，基隆地區的西皮
+  occurrences[]                               1   0.0%  [{'name': '芳苑牛車', 'timeDescription': '早在日治時期，彰化芳苑就已有牛車載著遊客到沙
+
+## cip-indigenous-festivals  (n=66)
+  Seq                                        66 100.0%  1
+  DateListed                                 66 100.0%  20230731
+  民族                                         66 100.0%  卑南族
+  祭儀名稱                                       66 100.0%  年祭
+  民國年                                        66 100.0%  112
+  舉辦期間                                       66 100.0%  12/15-1/5
+
+## kaohsiung-busker-venues  (n=49)
+  編號                                         49 100.0%  1
+  場所                                         49 100.0%  高雄市文化中心
+  地點                                         49 100.0%  高雄市文化中心藝術大道
+  地址                                         49 100.0%  高雄市苓雅區五福一路67號
+  行政區                                        49 100.0%  苓雅
+  管理單位/聯絡方式                                  49 100.0%  高雄市政府文化局 管理處活動課
+  場域類別                                       48  98.0%  公共場域
+  展演時段                                       47  95.9%  週六、日 1600-2130
+  展演組數                                       47  95.9%  150組
+  特色                                         45  91.8%  高雄市文化中心是高雄的文化藝術展演重鎮，自從撤除圍籬變妝為「市民藝術大道」，更有明亮、舒爽的都會休閒風貌。這裡經常舉辦各
+
+## moc-community  (n=820)
+  groupTypeName                             820 100.0%  社區
+  hitRate                                   820 100.0%  3
+  mainTypeName                              820 100.0%  社區
+  name                                      820 100.0%  苗栗縣公館鄉石墻社區發展協會
+  representImage                            820 100.0%  https://communitytaiwan.moc.gov.tw
+  srcWebsite                                820 100.0%  https://communitytaiwan.moc.gov.tw/Villages/CommunityFind/Co
+  version                                   820 100.0%  1.0
+  website                                   820 100.0%  https://communitytaiwan.moc.gov.tw/Villages/CommunityFind/Co
+  address                                   810  98.8%  9鄰185-1號
+  cityName                                  810  98.8%  苗栗縣
+  mainTypePk                                676  82.4%  3505-30
+  intro                                     659  80.4%  <div><div><p><span style="font-weight: bold;">社區名稱：</span>苗栗
+  latitude                                  439  53.5%  120.8183077
+  longitude                                 439  53.5%  24.4770882
+
+## moc-emap-poi  (n=13388)
+  name                                    13388 100.0%  嘉義仁武宮
+  mainTypeName                            13388 100.0%  文化資產 
+  groupTypeName                           13388 100.0%  文化資產
+  mainTypePk                              13388 100.0%  19980430000001
+  version                                 13388 100.0%  1.0
+  hitRate                                 13388 100.0%  2211
+  srcWebsite                              13355  99.8%  http://nchdb.boch.gov.tw/assets/advanceSearch/monument/19980
+  cityName                                13298  99.3%  嘉義市
+  address                                 13210  98.7%  仁武里8鄰北榮街54號
+  latitude                                13014  97.2%  23.481521309412692
+  longitude                               12912  96.4%  120.45083109561618
+  buildingCreateWestYear                   6338  47.3%  2000
+  author                                   6246  46.7%  李乾朗
+  intro                                    6214  46.4%  其名源自台北市現存的古城門門額，寓意深遠，以代表「承先」的精神，出土文物與研究成果共同展現四件作品，主題分別為「府城春秋
+  representImage                           5926  44.3%  https://cloud.culture.tw/e_new_upload/task/ebcdcfb9-92d1-4d8
+  material                                 5859  43.8%  鋼鐵
+  size                                     5808  43.4%  400*250*400
+  website                                  5507  41.1%  http://www.tycg.gov.tw/confucius/
+  areaCode                                 3633  27.1%  1106
+  buildingYearName                         3521  26.3%  2000
+  type                                     1537  11.5%  1.1
+  headCityName                             1150   8.6%  嘉義市政府
+  registerDateValue                        1144   8.5%  1998-04-30
+  registerDateValue_eng                    1144   8.5%  1998-04-30
+  typeName                                 1144   8.5%  古蹟
+  level                                    1142   8.5%  縣(市)定古蹟
+  name_eng                                  945   7.1%  Martyrs' Shrine Agency, Taoyuan
+  openTime                                  880   6.6%  上午6時至晚上9時
+  phone                                     573   4.3%  04-7707799
+  intro_eng                                 515   3.8%  Like the disseminating fruits of the Spanish Needle, the lif
+  author_eng                                447   3.3%  Yi-Ru Pan
+  material_eng                              430   3.2%  light emitting diode, concrete, wood, stone
+  facebook                                  253   1.9%  https://www.facebook.com/tycg.confuciustemple/
+  email                                     243   1.8%   〔已隱去〕@gmail.com
+  size_eng                                  179   1.3%  no information
+  ticketPrice                               135   1.0%  20 除本鄉鄉民、6歲以下兒童及身心障礙者外 20元 0 本鄉鄉民、6歲以下兒童及身心障礙者 免費 
+  closeDay                                    2   0.0%  春節
+
+## moc-events  (n=1622)
+  version                                  1622 100.0%  1.4
+  UID                                      1622 100.0%  68b5d5f926b32440a8964233
+  title                                    1622 100.0%  2026風動室內樂團《無限》宮崎駿動畫音樂精選
+  category                                 1622 100.0%  1
+  showInfo[]                               1622 100.0%  [{'time': '2026/10/31 14:30:00', 'location': '桃園市桃園區中正路1188號
+  sourceWebName                            1622 100.0%  OPENTIX兩廳院文化生活
+  startDate                                1622 100.0%  2026/10/31
+  endDate                                  1622 100.0%  2026/12/13
+  hitRate                                  1622 100.0%  113
+  sourceWebPromote                         1356  83.6%  https://www.opentix.life/program/1955833404180180992
+  webSales                                 1067  65.8%  https://www.opentix.life/program/1955833404180180992
+  descriptionFilterHtml                     583  35.9%  1/4
+ 14:00-17:00
+ 觀景碼頭
+ 米嚕
+ 
+ 1/10
+ 14:00-17:00
+ 河馬家族
+ 阿翰
+ 
+  masterUnit[]                              583  35.9%  ['財團法人奇美博物館基金會']
+  showUnit                                  566  34.9%  (中華民國)米嚕/阿翰/歸甲萬
+  otherUnit[]                               174  10.7%  ['(合辦)南投縣政府文化局', '(指導)內政部', '(指導)文化部']
+  discountInfo                              134   8.3%  特展及門票優惠詳洽官網。
+  subUnit[]                                 106   6.5%  ['金門縣仙洲薪傳南音社']
+  imageUrl                                   59   3.6%  https://cloud.culture.twhttps://cloud.culture.tw/e_new_uploa
+  comment                                    36   2.2%  文創 cfpao1979
+  editModifyDate                             32   2.0%  2026/07/24 18:04:42
+  supportUnit[]                              18   1.1%  ['台北市文化局']
+
+## nantou-arts-events  (n=168)
+  序號                                        168 100.0%  1
+  活動名稱                                      168 100.0%  亮光與暗影：1945年前後的臺灣重要史料微型展
+  地點名稱                                      168 100.0%  國史館臺灣文獻館
+  活動展演起日                                    168 100.0%  2026/1/1 09:00
+  活動展演迄日                                    168 100.0%  2026/12/31 17:00
+  活動型態                                      168 100.0%  展覽
+  辦理單位                                      168 100.0%  主辦：國史館臺灣文獻館， 指導：國史館
+  票價或費用                                      28  16.7%  全票︰50 團體票（20人以上）︰30 優待票︰30 6 歲以上，未滿 12 歲兒童︰25
+
+## ncfta-activities  (n=51)
+  id                                         51 100.0%  261470
+  url                                        51 100.0%  https://www.ncfta.gov.tw/News_Content3.aspx?n=2802&s=261470
+  title                                      51 100.0%  《聲音的生產》⸺臺灣音樂高等教育八十年
+  description                                51 100.0%  本活動以全臺各大學音樂系為主體，邀請不同學校共同參與，透過演出、創作與策展，呈現各校在教育理念、學術發展與藝術實踐上的特
+  dateText                                   51 100.0%  2026-10-16 ~ 2026-10-23
+  place                                      51 100.0%  臺灣戲曲中心大表演廳
+  category                                   46  90.2%  演出
+
+## nmns-exhibitions  (n=10)
+  url                                        10 100.0%  https://www.nmns.edu.tw/ch/exhibitions/special-exhibitions/E
+  title                                      10 100.0%  2026第28次中華盆栽作風
+  image                                      10 100.0%  https://www.nmns.edu.tw/export/sites/nmns/ch/exhibitions/.ga
+  dateText                                   10 100.0%  2026/09/16 ～2026/09/20
+  place                                      10 100.0%  橢圓形廣場露天展區
+  schedule                                    7  70.0%  定時解說場次 15:00 (9/18-20)
+
+## npm-events  (n=15)
+  _kind                                      15 100.0%  activity
+  title                                      15 100.0%  【北部院區】115年度下半年「故宮遊藝思─學子嗨FUN參訪北部院區」(參訪時間：115年10月20日至115年12月4日
+  tags                                       15 100.0%  #學校
+  dateText                                    9  60.0%  2026-10-20~2026-12-04
+  url                                         9  60.0%  https://www.npm.gov.tw/Exhibition-Content.aspx?sno=04014555&
+  place                                       9  60.0%  北部院區 第一展覽館 202,204,206,208,210,212
+
+## ntch-programs  (n=17)
+  id                                         17 100.0%  27659
+  itemType                                   17 100.0%  PROGRAM
+  type                                       17 100.0%  HOST
+  cancelled                                  17 100.0%  False
+  startFrom                                  17 100.0%  2026-09-13T05:00:00.000Z
+  endOn                                      17 100.0%  2026-09-13T05:00:00.000Z
+  title                                      17 100.0%  艾莉莎．薇勒絲坦 大提琴獨奏會《碎片》
+  engTitle                                   17 100.0%  Alisa Weilerstein: FRAGMENTS
+  brief                                      17 100.0%  艾莉莎．薇勒絲坦 大提琴獨奏會《碎片》
+  hall.id                                    17 100.0%  2
+  hall.name                                  17 100.0%  國家音樂廳
+  purchaseLink                               17 100.0%  https://www.opentix.life/event/2058873803966504961
+  cover                                      17 100.0%  9554d42ca07509857b2bc9f28e5ad5dac5fdb007.jpeg
+  minimumYearsOld                            16  94.1%  6
+
+## ntm-activities  (n=25)
+  actId                                      25 100.0%  60199
+  url                                        25 100.0%  https://event.culture.tw/mocweb/reg/NTM/Detail.init.ctr?actI
+  title                                      25 100.0%  【骨早味特展】拜師學藝╧╤ 異特龍模型骨架體驗工作坊
+  description                                25 100.0%  「骨早味：異特龍記憶與化石繪圖」特展的異特龍模型，那經典造型究竟如何誕生？製作者對於未曾看過的古生物，如何從零到有？或是
+  category                                   25 100.0%  活動類型：本館、教育活動
+  place                                      16  64.0%  地點：本館3樓自然教室
+
+## ntpc-culture-events  (n=55)
+  author                                     55 100.0%  新北市文化局
+  type                                       55 100.0%  轉知訊息
+  startdate                                  55 100.0%  2026-09-01
+  enddate                                    55 100.0%  2026-10-15
+  title                                      55 100.0%  文化部116年青年村落文化行動受理申請
+  link                                       55 100.0%  https://www.culture.ntpc.gov.tw/xceventsnews/cont?xsmsid=0G2
+  description                                55 100.0%  文化部116年青年村落文化行動受理申請,文化部,年滿18歲至45歲之本國人士及外籍人士，免費參加,文化部青年村落文化行動
+  pubdate                                    55 100.0%  2026-09-01 00:00:00
+
+## ntpc-museum-venues  (n=34)
+  title                                      34 100.0%  新北市立十三行博物館
+  location                                   34 100.0%  新北市八里區博物館路200號
+  areacode                                   34 100.0%  10001230
+  localcallservice                           34 100.0%  (02)26191313
+  twd97x                                     34 100.0%  290829.53
+  twd97y                                     34 100.0%  2783228.28
+  wgs84ax                                    34 100.0%  121.4050071
+  wgs84ay                                    34 100.0%  25.15699627
+
+## ntt-programs  (n=109)
+  url                                       109 100.0%  https://www.npac-ntt.org/program/events/c-nPjai2Bd6YI
+  id                                        109 100.0%  c-nPjai2Bd6YI
+  title                                     109 100.0%  時刻在藝起：NTT10週年回顧展
+  place                                     109 100.0%  其他場地
+  dateRaw                                   109 100.0%  2026/07/01(三)～2026/11/01(日)
+  price                                     109 100.0%  免費
+  startDate                                 105  96.3%  2026/07/01
+  endDate                                   105  96.3%  2026/11/01
+
+## taichung-culture-events  (n=871)
+  編號                                        871 100.0%  1
+  縣市別代碼                                     871 100.0%  66000
+  活動名稱                                      871 100.0%  114年度第1期【樂活美學】-漆工藝技法基礎入門教學
+  活動展演_起訖                                   871 100.0%  2025-03-06 ~ 2025-05-29 13：30-16：30
+  活動售票與否                                    871 100.0%  N
+  地點                                        871 100.0%  葫蘆墩文化中心
+  活動網址                                      131  15.0%  https://culture-signup.taichung.gov.tw/CourseListTable?DeptI
+  相關圖片                                       89  10.2%  https://activity.culture.taichung.gov.tw/df_ufiles/a/漆藝-.jpg
+  入場方式                                       35   4.0%  售票活動，憑票入場。
+  票價                                         33   3.8%  報名費3700元，材料費$5,000元。學員自備工具：筆記簿、筆、工作圍裙、塑膠手套。 (材料費含：10*16中塗板三片
+
+## taichung-culture-venues  (n=17)
+  機關代碼                                       17 100.0%  387330000E
+  縣市別代碼                                      17 100.0%  10019
+  郵遞區號                                       17 100.0%  407
+  名稱                                         17 100.0%  臺中市大墩文化中心 
+  地址                                         17 100.0%  臺中市西區英才路600號
+  電話                                         17 100.0%  電話：04-23727311         （服務台分機228、229、230）　  傳真：04-23712614
+  相關連結                                       17 100.0%  http://www.dadun.culture.taichung.gov.tw/
+
+## tainan-culture-venues  (n=57)
+  編號                                         57 100.0%  1
+  類別                                         57 100.0%  公立
+  館舍名稱                                       57 100.0%  國立臺灣歷史博物館
+  地址                                         57 100.0%  709025臺南市安南區長和路一段250號
+  縣市別代碼                                      57 100.0%  67000
+  地址-行政區域代碼                                  57 100.0%  67000350
+  聯繫電話                                       55  96.5%  06-356-8889
+  開放時間                                       52  91.2%  星期二至日09:00-17:00（最後入館時間16:30）
+  管理單位                                       36  63.2%  文化部
+
+## taipei-culture-events  (n=319)
+  ID                                        319 100.0%  c30b5c88-a6bb-4571-a20f-61ef20da2a69
+  Category                                  319 100.0%  展覽
+  Caption                                   319 100.0%  古蹟探祕—勸業銀行舊廈古蹟修復常設展
+  Company                                   319 100.0%  國立臺灣博物館
+  StartDate                                 319 100.0%  2021-11-15 09:30:00
+  EndDate                                   319 100.0%  2026-12-31 17:00:00
+  TicketType                                319 100.0%  售票
+  ContactPerson                             319 100.0%  服務臺
+  ContactTel                                319 100.0%  02-2314-2699
+  Introduction                              319 100.0%  臺北市定古蹟勸業銀行舊廈前身是日本時代在臺設立的「日本勸業銀行臺北支店」，落成於1933年。1946年國民政府接收勸業銀
+  WebsiteLink                               319 100.0%  https://event.culture.tw/mocweb/reg/NTM/Detail.init.ctr?actI
+  ImageFile                                 319 100.0%  https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD
+  CreateDate                                319 100.0%  2023-05-03 17:14:49
+  Venue                                     319 100.0%  臺博館古生物館
+  SessionStartDate                          319 100.0%  2021-11-15 09:30:00
+  SessionEndDate                            319 100.0%  2026-12-31 17:00:00
+  Longitude                                 319 100.0%  121.51443
+  Latitude                                  319 100.0%  25.04367
+  City                                      302  94.7%  臺北市
+  Area                                      301  94.4%  中正區
+  Address                                   301  94.4%  中正區
+  RelatedLink                               224  70.2%  https://event.culture.tw/mocweb/reg/NTM/Detail.init.ctr?actI
+  TicketPrice                               205  64.3%  NT$30元(現場販售)
+  TicketPurchaseLink                        193  60.5%  https://event.culture.tw/mocweb/reg/NTM/Detail.init.ctr?actI
+  YoutubeLink                                32  10.0%  https://www.youtube.com/watch?v=Fu5uBI7GGvE&t=777s
+
+## taipei-culture-venues  (n=130)
+  管理單位                                      130 100.0%  臺北市中山堂管理所
+  場館                                        130 100.0%  中山堂-中正廳
+  行政區                                       130 100.0%  中正區
+  座位數或坪數                                    130 100.0%  1122席
+  申請方式                                      130 100.0%  電話確認空檔，一般檔期6個月前申請
+  市話                                        130 100.0%  (02)23813137
+  地址                                        129  99.2%   臺北市中正區延平南路98號
+  網址                                        129  99.2%  https://www.zsh.gov.taipei/Default.aspx
+  分機                                         75  57.7%  103
+
+## taoyuan-tourism-events  (n=64)
+  infoid                                     64 100.0%  6656
+  tywebsite                                  64 100.0%  https://travel.tycg.gov.tw/zh-tw/Event/CalendarDetail/6656
+  name                                       64 100.0%  《夏娃克隆系列：林珮淳的AI伊甸園》林珮淳個展
+  toldescribe                                64 100.0%  ￭相關細節可電洽中原文創園區(03-4333833#220)展覽名稱｜《夏娃克隆系列：林珮淳的AI伊甸園》林珮淳個展展覽
+  add                                        64 100.0%  桃園市中壢區中原文創園區 14倉
+  start                                      64 100.0%  2025/12/27 00:00:00
+  end                                        64 100.0%  2026/02/08 23:59:59
+  onlyholiday                                64 100.0%  true
+  changetime                                 64 100.0%  2025/12/17 10:57:05
+  px                                         62  96.9%  121.241484
+  py                                         62  96.9%  24.963528
+
+## tcmb-culture  (n=11553)
+  id                                      11553 100.0%  18898
+  identifier                              11553 100.0%  180658
+  indexCode                               11553 100.0%  Culture_Event
+  imageLicense                            11553 100.0%  CC BY
+  contentLicense                          11553 100.0%  CC BY
+  title                                   11553 100.0%  2019年4月24日行政院長蘇貞昌蒞臨臺灣文博會工藝館，茶3.1415展場「茶未來實驗室」區參觀
+  description                             11553 100.0%  <p>2019(民國108)年4月24日臺灣文博會工藝館，茶3.1415展場行政院長蘇貞昌蒞臨「境」區參觀，在文化部長鄭
+  originalUrl                             11553 100.0%  https://cmsdb.culture.tw/event/DC4561BF-4557-4DED-A424-BC79A
+  createDept                              11553 100.0%  國立台灣工藝研究發展中心
+  lastUpdateDate                          11553 100.0%  2021-11-02T16:02:46.005
+  subjects[]                              11553 100.0%  ['藝術與人文']
+  tcmbUrl                                 11553 100.0%  https://tcmb.culture.tw/zh-tw/detail?indexCode=Culture_Event
+  keywords[]                              10751  93.1%  [' 文化博覽會 ', '茶', '茶3.1415']
+  images[]                                10434  90.3%  ['https://dcm.s3.hicloud.net.tw/new/f_upload/excel/event/201
+
+## tfam-exhibitions  (n=584)
+  ExID                                      584 100.0%  807
+  ExName                                    584 100.0%  共感：存在的節奏 
+  BeginDate                                 584 100.0%  2026/05/09
+  EndDate                                   584 100.0%  2026/09/20
+  ExType                                    584 100.0%  策劃展
+  Sequence                                  584 100.0%  5
+  IsIssueDate                               584 100.0%  True
+  IsSpecial                                 584 100.0%  1
+  ShowStyle                                 584 100.0%  1
+  _sourceType                               584 100.0%  1
+  PlayImg                                   583  99.8%  Exhibition\Main\807\2026080409282161730022.png
+  Content                                   569  97.4%  <p>「共感：存在的節奏」展在概念上呼應現代物理學所揭示的現象：在量子層次中，某些粒子之間存在不可分割的關聯。這樣的觀點
+  Area                                      568  97.3%  一樓1A~1B
+  NowPlayImg                                403  69.0%  Exhibition\Main\807\2026080409282153910771.png
+  ExternalLink                               52   8.9%  https://
+
+## tpac-programs  (n=31)
+  id                                         31 100.0%  1872
+  url                                        31 100.0%  https://tpac.org.taipei/program/1872
+  title                                      31 100.0%  2026臺北藝術節 X 中國信託新舞臺藝術節：驫舞20《大群舞》
+  image                                      31 100.0%  https://backstage.tpac-taipei.org/storage/uploads/program/im
+  dateText                                   31 100.0%  2026-09-11 - 2026-09-12
+  age                                        27  87.1%  建議年齡：6+
+  tags[]                                     26  83.9%  ['優惠', '北藝中心主辦']
+
+## twtourism-events  (n=1048)
+  EventID                                  1048 100.0%  Event_371020000A_003959
+  EventName                                1048 100.0%  金門島嶼生活節
+  Description                              1048 100.0%  《金門島嶼生活節 Kinmen Island Life Festival》10月盛大登場！
+  PositionLat                              1048 100.0%  24.43586
+  PositionLon                              1048 100.0%  118.31705
+  EventClasses[]                           1048 100.0%  [2]
+  PostalAddress.City                       1048 100.0%  金門縣
+  PostalAddress.CityCode                   1048 100.0%  09020
+  PostalAddress.Town                       1048 100.0%  金沙鎮
+  PostalAddress.TownCode                   1048 100.0%  09020020
+  PostalAddress.ZipCode                    1048 100.0%  890
+  Telephones[]                             1048 100.0%  [{'Tel': '(08)2318823'}]
+  Images[]                                 1048 100.0%  [{'Name': '金門島嶼生活節', 'Description': None, 'URL': 'https://ki
+  IsAccessibleForFree                      1048 100.0%  0
+  StartDateTime                            1048 100.0%  2025-10-04T16:00:00+08:00
+  EndDateTime                              1048 100.0%  2026-03-01T15:59:59+08:00
+  EventStatus                              1048 100.0%  EventScheduled
+  UpdateTime                               1048 100.0%  2026-08-10T02:07:37+08:00
+  PostalAddress.StreetAddress               890  84.9%  金馬聯合服務中心前廣場(出發地點)
+  Organizations[]                           145  13.8%  [{'Name': '交通部觀光署', 'Class': 'Provider', 'TaxCode': None, 'A
+  WebsiteURL                                128  12.2%  https://www.maolin-nsa.gov.tw/zh-tw/application/activity/36/
+  Participant                                 5   0.5%  民眾
+  Remarks                                     2   0.2%  、
+  TrafficInfo                                 2   0.2%  線上活動，地點為花蓮縣、台東縣地區
+  ParkingInfo                                 1   0.1%  依各協會規定
+  Tags[]                                      1   0.1%  ['打卡熱點', '寺廟祈福', '網美必拍']
+

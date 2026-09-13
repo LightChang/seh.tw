@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import { catVar } from '../lib/format.mjs';
+import { allVenues } from '../lib/build-data.mjs';
+const venues = (await allVenues()).sort((a, b) => b.eventCount - a.eventCount || a.name.localeCompare(b.name));
+const withGeo = venues.filter((v) => v.lat).length;
+const derived = venues.filter((v) => v.origin === 'derived').length;
+---
+<Base title="藝文場館｜seh" description={`台灣正在舉辦活動的 ${venues.length} 個藝文場館。`}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <h1>場館</h1>
+      <p class="sub"><strong class="tabular">{venues.length}</strong> 個場館有活動，{withGeo} 個有座標，
+        {derived} 個是從活動資料長出來的（名錄裡查不到）</p>
+    </header>
+    <ol class="ev-list">
+      {venues.map((v) => (
+        <li><a href={`/venue/${v.slug}`}>
+          <span class="ev-lead tabular">{v.eventCount} 個</span>
+          <span class="ev-body">
+            <span class="ev-t">{v.name}</span>
+            <span class="ev-m">{[v.city, v.district].filter(Boolean).join('　')}</span>
+          </span>
+          <span class="ev-cat">{v.origin === 'derived' ? '活動資料' : '名錄'}</span>
+        </a></li>
+      ))}
+    </ol>
+  </div>
+</Base>

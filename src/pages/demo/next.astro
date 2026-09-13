@@ -1,0 +1,369 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="方案 C：接下來" noindex={true}>
+  <main class="page">
+    <header class="hd">
+      <div class="hd-l">
+        <p class="label">seh.tw</p>
+        <h1 id="lead">接下來</h1>
+      </div>
+      <nav class="filters" id="filters" aria-label="類型篩選"></nav>
+    </header>
+
+    <section class="body">
+      <article class="soon" id="soon">
+        <div class="soon-when">
+          <p class="label">最近的一場</p>
+          <p class="soon-in tabular" id="s-in">—</p>
+        </div>
+        <div class="soon-what">
+          <h2 class="soon-t"><a id="s-link" href="#"><span id="s-title">—</span></a></h2>
+          <p class="soon-m"><span id="s-meta"></span><span class="tag" id="s-cat"></span><span class="more" id="s-more"></span><a class="src" id="s-src" href="#" target="_blank" rel="noopener"></a></p>
+        </div>
+      </article>
+
+      <ol class="rest" id="rest"></ol>
+    </section>
+
+    <footer class="ft">
+      <svg id="nav" preserveAspectRatio="none" role="img" aria-label="時間導航"></svg>
+      <div class="ft-b">
+        <p class="label" id="ft-note">拖曳時間軸看其他時段</p>
+        <p class="label tabular" id="ft-count"></p>
+      </div>
+    </footer>
+  </main>
+</Base>
+
+<script>
+  import { loadSessions } from '../../lib/index-client.mjs';
+  import { select, pointer } from 'd3-selection';
+  import { scaleLinear } from 'd3-scale';
+  import { timer } from 'd3-timer';
+
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const raw = await loadSessions();
+  const evs = raw
+    .map((d) => ({ ...d, ts: new Date(d.at).getTime() }))
+    .sort((a, b) => a.ts - b.ts);
+
+  const now = new Date();
+  const nowTs = now.getTime();
+  const DAY = 86400000;
+  let from = nowTs;
+
+  const WD = ['日', '一', '二', '三', '四', '五', '六'];
+  const midnight = (t) => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+  const dayGap = (t) => Math.round((midnight(t) - midnight(nowTs)) / DAY);
+  const hhmm = (t) => new Date(t).toTimeString().slice(0, 5);
+
+  // 一小時內講「還有多久」，跨天講「明天 19:30」——這是人實際會用的說法
+  const rel = (t) => {
+    const diff = t - nowTs;
+    const g = dayGap(t);
+    if (diff < 0) return '進行中';
+    if (diff < 60000) return '正要開始';
+    if (g === 0) {
+      const m = Math.round(diff / 60000);
+      if (m < 60) return `${m} 分鐘後`;
+      const h = Math.floor(m / 60), mm = m % 60;
+      return mm ? `${h}小時${mm}分後` : `${h}小時後`;
+    }
+    if (g === 1) return `明天 ${hhmm(t)}`;
+    if (g === 2) return `後天 ${hhmm(t)}`;
+    const d = new Date(t);
+    return `${d.getMonth() + 1}/${d.getDate()}（${WD[d.getDay()]}）${hhmm(t)}`;
+  };
+
+  // ── 主卡與清單 ────────────────────────────────
+  const el = {
+    lead: document.getElementById('lead'),
+    headL: document.getElementById('head-l'),
+    sIn: document.getElementById('s-in'),
+    sTitle: document.getElementById('s-title'),
+    sMeta: document.getElementById('s-meta'),
+    sCat: document.getElementById('s-cat'),
+    rest: document.getElementById('rest'),
+    count: document.getElementById('ft-count'),
+    note: document.getElementById('ft-note'),
+  };
+
+  let catFilter = null;
+
+  // 同一個活動一天演好幾場，列表上只出現一次，其餘場次收成「另有 N 場」
+  function collapse(list) {
+    const seen = new Map();
+    for (const d of list) {
+      const key = `${d.title}@@${d.venue}`;
+      if (seen.has(key)) seen.get(key).extra++;
+      else seen.set(key, { ...d, extra: 0 });
+    }
+    return [...seen.values()];
+  }
+
+  function render(anim) {
+    const raw = evs.filter((d) => d.ts >= from && (!catFilter || d.cat === catFilter));
+    const upcoming = collapse(raw);
+    const [first, ...rest] = upcoming;
+    const g = dayGap(from);
+
+    el.lead.textContent = from === nowTs ? '接下來'
+      : g === 0 ? `今天 ${hhmm(from)} 之後`
+      : g === 1 ? '明天' : g === 2 ? '後天'
+      : `${new Date(from).getMonth() + 1}/${new Date(from).getDate()} 之後`;
+
+    const todayLeft = evs.filter((d) => d.ts >= nowTs && dayGap(d.ts) === 0 && (!catFilter || d.cat === catFilter)).length;
+    const moreEl = document.getElementById('s-more');
+    el.count.textContent = todayLeft > 0
+      ? `今天還有 ${todayLeft} 場・當天起 72 小時內 ${evs.length} 場`
+      : `當天起 72 小時內 ${evs.length} 場`;
+
+    if (first) {
+      el.sIn.textContent = rel(first.ts);
+      el.sTitle.textContent = first.title;
+      const link = document.getElementById('s-link');
+      const srcA = document.getElementById('s-src');
+      // demo 階段連原站；正式版改連 /event/${first.slug}
+      link.href = first.url ?? '#';
+      link.target = '_blank'; link.rel = 'noopener';
+      srcA.textContent = first.url ? `原始出處：${first.src}` : '';
+      srcA.href = first.url ?? '#';
+      el.sMeta.textContent = [first.venue, first.city].filter(Boolean).join('　');
+      el.sCat.textContent = first.cat ?? '';
+      moreEl.textContent = first.extra ? `同場館另有 ${first.extra} 場次` : '';
+    } else {
+      el.sIn.textContent = '沒有更多了';
+      el.sTitle.textContent = '這 72 小時的活動都看完了';
+      el.sMeta.textContent = '';
+      el.sCat.textContent = '';
+      moreEl.textContent = '';
+    }
+
+    el.rest.innerHTML = rest.slice(0, 4).map((d) => `
+      <li>
+        <a class="r-a" href="${d.url ?? '#'}" target="_blank" rel="noopener">
+          <p class="r-t">${d.title}</p>
+          <p class="r-m">
+            <span class="r-in tabular">${rel(d.ts)}</span>
+            <span class="r-v">${d.venue || d.city || ''}</span>
+            <span class="r-c">${d.cat || ''}</span>
+            ${d.extra ? `<span class="r-x">另有 ${d.extra} 場次</span>` : ''}
+          </p>
+        </a>
+      </li>`).join('');
+
+    if (anim) {
+      const items = [document.getElementById('soon'), ...el.rest.children];
+      items.forEach((node, i) => {
+        node.style.opacity = '0';
+        node.style.transform = 'translateY(10px)';
+        setTimeout(() => {
+          node.style.transition = 'opacity .32s ease, transform .32s ease';
+          node.style.opacity = '1';
+          node.style.transform = 'none';
+        }, 40 + i * 55);
+      });
+    }
+  }
+
+  // ── 類型篩選：把 700 多場收斂到看得完的量 ──────────
+  const catCount = new Map();
+  evs.forEach((d) => catCount.set(d.cat, (catCount.get(d.cat) ?? 0) + 1));
+  const topCats = [...catCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 5);
+  const filtersEl = document.getElementById('filters');
+
+  function drawFilters() {
+    filtersEl.innerHTML =
+      `<button type="button" class="f${catFilter === null ? ' on' : ''}" data-c="">全部 ${evs.length}</button>` +
+      topCats.map(([c, n]) => `<button type="button" class="f${catFilter === c ? ' on' : ''}" data-c="${c}">${c} ${n}</button>`).join('');
+    filtersEl.querySelectorAll('button').forEach((b) => {
+      b.addEventListener('click', () => {
+        catFilter = b.dataset.c || null;
+        drawFilters();
+        render(true);
+      });
+    });
+  }
+  drawFilters();
+
+  // ── 底部時間導航 ──────────────────────────────
+  const W = 1000, H = 66;
+  const svg = select('#nav').attr('viewBox', `0 0 ${W} ${H}`);
+  const T0 = midnight(nowTs);              // 當天 00:00 起
+  const T1 = nowTs + 72 * 3600000;         // 現在後 72 小時
+  const x = scaleLinear().domain([T0, T1]).range([0, W]);
+  const SLOT = DAY / 8;                      // 每 3 小時一格
+  const slots = Math.round((T1 - T0) / SLOT);
+  const colW = W / slots;
+
+  svg.append('line').attr('x1', 0).attr('x2', W).attr('y1', H - 24).attr('y2', H - 24)
+    .attr('stroke', css('--border-subtle'));
+
+  // 導航條本身就是密度圖：哪幾天、哪個時段活動多，一眼看得出來
+  const bins = new Array(slots).fill(0);
+  evs.forEach((d) => {
+    const i = Math.floor((d.ts - T0) / SLOT);
+    if (i >= 0 && i < slots) bins[i]++;
+  });
+  const maxH = Math.max(...bins, 1);
+  svg.append('g').selectAll('rect').data(bins).join('rect')
+    .attr('x', (v, i) => i * colW + 0.5)
+    .attr('width', colW - 1)
+    .attr('y', (v) => (H - 24) - (v / maxH) * (H - 30))
+    .attr('height', (v) => (v / maxH) * (H - 30))
+    .attr('fill', (v, i) => (T0 + (i + 1) * SLOT >= nowTs ? css('--color-link') : css('--border-subtle')))
+    .attr('opacity', 0.5);
+
+  for (let d = 0; d <= 3; d++) {
+    const t = T0 + d * DAY;
+    const dt = new Date(t);
+    svg.append('line').attr('x1', x(t)).attr('x2', x(t)).attr('y1', H - 30).attr('y2', H - 24)
+      .attr('stroke', css('--border-subtle'));
+    svg.append('text').attr('x', x(t) + 4).attr('y', H - 2).attr('text-anchor', 'start')
+      .attr('fill', css('--text-muted')).attr('font-size', 18)
+      .attr('font-family', 'IBM Plex Mono, monospace')
+      .text(d === 0 ? '今天' : d === 1 ? '明天' : `${dt.getMonth() + 1}/${dt.getDate()}`);
+  }
+
+  const handle = svg.append('g');
+  const hLine = handle.append('line').attr('y1', 2).attr('y2', H - 24)
+    .attr('stroke', css('--color-link')).attr('stroke-width', 2);
+  const hDot = handle.append('circle').attr('cy', 2).attr('r', 4).attr('fill', css('--color-link'));
+
+  function moveHandle(m) {
+    hLine.attr('x1', x(m)).attr('x2', x(m));
+    hDot.attr('cx', x(m));
+  }
+  moveHandle(from);
+
+  let dragging = false;
+  const setFrom = (px) => {
+    from = Math.max(T0, Math.min(T1, x.invert(px)));   // 可拖回當天凌晨看今天稍早的
+    moveHandle(from);
+    render(false);
+    el.note.textContent = '雙擊回到現在';
+  };
+  svg.style('cursor', 'ew-resize')
+    .on('pointerdown', (e) => { dragging = true; svg.node().setPointerCapture(e.pointerId); setFrom(pointer(e, svg.node())[0]); })
+    .on('pointermove', (e) => { if (dragging) setFrom(pointer(e, svg.node())[0]); })
+    .on('pointerup', () => { dragging = false; })
+    .on('dblclick', () => { from = nowTs; moveHandle(from); render(true); el.note.textContent = '拖曳時間軸看其他時段'; });
+
+  // ── 首次進場：游標從 00:00 滑到現在，卡片接著浮現 ──
+  render(false);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    moveHandle(nowTs); render(false);
+  } else {
+    const DUR = 900;
+    const t = timer((elp) => {
+      const k = Math.min(1, elp / DUR);
+      const e = 1 - Math.pow(1 - k, 3);
+      moveHandle(T0 + e * (nowTs - T0));
+      if (k === 1) { t.stop(); moveHandle(nowTs); render(true); }
+    });
+  }
+</script>
+
+<style>
+  .page {
+    height: 100vh; height: 100dvh;
+    display: grid; grid-template-rows: auto auto 1fr auto;
+    grid-template-areas: "hd" "soon" "rest" "ft";
+    padding-inline: 4%;
+    overflow: hidden;
+  }
+
+  .hd {
+    grid-area: hd;
+    display: flex; align-items: flex-end; justify-content: space-between;
+    gap: 2rem; flex-wrap: wrap;
+    padding-block: 2.2% 1.4%;
+  }
+  .hd h1 { font-size: clamp(1.75rem, 3.2vw, 2.75rem); margin-top: 0.4rem; }
+
+  .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .filters :global(.f) {
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    background: none; border: var(--hairline) solid var(--border-subtle);
+    color: var(--text-secondary); padding: 0.35rem 0.8rem; cursor: pointer; line-height: 1.2;
+  }
+  .filters :global(.f:hover) { border-color: var(--color-link); color: var(--color-link); }
+  .filters :global(.f.on) { background: var(--color-link); border-color: var(--color-link); color: var(--bg-base); }
+
+  /* 最近的一場：全寬，標題不再被壓縮 */
+  .soon {
+    grid-area: soon;
+    display: grid; grid-template-columns: minmax(0, 15rem) minmax(0, 1fr); gap: 3%;
+    align-items: start;
+    border-top: var(--hairline) solid var(--border-subtle);
+    border-bottom: var(--hairline) solid var(--border-subtle);
+    padding-block: 1.5rem;
+  }
+  .soon-in {
+    font-family: var(--font-display); font-weight: 800;
+    font-size: clamp(1.75rem, 2.8vw, 2.5rem); line-height: 1.05;
+    color: var(--color-link); margin: 0.5rem 0 0;
+  }
+  .soon-t a { text-decoration: none; }
+  .soon-t a:hover { color: var(--color-link); }
+  .soon-t {
+    font-family: var(--font-body); font-weight: 700;
+    font-size: clamp(1.5rem, 2.1vw, 2rem); line-height: 1.35; letter-spacing: 0;
+  }
+  .soon-m {
+    display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+    font-size: var(--text-sm); color: var(--text-secondary); margin-top: 1rem; max-width: none;
+  }
+  .tag {
+    font-family: var(--font-mono); font-size: var(--text-xs);
+    color: var(--color-link); background: var(--bg-surface); padding: 0.2rem 0.7rem;
+  }
+  .more { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); }
+  .src {
+    font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);
+    text-decoration-color: var(--border-subtle);
+  }
+  .src:hover { color: var(--color-link); }
+
+  /* 接下來：兩欄，標題完整可兩行 */
+  .rest {
+    grid-area: rest; list-style: none; margin: 0; padding: 0; min-height: 0;
+    display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0 5%; align-content: start; overflow: hidden;
+  }
+  .rest :global(li) {
+    border-bottom: var(--hairline) solid var(--border-subtle);
+    min-width: 0;
+  }
+  .rest :global(.r-a) {
+    display: block; padding-block: 1rem; text-decoration: none;
+    padding-inline: 0.6rem; margin-inline: -0.6rem;
+  }
+  .rest :global(.r-a:hover) { background: var(--bg-surface); }
+  .rest :global(.r-a:hover .r-t) { color: var(--color-link); }
+  .rest :global(.r-t) {
+    font-size: var(--text-base); font-weight: 500; color: var(--text-primary);
+    line-height: 1.4; margin: 0; max-width: none;
+    height: 2.8em;                      /* 固定兩行，讓左右兩欄逐列對齊 */
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+  }
+  .rest :global(.r-m) {
+    display: flex; align-items: baseline; gap: 1rem; flex-wrap: nowrap;
+    margin: 0.5rem 0 0; font-size: var(--text-sm); max-width: none;
+    overflow: hidden; white-space: nowrap;
+  }
+  .rest :global(.r-in) { color: var(--color-link); white-space: nowrap; flex: none; }
+  .rest :global(.r-v) { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 0 1 auto; }
+  .rest :global(.r-c) { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); flex: none; }
+  .rest :global(.r-x) { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); flex: none; }
+
+  .ft { grid-area: ft; padding-block: 1.2rem 1.6rem; }
+  #nav { width: 100%; height: auto; touch-action: none; }
+  .ft-b { display: flex; justify-content: space-between; gap: 2rem; margin-top: 0.6rem; }
+
+  @media (max-width: 900px) {
+    .soon { grid-template-columns: 1fr; gap: 1rem; }
+    .rest { grid-template-columns: 1fr; }
+  }
+</style>

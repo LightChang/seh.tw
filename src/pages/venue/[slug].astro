@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { catVar, relTime, dateLabel, hhmm } from '../../lib/format.mjs';
+import { allVenues, flatSessions, isIndexable } from '../../lib/build-data.mjs';
+
+export async function getStaticPaths() {
+  const all = await flatSessions();
+  return (await allVenues()).map((v) => ({
+    params: { slug: v.slug },
+    props: { v, rows: all.filter((d) => d.venueSlug === v.slug).slice(0, 40) },
+  }));
+}
+const { v, rows } = Astro.props;
+const indexable = await isIndexable(`/venue/${v.slug}`);
+// 只有 street 精度才輸出 streetAddress，否則會產出與頁面不符的 structured data
+const ld = {
+  '@context': 'https://schema.org', '@type': 'Place', name: v.name,
+  ...(v.city ? { address: { '@type': 'PostalAddress',
+    addressCountry: 'TW', addressRegion: v.city,
+    ...(v.district ? { addressLocality: v.district } : {}),
+    ...(v.addressPrecision === 'street' && v.address ? { streetAddress: v.address } : {}) } } : {}),
+  ...(v.lat ? { geo: { '@type': 'GeoCoordinates', latitude: v.lat, longitude: v.lng } } : {}),
+};
+---
+<Base title={`${v.name}｜seh`} noindex={!indexable}
+  description={`${v.name}${v.eventCount ? `近期有 ${v.eventCount} 個活動` : ''}。${[v.city, v.district].filter(Boolean).join('')}`}>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <nav class="crumb"><a href="/venues">場館</a>{v.city && <><span>/</span><a href={`/city/${v.city}`}>{v.city}</a></>}</nav>
+      <h1 class="vname">{v.name}</h1>
+      <p class="sub"><strong class="tabular">{v.eventCount}</strong> 個活動
+        <span class="orig">{v.origin === 'derived' ? '　場地資料由活動資料建立' : '　來自場館名錄'}</span></p>
+    </header>
+
+    {v.address && <p class="addr">{v.address}</p>}
+
+    <h2 class="h-sm">近期活動</h2>
+    <ol class="ev-list">
+      {rows.map((d) => (
+        <li><a href={`/event/${d.slug}`}>
+          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)} {hhmm(d.at)}</time>
+          <span class="ev-body"><span class="ev-t">{d.title}</span></span>
+          <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+        </a></li>
+      ))}
+    </ol>
+    {rows.length === 0 && <p class="empty-note">目前沒有收錄到這個場館的活動。</p>}
+  </div>
+</Base>
+<style>
+  .vname { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); letter-spacing: 0; line-height: 1.35; }
+  .intro { margin-top: var(--space-5); color: var(--text-secondary); max-width: var(--measure); }
+  .addr { margin-top: var(--space-3); color: var(--text-muted); font-size: var(--text-sm); }
+  .orig { color: var(--text-muted); font-size: var(--text-sm); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+          color: var(--text-secondary); margin-top: var(--space-7); }
+</style>

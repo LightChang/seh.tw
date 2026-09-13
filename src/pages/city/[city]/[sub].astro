@@ -1,0 +1,160 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../components/Nav.astro';
+import { catVar } from '../../../lib/format.mjs';
+import { flatSessions, builtCategories } from '../../../lib/build-data.mjs';
+
+// 一個路由涵蓋兩種子頁：/city/臺北市/中正區 與 /city/臺北市/2026-10。
+// 兩者都是縣市底下的單一路徑段，分成兩個 [param] 路由會撞在一起，
+// 所以合成一個，靠資料本身分辨。
+export async function getStaticPaths() {
+  // 常數要放在函式裡。Astro 會把 getStaticPaths 抽成獨立的 chunk，
+  // 只帶著 import，不帶模組層的其他宣告——放外面會 ReferenceError。
+  const MIN = 5;   // 少於 5 場的子頁沒有內容價值，不建
+  const all = await flatSessions();
+  const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
+  // 只看還沒結束的。已結束的活動撐不起「這一區現在有什麼」。
+  const live = all.filter((d) => (d.end ?? d.at).slice(0, 10) >= today);
+  // 月份頁只做當月往後一年。長期展覽的起始月可能落在 2024，那個月份頁沒有人要看，
+  // 而且會生出一堆「過去的月份」網址。
+  const nowD = new Date(Date.now() + 8 * 3600e3);
+  const hiMonth = new Date(Date.UTC(nowD.getUTCFullYear() + 1, nowD.getUTCMonth(), 1))
+    .toISOString().slice(0, 7);
+
+  const byDistrict = new Map();
+  const byMonth = new Map();
+  for (const d of live) {
+    if (!d.city) continue;
+    if (d.district) {
+      const k = `${d.city} ${d.district}`;
+      if (!byDistrict.has(k)) byDistrict.set(k, []);
+      byDistrict.get(k).push(d);
+    }
+    const ym = d.at.slice(0, 7);
+    if (ym >= today.slice(0, 7) && ym <= hiMonth) {
+      const m = `${d.city} ${ym}`;
+      if (!byMonth.has(m)) byMonth.set(m, []);
+      byMonth.get(m).push(d);
+    }
+  }
+
+  // 側欄要互相連結，但只能連到**真的有建**的頁——月份頁只做當月往後一年、
+  // 而且兩種都有 MIN 門檻。不先算出實際建了哪些，側欄會連出 404
+  // （實測抽驗 400 頁就有 223 條這種連結）。
+  const built = new Set();
+  for (const [mode, map] of [['district', byDistrict], ['month', byMonth]]) {
+    for (const [k, rows] of map) if (rows.length >= MIN) built.add(`${mode} ${k}`);
+  }
+
+  const paths = [];
+  for (const [mode, map] of [['district', byDistrict], ['month', byMonth]]) {
+    for (const [k, rows] of map) {
+      if (rows.length < MIN) continue;
+      const [city, sub] = k.split(' ');
+      paths.push({ params: { city, sub }, props: { city, sub, rows, mode, built: [...built] } });
+    }
+  }
+  return paths;
+}
+
+const { city, sub, rows, mode, built } = Astro.props;
+const catPages = await builtCategories();
+const has = (m, k) => built.includes(`${m} ${city} ${k}`);
+const isMonth = mode === 'month';
+const events = new Set(rows.map((d) => d.slug)).size;
+const title = isMonth ? `${city} ${sub.slice(0, 4)} 年 ${+sub.slice(5)} 月` : `${city}${sub}`;
+
+const count = (key) => [...rows.reduce((m, d) => (d[key] ? m.set(d[key], (m.get(d[key]) ?? 0) + 1) : m), new Map())]
+  .sort((a, b) => b[1] - a[1]).slice(0, 8);
+const cats = count('cat');
+const venues = count('venue');
+
+// 行政區頁看月份、月份頁看行政區——互為對方的下一層入口
+const others = (isMonth
+  ? count('district')
+      .filter(([v]) => has('district', v))
+      .map(([v, n]) => ({ label: v, href: `/city/${city}/${v}`, n }))
+  : [...new Set(rows.map((d) => d.at.slice(0, 7)))].sort()
+      .filter((m) => has('month', m))
+      .map((m) => ({ label: `${m.slice(0, 4)} / ${m.slice(5)}`, href: `/city/${city}/${m}`,
+                     n: rows.filter((d) => d.at.slice(0, 7) === m).length })));
+
+const sorted = rows.slice().sort((a, b) => a.at.localeCompare(b.at));
+---
+<Base
+  title={`${title}有什麼文化活動｜seh`}
+  description={`${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
+>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <nav class="crumb">
+        <a href="/city">全部縣市</a><span>/</span><a href={`/city/${city}`}>{city}</a>
+      </nav>
+      <h1>{title}</h1>
+      <p class="sub">
+        <strong class="tabular">{events}</strong> 個活動、
+        <span class="tabular">{rows.length}</span> 場次{isMonth ? '' : '正在或即將發生'}
+      </p>
+    </header>
+
+    <div class="cols">
+      <section>
+        <h2 class="h-sm">活動</h2>
+        <ol class="ev-list">
+          {sorted.slice(0, 40).map((d) => (
+            <li><a href={`/event/${d.slug}`}>
+              <time class="ev-lead tabular" datetime={d.at}>
+                {d.at.slice(5, 10).replace('-', '/')}{d.dateOnly ? '' : ` ${d.at.slice(11, 16)}`}
+              </time>
+              <span class="ev-body">
+                <span class="ev-t">{d.title}</span>
+                <span class="ev-m">{isMonth ? [d.district, d.venue].filter(Boolean).join('　') : d.venue}</span>
+              </span>
+              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
+            </a></li>
+          ))}
+        </ol>
+        {sorted.length > 40 && <p class="more">另有 {sorted.length - 40} 場次</p>}
+      </section>
+
+      <aside class="side">
+        <h2 class="h-sm">類型</h2>
+        <ul class="tags">
+          {cats.filter(([c]) => catPages.has(c)).map(([c, v]) => (
+            <li><a href={`/category/${c}`} style={`color:var(${catVar(c)})`}>{c || '未分類'}<span class="tabular">{v}</span></a></li>
+          ))}
+        </ul>
+        {others.length > 0 && (
+          <>
+            <h2 class="h-sm" style="margin-top:2rem">{isMonth ? '行政區' : '月份'}</h2>
+            <ul class="tags">
+              {others.map((o) => (<li><a href={o.href}>{o.label}<span class="tabular">{o.n}</span></a></li>))}
+            </ul>
+          </>
+        )}
+        <h2 class="h-sm" style="margin-top:2rem">常見場地</h2>
+        <ul class="tags">
+          {venues.map(([v, k]) => (<li><span class="vn">{v}<span class="tabular">{k}</span></span></li>))}
+        </ul>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .cols { display: grid; grid-template-columns: minmax(0, 1fr) 20rem; gap: 5%; padding-bottom: var(--space-9); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .ev-list { margin-top: var(--space-4); }
+  .more { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); }
+  .tags { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
+  .tags li { border-top: var(--hairline) solid var(--border-subtle); }
+  .tags a, .tags .vn {
+    display: flex; justify-content: space-between; gap: 1rem;
+    padding: 0.55rem 0; text-decoration: none; font-size: var(--text-sm);
+  }
+  .tags .tabular { color: var(--text-muted); }
+  .crumb { display: flex; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); }
+  .crumb a { text-decoration: none; }
+  @media (max-width: 860px) { .cols { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); } }
+</style>

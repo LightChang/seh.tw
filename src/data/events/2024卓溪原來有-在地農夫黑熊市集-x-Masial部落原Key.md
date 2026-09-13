@@ -1,0 +1,31 @@
+---
+clusterId: "evt_ysnp-activities_51b257346667dea3"
+slug: "2024卓溪原來有-在地農夫黑熊市集-x-Masial部落原Key"
+title: "2024卓溪原來有-在地農夫黑熊市集 x Masial部落原Key"
+categoryRaw: "活動列車"
+status: "scheduled"
+description: "協助宣傳活動 花蓮縣卓溪鄉公所辦理 2024卓溪原來有-在地農夫黑熊市集 x Masial部落原Key 活動時間 : 113/09/14(14:00~20:00) 活動地點 :..."
+sessions: 
+  - startAt: "2024-09-14T14:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2024-09-14T19:59:00+08:00"
+    venueNameRaw: "玉山國家公園管理處"
+    city: "南投縣"
+    district: "水里鄉"
+    address: "南投縣水里鄉中山路一段515號"
+    addressPrecision: "street"
+    venueId: "ven_derived_玉山國家公園管理處"
+    venueSlug: "玉山國家公園管理處"
+sources: 
+  - id: "ysnp-activities"
+    recordId: "e397414e-16f5-4316-a1c0-61850eec90c9"
+    sourceName: "玉山國家公園管理處 活動列車"
+    url: "https://www.ysnp.gov.tw/ActivityInfo/C002000?ID=e397414e-16f5-4316-a1c0-61850eec90c9&PageIndex=3&PageType=1"
+    lastVerifiedAt: "2026-09-13"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+---

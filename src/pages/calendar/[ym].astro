@@ -1,0 +1,84 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { catVar } from '../../lib/format.mjs';
+import { flatSessions } from '../../lib/build-data.mjs';
+
+export async function getStaticPaths() {
+  const all = await flatSessions();
+  // 資料裡有 2015 年的常設展，全部出月曆頁會產生幾百個空月份。
+  // 只出「上個月到一年後」這個區間裡真的有場次的月份。
+  const now = new Date();
+  const lo = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().slice(0, 7);
+  const hi = new Date(now.getFullYear() + 1, now.getMonth(), 1).toISOString().slice(0, 7);
+  const months = [...new Set(all.map((d) => d.at.slice(0, 7)))]
+    .filter((ym) => ym >= lo && ym <= hi).sort();
+  return months.map((ym) => ({
+    params: { ym }, props: { ym, rows: all.filter((d) => d.at.slice(0, 7) === ym) },
+  }));
+}
+const { ym, rows } = Astro.props;
+const [y, m] = ym.split('-').map(Number);
+
+const byDay = new Map();
+for (const d of rows) {
+  const k = d.at.slice(8, 10);
+  if (!byDay.has(k)) byDay.set(k, []);
+  byDay.get(k).push(d);
+}
+const first = new Date(y, m - 1, 1);
+const days = new Date(y, m, 0).getDate();
+const lead = (first.getDay() + 6) % 7; // 週一為首
+const cells = [...Array(lead).fill(null), ...Array.from({ length: days }, (_, i) => i + 1)];
+const maxN = Math.max(1, ...[...byDay.values()].map((v) => v.length));
+const WD = ['一', '二', '三', '四', '五', '六', '日'];
+---
+<Base title={`${y} 年 ${m} 月活動行事曆｜seh`} description={`${y} 年 ${m} 月台灣的文化活動行事曆，共 ${rows.length} 場次。`}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <h1 class="tabular">{y} 年 {m} 月</h1>
+      <p class="sub"><strong class="tabular">{rows.length}</strong> 場次</p>
+    </header>
+
+    <div class="cal" role="table" aria-label={`${y} 年 ${m} 月行事曆`}>
+      {WD.map((w) => <div class="wd" role="columnheader">{w}</div>)}
+      {cells.map((d) => {
+        if (!d) return <div class="cell empty" />;
+        const key = String(d).padStart(2, '0');
+        const list = byDay.get(key) ?? [];
+        const level = list.length === 0 ? 0 : Math.ceil((list.length / maxN) * 3);
+        return (
+          <div class={`cell lv${level}`}>
+            <span class="dn tabular">{d}</span>
+            {list.length > 0 && <span class="cn tabular">{list.length}</span>}
+            <ul class="mini">
+              {list.slice(0, 2).map((e) => (
+                <li><a href={`/event/${e.slug}`} style={`color:var(${catVar(e.cat)})`}>{e.title.slice(0, 10)}</a></li>
+              ))}
+            </ul>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</Base>
+<style>
+  .cal { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr));
+         gap: 1px; background: var(--border-subtle);
+         border: var(--hairline) solid var(--border-subtle); margin-bottom: var(--space-9); }
+  .wd { background: var(--bg-overlay); padding: 0.5rem; text-align: center;
+        font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-secondary); }
+  .cell { background: var(--bg-base); min-height: 7rem; padding: 0.55rem; position: relative; }
+  .cell.empty { background: var(--bg-surface); }
+  .cell.lv1 { background: color-mix(in oklch, var(--color-link) 6%, var(--bg-base)); }
+  .cell.lv2 { background: color-mix(in oklch, var(--color-link) 12%, var(--bg-base)); }
+  .cell.lv3 { background: color-mix(in oklch, var(--color-link) 20%, var(--bg-base)); }
+  .dn { font-size: var(--text-sm); color: var(--text-secondary); }
+  .cn { position: absolute; top: 0.55rem; right: 0.6rem;
+        font-size: var(--text-xs); color: var(--color-link); font-family: var(--font-mono); }
+  .mini { list-style: none; margin: 0.4rem 0 0; padding: 0; display: grid; gap: 0.2rem; }
+  .mini a { font-size: var(--text-xs); text-decoration: none; display: block;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  @media (max-width: 700px) { .cell { min-height: 4.5rem; } .mini { display: none; } }
+</style>

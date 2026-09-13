@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="搜尋｜seh" description="搜尋台灣的文化活動、場館與城市。" noindex={true}>
+  <div class="shell">
+    <Nav current="search" />
+    <header class="page-hd">
+      <h1>搜尋</h1>
+      <form class="sform" id="f" role="search">
+        <input id="q" type="search" autocomplete="off" placeholder="活動名稱、場館、城市⋯" aria-label="搜尋" />
+      </form>
+      <p class="sub" id="sub">輸入關鍵字開始搜尋</p>
+    </header>
+    <ol class="ev-list" id="list"></ol>
+  </div>
+</Base>
+
+<script>
+  import { relTime, fmtNum, catVar } from '../lib/format.mjs';
+  import { loadSessions } from '../lib/index-client.mjs';
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const all = (await loadSessions())
+    .map((d) => ({ ...d, ts: new Date(d.at).getTime(), hay: `${d.title}${d.venue ?? ''}${d.city ?? ''}${d.cat ?? ''}` }));
+  const now = Date.now();
+  const q = document.getElementById('q'), sub = document.getElementById('sub'), list = document.getElementById('list');
+
+  function run(v) {
+    if (!v) { sub.textContent = '輸入關鍵字開始搜尋'; list.innerHTML = ''; return; }
+    const hits = all.filter((d) => d.hay.includes(v)).sort((a, b) => a.ts - b.ts);
+    sub.innerHTML = hits.length ? `找到 <strong class="tabular">${fmtNum(hits.length)}</strong> 場` : `找不到「${v}」，換個說法試試`;
+    list.innerHTML = hits.slice(0, 40).map((d) => `
+      <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
+        <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
+        <span class="ev-body"><span class="ev-t">${d.title}</span>
+          <span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+        <span class="ev-cat" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
+      </a></li>`).join('');
+  }
+  q.addEventListener('input', () => run(q.value.trim()));
+  document.getElementById('f').addEventListener('submit', (e) => { e.preventDefault(); run(q.value.trim()); });
+  const pre = new URLSearchParams(location.search).get('q');
+  if (pre) { q.value = pre; run(pre); }
+  q.focus();
+</script>
+
+<style>
+  .sform { margin-top: var(--space-5); }
+  .sform input {
+    width: 100%; font: inherit; font-size: var(--text-lg); padding: 0.8rem 1.1rem;
+    background: var(--bg-surface); border: var(--hairline) solid var(--border-subtle); color: var(--text-primary);
+  }
+  .sform input:focus { outline: 2px solid var(--color-link); outline-offset: 2px; }
+</style>

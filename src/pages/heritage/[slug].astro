@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { allHeritage, isIndexable } from '../../lib/build-data.mjs';
+
+export async function getStaticPaths() {
+  // md 只為沿革 ≥200 字的產生（emit-md.mjs），所以這裡整個 collection 都建頁
+  return (await allHeritage()).map((h) => ({
+    params: { slug: h.slug },
+    props: { h: { ...h, type: h.level ?? h.categoryRaw, history: h.history ?? '' } },
+  }));
+}
+const { h } = Astro.props;
+const indexable = await isIndexable(`/heritage/${h.slug}`);
+const ld = {
+  '@context': 'https://schema.org', '@type': 'LandmarksOrHistoricalBuildings', name: h.name,
+  ...(h.city ? { address: { '@type': 'PostalAddress',
+    addressCountry: 'TW', addressRegion: h.city,
+    ...(h.district ? { addressLocality: h.district } : {}),
+    ...(h.addressPrecision === 'street' && h.address ? { streetAddress: h.address } : {}) } } : {}),
+  ...(h.lat ? { geo: { '@type': 'GeoCoordinates', latitude: h.lat, longitude: h.lng } } : {}),
+};
+---
+<Base title={`${h.name}｜文化資產｜seh`} description={h.history.slice(0, 80)} noindex={!indexable}>
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
+  <div class="shell">
+    <Nav />
+    <article class="her">
+      <nav class="crumb"><a href="/heritage">文化資產</a>{h.city && <><span>/</span><a href={`/city/${h.city}`}>{h.city}</a></>}</nav>
+      <h1>{h.name}</h1>
+      <dl class="facts">
+        {h.type && <div><dt>類別</dt><dd>{h.type}</dd></div>}
+        {h.level && <div><dt>級別</dt><dd>{h.level}</dd></div>}
+        {h.reg && <div><dt>登錄</dt><dd class="tabular">{h.reg}</dd></div>}
+        {(h.city || h.address) && <div><dt>地點</dt><dd>{[h.city, h.dist, h.address].filter(Boolean).join(' ')}</dd></div>}
+        {h.open && <div><dt>開放</dt><dd>{h.open}</dd></div>}
+      </dl>
+      <h2 class="h-sm">歷史沿革</h2>
+      <p class="body">{h.history}</p>
+      <footer class="prov"><p>資料來源：文化部文化資產局。</p><p><a href="/about">資料怎麼來的</a></p></footer>
+    </article>
+  </div>
+</Base>
+<style>
+  .her { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
+  .crumb { display: flex; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4); }
+  .crumb a { text-decoration: none; }
+  h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); letter-spacing: 0; line-height: 1.35; }
+  .facts { margin: var(--space-6) 0 0; border-top: var(--hairline) solid var(--border-subtle); }
+  .facts > div { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.5rem;
+                 padding: 0.8rem 0; border-bottom: var(--hairline) solid var(--border-subtle); }
+  .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
+  .facts dd { margin: 0; font-size: var(--text-base); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+          color: var(--text-secondary); margin-top: var(--space-7); }
+  .body { margin-top: var(--space-4); line-height: 1.9; }
+  .prov { margin-top: var(--space-8); padding-top: var(--space-5);
+          border-top: var(--hairline) solid var(--border-subtle);
+          font-size: var(--text-sm); color: var(--text-muted); display: grid; gap: 0.5rem; }
+</style>

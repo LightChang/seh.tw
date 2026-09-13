@@ -1,0 +1,31 @@
+---
+clusterId: "evt_ysnp-activities_eed1c826ca27c4b8"
+slug: "歡迎參加-115年玉山東遊記〜秋賞Ma-aivul原遊繪活動"
+title: "歡迎參加--115年玉山東遊記〜秋賞Ma'aivul原遊繪活動"
+categoryRaw: "活動列車"
+status: "scheduled"
+description: "「Ma'aivul」布農族語為南安部落舊地名意為溪流之漩渦. 南安遊客中心-位於玉山國家公園東部園區，立秋之際由解說人員帶領，自南安遊客中心集合解說玉山國家公園~八通關開鑿紀念碑解說八通..."
+sessions: 
+  - startAt: "2026-08-29"
+    granularity: "date"
+    endAt: "2026-09-06"
+    venueNameRaw: "玉山國家公園管理處"
+    city: "南投縣"
+    district: "水里鄉"
+    address: "南投縣水里鄉中山路一段515號"
+    addressPrecision: "street"
+    venueId: "ven_derived_玉山國家公園管理處"
+    venueSlug: "玉山國家公園管理處"
+sources: 
+  - id: "ysnp-activities"
+    recordId: "e904978d-0978-42b4-8f52-8d853a20d023"
+    sourceName: "玉山國家公園管理處 活動列車"
+    url: "https://www.ysnp.gov.tw/ActivityInfo/C002000?ID=e904978d-0978-42b4-8f52-8d853a20d023&PageIndex=1&PageType=1"
+    lastVerifiedAt: "2026-09-13"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+---

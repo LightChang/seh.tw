@@ -1,0 +1,297 @@
+---
+clusterId: "evt_moc-events_6a15d2cd26b3243414cccb74"
+slug: "C-MUSICAL-韓國授權音樂劇我的遺願清單"
+title: "C MUSICAL 韓國授權音樂劇《我的遺願清單》"
+category: "戲劇"
+categoryRaw: "2"
+status: "scheduled"
+popularity: 0
+ticketUrl: "https://www.opentix.life/program/2054406826574860289"
+sessions: 
+  - startAt: "2026-09-12T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-12T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-12T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-12T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-13T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-13T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-13T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-13T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-16T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-16T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-16T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-16T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-17T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-17T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-18T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-18T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-18T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-18T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-19T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-19T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-19T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-19T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-20T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-20T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-20T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-20T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-23T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-23T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-23T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-23T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-24T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-24T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-25T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-25T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-25T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-25T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-26T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-26T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-26T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-26T21:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+  - startAt: "2026-09-27T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-27T16:10:00+08:00"
+    onSales: true
+    venueNameRaw: "西門紅樓二樓劇場"
+    city: "臺北市"
+    district: "萬華區"
+    address: "臺北市萬華區成都路10號"
+    addressPrecision: "street"
+    lat: 25.04214
+    lng: 121.5072876
+    venueId: "ent_taipei-culture-venues_58"
+    venueSlug: "西門紅樓-二樓劇場"
+sources: 
+  - id: "moc-events"
+    recordId: "6a15d2cd26b3243414cccb74"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2054406826574860289"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+      - "sourceUrl"
+---

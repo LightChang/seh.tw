@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import cityStats from '../../../public/city-stats.json';
+---
+<Base title="全部縣市｜seh" description="台灣 22 縣市正在發生的文化活動數量。">
+  <div class="shell">
+    <Nav />
+    <header class="page-hd"><h1>台灣各地</h1><p class="sub">點縣市看當地活動</p></header>
+    <ul class="grid">
+      {cityStats.map(([name, n]) => (
+        <li><a href={`/city/${name}`}><span class="n">{name}</span><span class="v tabular">{n.toLocaleString('en-US')}</span></a></li>
+      ))}
+    </ul>
+  </div>
+</Base>
+<style>
+  .grid { list-style: none; margin: 0; padding: 0 0 var(--space-9);
+          display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0 4%; }
+  .grid li { border-top: var(--hairline) solid var(--border-subtle); }
+  .grid a { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
+            padding: 0.9rem 0; text-decoration: none; }
+  .grid a:hover .n { color: var(--color-link); }
+  .n { font-size: var(--text-base); }
+  .v { color: var(--text-muted); font-size: var(--text-sm); }
+</style>

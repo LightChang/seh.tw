@@ -1,0 +1,28 @@
+---
+const { current } = Astro.props;
+const items = [
+  { k: 'today', label: '今天', href: '/today' },
+  { k: 'nearby', label: '附近', href: '/nearby' },
+  { k: 'map', label: '地圖', href: '/map' },
+  { k: 'search', label: '搜尋', href: '/search' },
+];
+---
+<nav class="nav" aria-label="主要導覽">
+  <a class="brand" href="/">seh<span>.tw</span></a>
+  <ul>
+    {items.map((i) => (
+      <li><a href={i.href} class={current === i.k ? 'on' : ''} aria-current={current === i.k ? 'page' : undefined}>{i.label}</a></li>
+    ))}
+  </ul>
+</nav>
+<style>
+  .nav { display: flex; align-items: baseline; gap: var(--space-6); padding-block: 1.1rem;
+         border-bottom: var(--hairline) solid var(--border-subtle); }
+  .brand { font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg);
+           text-decoration: none; letter-spacing: -0.01em; }
+  .brand span { color: var(--text-muted); font-weight: 400; }
+  .nav ul { display: flex; gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
+  .nav a { text-decoration: none; font-size: var(--text-sm); color: var(--text-secondary); }
+  .nav a:hover { color: var(--color-link); }
+  .nav a.on { color: var(--text-primary); font-weight: 700; }
+</style>

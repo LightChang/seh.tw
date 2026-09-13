@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import { catVar, dateLabel, hhmm } from '../../lib/format.mjs';
+import { flatSessions, countBy, CATEGORY_MIN } from '../../lib/build-data.mjs';
+
+export async function getStaticPaths() {
+  const all = await flatSessions();
+  // cat 是對照過的 canonical 值，來源不明的已經在 emit-md 被擋掉了。
+  // 仍然設 5 場門檻——只有兩三場的分類頁沒有內容價值。
+  return countBy(all, 'cat').filter(([, n]) => n >= CATEGORY_MIN).map(([cat]) => ({
+    params: { cat }, props: { cat, rows: all.filter((d) => d.cat === cat) },
+  }));
+}
+const { cat, rows } = Astro.props;
+const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) ?? 0) + 1) : m), new Map())]
+  .sort((a, b) => b[1] - a[1]).slice(0, 8);
+---
+<Base title={`${cat}｜seh`} description={`台灣近期的${cat}活動，共 ${rows.length} 場。`}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <nav class="crumb"><a href="/today">今天</a></nav>
+      <h1 style={`color:var(${catVar(cat)})`}>{cat}</h1>
+      <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期活動</p>
+    </header>
+
+    {cities.length > 0 && (
+      <p class="cityrow">{cities.map(([c, n]) => <a href={`/city/${c}`}>{c}<b class="tabular">{n}</b></a>)}</p>
+    )}
+
+    <ol class="ev-list">
+      {rows.slice(0, 40).map((d) => (
+        <li><a href={`/event/${d.slug}`}>
+          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)} {hhmm(d.at)}</time>
+          <span class="ev-body"><span class="ev-t">{d.title}</span>
+            <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+        </a></li>
+      ))}
+    </ol>
+    {rows.length === 0 && <p class="empty-note">這個分類目前沒有活動。</p>}
+  </div>
+</Base>
+<style>
+  .warn { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-warn);
+          background: var(--bg-surface); padding: 0.7rem 1rem; max-width: var(--measure); }
+  .cityrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; }
+  .cityrow a { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
+  .cityrow b { color: var(--text-muted); font-weight: 400; }
+</style>

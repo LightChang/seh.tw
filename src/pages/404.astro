@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="找不到這個頁面｜seh" noindex={true}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <h1>找不到這個頁面</h1>
+      <p class="sub">活動可能已經結束，或網址有誤。</p>
+      <nav class="chips" style="margin-top:2rem">
+        <a class="chip" href="/today">看今天有什麼</a>
+        <a class="chip" href="/map">打開地圖</a>
+        <a class="chip" href="/search">搜尋</a>
+        <a class="chip" href="/">回首頁</a>
+      </nav>
+    </header>
+  </div>
+</Base>
+<style>.chip { text-decoration: none; }</style>

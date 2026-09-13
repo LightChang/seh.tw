@@ -1,0 +1,31 @@
+---
+clusterId: "evt_ysnp-activities_17b6c985a47e674f"
+slug: "有熊森林-布農-古道-2026玉山Youth-Camp拉庫拉庫蕨之旅開始報名"
+title: "有熊森林、布農、古道~2026玉山Youth Camp「拉庫拉庫蕨之旅」開始報名"
+categoryRaw: "活動列車"
+status: "scheduled"
+description: "內政部國家公園署玉山國家公園管理處 (以下簡稱玉管處)2026年玉山國家公園Youth Camp「拉庫拉庫蕨之旅」賡續攜手南安在地部落及達娜分享文化有限公司，共同籌辦「拉庫拉庫蕨之旅」營隊活動，透過夜..."
+sessions: 
+  - startAt: "2026-01-29"
+    granularity: "date"
+    endAt: "2026-02-09"
+    venueNameRaw: "玉山國家公園管理處"
+    city: "南投縣"
+    district: "水里鄉"
+    address: "南投縣水里鄉中山路一段515號"
+    addressPrecision: "street"
+    venueId: "ven_derived_玉山國家公園管理處"
+    venueSlug: "玉山國家公園管理處"
+sources: 
+  - id: "ysnp-activities"
+    recordId: "7eca4b19-30cd-4510-94c0-a03ca3a6fb10"
+    sourceName: "玉山國家公園管理處 活動列車"
+    url: "https://www.ysnp.gov.tw/ActivityInfo/C002000?ID=7eca4b19-30cd-4510-94c0-a03ca3a6fb10&PageIndex=2&PageType=1"
+    lastVerifiedAt: "2026-09-13"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+---

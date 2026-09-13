@@ -1,0 +1,562 @@
+[
+ {
+  "id": "boch-heritage-arts-crafts",
+  "entity": "heritage",
+  "org": "文化部文化資產局",
+  "updateFreq": "UNVERIFIED",
+  "records": 355,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "boch-heritage-folklore",
+  "entity": "heritage",
+  "org": "文化部文化資產局",
+  "updateFreq": "UNVERIFIED",
+  "records": 288,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "boch-heritage-preservers",
+  "entity": "person",
+  "org": "文化部文化資產局",
+  "updateFreq": "UNVERIFIED",
+  "records": 1044,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "boch-heritage",
+  "entity": "heritage",
+  "org": "文化部文化資產局",
+  "updateFreq": "UNVERIFIED",
+  "records": 6412,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "changhua-performing-groups",
+  "entity": "organization",
+  "org": "彰化縣文化局",
+  "updateFreq": "每1年（data.gov.tw 各分類資料集更新頻率欄位）",
+  "records": 233,
+  "bucket": "每年"
+ },
+ {
+  "id": "chiayi-city-buskers",
+  "entity": "person",
+  "org": "嘉義市政府",
+  "updateFreq": "每1年（data.gov.tw dataset 52557 更新頻率欄位）",
+  "records": 1515,
+  "bucket": "每年"
+ },
+ {
+  "id": "cip-culture-halls",
+  "entity": "venue",
+  "org": "原住民族委員會",
+  "updateFreq": "不定期更新（data.gov.tw dataset 164242 更新頻率欄位；實測 metadata 更新時間 2026-04-05）",
+  "records": 28,
+  "bucket": "不定期"
+ },
+ {
+  "id": "cip-indigenous-festivals",
+  "entity": "event",
+  "org": "原住民族委員會",
+  "updateFreq": "annually（detectFrequency=annually，dataset A53000000A-112055 metadata）",
+  "records": 66,
+  "bucket": "其他"
+ },
+ {
+  "id": "cip-museums",
+  "entity": "venue",
+  "org": "原住民族委員會",
+  "updateFreq": "不定期更新（data.gov.tw dataset 164266 更新頻率欄位；實測 metadata 更新時間 2026-04-05）",
+  "records": 110,
+  "bucket": "不定期"
+ },
+ {
+  "id": "hakka-liudui-events",
+  "entity": "event",
+  "org": "客家委員會客家文化發展中心",
+  "updateFreq": "每3年（data.gov.tw dataset 178522 更新頻率欄位；⚠️ 與實測內容不符，內容持續更新到 2026-06，僅供參考）",
+  "records": 205,
+  "bucket": "每季"
+ },
+ {
+  "id": "hsinchu-city-buskers",
+  "entity": "person",
+  "org": "新竹市文化局",
+  "updateFreq": "每1年（data.gov.tw dataset 67569 更新頻率欄位）",
+  "records": 236,
+  "bucket": "每年"
+ },
+ {
+  "id": "hsinchu-city-culture-events",
+  "entity": "event",
+  "org": "新竹市文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 176929 更新頻率欄位；每年度會新開一個 dataset，需每年手動換連結）",
+  "records": 68,
+  "bucket": "每年"
+ },
+ {
+  "id": "hsinchu-city-culture-venues",
+  "entity": "venue",
+  "org": "新竹市文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 86971 更新頻率欄位；詮釋資料更新時間 2025-06-30）",
+  "records": 9,
+  "bucket": "不定期"
+ },
+ {
+  "id": "hsinchu-county-culture-events",
+  "entity": "event",
+  "org": "新竹縣政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 109308 更新頻率欄位）",
+  "records": 11,
+  "bucket": "不定期"
+ },
+ {
+  "id": "hsinchu-county-culture-venues",
+  "entity": "venue",
+  "org": "新竹縣政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 109309 更新頻率欄位；詮釋資料更新時間 2023-07-19）",
+  "records": 6,
+  "bucket": "不定期"
+ },
+ {
+  "id": "hsinchu-county-performing-groups",
+  "entity": "organization",
+  "org": "新竹縣政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 109312 更新頻率欄位）",
+  "records": 82,
+  "bucket": "不定期"
+ },
+ {
+  "id": "kaohsiung-busker-venues",
+  "entity": "venue",
+  "org": "高雄市政府文化局",
+  "updateFreq": "不定期更新（平台宣稱值；實測 metadata 更新時間 2025-04-16，資料標題仍標「112年」）",
+  "records": 49,
+  "bucket": "每年"
+ },
+ {
+  "id": "kaohsiung-buskers",
+  "entity": "person",
+  "org": "高雄市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 104439 更新頻率欄位）",
+  "records": 124,
+  "bucket": "不定期"
+ },
+ {
+  "id": "kaohsiung-neighborhood-centers",
+  "entity": "venue",
+  "org": "高雄市政府民政局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 47063 更新頻率欄位）",
+  "records": 107,
+  "bucket": "不定期"
+ },
+ {
+  "id": "kaohsiung-public-libraries",
+  "entity": "venue",
+  "org": "高雄市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 170866 更新頻率欄位）",
+  "records": 61,
+  "bucket": "不定期"
+ },
+ {
+  "id": "moc-buskers",
+  "entity": "person",
+  "org": "文化部",
+  "updateFreq": "每1年（data.gov.tw dataset 35507 更新頻率欄位；實測遠大於宣稱的 1200 筆）",
+  "records": 19328,
+  "bucket": "每年"
+ },
+ {
+  "id": "moc-community",
+  "entity": "organization",
+  "org": "文化部",
+  "updateFreq": "UNVERIFIED（data.gov.tw metadata updateFrequency.regularupdate=\"2\"，代碼意義未查證）",
+  "records": 820,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "moc-emap-poi",
+  "entity": "venue",
+  "org": "文化部",
+  "updateFreq": "UNVERIFIED",
+  "records": 14383,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "moc-events",
+  "entity": "event",
+  "org": "文化部",
+  "updateFreq": "每1日（來源: https://data.gov.tw/api/v2/rest/dataset/6478 之 updateFrequency）",
+  "records": 1622,
+  "bucket": "每日"
+ },
+ {
+  "id": "moc-perform-place",
+  "entity": "venue",
+  "org": "文化部",
+  "updateFreq": "每1年（data.gov.tw dataset 35504 更新頻率欄位）",
+  "records": 767,
+  "bucket": "每年"
+ },
+ {
+  "id": "nantou-arts-events",
+  "entity": "event",
+  "org": "南投縣政府文化局",
+  "updateFreq": "UNVERIFIED（觀察到的更新紀錄：2026-09-01）",
+  "records": 168,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "nantou-culture-venues",
+  "entity": "venue",
+  "org": "南投縣政府",
+  "updateFreq": "不定期更新（data.gov.tw dataset 38381 更新頻率欄位；詮釋資料更新時間 2023-07-28）",
+  "records": 14,
+  "bucket": "不定期"
+ },
+ {
+  "id": "national-public-libraries",
+  "entity": "venue",
+  "org": "國立公共資訊圖書館",
+  "updateFreq": "不定期更新（data.gov.tw dataset 99567 更新頻率欄位；各館可自行更新）",
+  "records": 22,
+  "bucket": "不定期"
+ },
+ {
+  "id": "ncfta-activities",
+  "entity": "event",
+  "org": "國立傳統藝術中心",
+  "updateFreq": "UNVERIFIED",
+  "records": 51,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "ncl-events",
+  "entity": "event",
+  "org": "國家圖書館",
+  "updateFreq": "不定期更新（data.gov.tw dataset 6838 更新頻率欄位；RSS 即時更新，但固定只出最新10筆）",
+  "records": 10,
+  "bucket": "不定期"
+ },
+ {
+  "id": "nmmba-exhibitions",
+  "entity": "event",
+  "org": "國立海洋生物博物館",
+  "updateFreq": "每1年（data.gov.tw dataset 90320 更新頻率欄位）",
+  "records": 30,
+  "bucket": "每年"
+ },
+ {
+  "id": "nmns-exhibitions",
+  "entity": "event",
+  "org": "國立自然科學博物館",
+  "updateFreq": "UNVERIFIED",
+  "records": 10,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "npm-events",
+  "entity": "event",
+  "org": "國立故宮博物院",
+  "updateFreq": "UNVERIFIED",
+  "records": 15,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "nstm-activities",
+  "entity": "event",
+  "org": "國立科學工藝博物館",
+  "updateFreq": "每1月（data.gov.tw dataset 6472 更新頻率欄位）",
+  "records": 159,
+  "bucket": "每月"
+ },
+ {
+  "id": "nstm-exhibitions",
+  "entity": "event",
+  "org": "國立科學工藝博物館",
+  "updateFreq": "每1年（data.gov.tw dataset 27267 更新頻率欄位）",
+  "records": 357,
+  "bucket": "每年"
+ },
+ {
+  "id": "ntch-programs",
+  "entity": "event",
+  "org": "國家表演藝術中心國家兩廳院",
+  "updateFreq": "UNVERIFIED",
+  "records": 17,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "ntm-activities",
+  "entity": "event",
+  "org": "國立臺灣博物館",
+  "updateFreq": "UNVERIFIED",
+  "records": 25,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "ntpc-buskers",
+  "entity": "person",
+  "org": "新北市政府文化局",
+  "updateFreq": "每1年（data.gov.tw dataset 124452 更新頻率欄位）",
+  "records": 2871,
+  "bucket": "每年"
+ },
+ {
+  "id": "ntpc-city-museums",
+  "entity": "venue",
+  "org": "新北市政府文化局",
+  "updateFreq": "每1年（data.gov.tw dataset 124272 更新頻率欄位；實測 metadata 更新時間 2025-11-28）",
+  "records": 5,
+  "bucket": "每年"
+ },
+ {
+  "id": "ntpc-culture-events",
+  "entity": "event",
+  "org": "新北市政府文化局",
+  "updateFreq": "day（平台 update_freq_desc 宣稱值；實測 changed 為當日）",
+  "records": 55,
+  "bucket": "每日"
+ },
+ {
+  "id": "ntpc-museum-venues",
+  "entity": "venue",
+  "org": "新北市政府文化局",
+  "updateFreq": "year（平台 update_freq_desc 宣稱值；實測 changed=2025-11-28）",
+  "records": 34,
+  "bucket": "其他"
+ },
+ {
+  "id": "ntpc-performing-groups",
+  "entity": "organization",
+  "org": "新北市政府文化局",
+  "updateFreq": "每1年（data.gov.tw dataset 123817 更新頻率欄位）",
+  "records": 1191,
+  "bucket": "每年"
+ },
+ {
+  "id": "ntt-programs",
+  "entity": "event",
+  "org": "國家表演藝術中心臺中國家歌劇院",
+  "updateFreq": "UNVERIFIED",
+  "records": 109,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "penghu-cultural-organizations",
+  "entity": "organization",
+  "org": "澎湖縣政府",
+  "updateFreq": "不定期更新（data.gov.tw dataset 166910 更新頻率欄位）",
+  "records": 93,
+  "bucket": "不定期"
+ },
+ {
+  "id": "pingtung-public-libraries",
+  "entity": "venue",
+  "org": "屏東縣政府文化處",
+  "updateFreq": "不定期更新（data.gov.tw dataset 155887 更新頻率欄位）",
+  "records": 36,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taichung-artists",
+  "entity": "person",
+  "org": "臺中市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 81265 更新頻率欄位）",
+  "records": 26,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taichung-arts-groups",
+  "entity": "organization",
+  "org": "臺中市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 84002 更新頻率欄位）",
+  "records": 118,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taichung-culture-events",
+  "entity": "event",
+  "org": "臺中市政府文化局",
+  "updateFreq": "不定期更新（平台宣稱值；實測最新一筆活動日為 2025-12-31，近 9 個月無新資料，疑似停更）",
+  "records": 871,
+  "bucket": "每日"
+ },
+ {
+  "id": "taichung-culture-venues",
+  "entity": "venue",
+  "org": "臺中市政府文化局",
+  "updateFreq": "UNVERIFIED（資料集頁面未列出「更新頻率」欄位；metadata_changed=2024-12-18）",
+  "records": 17,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "taichung-museums",
+  "entity": "venue",
+  "org": "臺中市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 84192 更新頻率欄位；實測 metadata 更新時間 2026-03-18）",
+  "records": 3,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taichung-performing-groups",
+  "entity": "organization",
+  "org": "臺中市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 84992 更新頻率欄位）",
+  "records": 717,
+  "bucket": "不定期"
+ },
+ {
+  "id": "tainan-culture-events",
+  "entity": "event",
+  "org": "臺南市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 172991 更新頻率欄位；實測內容含 2026-11～12 月場次，資料很新）",
+  "records": 44,
+  "bucket": "每月"
+ },
+ {
+  "id": "tainan-culture-halls",
+  "entity": "venue",
+  "org": "臺南市政府文化局",
+  "updateFreq": "每年（data.gov.tw dataset 53395 更新頻率欄位）",
+  "records": 4,
+  "bucket": "每年"
+ },
+ {
+  "id": "tainan-culture-venues",
+  "entity": "venue",
+  "org": "臺南市政府文化局",
+  "updateFreq": "1 年（平台宣稱值；實測 metadata 更新時間 2025-09-05）",
+  "records": 57,
+  "bucket": "每年"
+ },
+ {
+  "id": "tainan-indigenous-performing-groups",
+  "entity": "organization",
+  "org": "原住民族事務委員會（臺南市政府）",
+  "updateFreq": "每年（data.gov.tw dataset 143199 更新頻率欄位）",
+  "records": 3,
+  "bucket": "每年"
+ },
+ {
+  "id": "tainan-public-libraries",
+  "entity": "venue",
+  "org": "臺南市政府文化局",
+  "updateFreq": "每年（data.gov.tw dataset 7543 更新頻率欄位）",
+  "records": 45,
+  "bucket": "每年"
+ },
+ {
+  "id": "taipei-artist-village-residents",
+  "entity": "person",
+  "org": "臺北市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 133853 更新頻率欄位）",
+  "records": 717,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taipei-buskers",
+  "entity": "person",
+  "org": "臺北市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 121338 更新頻率欄位）",
+  "records": 30,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taipei-culture-events",
+  "entity": "event",
+  "org": "臺北市政府文化局",
+  "updateFreq": "每6月（data.taipei 頁面宣稱值；實測 CreateDate 最新為近日，資料本身持續在動）",
+  "records": 319,
+  "bucket": "每日"
+ },
+ {
+  "id": "taipei-culture-promotion-halls",
+  "entity": "venue",
+  "org": "臺北市藝文推廣處",
+  "updateFreq": "不定期更新（data.taipei 頁面宣稱值）",
+  "records": 14,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taipei-culture-venues",
+  "entity": "venue",
+  "org": "臺北市政府文化局",
+  "updateFreq": "不定期更新（data.taipei 頁面宣稱值；實測「更新時間」欄位為 2026-04-16）",
+  "records": 130,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taipei-disabled-buskers",
+  "entity": "person",
+  "org": "臺北市勞動力重建運用處",
+  "updateFreq": "不定期更新（data.gov.tw dataset 134799 更新頻率欄位）",
+  "records": 86,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taipei-performing-groups",
+  "entity": "organization",
+  "org": "臺北市政府文化局",
+  "updateFreq": "每6月（data.gov.tw dataset 145213 更新頻率欄位）",
+  "records": 1797,
+  "bucket": "每月"
+ },
+ {
+  "id": "taipei-private-museums",
+  "entity": "venue",
+  "org": "臺北市政府文化局",
+  "updateFreq": "不定期更新（data.gov.tw dataset 145209 更新頻率欄位；實測 metadata 更新時間 2026-05-15）",
+  "records": 2,
+  "bucket": "不定期"
+ },
+ {
+  "id": "taipei-public-libraries",
+  "entity": "venue",
+  "org": "臺北市政府教育局",
+  "updateFreq": "每1年（data.gov.tw dataset 121431 更新頻率欄位）",
+  "records": 70,
+  "bucket": "每年"
+ },
+ {
+  "id": "taoyuan-tourism-events",
+  "entity": "event",
+  "org": "桃園市政府觀光旅遊局",
+  "updateFreq": "不定期（平台頁面宣稱值；實測 changetime 最新為近日、start/end 涵蓋至 2026-12）",
+  "records": 64,
+  "bucket": "每日"
+ },
+ {
+  "id": "tcmb-culture",
+  "entity": "heritage",
+  "org": "文化部（國立臺灣歷史博物館代管）",
+  "updateFreq": "UNVERIFIED",
+  "records": 11553,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "tfam-exhibitions",
+  "entity": "event",
+  "org": "臺北市立美術館",
+  "updateFreq": "UNVERIFIED",
+  "records": 584,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "tpac-programs",
+  "entity": "event",
+  "org": "臺北表演藝術中心",
+  "updateFreq": "UNVERIFIED",
+  "records": 31,
+  "bucket": "未宣告"
+ },
+ {
+  "id": "twtourism-events",
+  "entity": "event",
+  "org": "交通部觀光署",
+  "updateFreq": "每日（data.gov.tw dataset 7778 updateFrequency unittime=日；EventList.json UpdateInterval=86400 秒）",
+  "records": 1048,
+  "bucket": "每日"
+ }
+]

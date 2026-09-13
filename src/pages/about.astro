@@ -1,0 +1,455 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import stats from '../../public/pipeline-stats.json';
+
+// 這一頁的每個數字都來自 transform/emit-pipeline-stats.mjs 實際算出來的檔案，
+// 沒有一個是為了畫面好看調整過的（docs/about-page-spec.md §2）。
+const KIND_LABEL = {
+  event: '活動', venue: '場館', person: '人物', organization: '團體', heritage: '文化資產',
+};
+const KIND_ORDER = ['event', 'venue', 'heritage', 'organization', 'person'];
+const groups = KIND_ORDER.map((k) => ({
+  kind: k,
+  label: KIND_LABEL[k],
+  items: stats.sources.filter((s) => s.kind === k),
+})).filter((g) => g.items.length);
+
+const STATUS = {
+  changed: { label: '有更新', cls: 'st-changed' },
+  unchanged: { label: '無變動', cls: 'st-same' },
+  waiting: { label: '等待下次', cls: 'st-wait' },
+  degraded: { label: '異常', cls: 'st-warn' },
+  failed: { label: '抓取失敗', cls: 'st-fail' },
+};
+const statusCount = Object.fromEntries(
+  Object.keys(STATUS).map((k) => [k, stats.sources.filter((s) => s.status === k).length]));
+
+const fmt = (n) => (n ?? 0).toLocaleString('en-US');
+const hhmm = (t) => (t ? String(t).slice(11, 16) : '—');
+const mdhm = (t) => (t ? `${String(t).slice(5, 10)} ${String(t).slice(11, 16)}` : '—');
+
+const totalRecords = stats.sources.reduce((a, s) => a + s.records, 0);
+const relate = stats.stages.find((s) => s.id === 'relate');
+const venueOut = stats.outputs.find((o) => o.id === 'venues');
+const pct = (a, b) => (b ? `${((a / b) * 100).toFixed(1)}%` : '—');
+
+// 最能說明「一個來源生出多種頁面」的那一支
+const showcase = [...stats.sources].sort((a, b) =>
+  Object.values(b.producesUrls).reduce((x, y) => x + y, 0)
+  - Object.values(a.producesUrls).reduce((x, y) => x + y, 0))[0];
+---
+<Base
+  title="資料從哪來｜seh"
+  description={`seh 的資料來自 ${stats.sources.length} 個公開資料來源，共 ${fmt(totalRecords)} 筆原始記錄。這一頁說明它們怎麼變成你看到的頁面。`}
+>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <h1>資料從哪來</h1>
+      <p class="sub">
+        seh 的資料來自 <strong class="tabular">{stats.sources.length}</strong> 個公開來源，
+        共 <strong class="tabular">{fmt(totalRecords)}</strong> 筆原始記錄。
+        這一頁的每個數字都是實際算出來的，不是估計值。
+      </p>
+      <p class="gen">最後更新 <time class="tabular">{mdhm(stats.generatedAt)}</time></p>
+    </header>
+
+    <!-- 靜態版本必須自己就是完整的：不靠 JS，搜尋引擎與關掉 JS 的人看到一樣的資訊 -->
+    <div class="flow" id="flow">
+      <canvas id="fx" aria-hidden="true"></canvas>
+
+      <!-- ── 左：來源 ─────────────────────────────────── -->
+      <section class="col col-src" aria-labelledby="h-src">
+        <h2 id="h-src" class="h-col">來源</h2>
+        <p class="col-note">
+          {statusCount.changed} 個近 24 小時有更新、{statusCount.unchanged} 個抓了但內容沒變、
+          {statusCount.waiting} 個還沒到重抓時間。
+          <a href="#sched">等待中是正常的</a>。
+        </p>
+        {groups.map((g) => (
+          <div class="grp">
+            <h3 class="h-grp">{g.label}<span class="gn tabular">{g.items.length}</span></h3>
+            <ul class="srcs">
+              {g.items.map((s) => (
+                <li>
+                  <button
+                    class={`src ${STATUS[s.status].cls}`}
+                    data-src={s.id}
+                    data-kind={s.kind}
+                    aria-expanded="false"
+                    aria-label={`${s.name}，${fmt(s.records)} 筆，${STATUS[s.status].label}`}
+                  >
+                    <span class="s-name">{s.name}</span>
+                    <span class="s-n tabular">{fmt(s.records)}</span>
+                  </button>
+                  <div class="s-detail" hidden>
+                    <dl>
+                      <div><dt>提供機關</dt><dd>{s.org}</dd></div>
+                      <div><dt>狀態</dt><dd>{STATUS[s.status].label}</dd></div>
+                      <div><dt>官方宣告更新</dt><dd>{s.declaredFreq || '未宣告'}</dd></div>
+                      <div><dt>實測重抓間隔</dt><dd class="tabular">{s.observedInterval ?? '—'}</dd></div>
+                      <div><dt>最後抓取</dt><dd class="tabular">{mdhm(s.lastFetchedAt)}</dd></div>
+                      <div><dt>最後變動</dt><dd class="tabular">{mdhm(s.lastChangedAt)}</dd></div>
+                      <div><dt>下次預計</dt><dd class="tabular">{mdhm(s.nextDueAt)}</dd></div>
+                      {s.license && <div><dt>授權</dt><dd>{s.license}</dd></div>}
+                    </dl>
+                    <p class="s-prod">
+                      這個來源產生了
+                      {Object.entries({
+                        events: '個活動頁', venues: '個場地頁', heritage: '個文化資產頁',
+                        cities: '個縣市頁', months: '個月份', performers: '位演出者',
+                      }).filter(([k]) => s.producesUrls[k] > 0)
+                        .map(([k, lbl]) => ` ${fmt(s.producesUrls[k])} ${lbl}`).join('、')}
+                      {Object.values(s.producesUrls).every((v) => !v) && '（尚未產生頁面）'}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </section>
+
+      <!-- ── 中：處理階段 ─────────────────────────────── -->
+      <section class="col col-mid" aria-labelledby="h-mid">
+        <h2 id="h-mid" class="h-col">處理</h2>
+        <ol class="stages">
+          {stats.stages.map((st) => (
+            <li class="stage" data-stage={st.id}>
+              <span class="st-label">{st.label}</span>
+              <span class="st-num tabular">{fmt(st.in)} <i>→</i> {fmt(st.out)}</span>
+              <span class="st-say">
+                {st.id === 'normalize' && '把 70 種格式統一成一種。這一步不篩掉任何東西。'}
+                {st.id === 'filter' && '去掉已經結束的活動。'}
+                {st.id === 'dedupe' && '同一個活動常常有好幾個來源同時提供，合併成一筆。'}
+                {st.id === 'relate' && '把活動連到場地、場地連到縣市。'}
+                {st.id === 'quality' && '判斷內容夠不夠請搜尋引擎收錄。不夠的頁面照樣存在、照樣連得到，只是不收錄。'}
+              </span>
+              {st.id === 'relate' && (
+                <span class="st-sub">
+                  場地連上 <b class="tabular">{pct(st.resolved.venue, st.resolved.venue + st.unresolved.venue)}</b>、
+                  演出者 <b class="tabular">{pct(st.resolved.performer, st.resolved.performer + st.unresolved.performer)}</b>。
+                  連不上的 <b class="tabular">{fmt(st.unresolved.venue + st.unresolved.performer)}</b> 條沒有丟掉——
+                  頁面上照樣寫出地點名稱，只是點不進去。
+                </span>
+              )}
+              {st.id === 'quality' && (
+                <span class="st-sub">
+                  每天重算。活動結束就退出收錄、網址保留；一個場地今天沒活動、明天有了，
+                  隔天就會自己進來。進出用不同門檻，避免在搜尋引擎那邊進進出出。
+                </span>
+              )}
+            </li>
+          ))}
+        </ol>
+
+        <div class="merge-eg">
+          <h3 class="h-grp">合併重複是這裡最值得看的一步</h3>
+          <p>
+            同一場活動常常同時出現在文化部、場館官網、縣市文化局三個地方。
+            文化部給了完整的場次與座標，縣市文化局給了活動介紹與票價，場館給了另一個票價寫法。
+            seh 把它們合併成一筆，<strong>每個欄位各自挑最可信的來源</strong>，落選的值也留著——
+            沒有它就答不出「為什麼這個活動是三場而不是一場」。
+          </p>
+          <p class="eg-n">
+            實測 <b class="tabular">{fmt(stats.stages.find((s) => s.id === 'dedupe').in)}</b> 筆
+            合併成 <b class="tabular">{fmt(stats.stages.find((s) => s.id === 'dedupe').out)}</b> 個活動。
+          </p>
+        </div>
+      </section>
+
+      <!-- ── 右：產出 ─────────────────────────────────── -->
+      <section class="col col-out" aria-labelledby="h-out">
+        <h2 id="h-out" class="h-col">產出</h2>
+        <ul class="outs">
+          {stats.outputs.map((o) => (
+            <li>
+              <a class="out" href={o.href} data-out={o.id}>
+                <span class="o-label">{o.label}</span>
+                <span class="o-n tabular">{fmt(o.urls)}</span>
+                <span class="o-idx">
+                  收錄 <b class="tabular">{fmt(o.indexable)}</b>
+                  {o.known && o.known > o.urls && <>　（認識 {fmt(o.known)} 筆，{o.note}）</>}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <p class="col-note">
+          左邊的數字是實際建立的網址數。認識的資料筆數比這個多——
+          只有內容足夠的才建頁，這個判定會隨資料改變：一個場地今天沒有活動、明天有了，
+          它就會有自己的頁面。
+        </p>
+        {venueOut?.derivedFromEvents > 0 && (
+          <p class="col-note hl">
+            場地那 <b class="tabular">{fmt(venueOut.urls)}</b> 個裡面，
+            有 <b class="tabular">{fmt(venueOut.derivedFromEvents)}</b> 個不是來自任何場館名錄，
+            而是<strong>從活動資料自己長出來的</strong>：活動說「這場在國家音樂廳」，
+            而國家音樂廳不在政府開放資料裡，系統就依活動附帶的地址與座標把它建起來。
+          </p>
+        )}
+      </section>
+    </div>
+
+    <!-- ── 一個來源生出多種頁面 ───────────────────────── -->
+    <section class="section" id="onetomany">
+      <h2 class="h-col">一個來源不是只生出一種頁面</h2>
+      <p class="say">
+        以 <strong>{showcase.name}</strong> 為例，它那 {fmt(showcase.records)} 筆資料同時生出了：
+      </p>
+      <ul class="fanout">
+        {[['events', '活動頁'], ['venues', '場地頁'], ['heritage', '文化資產頁'],
+          ['cities', '縣市頁'], ['months', '月份'], ['performers', '位演出者']]
+          .filter(([k]) => showcase.producesUrls[k] > 0)
+          .map(([k, lbl]) => (
+            <li><b class="tabular">{fmt(showcase.producesUrls[k])}</b><span>{lbl}</span></li>
+          ))}
+      </ul>
+      <p class="say dim">
+        點左欄任何一個來源，可以看到它各自生出了什麼。
+      </p>
+    </section>
+
+    <!-- ── 排程 ───────────────────────────────────────── -->
+    <section class="section" id="sched">
+      <h2 class="h-col">為什麼有些來源「等待中」</h2>
+      <p class="say">
+        每支來源的重抓間隔不一樣，而且會自己調整：抓到內容有變就縮短間隔，連續沒變就拉長，
+        連續十次沒變就允許拉到 30 天。所以一支一年才更新一次的名錄不會被天天打擾，
+        而每天在動的活動來源會被抓得很勤。
+      </p>
+      <p class="say">
+        官方宣告的更新頻率不能直接當間隔用——實測有來源宣告「不定期更新」但九個月沒有新資料，
+        也有宣告「每半年」但實際天天在動。宣告值只當起點，實際間隔由抓到的結果決定。
+      </p>
+      <p class="say dim">
+        近 24 小時共有 <b class="tabular">{stats.activity.length}</b> 次抓取。
+        排程是分散的，不是每天凌晨一次全部抓完。
+      </p>
+    </section>
+
+    <section class="section">
+      <h2 class="h-col">資料的限制</h2>
+      <ul class="limits">
+        <li>活動資料以原始出處為準。機關改了內容，這裡最快也要等到下次重抓才會反映。</li>
+        <li>
+          演出者與主辦單位只有 <b class="tabular">{pct(relate.resolved.performer, relate.resolved.performer + relate.unresolved.performer)}</b> 連得上名錄。
+          演藝團體名錄和活動主辦單位是不同母體——主辦多為政府機關與場館，名錄裡是演出者。
+        </li>
+        <li>免費與否只有少數來源標得可靠，所以沒有做「免費活動」的專頁。</li>
+        <li>所有來源、授權條款與抓取狀況都列在上面，沒有隱藏的資料來源。</li>
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<script>
+  import { select } from 'd3-selection';
+  import { timer } from 'd3-timer';
+
+  const flow = document.getElementById('flow');
+  const canvas = document.getElementById('fx');
+  const srcBtns = [...document.querySelectorAll('.src')];
+
+  // ── 展開來源細節 ──────────────────────────────────────────────
+  for (const b of srcBtns) {
+    b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') === 'true';
+      for (const o of srcBtns) {
+        o.setAttribute('aria-expanded', 'false');
+        o.nextElementSibling.hidden = true;
+      }
+      if (!open) {
+        b.setAttribute('aria-expanded', 'true');
+        b.nextElementSibling.hidden = false;
+      }
+    });
+  }
+
+  // ── 粒子：用單一 canvas，不是每個粒子一個 SVG 元素 ─────────────
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+  if (!reduce && canvas) {
+    const ctx = canvas.getContext('2d');
+    let W = 0, H = 0, dpr = 1;
+    let lanes = [];
+    const MAX = 300;
+    const parts = [];
+
+    // 每一組來源對應一條泳道，粒子從左欄流到右欄。位置由版面算出來，
+    // 不用力導向模擬——那會讓每次載入的版面都不一樣，也吃 CPU。
+    function layout() {
+      const r = flow.getBoundingClientRect();
+      dpr = Math.min(2, devicePixelRatio || 1);
+      W = r.width; H = r.height;
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      canvas.style.width = `${W}px`; canvas.style.height = `${H}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      const mid = flow.querySelector('.col-mid')?.getBoundingClientRect();
+      const out = flow.querySelector('.col-out')?.getBoundingClientRect();
+      if (!mid || !out) { lanes = []; return; }
+      lanes = srcBtns.map((b) => {
+        const bb = b.getBoundingClientRect();
+        return {
+          id: b.dataset.src,
+          x0: bb.right - r.left, y0: bb.top + bb.height / 2 - r.top,
+          x1: mid.left - r.left + mid.width / 2, y1: mid.top - r.top + mid.height * 0.35,
+          x2: out.left - r.left + 8, y2: out.top - r.top + out.height * (0.2 + Math.random() * 0.5),
+        };
+      });
+    }
+
+    // 粒子的產生時機對應真實的抓取事件，不是均勻亂灑
+    let activity = [];
+    fetch('/pipeline-stats.json').then((r) => r.json()).then((d) => {
+      activity = d.activity ?? [];
+    }).catch(() => {});
+
+    function spawn() {
+      if (parts.length >= MAX || !lanes.length) return;
+      const lane = lanes[(Math.random() * lanes.length) | 0];
+      parts.push({ lane, t: 0, v: 0.0016 + Math.random() * 0.0022 });
+    }
+
+    // 二次貝茲，端點在左欄節點、控制點在中欄、終點在右欄
+    function at(l, t) {
+      const u = 1 - t;
+      return [
+        u * u * l.x0 + 2 * u * t * l.x1 + t * t * l.x2,
+        u * u * l.y0 + 2 * u * t * l.y1 + t * t * l.y2,
+      ];
+    }
+
+    let running = true;
+    let colorPass = css('--color-pass') || '#1e8050';
+    let colorLink = css('--color-link') || '#1e5ab8';
+
+    const tick = timer((el) => {
+      if (!running) return;
+      if (Math.random() < 0.55) spawn();
+      ctx.clearRect(0, 0, W, H);
+      for (let i = parts.length - 1; i >= 0; i--) {
+        const p = parts[i];
+        p.t += p.v * 16;
+        if (p.t >= 1) { parts.splice(i, 1); continue; }
+        const [x, y] = at(p.lane, p.t);
+        const focus = flow.dataset.focus;
+        const dim = focus && focus !== p.lane.id;
+        ctx.globalAlpha = dim ? 0.06 : 0.34 * Math.sin(Math.PI * p.t) + 0.12;
+        ctx.fillStyle = p.t < 0.5 ? colorLink : colorPass;
+        ctx.beginPath();
+        ctx.arc(x, y, 1.6, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+    });
+
+    // 捲出畫面或切到別的分頁就停，不要在背景燒 CPU
+    const io = new IntersectionObserver(([e]) => { running = e.isIntersecting && !document.hidden; });
+    io.observe(flow);
+    document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+    addEventListener('resize', layout);
+    layout();
+
+    for (const b of srcBtns) {
+      b.addEventListener('pointerenter', () => { flow.dataset.focus = b.dataset.src; });
+      b.addEventListener('focus', () => { flow.dataset.focus = b.dataset.src; });
+      b.addEventListener('pointerleave', () => { delete flow.dataset.focus; });
+      b.addEventListener('blur', () => { delete flow.dataset.focus; });
+    }
+  }
+</script>
+
+<style>
+  .gen { margin-top: var(--space-3); font-size: var(--text-sm); color: var(--text-muted); }
+  .flow {
+    position: relative; margin-top: var(--space-7);
+    display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr) minmax(0, 0.85fr);
+    gap: var(--space-6);
+    align-items: start;
+  }
+  #fx { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .col { position: relative; z-index: 1; min-width: 0; }
+  /* 來源欄有 70 個項目、比另外兩欄長很多。中右兩欄黏住，捲動來源清單時
+     處理階段與產出一直在視線內，粒子動畫才有對照的對象。 */
+  .col-mid, .col-out { position: sticky; top: var(--space-5); }
+  .h-col {
+    font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+    color: var(--text-secondary); margin: 0 0 var(--space-4);
+  }
+  .col-note { font-size: var(--text-sm); color: var(--text-muted); margin: 0 0 var(--space-5); line-height: 1.6; }
+  .col-note.hl { color: var(--text-secondary); margin-top: var(--space-5); }
+  .grp { margin-bottom: var(--space-5); }
+  .h-grp {
+    font-family: var(--font-body); font-weight: 700; font-size: var(--text-xs);
+    color: var(--text-muted); margin: 0 0 0.4rem; display: flex; gap: 0.5rem; align-items: baseline;
+  }
+  .gn { color: var(--text-muted); }
+  .srcs { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+  .src {
+    width: 100%; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.8rem;
+    align-items: baseline; text-align: left; background: none; border: 0;
+    border-left: 3px solid var(--border-subtle);
+    padding: 0.34rem 0.5rem; cursor: pointer; font: inherit;
+    font-size: var(--text-xs); color: var(--text-secondary);
+  }
+  .src:hover, .src:focus-visible { background: var(--bg-hover); color: var(--text-primary); }
+  .s-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .s-n { color: var(--text-muted); font-family: var(--font-mono); }
+  .st-changed { border-left-color: var(--color-pass); }
+  .st-same { border-left-color: var(--border-subtle); }
+  .st-wait { border-left-color: var(--bg-surface); }
+  .st-warn { border-left-color: var(--color-warn); }
+  .st-fail { border-left-color: var(--color-fail); }
+  .s-detail {
+    padding: 0.6rem 0.5rem 0.9rem; background: var(--bg-surface);
+    font-size: var(--text-xs);
+  }
+  .s-detail dl { margin: 0; display: grid; gap: 0.2rem; }
+  .s-detail dl > div { display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 0.6rem; }
+  .s-detail dt { color: var(--text-muted); }
+  .s-detail dd { margin: 0; color: var(--text-secondary); }
+  .s-prod { margin: 0.7rem 0 0; color: var(--text-primary); line-height: 1.55; }
+
+  .stages { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px; }
+  .stage {
+    background: var(--bg-surface); padding: 0.8rem 0.9rem;
+    display: grid; gap: 0.25rem;
+  }
+  .st-label { font-weight: 700; font-size: var(--text-base); }
+  .st-num { font-family: var(--font-mono); font-size: var(--text-sm); color: var(--color-link); }
+  .st-num i { color: var(--text-muted); font-style: normal; }
+  .st-say { font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.6; }
+  .st-sub { font-size: var(--text-xs); color: var(--text-muted); line-height: 1.6; }
+  .st-todo { color: var(--color-warn); }
+  .merge-eg { margin-top: var(--space-6); }
+  .merge-eg p { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; margin: 0.5rem 0 0; }
+  .eg-n { color: var(--text-muted) !important; }
+
+  .outs { list-style: none; margin: 0 0 var(--space-5); padding: 0; display: grid; gap: 1px; }
+  .out {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0.4rem 0.8rem;
+    padding: 0.7rem 0.9rem; background: var(--bg-surface); text-decoration: none;
+  }
+  .out:hover { background: var(--bg-hover); }
+  .o-label { font-weight: 700; font-size: var(--text-base); color: var(--text-primary); }
+  .o-n { font-family: var(--font-mono); font-size: var(--text-base); color: var(--color-link); }
+  .o-idx { grid-column: 1 / -1; font-size: var(--text-xs); color: var(--text-muted); }
+
+  .say { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.75; max-width: var(--measure); }
+  .say.dim { color: var(--text-muted); }
+  .fanout { list-style: none; margin: var(--space-4) 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-5); }
+  .fanout li { display: grid; gap: 0.15rem; }
+  .fanout b { font-family: var(--font-display); font-size: var(--text-xl); font-weight: 800; line-height: 1; }
+  .fanout span { font-size: var(--text-xs); color: var(--text-muted); }
+  .limits { margin: var(--space-4) 0 0; padding-left: 1.2rem; display: grid; gap: 0.5rem;
+            font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; max-width: var(--measure); }
+
+  @media (max-width: 900px) {
+    .flow { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); }
+    #fx { display: none; }
+  }
+</style>

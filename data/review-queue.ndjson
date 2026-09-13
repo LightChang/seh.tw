@@ -1,0 +1,14 @@
+{"id":"rq_00001","kind":"merge-candidate","payload":{"rules":["title+date+city"],"confidence":0.6,"count":4,"members":[{"id":"nantou-arts-events:118","title":"山城厝內講台語－親子講故事（115年9月-3場次）"},{"id":"nantou-arts-events:125","title":"山城厝內講台語－親子講故事（115年9月-3場次）"},{"id":"nantou-arts-events:131","title":"山城厝內講台語－親子講故事（115年9月-3場次）"},{"id":"nantou-arts-events:97","title":"山城厝內講台語－親子講故事（115年9月-3場次）"}]},"suggested":"merge","status":"open","decidedAt":null}
+{"id":"rq_00002","kind":"merge-candidate","payload":{"rules":["title~+date+city"],"confidence":0.5,"count":2,"members":[{"id":"moc-events:6a3c364826b3243414ccd610","title":"唐伶樂集 2026「金色輝煌年代」講座音樂會（地點：東門-代天府前廣場）"},{"id":"twtourism-events:Event_371020000A_004438","title":"唐伶樂集 2026「金色輝煌年代」講座音樂會"}]},"suggested":"merge","status":"open","decidedAt":null}
+{"id":"rq_venue_1","kind":"venue-unmatched","payload":{"nameRaw":"精武圖書館","sessions":21,"city":"臺中市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_2","kind":"venue-unmatched","payload":{"nameRaw":"東勢分館","sessions":14,"city":"臺中市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_3","kind":"venue-unmatched","payload":{"nameRaw":"青草湖景觀平台","sessions":12,"city":"新竹市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_4","kind":"venue-unmatched","payload":{"nameRaw":"新竹公園廣場","sessions":7,"city":"新竹市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_5","kind":"venue-ambiguous","payload":{"nameRaw":"朱銘美術館","sessions":4,"city":"新北市","address":"新北市金山區西勢湖2號","candidates":["ent_moc-emap-poi_14e125cebd5dd3da","ent_ntpc-museum-venues_22"]},"suggested":"pick","status":"open","decidedAt":null}
+{"id":"rq_venue_6","kind":"venue-unmatched","payload":{"nameRaw":"清水眷村文化園區清水區  海灣繪本館","sessions":4,"city":"臺中市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_7","kind":"venue-unmatched","payload":{"nameRaw":"臺灣大道市政大樓","sessions":4,"city":"臺中市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_8","kind":"venue-unmatched","payload":{"nameRaw":"東埔帝綸溫泉渡假大飯店","sessions":2,"city":"南投縣"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_9","kind":"venue-unmatched","payload":{"nameRaw":"宜蘭園區展示館","sessions":2},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_10","kind":"venue-unmatched","payload":{"nameRaw":"高雄市燕巢動物關愛園區","sessions":2,"city":"高雄市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_11","kind":"venue-unmatched","payload":{"nameRaw":"臺博館古生物館３樓簡報室","sessions":2,"city":"臺北市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_12","kind":"venue-unmatched","payload":{"nameRaw":"屏東 繫。本屋 / 演講廳","sessions":2,"city":"屏東縣"},"suggested":"create","status":"open","decidedAt":null}

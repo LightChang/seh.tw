@@ -1,0 +1,40 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="今晚哪裡有活動｜seh" description="今晚 19:00 之後開始的文化活動。">
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <h1>今晚</h1>
+      <p class="sub" id="sub">載入中⋯</p>
+      <p class="note">只列出有明確開始時刻的活動。部分來源只提供日期，那些活動無法判斷是否為夜間場次。</p>
+    </header>
+    <ol class="ev-list" id="list"></ol>
+    <p class="empty-note" id="empty" hidden>今晚沒有收錄到活動，<a href="/today">看看今天其他時段</a>。</p>
+  </div>
+</Base>
+<script>
+  import { relTime, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+  import { loadSessions } from '../lib/index-client.mjs';
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const all = await loadSessions();
+  const now = Date.now();
+  const d0 = new Date(); d0.setHours(19, 0, 0, 0);
+  const d1 = new Date(); d1.setHours(23, 59, 59, 999);
+  const rows = all.map((d) => ({ ...d, ts: new Date(d.at).getTime() }))
+    .filter((d) => d.ts >= d0.getTime() && d.ts <= d1.getTime() && d.at.slice(11) !== '00:00')
+    .sort((a, b) => a.ts - b.ts);
+  document.getElementById('sub').textContent = `${dateLabel(d0)} 19:00 之後　${fmtNum(rows.length)} 場`;
+  document.getElementById('empty').hidden = rows.length > 0;
+  document.getElementById('list').innerHTML = rows.map((d) => `
+    <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
+      <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
+      <span class="ev-body"><span class="ev-t">${d.title}</span>
+        <span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+      <span class="ev-cat" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
+    </a></li>`).join('');
+</script>
+<style>
+  .note { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); max-width: var(--measure); }
+</style>

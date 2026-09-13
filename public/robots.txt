@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+# 內容不足或無意義索引的頁面
+Disallow: /demo/
+Disallow: /search
+Disallow: /nearby
+
+Sitemap: https://seh.tw/sitemap-index.xml

@@ -1,0 +1,296 @@
+{
+  "_comment": "人工確認「這些是同一個東西」。cluster.mjs 無條件併，不看 confidence。",
+  "pairs": {
+    "twtourism-events:Event_A15010000H_081665 | twtourism-events:Event_A15010700H_020469": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a1dbbca26b3243414cccdce | weiwuying-programs:6a0d14651060b70008d2b270": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a4bdfe526b32427d060413a | tpac-programs:2048": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3c364826b3243414ccd60e | moc-events:6a3c364826b3243414ccd60f": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3c364826b3243414ccd60e | moc-events:6a3c364826b3243414ccd610": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3c364826b3243414ccd60e | twtourism-events:Event_371020000A_004438": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:116 | twtourism-events:Event_A15010000H_081672": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24626b3243b1ca0bf48 | twtourism-events:Event_371020000A_004321": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_387000000A_010238 | twtourism-events:Event_A15010000H_081680": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a8490f526b32427d0604417 | weiwuying-programs:6a22655a3660ba0008bf76fe": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24626b3243b1ca0bf49 | twtourism-events:Event_371020000A_004322": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a32d34726b3243414ccd3a8 | taipei-culture-events:51e6b3e9-ac2d-448b-b532-f177c428e932": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69b1c12726b3242a48a9daf6 | nantou-arts-events:54": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69de905c26b3242a48a9e353 | moc-events:69de905c26b3242a48a9e354": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69de905c26b3242a48a9e353 | twtourism-events:Event_371020000A_004385": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a97065526b32434f43580ac | taipei-culture-events:d6d581c4-7aaa-41da-a442-354138f8f648": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a7df97226b32427d06043c3 | taipei-culture-events:1c7bc995-d5f0-4ef3-8dd1-b1dd0763591b": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081938 | twtourism-events:Event_A15011200H_014374": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:697678ed26b32454e437c439 | twtourism-events:Event_376420000A_000192": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69a0b2b726b32454e437cb64 | taipei-culture-events:e325e570-82d7-40b6-a875-afbdfcb40d16": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a95b4dc26b32434f435808c | weiwuying-programs:6a86abc536422a0008300599": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a435f1026b32427d0603f51 | twtourism-events:Event_371020000A_004239": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a435f1026b32427d0603f51 | twtourism-events:Event_A15010000H_081873": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_376540000A_006269 | twtourism-events:Event_A15010000H_081719": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_376540000A_006269 | twtourism-events:Event_A15010300H_007048": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:101 | nantou-arts-events:117": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:101 | nantou-arts-events:118": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:101 | nantou-arts-events:125": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:101 | nantou-arts-events:131": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:101 | nantou-arts-events:97": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a08c07c26b3243414ccc976 | nantou-arts-events:51": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:146 | nantou-arts-events:150": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3c364626b3243414ccd601 | nantou-arts-events:53": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24626b3243b1ca0bf4a | twtourism-events:Event_371020000A_004323": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a08c07c26b3243414ccc975 | nantou-arts-events:52": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081666 | twtourism-events:Event_A15011100H_002487": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081869 | twtourism-events:Event_A15010300H_007038": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081884 | twtourism-events:Event_A15010300H_007039": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a7b566626b32427d06043b3 | twtourism-events:Event_376540000A_006375": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a7a04f226b32427d060439e | weiwuying-programs:6a603d6acdcdfe0008f6045c": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24726b3243b1ca0bf4d | twtourism-events:Event_371020000A_004324": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081904 | twtourism-events:Event_A15010600H_000004": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24726b3243b1ca0bf4e | twtourism-events:Event_371020000A_004325": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a76106726b32427d060437e | twtourism-events:Event_387000000A_010351": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a76106726b32427d060437e | twtourism-events:Event_A15010000H_081671": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a022afe26b3243414ccc75f | twtourism-events:Event_382000000A_003811": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_382000000A_003691 | twtourism-events:Event_A15010000H_081710": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24626b3243b1ca0bf3e | twtourism-events:Event_371020000A_004318": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a4bdfe526b32427d0604139 | tpac-programs:2047": {
+      "decidedAt": "2026-09-13"
+    },
+    "taoyuan-tourism-events:6694 | twtourism-events:Event_376430000A_006694": {
+      "decidedAt": "2026-09-13"
+    },
+    "taoyuan-tourism-events:6694 | twtourism-events:Event_A15010000H_081679": {
+      "decidedAt": "2026-09-13"
+    },
+    "taoyuan-tourism-events:6673 | twtourism-events:Event_376430000A_006673": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a4397ed26b32427d0603fa5 | twtourism-events:Event_397000000A_007735": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:144 | twtourism-events:Event_A15010000H_081725": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:144 | twtourism-events:Event_A15010600H_000007": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_376430000A_006687 | twtourism-events:Event_A15010000H_081900": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a45485726b32427d0604016 | weiwuying-programs:69dc8fef2dfc3b00083ac85d": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a4fd45e26b32427d060416a | weiwuying-programs:6a4cc260ffced3000797be0a": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3835b026b3243414ccd49a | nantou-arts-events:63": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3835b026b3243414ccd49a | taipei-culture-events:0b034850-692c-442f-9e31-18c344617ac3": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a396ac926b3243414ccd4c6 | weiwuying-programs:6a0e7502f2bf2c0008d54872": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69e7e31926b3242a48a9e5c8 | nantou-arts-events:43": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69e7e31926b3242a48a9e5c8 | taipei-culture-events:95990608-fd07-47a1-b812-ef07de544971": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081721 | twtourism-events:Event_A15010200H_000001": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:696fe8b226b3243b1ca0c129 | nantou-arts-events:26": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6966a24626b3243b1ca0bf3f | twtourism-events:Event_371020000A_004319": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_382000000A_003924 | twtourism-events:Event_A15010000H_081712": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_395000000A_007897 | twtourism-events:Event_A15011200H_014322": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081950 | twtourism-events:Event_A15010600H_000005": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:697bbd1126b32454e437c5a2 | twtourism-events:Event_371020000A_004341": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a736fd626b32427d0604351 | weiwuying-programs:6a60317c3623540007c01ef1": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a9ef12d26b324165c32e37b | weiwuying-programs:6aa0d34086975700087e7ba5": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_397000000A_007428 | twtourism-events:Event_A15010000H_081699": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a1604ea26b3243414cccbc1 | nantou-arts-events:161": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:697bbd1326b32454e437c5b9 | moc-events:697bbd1326b32454e437c5ba": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:697bbd1326b32454e437c5b9 | twtourism-events:Event_371020000A_004335": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081883 | twtourism-events:Event_A15010300H_007037": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081935 | twtourism-events:Event_A15010700H_015279": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a28641a26b3243414ccd051 | taipei-culture-events:c237172d-a350-4e00-8faf-b9ed6d47a84e": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a4d315c26b32427d0604146 | weiwuying-programs:6a47328b908c4a000753a0eb": {
+      "decidedAt": "2026-09-13"
+    },
+    "taipei-culture-events:1b055697-bb3a-4dcb-b936-21292f7e0f83 | taipei-culture-events:44b596d0-a90a-4462-8f73-ad22ae4abd0b": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a28644026b3243414ccd07a | taipei-culture-events:5e797858-c2a9-4ab8-aae5-189070df0e13": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a4bdfe526b32427d060413b | tpac-programs:2049": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69f33e5226b3243414ccc4b2 | nantou-arts-events:42": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:696805eb26b3243b1ca0bfab | twtourism-events:Event_371020000A_004329": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a34414826b3243414ccd45b | taipei-culture-events:23cf171b-2bb5-4102-bdcd-179faf5a28d0": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:75 | nantou-arts-events:76": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:117 | nantou-arts-events:118": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:117 | nantou-arts-events:125": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:117 | nantou-arts-events:131": {
+      "decidedAt": "2026-09-13"
+    },
+    "nantou-arts-events:117 | nantou-arts-events:97": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3c364826b3243414ccd60f | moc-events:6a3c364826b3243414ccd610": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:6a3c364826b3243414ccd60f | twtourism-events:Event_371020000A_004438": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_376430000A_006694 | twtourism-events:Event_A15010000H_081679": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:697bbd1326b32454e437c5ba | twtourism-events:Event_371020000A_004335": {
+      "decidedAt": "2026-09-13"
+    },
+    "moc-events:69de905c26b3242a48a9e354 | twtourism-events:Event_371020000A_004385": {
+      "decidedAt": "2026-09-13"
+    },
+    "twtourism-events:Event_A15010000H_081725 | twtourism-events:Event_A15010600H_000007": {
+      "decidedAt": "2026-09-13"
+    }
+  }
+}

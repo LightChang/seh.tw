@@ -1,0 +1,22 @@
+---
+clusterId: "evt_taichung-culture-events_393"
+slug: "大雅分館12-12-2024年信誼Bookstart閱讀起步走全台圖書館串聯活動-動物兒歌歡樂派對-我家是動物園-紅龜粿-花貓帽"
+title: "【大雅分館】12/12 2024年信誼Bookstart閱讀起步走全台圖書館串聯活動-「動物兒歌歡樂派對」-我家是動物園，紅龜粿， 花貓帽"
+status: "scheduled"
+sessions: 
+  - startAt: "2024-12-12T10:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2024-12-12T11:00:00+08:00"
+    venueNameRaw: "大雅分館"
+    city: "臺中市"
+    addressPrecision: "city"
+    venueId: "ent_national-public-libraries_fa86d3c6d683c085"
+    venueSlug: "臺中市立圖書館大雅分館"
+sources: 
+  - id: "taichung-culture-events"
+    recordId: "393"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "sessions"
+---

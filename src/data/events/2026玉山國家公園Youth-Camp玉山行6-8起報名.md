@@ -1,0 +1,31 @@
+---
+clusterId: "evt_ysnp-activities_35df6ab5e7c877c0"
+slug: "2026玉山國家公園Youth-Camp玉山行6-8起報名"
+title: "2026玉山國家公園Youth Camp「玉山行」6/8起報名"
+categoryRaw: "活動列車"
+status: "scheduled"
+description: "內政部國家公園署玉山國家公園管理處(以下簡稱玉管處)將於7、8月暑假期間辦理2026年玉山國家公園Youth Camp「玉山行」活動，共計4梯次，報名期間為115年6月8日8:00起至6月19日18:..."
+sessions: 
+  - startAt: "2026-07-19"
+    granularity: "date"
+    endAt: "2026-08-28"
+    venueNameRaw: "玉山國家公園管理處"
+    city: "南投縣"
+    district: "水里鄉"
+    address: "南投縣水里鄉中山路一段515號"
+    addressPrecision: "street"
+    venueId: "ven_derived_玉山國家公園管理處"
+    venueSlug: "玉山國家公園管理處"
+sources: 
+  - id: "ysnp-activities"
+    recordId: "685b75a0-17b1-412f-b30b-4953a52dd88e"
+    sourceName: "玉山國家公園管理處 活動列車"
+    url: "https://www.ysnp.gov.tw/ActivityInfo/C002000?ID=685b75a0-17b1-412f-b30b-4953a52dd88e&PageIndex=1&PageType=1"
+    lastVerifiedAt: "2026-09-13"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+---

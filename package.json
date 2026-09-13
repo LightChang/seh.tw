@@ -1,0 +1,35 @@
+{
+  "name": "seh-tw",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "ingest": "node transform/scheduler.mjs",
+    "emit": "node transform/emit-md.mjs",
+    "sync:tokens": "node scripts/sync-tokens.mjs",
+    "sources": "node scripts/gen-sources.mjs",
+    "pipeline": "node transform/pipeline.mjs",
+    "health": "node transform/check-health.mjs",
+    "eval": "node transform/eval-cluster.mjs",
+    "score": "node transform/score-pages.mjs",
+    "inspect": "node transform/inspect.mjs",
+    "test": "node --test \"test/**/*.test.mjs\"",
+    "review": "node transform/review.mjs",
+    "test:unit": "node --test \"test/lib-*.test.mjs\" \"test/cluster-*.test.mjs\"",
+    "test:pipeline": "node --test \"test/pipeline-*.test.mjs\""
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.2",
+    "d3-array": "^3.2.4",
+    "d3-geo": "^3.1.1",
+    "d3-scale": "^4.0.2",
+    "d3-selection": "^3.0.0",
+    "d3-shape": "^3.2.0",
+    "d3-timer": "^3.0.1",
+    "d3-transition": "^3.0.1"
+  }
+}

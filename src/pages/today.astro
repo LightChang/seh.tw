@@ -1,0 +1,82 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+---
+<Base title="今天有什麼｜seh" description="今天台灣各地正在發生的文化活動，依開始時間排列。">
+  <div class="shell">
+    <Nav current="today" />
+    <header class="page-hd">
+      <h1>今天</h1>
+      <p class="sub" id="sub">載入中⋯</p>
+      <nav class="chips" id="chips" aria-label="類型篩選"></nav>
+    </header>
+    <ol class="ev-list" id="list"></ol>
+    <p class="empty-note" id="empty" hidden>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
+  </div>
+</Base>
+
+<script>
+  import { relTime, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+  import { loadSessions } from '../lib/index-client.mjs';
+  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const all = await loadSessions();
+  const now = Date.now();
+  const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  const t1 = t0.getTime() + 86400000;
+
+  const today = all.map((d) => ({ ...d, ts: new Date(d.at).getTime() }))
+    .filter((d) => d.ts >= t0.getTime() && d.ts < t1)
+    .sort((a, b) => {
+      const ap = a.ts <= now, bp = b.ts <= now;
+      if (ap !== bp) return ap ? 1 : -1;
+      return ap ? b.ts - a.ts : a.ts - b.ts;
+    });
+
+  // 同名同場館的多場次收成一筆，避免一齣戲洗掉整個列表
+  const merged = []; const seen = new Map();
+  for (const d of today) {
+    const key = `${d.title}@@${d.venue}`;
+    if (seen.has(key)) { seen.get(key).times.push(d.ts); continue; }
+    const row = { ...d, times: [d.ts] }; seen.set(key, row); merged.push(row);
+  }
+
+  document.getElementById('sub').textContent =
+    `${dateLabel(t0)}　${fmtNum(merged.length)} 個活動、${fmtNum(today.length)} 場次`;
+
+  const counts = new Map();
+  merged.forEach((d) => counts.set(d.cat, (counts.get(d.cat) ?? 0) + 1));
+  const cats = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+  let pick = null;
+
+  function chips() {
+    document.getElementById('chips').innerHTML =
+      `<button type="button" class="chip${pick === null ? ' on' : ''}" data-c="">全部 ${merged.length}</button>` +
+      cats.map(([c, n]) => `<button type="button" class="chip${pick === c ? ' on' : ''}" data-c="${c}" style="--c:${css(catVar(c))}">${c || '未分類'} ${n}</button>`).join('');
+    document.querySelectorAll('#chips .chip').forEach((b) =>
+      b.addEventListener('click', () => { pick = b.dataset.c || null; chips(); draw(); }));
+  }
+
+  const row = (d) => {
+    const extra = d.times.length > 1 ? `<span class="ev-x">今天還有 ${d.times.length - 1} 場</span>` : '';
+    return `<li class="${d.ts <= now ? 'past' : ''}">
+      <a href="/event/${encodeURIComponent(d.slug)}">
+        <time class="ev-lead tabular" datetime="${d.at}">${relTime(d.ts, now)}</time>
+        <span class="ev-body"><span class="ev-t">${d.title}</span>
+          <span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+        <span class="ev-cat" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
+        ${extra}
+      </a></li>`;
+  };
+
+  function draw() {
+    const rows = pick ? merged.filter((d) => d.cat === pick) : merged;
+    document.getElementById('empty').hidden = rows.length > 0;
+    let split = false;
+    document.getElementById('list').innerHTML = rows.map((d) => {
+      let sep = '';
+      if (d.ts <= now && !split) { split = true; sep = `<li class="sep">以下為今天稍早已開始</li>`; }
+      return sep + row(d);
+    }).join('');
+  }
+  chips(); draw();
+</script>

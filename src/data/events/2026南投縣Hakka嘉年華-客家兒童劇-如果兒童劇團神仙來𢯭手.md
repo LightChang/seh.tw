@@ -1,0 +1,35 @@
+---
+clusterId: "evt_nantou-arts-events_142"
+slug: "2026南投縣Hakka嘉年華-客家兒童劇-如果兒童劇團神仙來𢯭手"
+title: "「2026南投縣Hakka嘉年華-客家兒童劇」-如果兒童劇團《神仙來𢯭手》"
+category: "節慶活動"
+categoryRaw: "表演與節慶"
+status: "scheduled"
+organizers: 
+  - nameRaw: "南投縣客家發展所"
+    role: "master"
+  - nameRaw: "客家委員會"
+    role: "other"
+  - nameRaw: "南投縣政府文化局"
+    role: "master"
+  - nameRaw: "南投縣政府"
+    role: "other"
+sessions: 
+  - startAt: "2026-09-12T14:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-09-12T15:30:00+08:00"
+    venueNameRaw: "南投縣政府文化局"
+    city: "南投縣"
+    addressPrecision: "city"
+    venueId: "ent_moc-emap-poi_I-11"
+    venueSlug: "南投縣政府文化局"
+sources: 
+  - id: "nantou-arts-events"
+    recordId: "142"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "organizers"
+      - "sessions"
+---

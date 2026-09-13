@@ -1,0 +1,68 @@
+---
+clusterId: "ent_boch-heritage-folklore_20160317000011"
+slug: "布農族malahtangia射耳祭"
+name: "布農族malahtangia射耳祭"
+level: "民俗"
+heritageTypes: 
+  - code: "F5"
+    name: "儀式、祭典、節慶"
+categoryRaw: "民俗"
+registeredAt: "2016-03-17"
+govInstitution: "臺東縣政府"
+city: "臺東縣"
+district: "達仁鄉"
+address: "臺東縣達仁鄉"
+addressPrecision: "district"
+images: 
+  - url: "https://data.boch.gov.tw/upload/representImageFile/2021-07-20/4ea9bf79-ea1d-4e83-af23-14c442eeb51e/民俗02_布農族_射耳祭-永保.jpg"
+    caption: "民俗02_布農族_射耳祭-永保"
+  - url: "https://data.boch.gov.tw/upload/media/2022-07-28/d5ea638b-7c08-4724-9ffc-41efeba4f094/射耳_延平鄉永康村_姜.jpg"
+    caption: "延平鄉永康村"
+  - url: "https://data.boch.gov.tw/upload/media/2022-07-28/ceb51160-2087-4c24-b2e1-d55ba5c7915e/射耳_延平鄉紅葉村_姜.jpg"
+    caption: "延平鄉紅葉村"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-05/8ecf8c12-c966-498c-9757-d40de377eca5/射耳_海端鄉崁頂村_姜_調.jpg"
+    caption: "海端鄉崁頂村"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-05/9f167043-98b6-4727-be6c-1a051dc9ed36/團9.射耳_海端鄉海端村初來胡氏_姜_調.jpg"
+    caption: "海端鄉海端村初來胡氏"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-05/2c1eb528-87c9-4278-a96c-80d8b7736b26/團7.射耳_海端鄉霧鹿村_姜_調.jpg"
+    caption: "海端鄉霧鹿村"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-05/81d9d29d-abaa-4953-bb30-db33b8f32a7d/團2.射耳_2015.0418_鸞山村_姜_調.jpg"
+    caption: "鸞山村"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-05/4524e999-1bdd-4b39-ad09-857a759422e2/團5.射耳_2015.0425_海端新武_姜_調.jpg"
+    caption: "海端新武"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-05/70d8eb13-a678-41b3-a2e7-9ede9b39dc14/團6.射耳_2017.0415_武陵村_姜_調.jpg"
+    caption: "武陵村"
+  - url: "https://data.boch.gov.tw/upload/media/2022-09-01/d716ac9b-a974-4ce9-b18b-ba30abc454ff/團10.射耳_2016.0402_桃源村_姜.jpg"
+    caption: "桃源村"
+history: |-
+  布農族人是從hanito精靈的基礎、崇敬「天」（Dihanin）和祖靈的概念上，發展出日常生活中的信仰和祭典儀式。
+  臺東的布農族人，從19世紀初開始，分別由今南投、花蓮跨越中央山脈，進入今臺東縣新武路溪流域及大崙溪流域建立聚落。日治時期被日本殖民政府強迫集團移住到新武呂溪、北絲鬮溪和卑南溪流域。這些被移住的部落，縱然在艱困的環境下，因生活習性使然，傳統的信仰和祭儀仍然保存。
+  臺東縣布農族的Malahtangia射耳祭，除了位居偏遠的部落外，從日治末期開始，因種種外來因素的影響，有些氏族已經中止了。但某些氏族還是在惡劣的環境下努力保存，例如海端鄉的利稻、霧鹿部落，初來部落的王家和胡家等，就一直堅持在自己的祭場定期辦理射耳祭。1960年代（民國50年代）時，布農族的傳統祭儀明顯受到政府和教會的壓抑。隨著小米栽種的減少，和對經濟作物與薪資勞動的日漸依賴，農事祭儀包括射耳祭也日漸荒廢。但是在霧鹿，大約也是1960年代時，先是傳統射箭被納入運動會的競賽項目中。1970年代後期，鄉公所也開始要求霧鹿部落恢復辦理射耳祭。霧鹿部落於1986年（民國75年）成立了「布農山地傳統音樂團」（簡稱布音團），四處表演和參加比賽，先後出國往法國、德國、荷蘭、瑞士、大陸、日本、新加坡巡迴演出。2003年與美國著名大提琴家David Darling合作，出版「Mihumisa(n)g祝福你」專輯。2004年前往英國，作6場巡迴演出。2010年布音團演唱的「八部傳說布農」專輯，獲得第21屆金曲獎最佳原住民語專輯獎。讓布農族的Malahtangia射耳祭和pasibutbut祈禱小米豐收歌馳名國內外。
+  1987年（民國76年）政府解嚴，1991年在國家劇院公演了〈布農族樂舞篇〉，讓布農族人找回了自信和自尊。晚近也發展出「文化」的自我認同，布農族人的「文化」，就是跟漢人有別的生活方式。從此以後，不但是海端鄉和延平鄉恢復了Malahtangia射耳祭，更進而辦理全鄉的射耳祭，和全國的射耳祭。
+sources: 
+  - id: "boch-heritage-folklore"
+    recordId: "20160317000011"
+    sourceName: "國家文化資產網"
+    url: "http://nchdb.boch.gov.tw/assets/advanceSearch/folklore/20160317000011"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "name"
+      - "images"
+      - "categoryRaw"
+      - "address"
+      - "addressPrecision"
+      - "city"
+      - "district"
+      - "sourceUrl"
+      - "heritageTypes"
+      - "registeredAt"
+      - "govInstitution"
+  - id: "boch-heritage"
+    recordId: "20160317000011"
+    sourceName: "國家文化資產網"
+    url: "http://nchdb.boch.gov.tw/assets/advanceSearch/folklore/20160317000011"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "level"
+      - "history"
+---
