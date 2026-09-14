@@ -1,5 +1,6 @@
 ---
 import '../styles/site.css';
+import { GA_MEASUREMENT_ID, GSC_VERIFICATION } from '../site.config.mjs';
 
 interface Props {
   title: string;
@@ -33,9 +34,22 @@ const url = canonical ?? `${site}${Astro.url.pathname}`;
     <meta property="og:type" content="website" />
     <meta property="og:url" content={url} />
     <meta property="og:locale" content="zh_TW" />
+
+    {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
     <slot name="head" />
   </head>
   <body>
     <slot />
+    {GA_MEASUREMENT_ID && (
+      <Fragment>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
+        <script is:inline define:vars={{ id: GA_MEASUREMENT_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { window.dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', id);
+        </script>
+      </Fragment>
+    )}
   </body>
 </html>

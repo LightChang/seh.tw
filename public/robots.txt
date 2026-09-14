@@ -1,9 +1,9 @@
 User-agent: *
 Allow: /
 
-# 內容不足或無意義索引的頁面
-Disallow: /demo/
-Disallow: /search
-Disallow: /nearby
+# 不想被收錄的頁面（搜尋、定位、地圖、demo）帶 noindex，不在這裡 Disallow。
+# 兩個一起下反而更糟：擋住之後 Google 讀不到 noindex，那些網址還是可能以
+# 「只有網址、沒有內容」的形式進索引，並在 Search Console 裡變成
+# 「已建立索引，但遭 robots.txt 封鎖」的警告。
 
 Sitemap: https://seh.tw/sitemap-index.xml
