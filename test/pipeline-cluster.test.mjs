@@ -156,3 +156,59 @@ test('cluster id 與 slug 跨次執行穩定，標題改了也不改 slug', asyn
   assert.equal(second.slug, first.slug, '標題改了不改 slug，只改頁面上顯示的標題');
   await cleanup(root);
 });
+
+test('同名不同群要各有網址，不能撞在一起', async () => {
+  // 實測踩過：227 個活動與 162 個文資因為 slug 相同，md 互相覆蓋，
+  // 其中一個等於不存在。「刻辭箭桿」在殷墟甲骨就有 4 件，各自是獨立的國寶。
+  const h = (src, id, lat) =>
+    obs({ _source: src, _sourceRecordId: id, name: '刻辭箭桿', city: '臺北市', lat, lng: 121.5 },
+      { entityKind: 'heritage' });
+  const { root, clusters } = await cluster({ a: [h('a', '1', 25.10), h('a', '2', 25.20), h('a', '3', 25.30)] });
+  assert.equal(clusters.length, 3, '同名但不同地，是三件事');
+  assert.equal(new Set(clusters.map((c) => c.slug)).size, 3, '三個網址不能撞');
+  assert.ok(clusters.some((c) => c.slug === '刻辭箭桿'), '第一個保留原名');
+  await cleanup(root);
+});
+
+test('slug 撞號的編排跨次執行穩定', async () => {
+  const h = (id, lat) =>
+    obs({ _source: 'a', _sourceRecordId: id, name: '同名文資', city: '臺北市', lat, lng: 121.5 },
+      { entityKind: 'heritage' });
+  const root = await makeRoot({ a: [h('1', 25.10), h('2', 25.20)] });
+  assert.equal((await runStage(root, 'cluster.mjs')).code, 0);
+  const first = (await readNd(root, 'data/clusters.ndjson')).map((c) => `${c.id}=${c.slug}`).sort();
+  const second = await runStage(root, 'cluster.mjs');
+  assert.equal(second.code, 0);
+  assert.doesNotMatch(second.stdout, /撞號改配/, '第二次不該再改號，網址要穩定');
+  assert.deepEqual((await readNd(root, 'data/clusters.ndjson')).map((c) => `${c.id}=${c.slug}`).sort(), first);
+  await cleanup(root);
+});
+
+test('一群拆成兩群時，舊 id 只能給一邊', async () => {
+  // 實測踩過：兩邊都在舊資料裡找到同一個 cluster，於是共用 id 與 slug，
+  // md 互相覆蓋，其中一個活動等於不存在。68 個活動就是這樣消失的。
+  const together = {
+    'src-a': [obs(event('src-a', 'A', { title: '雙城記 臺北場', externalIds: { opentix: '777' } }))],
+    'src-b': [obs(event('src-b', 'B', { title: '雙城記 臺中場', externalIds: { opentix: '777' } }))],
+  };
+  const first = await cluster(together);
+  assert.equal(first.clusters.length, 1, '同一個 opentix id 先併成一群');
+  const oldId = first.clusters[0].id, oldSlug = first.clusters[0].slug;
+  const root = first.root;
+
+  // 來源把 external id 拿掉了，兩筆再也沒有共通點 → 應該拆成兩群
+  const { writeFile } = await import('node:fs/promises');
+  const pathMod = await import('node:path');
+  await writeFile(pathMod.join(root, 'data', 'observation', 'src-b.ndjson'),
+    JSON.stringify(obs(event('src-b', 'B', { title: '完全不一樣的節目' }))) + '\n', 'utf-8');
+  assert.equal((await runStage(root, 'cluster.mjs')).code, 0);
+  const after = await readNd(root, 'data/clusters.ndjson');
+
+  assert.equal(after.length, 2);
+  assert.equal(new Set(after.map((c) => c.id)).size, 2, 'id 不能共用');
+  assert.equal(new Set(after.map((c) => c.slug)).size, 2, 'slug 不能共用，否則 md 互相覆蓋');
+  const kept = groupOf(after, 'src-a:A');
+  assert.equal(kept.id, oldId, '舊 id 留給帶著原 seed 的那一群');
+  assert.equal(kept.slug, oldSlug);
+  await cleanup(root);
+});

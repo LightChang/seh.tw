@@ -467,7 +467,10 @@ async function main() {
   const prev = await loadExisting();
   const day = today();
 
-  const clusters = [];
+  // 先把每一群的「候選繼承對象」算出來，再決定誰真的拿到——
+  // 一群拆成兩群時兩邊都會指向同一個舊 cluster，但 id 與 slug 只能給一邊。
+  // 給兩邊的話 md 互相覆蓋，其中一個活動等於不存在（實測 68 個活動這樣消失）。
+  const entries = [];
   for (const members of groups.values()) {
     // id 由第一個成員決定，不由群的內容決定——加人移人都不會改 id
     members.sort((a, b) => a._id.localeCompare(b._id));
@@ -475,13 +478,44 @@ async function main() {
     // 這群裡任何一個成員在舊資料中屬於哪一群，就沿用那個 id 與 slug，URL 才不會斷。
     // 但被人工強制移出的那一筆不能沿用——它本來就不該在那個 URL 上，
     // 舊 id 要留給留下來的那一群。
-    const inherited = forcedOut.has(seed._id)
+    const candidate = forcedOut.has(seed._id)
       ? null
       : members.map((m) => prev.byMember.get(m._id)).find(Boolean);
+    entries.push({ members, seed, candidate });
+  }
+  entries.sort((a, b) => a.seed._id.localeCompare(b.seed._id));
+
+  // 舊 id 留給「還帶著舊群 seed 成員」的那一群；都沒帶就給留下最多舊成員的那群。
+  const claim = new Map();
+  const better = (e, cur) => {
+    const rank = (x) => {
+      const oldSeed = x.candidate.members.find((m) => m.rule === 'seed')?.observationId;
+      const hasSeed = oldSeed && x.members.some((m) => m._id === oldSeed) ? 1 : 0;
+      const kept = x.members.filter((m) => prev.byMember.get(m._id)?.id === x.candidate.id).length;
+      return [hasSeed, kept];
+    };
+    const [ha, ka] = rank(e);
+    const [hb, kb] = rank(cur);
+    return ha !== hb ? ha > hb : ka !== kb ? ka > kb : e.seed._id < cur.seed._id;
+  };
+  for (const e of entries) {
+    if (!e.candidate) continue;
+    const cur = claim.get(e.candidate.id);
+    if (!cur || better(e, cur)) claim.set(e.candidate.id, e);
+  }
+  let reissued = 0;
+
+  const clusters = [];
+  for (const entry of entries) {
+    const { members, seed, candidate } = entry;
+    const inherited = candidate && claim.get(candidate.id) === entry ? candidate : null;
+    if (candidate && !inherited) reissued += 1;
     const kind = seed._kind === 'event' ? 'evt' : 'ent';
     clusters.push({
-      id: inherited?.id ?? `${kind}_${seed._source}_${idPart(seed._sourceRecordId)}`,
-      slug: inherited?.slug ?? makeSlug(seed.title ?? seed.name),
+      id: inherited?.id,       // 沿用的先放著，新的等一下統一配號（見下）
+      idBase: `${kind}_${seed._source}_${idPart(seed._sourceRecordId)}`,
+      slug: inherited?.slug,
+      slugBase: makeSlug(seed.title ?? seed.name),
       // observation 自己記了 entityKind（單筆可覆蓋來源預設），直接用，不要再猜
       entityKind: inherited?.entityKind ?? seed._kind,
       createdAt: inherited?.createdAt ?? day,
@@ -500,7 +534,53 @@ async function main() {
       }),
     });
   }
+  // id 唯一性。沿用的先佔位，新配的才不會撞上——某群沿用 evt_s_R 的同時，
+  // 另一群的 seed 剛好就是 s:R，兩邊都會算出 evt_s_R。
+  const usedIds = new Set();
+  for (const c of clusters) if (c.id) usedIds.add(c.id);
+  clusters.sort((a, b) => (a.id ?? a.idBase).localeCompare(b.id ?? b.idBase));
+  for (const c of clusters) {
+    if (!c.id) {
+      let id = c.idBase;
+      for (let n = 2; usedIds.has(id); n += 1) id = `${c.idBase}-${n}`;
+      usedIds.add(id);
+      c.id = id;
+    }
+    delete c.idBase;
+  }
   clusters.sort((a, b) => a.id.localeCompare(b.id));
+  if (reissued) console.log(`  舊群拆開後另給新 id ${reissued} 群（舊網址留給帶著原 seed 的那一群）`);
+
+  // ── slug 唯一性 ────────────────────────────────────────────────────
+  // 兩群對到同一個網址，md 會互相覆蓋，其中一個等於不存在——實測 227 個活動與
+  // 162 個文資就是這樣消失的（「刻辭箭桿」在殷墟甲骨就有 4 件，各自是獨立的國寶）。
+  // 兩趟：先把沿用的 slug 全部佔位，再給新群配號，否則新群會搶走舊群的網址。
+  // 配號在 id 排序之後做，所以同一份資料跑幾次結果都一樣。
+  const taken = new Map();   // entityKind → Set<slug>
+  const slugsOf = (k) => {
+    if (!taken.has(k)) taken.set(k, new Set());
+    return taken.get(k);
+  };
+  // 第一趟：沿用的 slug 依 id 順序佔位。先到先得——同一個 slug 被兩群沿用時
+  // （舊資料留下來的錯），排前面的留住網址，後面的在第二趟改號。
+  const needsSlug = [];
+  for (const c of clusters) {
+    const used = slugsOf(c.entityKind);
+    if (c.slug && !used.has(c.slug)) used.add(c.slug);
+    else needsSlug.push(c);
+  }
+  // 第二趟：沒有 slug 的（新群）與被擠掉的，一起配號
+  let assigned = 0, moved = 0;
+  for (const c of needsSlug) {
+    const used = slugsOf(c.entityKind);
+    let s = c.slugBase;
+    for (let n = 2; used.has(s); n += 1) s = `${c.slugBase}-${n}`;
+    used.add(s);
+    if (c.slug) moved += 1; else assigned += 1;
+    c.slug = s;
+  }
+  for (const c of clusters) delete c.slugBase;
+  if (moved) console.log(`  slug 撞號改配 ${moved} 群（同一個網址不能有兩個頁面）`);
 
   // 待辦要以「決定」為單位，不是「配對」。一個 12 站的巡迴活動會產生 66 對候選，
   // 但人只需要判一次「這些是同一個活動嗎」。實測 165 對其實只有 79 個決定。

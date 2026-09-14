@@ -1,0 +1,77 @@
+---
+clusterId: "evt_moc-events_6a99ab5326b32434f43580cd"
+slug: "瘋迷24蕭邦PLUS橫山幸雄加碼場"
+title: "《瘋迷24蕭邦》PLUS橫山幸雄加碼場"
+category: "音樂"
+categoryRaw: "1"
+status: "scheduled"
+popularity: 0
+priceText: "NT$ 800"
+ticketUrl: "https://www.opentix.life/program/2092545579254595585"
+description: |-
+  24小時瘋迷還不夠，多一晚加碼才完整！
+  
+  2027年2月21日下午5點是《瘋迷24蕭邦》的最終場結束時間，樂迷可別急著離開，緊接著6點30分在表演廳，還有「《瘋迷24蕭邦》PLUS加碼場」，在「瘋迷24」內沒有安排的作品編號樂曲，直接一場音樂會通通補完——包括早期在波蘭創作的第一號奏鳴曲（作品 4）、開啟此類型創作的四首馬厝卡舞曲（作品 6），以及大家可能未必知道蕭邦也創作過的波麗露舞曲（作品 19）、塔朗泰拉舞曲（作品 43）或是蘇格蘭舞曲（作品 72之3）等種類，以及全數在「瘋迷24」裡沒演到的波蘭舞曲等等，眾多於音樂會舞台稀少罕見的蕭邦作品，皆在「PLUS加碼場」裡完整呈現！
+  
+  至於有誰能夠擔綱這個「蕭邦補完計畫」呢？當然就是曾經創下金氏世界紀錄，在一日內演奏最多蕭邦作品的日本鋼琴大師橫山幸雄！衛武營力邀他在《瘋迷24蕭邦》演出結束後繼續「PLUS加碼」，補齊所有的作品編號，不留下任何遺珠！
+  
+   演出暨製作團隊
+  
+  鋼琴｜橫山幸雄
+  
+   相關節目
+  
+  2027/2/20(六)-2/21(日) 17:00-17:00
+  
+  ►《瘋迷24蕭邦》
+sessions: 
+  - startAt: "2027-02-21T18:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2027-02-21T21:30:00+08:00"
+    onSales: true
+    venueNameRaw: "衛武營國家藝術文化中心表演廳"
+    city: "高雄市"
+    district: "鳳山區"
+    address: "高雄市鳳山區三多一路1號"
+    addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
+    venueId: "ven_derived_衛武營國家藝術文化中心表演廳"
+    venueSlug: "衛武營國家藝術文化中心表演廳"
+sources: 
+  - id: "moc-events"
+    recordId: "6a99ab5326b32434f43580cd"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2092545579254595585"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+    rejected: 
+      sourceUrl: "https://www.opentix.life/program/2092545579254595585"
+  - id: "weiwuying-programs"
+    recordId: "6a8652909199ab00089d86cb"
+    sourceName: "衛武營國家藝術文化中心 節目資料"
+    url: "https://www.npac-weiwuying.org/programs/6a8652909199ab00089d86cb"
+    lastVerifiedAt: "2026-09-13"
+    provides: 
+      - "description"
+      - "priceText"
+      - "sourceUrl"
+      - "sourceUpdatedAt"
+    rejected: 
+      ticketUrl: "https://www.opentix.life/event/2092545579254595585"
+      sessions: 
+        - startAt: "2027-02-21T18:30:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心表演廳"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
+---

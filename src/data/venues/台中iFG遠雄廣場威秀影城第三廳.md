@@ -10,7 +10,7 @@ addressPrecision: "street"
 lat: 24.135948820683126
 lng: 120.68774769663341
 buildingId: "bld_24.1359_120.6877"
-eventCount: 17
+eventCount: 20
 eventClusterIds: 
   - "evt_moc-events_6aa1943926b324165c32e394"
   - "evt_moc-events_6aa1943926b324165c32e39d"
@@ -28,5 +28,8 @@ eventClusterIds:
   - "evt_moc-events_6aa1943a26b324165c32e3ab"
   - "evt_moc-events_6aa1943a26b324165c32e3ac"
   - "evt_moc-events_6aa1943a26b324165c32e3ad"
+  - "evt_moc-events_6aa1943a26b324165c32e3ae"
+  - "evt_moc-events_6aa1943a26b324165c32e3af"
+  - "evt_moc-events_6aa1943a26b324165c32e3b0"
   - "evt_moc-events_6aa1943a26b324165c32e3b1"
 ---

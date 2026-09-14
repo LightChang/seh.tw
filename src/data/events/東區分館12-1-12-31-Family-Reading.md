@@ -1,0 +1,22 @@
+---
+clusterId: "evt_taichung-culture-events_568"
+slug: "東區分館12-1-12-31-Family-Reading"
+title: "【東區分館】12/1-12/31 Family Reading"
+status: "scheduled"
+sessions: 
+  - startAt: "2024-12-01T08:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2024-12-31T21:00:00+08:00"
+    venueNameRaw: "東區分館"
+    city: "臺中市"
+    addressPrecision: "city"
+    venueId: "ent_national-public-libraries_9890e1146f5aed30"
+    venueSlug: "臺中市立圖書館東區分館"
+sources: 
+  - id: "taichung-culture-events"
+    recordId: "568"
+    lastVerifiedAt: "2026-09-12"
+    provides: 
+      - "title"
+      - "sessions"
+---

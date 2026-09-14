@@ -19,7 +19,7 @@ flowchart LR
   D --> E[關聯<br/>resolve-relations]
   E --> F[逐欄位投影<br/>emit-md]
   F --> G[品質分數<br/>score-pages]
-  G --> H[靜態網站<br/>18,726 檔]
+  G --> H[靜態網站<br/>18,802 頁]
 
   style A fill:#ecedf0,stroke:#d5d6da,color:#1e2030
   style C fill:#e8f0f8,stroke:#2a6bb8,color:#1e2030
@@ -41,10 +41,10 @@ flowchart LR
 
 | | 網址 | 送進 sitemap |
 |---|---|---|
-| 活動 | 5,598 | 1,788 |
-| 場館 | 10,423 | 237 |
+| 活動 | 5,666 | 1,814 |
+| 場館 | 10,461 | 271 |
 | 文化資產 | 2,469 | 1,987 |
-| 全站 | 18,726 檔 | 4,211 |
+| 全站 | 18,802 頁 | 4,273 |
 
 收錄比例低是設計如此，不是還沒做完——多數活動已經結束，多數場館是沒有活動的
 名錄 POI。逐項說明在 [`docs/pages-status.md`](docs/pages-status.md)，
@@ -56,9 +56,10 @@ flowchart LR
 npm run dev        本機開發
 npm run pipeline   跑完整條：正規化 → 健康檢查 → 分群 → 關聯 → 產出 → 品質分 → 建置
 npm run ingest     依排程抓取到期的來源（不到期的不抓）
-npm test           248 條測試
+npm test           251 條測試
 npm run review     人工待辦佇列
 npm run sources    重新產生 SOURCES.md
+npm run links      檢查站內連結（build 之後跑）
 ```
 
 單獨重抓一支來源：`node ingest/sources/<id>.mjs`

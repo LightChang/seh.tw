@@ -9,8 +9,9 @@ addressPrecision: "district"
 lat: 25.03461
 lng: 121.52864
 buildingId: "bld_25.0346_121.5286"
-eventCount: 2
+eventCount: 3
 eventClusterIds: 
   - "evt_taipei-culture-events_6aa4e808f97fdcbc"
   - "evt_taipei-culture-events_68f1fd25daddd01d"
+  - "evt_taipei-culture-events_77ef4995016b84e3"
 ---

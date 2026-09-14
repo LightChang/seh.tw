@@ -1,30 +1,29 @@
 ---
 clusterId: "evt_twtourism-events_Event_376540000A_006281"
 slug: "2026台東博覽會-Taitung-EXPO"
-title: "2026台東博覽會"
-category: "節慶活動"
-categoryRaw: "1"
+title: "2026台東博覽會 Taitung EXPO"
+category: "藝文活動"
+categoryRaw: "2"
 status: "scheduled"
 images: 
-  - url: "https://www.taiwan.net.tw/att/event/0ff01e7c-e03d-4c88-b1a6-961a35af0db8.jpg"
-    caption: "台東博覽會列表圖"
-description: "2026台東博覽會於7月3日至8月20日正式展開，串聯全縣9大展區、23檔官方主題展覽、22件民間參與計畫、14個在地活動品牌及超過200場限定活動。本次展會以全台東為展場，從主場館A1「活的學校」出發，串聯舊站特區及全縣9大展區，並以慢經濟、永續發展、台東藍及南島文化四大策展核心理念為主軸，整合文化、藝術、教育、產業、生活、觀光、永續及地方創生等多元內容，呈現縣府與民間攜手推動慢經濟的成果，並描繪臺東下一個十年的發展藍圖。"
+  - url: "https://tour.taitung.gov.tw/image/54891/640x480"
+    caption: "2026台東博覽會 Taitung EXPO"
+description: "坐落於山海交匯之處的台東，蘊藏豐饒的自然資源與多元共融的文化風貌，凝聚純粹壯麗的地景與深厚人文底蘊，孕育出獨具一格的地方價值。"
 sessions: 
   - startAt: "2026-07-03"
     endAt: "2026-08-20"
     granularity: "date"
     city: "臺東縣"
     district: "臺東市"
-    address: "台東縣立體育館"
+    address: "臺東縣立體育館"
     addressPrecision: "district"
     cityCode: "10014"
     districtCode: "10014010"
-    lat: 22.75235
-    lng: 121.1451
+    lat: 22.75219
+    lng: 121.14506
 sources: 
   - id: "twtourism-events"
-    recordId: "Event_A15010000H_081949"
-    url: "https://taitungexpo2026.com.tw/"
+    recordId: "Event_376540000A_006281"
     lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
@@ -33,6 +32,5 @@ sources:
       - "categoryRaw"
       - "status"
       - "sessions"
-      - "sourceUrl"
       - "sourceUpdatedAt"
 ---
