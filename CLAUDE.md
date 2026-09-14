@@ -48,8 +48,10 @@ npm run links      # build 之後，站內連結不能有壞的
 **縮小某支來源的抓取範圍** → 要**先刪掉那支的 observation 檔**，否則被排除的舊記錄
 會全部標成 disappeared，`check-health` 會當成來源崩了而中止整條流程。
 
-**改設計 token** → 改上游的 design-tokens 技能，再 `npm run sync:tokens`。
-不要直接改 `src/styles/tokens.css`。
+**改設計 token** → 改上游（`agent.system-integration-quality-control/templates/styles.css`），
+再 `npm run sync:tokens`。不要直接改 `src/styles/tokens.css`，那是副本。
+兩條硬規則由 `test/style-tokens.test.mjs` 擋著：**最小字級 18px 無例外**、
+**寫死的 hex 只能是設計系統自己的 fallback 值**（隨手挑的 `#333` 會紅）。
 
 ## 隔離測試
 
