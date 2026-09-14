@@ -79,6 +79,7 @@ npm run links      檢查站內連結（build 之後跑）
 | [`docs/pages-status.md`](docs/pages-status.md) | 每種頁面的完成狀況 |
 | [`SOURCES.md`](SOURCES.md) | 79 支來源與各自的授權 |
 | [`docs/analytics.md`](docs/analytics.md) | Search Console 與 GA4 的設定與判讀 |
+| [`docs/search-console-api.md`](docs/search-console-api.md) | 服務帳號申請六步，與 `scripts/gsc-pull.mjs` |
 
 ## 授權
 

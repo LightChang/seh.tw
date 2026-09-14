@@ -14,3 +14,8 @@ node_modules/
 
 # data/observation/ 進版控（append-only，git log 就是變更軌跡，見 STORAGE.md §3）
 
+
+# Search Console 服務帳號金鑰。這個是**機密**，跟 GA ID 不一樣。
+*-key.json
+gsc-key*.json
+service-account*.json

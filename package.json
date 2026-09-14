@@ -12,6 +12,7 @@
     "sync:tokens": "node scripts/sync-tokens.mjs",
     "sources": "node scripts/gen-sources.mjs",
     "links": "node scripts/check-links.mjs",
+    "gsc": "node scripts/gsc-pull.mjs",
     "pipeline": "node transform/pipeline.mjs",
     "health": "node transform/check-health.mjs",
     "eval": "node transform/eval-cluster.mjs",
