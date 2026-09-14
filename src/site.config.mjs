@@ -6,8 +6,17 @@
 //
 // 值是空字串時什麼都不輸出：本機開發不會污染正式的統計數據。
 
-/** GA4 評估 ID，形如 G-XXXXXXXXXX。空字串＝不載入 GA。 */
-export const GA_MEASUREMENT_ID = process.env.SEH_GA_ID ?? '';
+/** GA4 評估 ID。空字串＝不載入 GA。 */
+export const GA_MEASUREMENT_ID = process.env.SEH_GA_ID ?? 'G-DKGLPQJD2N';
+
+/**
+ * 只有在這些主機名底下才真的載入 GA。
+ *
+ * ID 寫死在程式裡（它本來就印在每一頁原始碼裡，不是機密），代價是
+ * `npm run dev`、本機 `npm run build`、以及任何 fork 出去的部署都會送資料進來，
+ * 把正式統計弄髒。所以改在瀏覽器端擋：主機名對不上就連 gtag.js 都不去要。
+ */
+export const GA_HOSTS = ['seh.tw', 'www.seh.tw'];
 
 /**
  * Search Console 的 HTML 標記驗證碼（`google-site-verification` 的 content）。

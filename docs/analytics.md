@@ -1,16 +1,18 @@
 # Search Console 與 Analytics
 
-兩個值都不是機密——它們本來就印在每一頁的原始碼裡。放 GitHub 的
-**repository variables**（Settings → Secrets and variables → Actions → Variables），
-不要放 secrets：
+兩個值都不是機密——它們本來就印在每一頁的原始碼裡。設定都在
+`src/site.config.mjs`，套用點在 `src/layouts/Base.astro`。
 
-| 變數 | 值 | 沒設會怎樣 |
-|---|---|---|
-| `SEH_GA_ID` | GA4 評估 ID，`G-XXXXXXXXXX` | 不載入 GA，頁面完全沒有 gtag |
-| `SEH_GSC_TOKEN` | Search Console HTML 標記的 content | 不輸出 verification meta |
+**GA4 評估 ID `G-DKGLPQJD2N` 直接寫在程式裡**，不必設任何 CI 變數。
+代價是本機 build 與任何 fork 出去的部署也會帶著它，所以改在瀏覽器端擋：
+`GA_HOSTS` 對不上 `location.hostname` 就什麼都不做，連 `gtag.js` 的請求
+都不發出去。要換帳號改那一行，或用環境變數 `SEH_GA_ID` 覆蓋。
 
-本機要試：`SEH_GA_ID=G-XXXXXXXXXX npm run build`。
-程式在 `src/site.config.mjs`，套用點在 `src/layouts/Base.astro`。
+**Search Console 的 HTML 標記驗證碼**空著。用 DNS 驗證的話不需要它（見下）；
+真的要用，設 GitHub repository variable（Settings → Secrets and variables →
+Actions → **Variables**，不是 secrets）`SEH_GSC_TOKEN`，沒設就不輸出那個 meta。
+
+本機要試 GA：改 `GA_HOSTS` 加 `'localhost'`，別直接拿掉判斷。
 
 ---
 
@@ -47,7 +49,9 @@
 
 ## Analytics
 
-GA4 用官方 gtag.js，`src/layouts/Base.astro` 尾端，`async` 載入。
+GA4 用官方 gtag.js，`src/layouts/Base.astro` 尾端。script 標籤是判斷主機名之後
+才用 JS 建出來的，不是寫死在 HTML 裡——所以在非正式網域上完全不會有對外請求。
+
 沒有 cookie 同意橫幅——台灣沒有 GDPR 等級的同意要求。要加的話，
 GA 的載入要改成同意之後才觸發，不是載入後才問。
 

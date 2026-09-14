@@ -1,6 +1,6 @@
 ---
 import '../styles/site.css';
-import { GA_MEASUREMENT_ID, GSC_VERIFICATION } from '../site.config.mjs';
+import { GA_MEASUREMENT_ID, GA_HOSTS, GSC_VERIFICATION } from '../site.config.mjs';
 
 interface Props {
   title: string;
@@ -41,15 +41,19 @@ const url = canonical ?? `${site}${Astro.url.pathname}`;
   <body>
     <slot />
     {GA_MEASUREMENT_ID && (
-      <Fragment>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}></script>
-        <script is:inline define:vars={{ id: GA_MEASUREMENT_ID }}>
+      <script is:inline define:vars={{ gaId: GA_MEASUREMENT_ID, gaHosts: GA_HOSTS }}>
+        // 主機名對不上就什麼都不做——連 gtag.js 的請求都不發出去
+        if (gaHosts.indexOf(location.hostname) !== -1) {
           window.dataLayer = window.dataLayer || [];
-          function gtag() { window.dataLayer.push(arguments); }
-          gtag('js', new Date());
-          gtag('config', id);
-        </script>
-      </Fragment>
+          window.gtag = function () { window.dataLayer.push(arguments); };
+          window.gtag('js', new Date());
+          window.gtag('config', gaId);
+          var s = document.createElement('script');
+          s.async = true;
+          s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
+          document.head.appendChild(s);
+        }
+      </script>
     )}
   </body>
 </html>
