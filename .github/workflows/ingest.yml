@@ -7,6 +7,10 @@ on:
     # 不排在整點：GitHub 文件說整點負載高，排程會延遲或被丟掉。上線當天整點排程
     # 11 小時只觸發 1 次（2026-09-15）。scheduler 自己判斷到期，分鐘數不影響邏輯。
     - cron: '23 * * * *'
+  # 在本機跑完更新 push 上來 → 只建置與部署，不抓取、不回寫。
+  # GITHUB_TOKEN 推的 ingest commit 不會觸發這裡，所以不會自己觸發自己。
+  push:
+    branches: [main]
   workflow_dispatch:
     inputs:
       force:
@@ -45,6 +49,7 @@ jobs:
       # inputs.force 一律走 env，不內插進 run:。內插等於把使用者輸入當 shell 指令跑。
       - name: 抓取到期來源
         id: fetch
+        if: github.event_name != 'push'
         env:
           FORCE: ${{ inputs.force }}
         run: |
@@ -55,11 +60,11 @@ jobs:
           grep -q '^PIPELINE=1' run.log && echo 'changed=true' >> "$GITHUB_OUTPUT" || echo 'changed=false' >> "$GITHUB_OUTPUT"
 
       # 沒有任何來源變動就到此為止：不跑後續、不 build、不 commit、不部署
-      # 手動觸發例外：一律建置並部署（第一次上線、改了版面但資料沒變時用）
+      # 手動觸發與 push 例外：一律建置並部署
       # GA 與 Search Console 的值放 repository variables（vars，不是 secrets——
       # 它們本來就會出現在每一頁的原始碼裡）。沒設就什麼都不輸出。
       - name: 轉換與建置
-        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name != 'schedule'
         env:
           SEH_GA_ID: ${{ vars.SEH_GA_ID }}
           SEH_GSC_TOKEN: ${{ vars.SEH_GSC_TOKEN }}
@@ -69,6 +74,7 @@ jobs:
           npm run links
 
       - name: 回寫排程狀態
+        if: github.event_name != 'push'
         run: |
           git config user.name  'seh-ingest'
           git config user.email 'ingest@seh.tw'
@@ -81,11 +87,11 @@ jobs:
       # 部署必須跟 ingest 同一個 job。GITHUB_TOKEN 推出去的 commit 不會觸發任何
       # workflow，所以「push 觸發 deploy」那條路在這裡是死的。
       - uses: actions/configure-pages@v5
-        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name != 'schedule'
       - uses: actions/upload-pages-artifact@v3
-        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name != 'schedule'
         with:
           path: dist
       - uses: actions/deploy-pages@v4
         id: deploy
-        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name != 'schedule'
