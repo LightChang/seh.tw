@@ -36,7 +36,6 @@ sources:
     recordId: "6a97a4b1eb43f566f29c88df"
     sourceName: "國立陽明交通大學藝文中心"
     url: "https://arts.nycu.edu.tw/amabile-sophie-wang-violin-recital/"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

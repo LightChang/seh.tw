@@ -145,7 +145,6 @@ sources:
     recordId: "6a3424df26b3243414ccd44a"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2065059039769808896"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -157,7 +156,6 @@ sources:
     recordId: "2040"
     sourceName: "臺北表演藝術中心 節目資料"
     url: "https://tpac.org.taipei/program/2040"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
     rejected: 

@@ -149,7 +149,6 @@ sources:
     recordId: "7eb1cb9e-cac9-4136-9025-48a2542439c0"
     sourceName: "國立科學工藝博物館 歷年展覽資訊"
     url: "https://60immex.tzuchi.org.tw"
-    lastVerifiedAt: "2026-09-09"
     provides: 
       - "title"
       - "description"

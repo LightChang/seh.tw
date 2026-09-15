@@ -57,7 +57,6 @@ sources:
   - id: "moc-events"
     recordId: "6a319eb426b3243414ccd38d"
     sourceName: "全國藝文活動資訊系統"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -68,7 +67,6 @@ sources:
       - "sessions"
   - id: "twtourism-events"
     recordId: "Event_397000000A_007714"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
       - "status"

@@ -36,7 +36,6 @@ sources:
     recordId: "69ee7b8e26b3242a48a9e6e9"
     sourceName: "全國藝文活動資訊系統"
     url: "https://activity.ncku.edu.tw/index.php?c=apply&no=17165"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

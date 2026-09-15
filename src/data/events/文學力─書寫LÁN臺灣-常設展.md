@@ -32,7 +32,6 @@ sources:
     recordId: "69f7a63726b3243414ccc560"
     sourceName: "全國藝文活動資訊系統"
     url: "https://event.culture.tw/mocweb/reg/NMTL/Detail.init.ctr?actId=00060"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

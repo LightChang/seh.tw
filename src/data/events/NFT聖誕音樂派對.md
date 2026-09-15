@@ -19,7 +19,6 @@ sources:
   - id: "taichung-culture-events"
     recordId: "300"
     url: "https://www.ttdac.taichung.gov.tw/na5473708115913237810/naArticleContent"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "images"

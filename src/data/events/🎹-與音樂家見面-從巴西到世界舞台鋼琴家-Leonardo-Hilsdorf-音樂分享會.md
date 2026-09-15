@@ -30,7 +30,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "2f558b07-8400-4faa-a5d0-1e57bb884f38"
     url: "https://www.accupass.com/go/PianistLeonardo"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

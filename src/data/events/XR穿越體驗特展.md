@@ -57,7 +57,6 @@ sources:
   - id: "nstm-exhibitions"
     recordId: "28ab69a5-5b1e-42d5-a4c6-4c61455c2f87"
     sourceName: "國立科學工藝博物館 歷年展覽資訊"
-    lastVerifiedAt: "2026-09-09"
     provides: 
       - "title"
       - "description"

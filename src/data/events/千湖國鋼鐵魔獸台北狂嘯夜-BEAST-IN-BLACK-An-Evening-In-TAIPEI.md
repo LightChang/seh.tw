@@ -68,7 +68,6 @@ sources:
     recordId: "6a28645026b3243414ccd0a7"
     sourceName: "全國藝文活動資訊系統"
     url: "https://rockempire.kktix.cc/events/ad848569"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

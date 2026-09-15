@@ -39,7 +39,6 @@ sources:
     recordId: "6a3d86d426b3243414ccd63e"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.ntcri.gov.tw/home/zh-tw/exhibition/7497977"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

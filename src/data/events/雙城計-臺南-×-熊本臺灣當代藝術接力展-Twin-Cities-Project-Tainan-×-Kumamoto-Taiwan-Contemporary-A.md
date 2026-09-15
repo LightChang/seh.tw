@@ -23,7 +23,6 @@ sources:
     recordId: "exhibition-704"
     sourceName: "臺南市美術館 展覽與活動"
     url: "https://www.tnam.museum/exhibition/detail/704"
-    lastVerifiedAt: "2026-09-13"
     provides: 
       - "title"
       - "categoryRaw"

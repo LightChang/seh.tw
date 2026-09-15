@@ -31,6 +31,26 @@ export async function isIndexable(path) {
   return st.get(path)?.indexable !== 0;
 }
 
+/**
+ * 各來源記錄最後一次被確認的日期，key 是 `source:recordId`。
+ * 由 transform/emit-md.mjs 寫在 data/verified-state.ndjson，不放 md——
+ * 來源每次重抓都會變，放進 md 就是每天幾千個檔案的 diff。
+ */
+let VERIFIED = null;
+export async function verifiedState() {
+  if (VERIFIED) return VERIFIED;
+  VERIFIED = new Map();
+  try {
+    const text = await readFile(`${process.cwd()}/data/verified-state.ndjson`, 'utf-8');
+    for (const line of text.split('\n')) {
+      if (!line.trim()) continue;
+      const r = JSON.parse(line);
+      VERIFIED.set(r.key, r.verifiedAt);
+    }
+  } catch { /* 還沒 emit 過 */ }
+  return VERIFIED;
+}
+
 const dataOf = (e) => e.data;
 
 export async function allEvents() {

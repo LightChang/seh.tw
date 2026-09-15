@@ -26,7 +26,6 @@ sources:
     recordId: "6a2301d026b3243414cccf30"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2060265544164958209"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

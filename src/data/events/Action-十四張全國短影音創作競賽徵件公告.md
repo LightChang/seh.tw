@@ -15,7 +15,6 @@ sources:
     recordId: "0Q225328546936266123"
     sourceName: "新北市文化局"
     url: "https://www.culture.ntpc.gov.tw/xceventsnews/cont?xsmsid=0G295700334178642420&sid=0Q225328546936266123"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

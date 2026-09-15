@@ -30,7 +30,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "c271a0ea-1772-4d97-9cb9-3a389859dd8b"
     url: "https://2026.art-taipei.com/taipei/tw/"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

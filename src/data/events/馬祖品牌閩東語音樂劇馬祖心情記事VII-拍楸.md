@@ -23,7 +23,6 @@ sources:
   - id: "taoyuan-tourism-events"
     recordId: "6911"
     url: "https://travel.tycg.gov.tw/zh-tw/Event/CalendarDetail/6911"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -31,7 +30,6 @@ sources:
       - "sourceUrl"
   - id: "twtourism-events"
     recordId: "Event_376430000A_006911"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
       - "categoryRaw"

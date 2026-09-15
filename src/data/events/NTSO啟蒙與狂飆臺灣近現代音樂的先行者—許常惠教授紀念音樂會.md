@@ -23,7 +23,6 @@ sources:
     recordId: "c-fuk9MnjrJbR"
     sourceName: "臺中國家歌劇院 節目資料"
     url: "https://www.npac-ntt.org/program/events/c-fuk9MnjrJbR"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "isFree"

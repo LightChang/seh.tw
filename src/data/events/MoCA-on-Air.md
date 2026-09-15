@@ -13,7 +13,6 @@ sources:
     recordId: "MoCA*on*Air"
     sourceName: "臺北當代藝術館 展覽與活動"
     url: "https://www.mocataipei.org.tw/tw/ExhibitionAndEvent/Info/MoCA*on*Air"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

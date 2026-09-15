@@ -41,7 +41,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "befc6a69-fe76-4b02-bb03-6675dbd13db3"
     url: "https://www.ht.org.tw/p4_introduction12.htm"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

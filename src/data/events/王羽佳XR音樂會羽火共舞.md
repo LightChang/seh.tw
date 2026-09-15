@@ -1125,7 +1125,6 @@ sources:
     recordId: "6a435f1026b32427d0603f5b"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2062012882677915648"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -1136,7 +1135,6 @@ sources:
   - id: "ntch-programs"
     recordId: "31220"
     sourceName: "國家兩廳院 節目資料"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
       - "images"

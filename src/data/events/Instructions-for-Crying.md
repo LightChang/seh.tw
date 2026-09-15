@@ -29,7 +29,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "db1e9e91-1946-4f61-a8b4-f2cdfe4c173b"
     url: "https://www.galleryaki.com/zh/aki"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

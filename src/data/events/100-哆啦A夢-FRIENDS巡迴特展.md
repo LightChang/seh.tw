@@ -191,7 +191,6 @@ sources:
   - id: "nstm-exhibitions"
     recordId: "79d72a02-3a57-4ac8-b365-b792e838a8f6"
     sourceName: "國立科學工藝博物館 歷年展覽資訊"
-    lastVerifiedAt: "2026-09-09"
     provides: 
       - "description"
       - "categoryRaw"
@@ -201,7 +200,6 @@ sources:
       title: "100%哆啦A夢&FRIENDS巡迴特展"
   - id: "twtourism-events"
     recordId: "Event_397000000A_007263"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "images"

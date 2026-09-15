@@ -74,7 +74,6 @@ sources:
     recordId: "68965acc26b324477c8a14c1"
     sourceName: "全國藝文活動資訊系統"
     url: "https://event.culture.tw/mocweb/reg/NTCRI/Index.init.ctr?openExternalBrowser=1"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -87,7 +86,6 @@ sources:
       categoryRaw: "7"
   - id: "nantou-arts-events"
     recordId: "19"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "categoryRaw"
       - "priceText"

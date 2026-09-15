@@ -47,7 +47,6 @@ sources:
   - id: "moc-events"
     recordId: "6a7d1dd1eb436c2506e0fba2"
     sourceName: "THE 201 ART"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

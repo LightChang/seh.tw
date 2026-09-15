@@ -23,7 +23,6 @@ sources:
   - id: "nstm-activities"
     recordId: "b54eb4e7839cc533"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

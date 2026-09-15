@@ -31,7 +31,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "a7e1e064-69b6-4bde-84f9-f8e61757ac72"
     url: "https://www.chun-ching.org.tw/lesson/family_lesson/455"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

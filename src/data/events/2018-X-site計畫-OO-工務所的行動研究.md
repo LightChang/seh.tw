@@ -78,7 +78,6 @@ sources:
     recordId: "626"
     sourceName: "臺北市立美術館 展覽資料（當期／預告／歷年）"
     url: "https://www.tfam.museum/Exhibition/Exhibition_page.aspx?id=626&ddlLang=zh-tw"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

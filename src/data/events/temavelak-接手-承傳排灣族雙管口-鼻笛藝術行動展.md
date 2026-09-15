@@ -38,7 +38,6 @@ sources:
     recordId: "694076d926b32416dc348cca"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.facebook.com/tipcp.tw"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

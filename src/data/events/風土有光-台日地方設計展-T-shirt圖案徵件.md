@@ -22,7 +22,6 @@ sources:
     recordId: "eb9c752b-737a-47ae-bf6b-c88447996daa"
     sourceName: "高雄市立美術館 展覽與活動"
     url: "https://www.kmfa.gov.tw/OnlineApplyDetailC001200.aspx?Cond=eb9c752b-737a-47ae-bf6b-c88447996daa"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

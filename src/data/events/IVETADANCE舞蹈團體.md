@@ -13,7 +13,6 @@ sessions:
 sources: 
   - id: "hsinchu-city-culture-events"
     recordId: "94a64f44450bcadf"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "sessions"

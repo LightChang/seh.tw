@@ -38,7 +38,6 @@ sources:
     recordId: "6a456b3626b32427d06040ae"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.eternal-group.com/Eternalmuseum/Guided"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

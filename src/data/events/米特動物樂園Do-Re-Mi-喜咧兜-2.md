@@ -23,7 +23,6 @@ sources:
     recordId: "2074"
     sourceName: "臺北表演藝術中心 節目資料"
     url: "https://tpac.org.taipei/program/2074"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "images"

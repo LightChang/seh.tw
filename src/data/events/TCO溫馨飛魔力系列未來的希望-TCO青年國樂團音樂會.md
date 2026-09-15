@@ -29,7 +29,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "7387f1ed-786c-4eb3-8515-6e257a17c25b"
     url: "https://www.tco.gov.taipei/Default.aspx"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

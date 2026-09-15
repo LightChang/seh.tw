@@ -65,7 +65,6 @@ sources:
     recordId: "6a46b101eb4387d3509f0601"
     sourceName: "小巨人音樂"
     url: "www.wingsofpiano.com"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

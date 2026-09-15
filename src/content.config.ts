@@ -25,7 +25,6 @@ const source = z.object({
   recordId: z.string(),
   sourceName: z.string().optional(),
   url: z.string().optional(),
-  lastVerifiedAt: z.string(),
   provides: z.array(z.string()).default([]),
   rejected: z.record(z.any()).optional(),
 });

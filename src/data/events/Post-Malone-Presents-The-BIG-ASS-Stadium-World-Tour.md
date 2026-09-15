@@ -46,7 +46,6 @@ sources:
     recordId: "6a319eb326b3243414ccd38c"
     sourceName: "全國藝文活動資訊系統"
     url: "https://tixcraft.com/"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

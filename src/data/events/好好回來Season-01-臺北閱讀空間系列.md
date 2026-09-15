@@ -50,7 +50,6 @@ sources:
     recordId: "6a7e7b51647ad700eb56ccf1"
     sourceName: "Polly WEI"
     url: "https://www.instagram.com/hi.kyoo/"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -22,7 +22,6 @@ sources:
     recordId: "【當代館ｘ維京國際】《地圖之外》，一起展開屬於自己的旅程"
     sourceName: "臺北當代藝術館 展覽與活動"
     url: "https://www.mocataipei.org.tw/tw/ExhibitionAndEvent/Info/【當代館ｘ維京國際】《地圖之外》，一起展開屬於自己的旅程"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

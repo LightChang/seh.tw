@@ -28,7 +28,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "002e6d09-d386-463b-83ab-1e85d07209c5"
     url: "https://mocatpe.tw/ca04EQvmy"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

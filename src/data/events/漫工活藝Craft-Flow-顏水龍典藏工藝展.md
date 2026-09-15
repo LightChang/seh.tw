@@ -38,7 +38,6 @@ sources:
     recordId: "6a1f30f626b3243414ccce5a"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.ntcri.gov.tw/home/zh-tw"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -51,7 +50,6 @@ sources:
       categoryRaw: "6"
   - id: "nantou-arts-events"
     recordId: "46"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "categoryRaw"
     rejected: 

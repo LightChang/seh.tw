@@ -33,7 +33,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "a375dfc2-f901-44be-b199-db1f7c244a52"
     url: "https://owltale.org.tw/%e9%96%b1%e8%ae%80%e5%af%a6%e6%88%b0%e8%ac%9b%e5%ba%a7%ef%bc%9aai%e6%99%82%e4%bb%a3%ef%bc%8c%e5%ad%a9%e5%ad%90%e6%9c%80%e9%9c%80%e8%a6%81%e7%9a%84%e5%a4%a7%e4%ba%ba/"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

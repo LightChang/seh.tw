@@ -22,7 +22,6 @@ sources:
     recordId: "0Q187603685297429750"
     sourceName: "國家圖書館 活動報名系統"
     url: "https://web.ncl.edu.tw/event/FMEvents/Cont?SId=0Q187603685297429750"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

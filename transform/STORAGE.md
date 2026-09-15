@@ -143,17 +143,15 @@ sources:
   - id: moc-events
     recordId: "6a95b4dc26b32434f435808b"
     url: "https://www.opentix.life/program/…"
-    lastVerifiedAt: "2026-09-09"
     provides: [sessions, performers, popularity]
   - id: taipei-culture-events
     recordId: "f2f45e3d-84c9-45b3-af1d-d1f0145a5e74"
-    lastVerifiedAt: "2026-09-09"
     provides: [description, images, isFree, priceText, ticketUrl]
   - id: ntt-programs
     recordId: "c-fB7WXuJOVnT"
-    lastVerifiedAt: "2026-09-09"
     provides: []
     rejected: { priceText: "500/800" }
+# 確認日不在 md 裡：來源重抓就會變，另存 data/verified-state.ndjson（key = source:recordId）
 ---
 
 （描述內文）

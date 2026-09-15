@@ -15,7 +15,6 @@ sessions:
 sources: 
   - id: "hakka-liudui-events"
     recordId: "6f2272f1dd34bff2"
-    lastVerifiedAt: "2026-09-09"
     provides: 
       - "title"
       - "sessions"

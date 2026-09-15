@@ -119,7 +119,6 @@ sources:
     recordId: "6a04aef826b3243414ccc7fa"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2039666085545889793"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "categoryRaw"
       - "popularity"
@@ -132,7 +131,6 @@ sources:
     recordId: "6a04aef826b3243414ccc7fb"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2043627257385357312"
-    lastVerifiedAt: "2026-09-15"
     provides: []
     rejected: 
       title: "【2026衛武營小時光】韓國傳統說唱故事《水底王國，彼岸之歌》"
@@ -143,7 +141,6 @@ sources:
     recordId: "6a04aef826b3243414ccc7fc"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2043960193015562241"
-    lastVerifiedAt: "2026-09-15"
     provides: []
     rejected: 
       title: "【2026衛武營小時光】茱蒂口琴樂團《跟著口琴去旅行》"
@@ -153,7 +150,6 @@ sources:
     recordId: "6a04af0326b3243414ccc80b"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2043952009527836673"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
     rejected: 
@@ -162,7 +158,6 @@ sources:
       sourceUrl: "https://www.opentix.life/program/2043952009527836673"
   - id: "twtourism-events"
     recordId: "Event_397000000A_007603"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
       - "status"
@@ -187,7 +182,6 @@ sources:
     recordId: "69ae87ab5d400f0008acac58"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69ae87ab5d400f0008acac58"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "priceText"
       - "sourceUrl"
@@ -215,7 +209,6 @@ sources:
     recordId: "69af9180738aff0007321694"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69af9180738aff0007321694"
-    lastVerifiedAt: "2026-09-15"
     provides: []
     rejected: 
       title: "【衛武營小時光】韓國傳統說唱故事《水底王國，彼岸之歌》"
@@ -243,7 +236,6 @@ sources:
     recordId: "69af96e2738aff000732176e"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69af96e2738aff000732176e"
-    lastVerifiedAt: "2026-09-15"
     provides: []
     rejected: 
       title: "【衛武營小時光】紅潮劇集《當亞斯遇見人魚》讀演音樂會——B面歌單"
@@ -281,7 +273,6 @@ sources:
     recordId: "69afb5dff1151f0007a5cdfa"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69afb5dff1151f0007a5cdfa"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
     rejected: 

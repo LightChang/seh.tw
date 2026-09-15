@@ -33,7 +33,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "f35e4a3b-a920-4de7-bb82-b45aef3255cd"
     url: "https://www.maisontempsreves.com/collections/ahchenisdrawing"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -35,7 +35,6 @@ sources:
     recordId: "6a278991647a40ec65297a82"
     sourceName: "狂人音樂演藝經紀有限公司"
     url: "http://www.rockempire.com.tw"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "popularity"
       - "performers"
@@ -56,7 +55,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "6673cea9-4951-406d-b6ea-9e3630dd504b"
     url: "http://www.rockempire.com.tw/"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -35,7 +35,6 @@ sources:
     recordId: "20191212000002"
     sourceName: "國家文化資產網"
     url: "http://nchdb.boch.gov.tw/assets/advanceSearch/ote/20191212000002"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "name"
       - "images"
@@ -51,7 +50,6 @@ sources:
     recordId: "20191212000002"
     sourceName: "國家文化資產網"
     url: "http://nchdb.boch.gov.tw/assets/advanceSearch/ote/20191212000002"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "level"
       - "history"

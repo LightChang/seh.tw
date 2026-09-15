@@ -39,7 +39,6 @@ sources:
     recordId: "6a28644d26b3243414ccd09d"
     sourceName: "全國藝文活動資訊系統"
     url: "www.chipolin.org"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

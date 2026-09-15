@@ -27,7 +27,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "2940f8d7-6c6b-49e2-b2bb-762f88c3fbd0"
     url: "https://ayda.tw/"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

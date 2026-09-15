@@ -22,7 +22,6 @@ sessions:
 sources: 
   - id: "nantou-arts-events"
     recordId: "120"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "categoryRaw"

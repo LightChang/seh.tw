@@ -2,13 +2,14 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
-import { allEvents, isIndexable, builtCategories } from '../../lib/build-data.mjs';
+import { allEvents, isIndexable, builtCategories, verifiedState } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
 }
 
 const { e } = Astro.props;
+const verified = await verifiedState();
 const sessions = e.sessions;
 const first = sessions[0];
 const last = sessions[sessions.length - 1];
@@ -151,7 +152,9 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
           <li>
             <span class="sid">{s.sourceName || s.id}</span>
             <span class="sp">{s.provides.length ? `提供 ${s.provides.join('、')}` : '未被採用'}</span>
-            <time class="tabular sd">{s.lastVerifiedAt}</time>
+            {verified.get(`${s.id}:${s.recordId}`) && (
+              <time class="tabular sd">{verified.get(`${s.id}:${s.recordId}`)}</time>
+            )}
           </li>
         ))}</ul>
         <p>活動內容以原始出處為準。<a href="/about">資料怎麼來的</a></p>

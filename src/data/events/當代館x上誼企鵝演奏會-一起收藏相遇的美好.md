@@ -22,7 +22,6 @@ sources:
     recordId: "【當代館ｘ上誼】《企鵝演奏會》，一起收藏相遇的美好！"
     sourceName: "臺北當代藝術館 展覽與活動"
     url: "https://www.mocataipei.org.tw/tw/ExhibitionAndEvent/Info/【當代館ｘ上誼】《企鵝演奏會》，一起收藏相遇的美好！"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

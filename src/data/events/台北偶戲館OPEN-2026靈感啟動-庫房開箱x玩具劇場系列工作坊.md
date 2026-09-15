@@ -37,7 +37,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "8fe25067-d01d-4faa-82dc-a4826e675ba7"
     url: "https://www.pact.taipei/eventCT.aspx?id=1873&pid=1274"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

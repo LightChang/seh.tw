@@ -24,7 +24,6 @@ sources:
     recordId: "6aa84c9426b324165c32e400"
     sourceName: "年代"
     url: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1FMF3AD"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

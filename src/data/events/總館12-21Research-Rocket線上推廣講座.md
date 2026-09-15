@@ -16,7 +16,6 @@ sources:
   - id: "taichung-culture-events"
     recordId: "197"
     url: "https://docs.google.com/forms/d/1wtKV_IO5tNcxYwvPw2SLzjz8NRrUW_U5GO0_c_qzBbA/viewform?edit_requested=true"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "sessions"

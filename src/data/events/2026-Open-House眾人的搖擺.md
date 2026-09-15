@@ -75,7 +75,6 @@ sources:
     recordId: "69dd929632116a0007805be9"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69dd929632116a0007805be9"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

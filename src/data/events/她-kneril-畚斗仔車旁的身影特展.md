@@ -29,7 +29,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "29971601-e0a7-47bc-aa8c-ea501183252f"
     url: "https://www.atayal.ntpc.gov.tw/"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"
@@ -52,7 +51,6 @@ sources:
           lng: 121.55145
   - id: "twtourism-events"
     recordId: "Event_382000000A_003892"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "status"
       - "sessions"

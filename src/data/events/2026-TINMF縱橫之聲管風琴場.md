@@ -34,7 +34,6 @@ sources:
     recordId: "6a6cd5a026b32427d0604307"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2080116368828145664"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "popularity"
@@ -46,7 +45,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "13828efc-3e50-4c35-87fa-645056ad27c4"
     url: "https://www.npac-weiwuying.org/programs/6a30e8c25815080007eea795"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
       - "images"
@@ -71,7 +69,6 @@ sources:
     recordId: "6a30e8c25815080007eea795"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/6a30e8c25815080007eea795"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "sourceUpdatedAt"
     rejected: 

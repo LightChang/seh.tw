@@ -47,7 +47,6 @@ sources:
     recordId: "696fe8b126b3243b1ca0c119"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.chimeimuseum.org/event/62b96425d5e25"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

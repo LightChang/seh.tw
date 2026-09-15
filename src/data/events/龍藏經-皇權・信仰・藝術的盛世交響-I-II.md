@@ -33,7 +33,6 @@ sources:
   - id: "moc-events"
     recordId: "6a28640c26b3243414ccd042"
     sourceName: "全國藝文活動資訊系統"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -48,7 +47,6 @@ sources:
     recordId: "04014505"
     sourceName: "國立故宮博物院 活動與展覽資料"
     url: "https://www.npm.gov.tw/Exhibition-Content.aspx?sno=04014505&l=1&type=&cat="
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "categoryRaw"
       - "sourceUrl"

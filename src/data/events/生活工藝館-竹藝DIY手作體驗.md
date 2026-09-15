@@ -83,7 +83,6 @@ sources:
     recordId: "68965acc26b324477c8a14c2"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.ntcri.gov.tw/home/zh-tw/activitysoonlist/7490939"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -96,7 +95,6 @@ sources:
       categoryRaw: "7"
   - id: "nantou-arts-events"
     recordId: "20"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "categoryRaw"
       - "priceText"

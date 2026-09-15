@@ -28,7 +28,6 @@ sources:
     recordId: "6a5125ec26b32427d0604176"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2070072136511918080"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "categoryRaw"
@@ -41,7 +40,6 @@ sources:
     recordId: "c-27AIfJsCgTb"
     sourceName: "臺中國家歌劇院 節目資料"
     url: "https://www.npac-ntt.org/program/events/c-27AIfJsCgTb"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "isFree"
       - "priceText"

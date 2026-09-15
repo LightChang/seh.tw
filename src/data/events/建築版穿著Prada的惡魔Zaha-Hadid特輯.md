@@ -33,7 +33,6 @@ sources:
     recordId: "6a3a466e647a40ec65297aaa"
     sourceName: "新月社"
     url: "https://artfocus.com.tw/?,1300"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "popularity"
       - "performers"
@@ -53,7 +52,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "2428d0bf-6fee-42f7-84a8-757a3c409b77"
     url: "https://artfocus.com.tw/?,1300"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -47,7 +47,6 @@ sources:
     recordId: "583DE2B2364F19DF"
     sourceName: "國立海洋生物博物館 特展介紹"
     url: "https://www.nmmba.gov.tw/News_Content.aspx?n=3BA711487C292039&s=583DE2B2364F19DF"
-    lastVerifiedAt: "2026-09-09"
     provides: 
       - "title"
       - "description"

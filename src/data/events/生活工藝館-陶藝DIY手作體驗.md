@@ -73,7 +73,6 @@ sources:
     recordId: "68950a2f26b324477c8a1474"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.ntcri.gov.tw/home/zh-tw/activitysoonlist/7490912"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -87,7 +86,6 @@ sources:
       priceText: "備註：需燒製 運費另計。"
   - id: "nantou-arts-events"
     recordId: "18"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "categoryRaw"
       - "priceText"

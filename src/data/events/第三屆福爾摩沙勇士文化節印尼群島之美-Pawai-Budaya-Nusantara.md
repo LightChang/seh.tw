@@ -29,7 +29,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "7510d46e-546c-4b74-8e8b-72d2e70eed75"
     url: "https://drive.google.com/file/d/1ozkCEbB5bT_AIV173BNRHSNibTGM2AuF/view?usp=sharing"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

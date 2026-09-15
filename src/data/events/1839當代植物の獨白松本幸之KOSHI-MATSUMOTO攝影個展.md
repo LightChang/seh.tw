@@ -33,7 +33,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "864edca2-15d7-489c-a7c6-b10436febb84"
     url: "https://www.1839cg.com/archives/8520"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

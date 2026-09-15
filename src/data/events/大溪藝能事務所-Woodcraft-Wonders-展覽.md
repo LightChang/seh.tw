@@ -35,7 +35,6 @@ sources:
   - id: "moc-events"
     recordId: "698e24b626b32454e437c968"
     sourceName: "全國藝文活動資訊系統"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

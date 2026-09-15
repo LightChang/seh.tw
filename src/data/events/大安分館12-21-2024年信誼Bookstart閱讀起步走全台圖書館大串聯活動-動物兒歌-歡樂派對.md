@@ -15,7 +15,6 @@ sessions:
 sources: 
   - id: "taichung-culture-events"
     recordId: "226"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "sessions"

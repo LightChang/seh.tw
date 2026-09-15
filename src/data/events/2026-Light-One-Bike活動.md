@@ -25,7 +25,6 @@ sources:
   - id: "twtourism-events"
     recordId: "Event_A15010000H_081879"
     url: "https://www.taiwantriathlon.com/pages/2026-dapeng-bay-cycling-series?fbclid=IwdGRjcASMlRRjbGNrBIyUz2V4dG4DYWVtAjExAHNydGMGYXBwX2lkDDM1MDY4NTUzMTcyOAABHnqwLKycGKNCylM9-k8yI7-WM6SU-0-fcoJHj6JfNiTG2-S7cpEbHBjGH1zH_aem_WN_YS2mvoJwk3usZUIjGkg"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

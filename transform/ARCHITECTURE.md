@@ -287,17 +287,15 @@ sessions:
 sources:
   - id: moc-events
     recordId: "6a95b4dc26b32434f435808b"
-    lastVerifiedAt: "2026-09-09"
     provides: [sessions, performers, popularity]   # 哪些欄位採用了這個來源
   - id: taipei-culture-events
     recordId: "f2f45e3d-84c9-45b3-af1d-d1f0145a5e74"
-    lastVerifiedAt: "2026-09-09"
     provides: [description, images, isFree, priceText, ticketUrl]
   - id: ntt-programs
     recordId: "c-fB7WXuJOVnT"
-    lastVerifiedAt: "2026-09-09"
     provides: []
     rejected: { priceText: "500/800" }             # 落選值也留著
+# 確認日不在 md 裡：來源重抓就會變，另存 data/verified-state.ndjson（key = source:recordId）
 ```
 
 `rejected` 保留落選值不是為了好看——沒有它就答不出「為什麼這個活動的場次是 3 場而不是 1 場」，人工 review 時也看不到分歧在哪。

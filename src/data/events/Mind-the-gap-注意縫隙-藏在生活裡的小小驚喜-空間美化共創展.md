@@ -17,7 +17,6 @@ sources:
   - id: "taichung-culture-events"
     recordId: "851"
     url: "https://www.accupass.com/event/2407151010386344274490"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "images"

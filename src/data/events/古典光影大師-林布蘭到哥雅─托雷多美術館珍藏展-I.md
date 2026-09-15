@@ -30,7 +30,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "0500ee87-c25c-4bae-8823-a586e12d6a17"
     url: "https://www.fubonartmuseum.org/ExhibitionDetail?PKNO=X008B01L"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

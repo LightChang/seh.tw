@@ -22,7 +22,6 @@ sources:
     recordId: "event-727"
     sourceName: "臺南市美術館 展覽與活動"
     url: "https://www.tnam.museum/event/detail/727"
-    lastVerifiedAt: "2026-09-13"
     provides: 
       - "title"
       - "categoryRaw"

@@ -22,7 +22,6 @@ sources:
     recordId: "【當代館ｘ采實童書】《永遠的花子奶奶》，一場溫暖的回憶旅行"
     sourceName: "臺北當代藝術館 展覽與活動"
     url: "https://www.mocataipei.org.tw/tw/ExhibitionAndEvent/Info/【當代館ｘ采實童書】《永遠的花子奶奶》，一場溫暖的回憶旅行"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

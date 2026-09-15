@@ -24,7 +24,6 @@ sources:
     recordId: "12244"
     sourceName: "國立臺灣博物館 活動資料"
     url: "https://event.culture.tw/mocweb/reg/NTM/Detail.init.ctr?actId=12244"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

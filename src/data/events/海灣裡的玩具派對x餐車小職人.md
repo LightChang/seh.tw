@@ -19,7 +19,6 @@ sources:
   - id: "taichung-culture-events"
     recordId: "311"
     url: "https://www.facebook.com/share/p/heYA1BXZGkSqdF6K/"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "images"

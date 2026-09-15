@@ -37,7 +37,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "784681df-4982-41c4-947e-cde76daf6af7"
     url: "https://www.facebook.com/SAimprov/"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

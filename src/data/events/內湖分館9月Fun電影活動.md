@@ -15,7 +15,6 @@ sources:
     recordId: "9705077"
     sourceName: "臺北市立圖書館"
     url: "https://www.gov.taipei/News_Content.aspx?n=B1167F83E1FE0CD9&s=E99F445FC81DECA8"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -36,7 +36,6 @@ sources:
     recordId: "6a4f3aa6647ad700eb56ccb6"
     sourceName: "THE 201 ART"
     url: "https://www.facebook.com/THE201ART"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "popularity"
       - "organizers"
@@ -52,7 +51,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "b202657f-4c2b-4757-909d-d08b2bb275e1"
     url: "https://www.facebook.com/THE201ART"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

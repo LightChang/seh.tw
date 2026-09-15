@@ -34,7 +34,6 @@ sources:
     recordId: "6a6cd5a026b32427d0604305"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2080111167063805953"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "popularity"
@@ -46,7 +45,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "1821ff33-4091-4b26-bec6-d082cf434a7f"
     url: "https://www.opentix.life/event/2080111167063805953"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
       - "images"

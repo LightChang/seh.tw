@@ -38,7 +38,6 @@ sources:
   - id: "moc-events"
     recordId: "6a86ae58eb436c2506e0fbb5"
     sourceName: "張瑋特"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

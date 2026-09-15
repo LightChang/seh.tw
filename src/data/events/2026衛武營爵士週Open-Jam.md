@@ -102,7 +102,6 @@ sources:
     recordId: "6a2f5cc5ac6def0007e9a8c4"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/6a2f5cc5ac6def0007e9a8c4"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

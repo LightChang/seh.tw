@@ -44,7 +44,6 @@ sources:
     recordId: "6a28643026b3243414ccd069"
     sourceName: "全國藝文活動資訊系統"
     url: "https://museum.post.gov.tw/post/Postal_Museum/museum/index.jsp?ID=1525402172794&control_type=page&ne"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -59,7 +58,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "aacf2689-1ad8-4240-83a9-c9ccba1da572"
     url: "https://museum.post.gov.tw/post/Postal_Museum/museum/index.jsp?ID=1525402172794&control_type=page&news_no=66633&news_cat=10101%201"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
       - "categoryRaw"

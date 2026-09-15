@@ -25,7 +25,6 @@ sources:
     recordId: "20090423000005"
     sourceName: "國家文化資產網"
     url: "http://nchdb.boch.gov.tw/assets/advanceSearch/traditionalPerformingart/20090423000005"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "name"
       - "images"
@@ -42,7 +41,6 @@ sources:
     recordId: "20090423000005"
     sourceName: "國家文化資產網"
     url: "http://nchdb.boch.gov.tw/assets/advanceSearch/traditionalPerformingart/20090423000005"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "level"
       - "history"

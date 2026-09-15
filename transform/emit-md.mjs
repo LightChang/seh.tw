@@ -137,6 +137,8 @@ function pagePathOf(file) {
 }
 let emitPrev = null;
 const emitNow = new Map();
+// 活動頁「資料來源」區塊顯示的確認日，key 是 `source:recordId`。只有活動頁用得到。
+const verifiedNow = new Map();
 
 async function writeIfChanged(file, content) {
   let changed = true;
@@ -371,7 +373,7 @@ async function main() {
   const catSourceOf = (c, out) => membersOf(c)
     .find((m) => m.categoryRaw === out.categoryRaw)?._source ?? '';
 
-  function project(c, fields) {
+  function project(c, fields, { trackVerified = false } = {}) {
     const members = membersOf(c);
     const out = {}, provides = new Map(), rejected = new Map();
     for (const f of fields) {
@@ -387,6 +389,13 @@ async function main() {
         rejected.get(r.m._id)[f] = typeof r.v === 'string' ? r.v.slice(0, 120) : r.v;
       }
     }
+    // 確認日不進 md：來源每次重抓都會變，放進 md 就是幾千個檔案的 diff，
+    // 也會讓 emit-state 的 changedAt（sitemap lastmod）跟著說謊。另存 verified-state。
+    if (trackVerified) {
+      for (const m of members) {
+        verifiedNow.set(`${m._source}:${m._sourceRecordId}`, String(m._fetchedAt).slice(0, 10));
+      }
+    }
     const sources = members.slice()
       .sort((a, b) => `${a._source}:${a._sourceRecordId}`.localeCompare(`${b._source}:${b._sourceRecordId}`))
       .map((m) => ({
@@ -394,7 +403,6 @@ async function main() {
       recordId: String(m._sourceRecordId),
       sourceName: m.sourceName,
       url: m.sourceUrl,
-      lastVerifiedAt: String(m._fetchedAt).slice(0, 10),
       provides: provides.get(m._id) ?? [],
       rejected: rejected.get(m._id),
     }));
@@ -420,7 +428,7 @@ async function main() {
   await mkdir(eventDir, { recursive: true });
   const eventDirKeep = new Set();
   for (const c of eventClusters) {
-    const { out, sources } = project(c, EVENT_FIELDS);
+    const { out, sources } = project(c, EVENT_FIELDS, { trackVerified: true });
     if (!out.title || !out.sessions?.length) continue;
 
     // 場次補上解析到的 venueId，活動頁才連得到場地頁
@@ -607,6 +615,9 @@ async function main() {
   await writeFile(DATA('emit-state.ndjson'),
     [...emitNow].sort((a, b) => a[0].localeCompare(b[0]))
       .map(([p, changedAt]) => JSON.stringify({ path: p, changedAt })).join('\n') + '\n', 'utf-8');
+  await writeFile(DATA('verified-state.ndjson'),
+    [...verifiedNow].sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([key, verifiedAt]) => JSON.stringify({ key, verifiedAt })).join('\n') + '\n', 'utf-8');
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) await main();

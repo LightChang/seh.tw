@@ -21,7 +21,6 @@ sources:
     recordId: "e397414e-16f5-4316-a1c0-61850eec90c9"
     sourceName: "玉山國家公園管理處 活動列車"
     url: "https://www.ysnp.gov.tw/ActivityInfo/C002000?ID=e397414e-16f5-4316-a1c0-61850eec90c9&PageIndex=3&PageType=1"
-    lastVerifiedAt: "2026-09-13"
     provides: 
       - "title"
       - "description"

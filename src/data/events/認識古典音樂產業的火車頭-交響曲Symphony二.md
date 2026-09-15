@@ -54,7 +54,6 @@ sources:
     recordId: "6a3a4746647a40ec65297aac"
     sourceName: "新月社"
     url: "https://artfocus.com.tw/?,1296"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

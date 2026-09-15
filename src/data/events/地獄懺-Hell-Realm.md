@@ -39,7 +39,6 @@ sources:
     recordId: "6a319eb526b3243414ccd398"
     sourceName: "全國藝文活動資訊系統"
     url: "https://reurl.cc/Q2M1R5"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

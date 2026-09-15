@@ -31,7 +31,6 @@ sources:
     recordId: "6a2b070526b3243414ccd1ad"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.legacy.com.tw/article/page/taichung/3150"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

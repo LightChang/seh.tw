@@ -31,7 +31,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "0a193102-c55e-49eb-b7db-a5a9961635d7"
     url: "https://ticybf.moc.gov.tw/home/zh-tw"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -54,7 +53,6 @@ sources:
           lng: 120.29922
   - id: "twtourism-events"
     recordId: "Event_397000000A_007989"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "status"
       - "sessions"

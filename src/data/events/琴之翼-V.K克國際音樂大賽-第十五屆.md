@@ -31,7 +31,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "f0d2c72b-fd5c-43cb-8b6f-9916da85416c"
     url: "https://www.wingsofpiano.com"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"

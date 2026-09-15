@@ -32,7 +32,6 @@ sources:
   - id: "taipei-culture-events"
     recordId: "b68d32f7-cb2f-4261-9d9b-38ed42fe97ef"
     url: "https://www.accupass.com/event/2608120924545078066000"
-    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

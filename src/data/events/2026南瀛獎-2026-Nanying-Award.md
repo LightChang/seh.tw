@@ -33,7 +33,6 @@ sources:
   - id: "tainan-culture-events"
     recordId: "24336"
     url: "https://culture.tainan.gov.tw/act_month/Details?Parser=99,5,44,,,,24336"
-    lastVerifiedAt: "2026-09-12"
     provides: 
       - "title"
       - "description"
