@@ -11,7 +11,8 @@
 //   node transform/review.mjs show <id>          看單筆的完整內容
 //   node transform/review.mjs <id> merge|split|skip
 //   node transform/review.mjs <id> alias <目標場館名>
-//   node transform/review.mjs <id> reject
+//   node transform/review.mjs <id> reject                 這個字串根本不是場館
+//   node transform/review.mjs <id> defer <原因>           是場館，但名錄與來源都沒有資料
 //   node transform/review.mjs <id> name <建築名>
 //   node transform/review.mjs <id> map <canonical 分類>
 //   node transform/review.mjs <id> notacat            這個值不是分類（公告類型、版面欄位名）
@@ -82,6 +83,14 @@ if (!arg1) {
   for (const [k, list] of [...byKind].sort((a, b) => b[1].length - a[1].length)) {
     console.log(`  ${String(list.length).padStart(5)}  ${k}`);
   }
+  // 暫緩的不能變成隱形——它們是「判過了、等來源」，不是「不存在」
+  const deferred = await readJson(OV('venue-deferred.json'), {});
+  const n = Object.keys(deferred).length;
+  if (n) {
+    const sessions = Object.values(deferred).reduce((t, d) => t + (d.sessions ?? 0), 0);
+    console.log(`\n另有 ${n} 個場館名暫緩（${sessions} 場次），等來源補地址：`
+      + `overrides/venue-deferred.json`);
+  }
   console.log('\n看某一種：node transform/review.mjs <kind>');
   process.exit(0);
 }
@@ -113,11 +122,19 @@ if (arg1 === 'suggest') {
     // 場地名常常是「館名 + 行政區 + 兩個空白 + 廳室」，取第一段當關鍵字
     const head = (raw.match(/^.{2,12}?(?:分館|圖書館|文化中心|藝術中心|中心|館|園區|廳)/) ?? [raw])[0];
     const k = norm(head);
+    // 包含關係要有份量才算。名錄裡有「蘭」「園」「愛」這種一兩個字的條目，
+    // 不設下限的話它們會match到幾乎所有查詢，把真正的候選淹掉。
+    const MIN_OVERLAP = 3;
+    const seen = new Set();
     const hits = registry.filter((v) => {
       if (q.payload.city && v.city && v.city !== q.payload.city) return false;
       const n = norm(v.name);
-      return n.includes(k) || k.includes(n);
-    }).slice(0, 4);
+      if (!n || Math.min(n.length, k.length) < MIN_OVERLAP) return false;
+      if (!(n.includes(k) || k.includes(n))) return false;
+      if (seen.has(v.name)) return false;      // 同名分館只提一次
+      seen.add(v.name);
+      return true;
+    }).sort((a, b) => norm(b.name).length - norm(a.name).length).slice(0, 4);
     console.log(`${q.id}  ${String(q.payload.sessions).padStart(3)} 場次  ${raw}`);
     if (!hits.length) console.log('      名錄裡找不到候選 → 可能要 reject，或它本來就不是場館');
     for (const h of hits) {
@@ -191,6 +208,23 @@ switch (verdict) {
       console.log(`已寫入 overrides/venue-rejected.json：${item.payload.nameRaw}`);
     }
     break;
+  // 「查過了，這是真的場館，但名錄裡沒有、來源也沒給地址或座標」。
+  // 跟 reject 不一樣——reject 是「這個字串根本不是場館」（線上、Zoom、國外團體）。
+  // 判過的移出待辦，但留在 overrides/venue-deferred.json 裡看得到；
+  // 哪天來源補了地址，關聯會自己接上，不會被這份檔案擋住。
+  case 'defer':
+    if (!value) { console.error('要給原因：… defer <為什麼現在解不了>'); process.exit(1); }
+    {
+      const cur = await readJson(OV('venue-deferred.json'), {});
+      cur[item.payload.nameRaw] = {
+        city: item.payload.city ?? null, sessions: item.payload.sessions ?? null,
+        reason: value, decidedAt: today,
+      };
+      await writeJson(OV('venue-deferred.json'),
+        Object.fromEntries(Object.entries(cur).sort(([a], [b]) => a.localeCompare(b))));
+      console.log(`已寫入 overrides/venue-deferred.json：${item.payload.nameRaw}（${value}）`);
+    }
+    break;
   case 'name':
     if (!value) { console.error('要給建築名：… name <建築名>'); process.exit(1); }
     await record('venue-halls.json', (o) => {
@@ -213,7 +247,7 @@ switch (verdict) {
     console.log('略過，不寫入 overrides（下次重算仍會出現）');
     break;
   default:
-    console.error(`不認得的判定「${verdict}」。可用：merge split alias reject name map notacat skip`);
+    console.error(`不認得的判定「${verdict}」。可用：merge split alias reject defer name map notacat skip`);
     process.exit(1);
 }
 

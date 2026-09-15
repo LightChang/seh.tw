@@ -178,6 +178,10 @@ async function main() {
 
   const aliases = await readJson(path.join(OVERRIDES_DIR, 'venue-aliases.json'), {});
   const rejected = new Set(await readJson(path.join(OVERRIDES_DIR, 'venue-rejected.json'), []));
+  // 判過了、是真的場館，但名錄沒有而且來源也沒給地址座標。移出待辦但不當成 rejected
+  // ——哪天來源補了地址，下面的流程照樣會把它接起來，不受這份檔案影響。
+  const deferred = new Set(Object.keys(
+    await readJson(path.join(OVERRIDES_DIR, 'venue-deferred.json'), {})));
   const halls = await readJson(path.join(OVERRIDES_DIR, 'venue-halls.json'), { buildings: {} });
 
   // ── 1. 名錄場館 ──────────────────────────────────────────────────
@@ -501,10 +505,11 @@ async function main() {
   // 自然會浮上來，這是優先清單不是完整登記簿。
   const MIN_IMPACT = 2;
   const todo = [];
-  let suppressed = 0;
+  let suppressed = 0, deferredCount = 0;
   for (const [k, e] of [...seen].sort((a, b) => b[1].sessions - a[1].sessions)) {
     const res = resolution.get(k);
     if (res?.state === 'resolved' || res?.state === 'rejected') continue;
+    if (deferred.has(e.nameRaw)) { deferredCount += 1; continue; }
     if (e.sessions < MIN_IMPACT) { suppressed += 1; continue; }
     todo.push({
       id: `rq_venue_${todo.length + 1}`,
@@ -542,6 +547,9 @@ async function main() {
     .filter((q) => !String(q.id).startsWith('rq_venue_') && !String(q.id).startsWith('rq_bld_'));
   await writeFile(DATA('review-queue.ndjson'),
     [...existing, ...todo].map((q) => JSON.stringify(q)).join('\n') + '\n', 'utf-8');
+  if (deferredCount) {
+    console.log(`  暫緩 ${deferredCount} 個場館名（overrides/venue-deferred.json，等來源補地址）`);
+  }
   console.log(`待辦 +${todo.length}（venue-unmatched / venue-ambiguous / building-unnamed）`
     + (suppressed ? `，另有 ${suppressed} 個只影響 1 個場次的未列出` : ''));
   console.log('寫入 data/relations.ndjson、venues.ndjson、buildings.json');

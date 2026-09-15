@@ -24,6 +24,7 @@
   "lng": 121.515033,
   "venueIds": [
    "ent_cip-museums_1",
+   "ent_moc-emap-poi_ee7043b09c01c424",
    "ven_derived_國立臺灣博物館本館3樓自然教室",
    "ven_derived_國立臺灣博物館本館3樓自然教室-名額剩-5-名",
    "ven_derived_國立臺灣博物館臺博館本館",
@@ -490,6 +491,15 @@
   ]
  },
  {
+  "id": "bld_22.6780_120.5012",
+  "name": "繫。本屋",
+  "lat": 22.67797,
+  "lng": 120.501205,
+  "venueIds": [
+   "ent_moc-emap-poi_a0a69cd8906a7201"
+  ]
+ },
+ {
   "id": "bld_25.0477_121.5613",
   "name": "台北偶戲館",
   "lat": 25.047741,
@@ -653,6 +663,15 @@
   "lng": 120.529851,
   "venueIds": [
    "ent_moc-emap-poi_f8c88eb0135b3ebf"
+  ]
+ },
+ {
+  "id": "bld_24.3020_120.5855",
+  "name": "海灣繪本館",
+  "lat": 24.301983,
+  "lng": 120.585464,
+  "venueIds": [
+   "ent_moc-emap-poi_fa53a70d22d6b4f9"
   ]
  },
  {
@@ -1304,6 +1323,15 @@
   "lng": 120.705,
   "venueIds": [
    "ent_national-public-libraries_dd30abb852530637"
+  ]
+ },
+ {
+  "id": "bld_24.1458_120.6852",
+  "name": "國立公共資訊圖書館精武分館",
+  "lat": 24.1458,
+  "lng": 120.6852,
+  "venueIds": [
+   "ent_national-public-libraries_e3261e79180bc18c"
   ]
  },
  {
