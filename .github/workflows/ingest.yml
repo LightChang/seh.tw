@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
     inputs:
       force:
-        description: '強制重抓的 source id（空白＝只抓到期的）'
+        description: '強制重抓的 source id，多支用空白分隔（空白＝只抓到期的）'
         required: false
 
 permissions:
@@ -37,9 +37,10 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 50   # rebase 要看得到 origin 的近期歷史；全歷史每小時 clone 划不來
-      # 用 runner 機器上的 node，不用 setup-node：在這台 Mac 上它卡在下載、10 分鐘沒有輸出。
+      # 用 runner 機器上的 node（nvm v26，寫在 ~/actions-runner/seh.tw/.path 最前面），
+      # 不用 setup-node：在這台 Mac 上它卡在下載、10 分鐘沒有輸出。
       - name: 確認 node 版本
-        run: node -e "const m = +process.versions.node.split('.')[0]; console.log(process.version); if (m < 22) process.exit(1)"
+        run: node -e "const m = +process.versions.node.split('.')[0]; console.log(process.version); if (m < 26) process.exit(1)"
       # ~/.npm 裡有 root 擁有的快取檔（EACCES），npm 抓不到的 optional 套件會靜靜漏掉。
       # runner 用自己的快取目錄，不碰使用者的 ~/.npm。
       - run: npm ci
@@ -52,7 +53,10 @@ jobs:
         env:
           FORCE: ${{ inputs.force }}
         run: |
-          node transform/scheduler.mjs ${FORCE:+--force "$FORCE"} | tee run.log
+          # pipefail：沒有它，scheduler 失敗會被 tee 的 exit 0 蓋掉，job 顯示成功
+          set -o pipefail -o noglob
+          args=(); for id in $FORCE; do args+=(--force "$id"); done   # 空白分隔可指定多支
+          node transform/scheduler.mjs "${args[@]}" | tee run.log
           grep -q '^PIPELINE=1' run.log && echo 'changed=true' >> "$GITHUB_OUTPUT" || echo 'changed=false' >> "$GITHUB_OUTPUT"
 
       # 沒有任何來源變動就到此為止：不跑後續、不 build、不 commit、不部署

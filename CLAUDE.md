@@ -6,7 +6,7 @@
 ## 收手前一定要跑
 
 ```
-npm test           # 261 條，任何一條紅就是還沒做完
+npm test           # 264 條，任何一條紅就是還沒做完
 npm run pipeline   # 連跑第二次要「寫入 0」，有數字就是輸出不穩定
 npm run links      # build 之後，站內連結不能有壞的
 ```
