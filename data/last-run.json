@@ -1,10 +1,7 @@
 {
-  "at": "2026-09-15T19:55:20+08:00",
-  "attempted": 4,
-  "changed": [
-    "taipei-gov-hot-events",
-    "moc-events"
-  ],
+  "at": "2026-09-15T20:09:31+08:00",
+  "attempted": 3,
+  "changed": [],
   "failed": [],
   "alerting": [],
   "skipped": []

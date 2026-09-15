@@ -145,3 +145,6 @@
 {"at":"2026-09-15T19:55:20+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":432}
 {"at":"2026-09-15T19:55:20+08:00","id":"chiayi-county-event-board","outcome":"unchanged","via":"fetch","count":7,"ms":435}
 {"at":"2026-09-15T19:55:20+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1588,"ms":1935}
+{"at":"2026-09-15T20:09:31+08:00","id":"hsinchu-city-culture-events","outcome":"unchanged","via":"fetch","count":68,"ms":155}
+{"at":"2026-09-15T20:09:31+08:00","id":"kaohsiung-buskers","outcome":"unchanged","via":"fetch","count":124,"ms":353}
+{"at":"2026-09-15T20:09:31+08:00","id":"tainan-culture-events","outcome":"unchanged","via":"fetch","count":51,"ms":397}
