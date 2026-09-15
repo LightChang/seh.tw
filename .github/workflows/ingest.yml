@@ -4,7 +4,9 @@ name: ingest
 
 on:
   schedule:
-    - cron: '0 * * * *'   # UTC 整點；台灣沒有日光節約，等於每個台灣整點
+    # 不排在整點：GitHub 文件說整點負載高，排程會延遲或被丟掉。上線當天整點排程
+    # 11 小時只觸發 1 次（2026-09-15）。scheduler 自己判斷到期，分鐘數不影響邏輯。
+    - cron: '23 * * * *'
   workflow_dispatch:
     inputs:
       force:
