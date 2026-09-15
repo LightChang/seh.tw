@@ -2,7 +2,7 @@
 // 70 支 normalize 腳本的共用解析。難度集中在這裡，個別腳本才會薄。
 // 所有日期格式都是從 ingest/raw/ 實測出來的，不是猜的——新增格式前先確認真的有來源在用。
 
-import { readFile, writeFile, mkdir } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -553,8 +553,38 @@ export async function fetchedAtOf(sourceId) {
   return `${t.slice(0, 19)}+08:00`;
 }
 
+/**
+ * 讀 raw，但拒絕讀「比 CI 最後一次抓取還舊」的 raw。
+ *
+ * 上線後 CI 每小時抓取並 commit observation 與 schedule-state，本機的 ingest/raw/ 不進版控、
+ * 不會跟著更新。拿舊 raw 跑 normalize，CI 新增的記錄就會被標成 disappeared（2026-09-15 踩到，
+ * 20 支來源，被健康檢查擋下才發現）。
+ *
+ * 判準：雜湊與 schedule-state 的 contentHash 不同，**而且** raw 的 mtime 早於 lastFetchedAt。
+ * 只看雜湊不行——`node ingest/sources/<id>.mjs` 手動重抓會寫 raw 但不更新 schedule-state。
+ */
 export async function readRaw(sourceId) {
-  return JSON.parse(await readFile(path.join(RAW_DIR, `${sourceId}.json`), 'utf-8'));
+  const file = path.join(RAW_DIR, `${sourceId}.json`);
+  const body = await readFile(file, 'utf-8');
+  const st = (await scheduleState())[sourceId];
+  if (st?.contentHash && st.lastFetchedAt
+    && createHash('sha256').update(body).digest('hex') !== st.contentHash
+    && (await stat(file)).mtimeMs < Date.parse(st.lastFetchedAt)) {
+    const err = new Error(`${sourceId} 的 raw 比 schedule-state 記錄的最後抓取（${st.lastFetchedAt}）舊`);
+    err.code = 'STALE_RAW';
+    throw err;
+  }
+  return JSON.parse(body);
+}
+
+let SCHEDULE_STATE = null;
+async function scheduleState() {
+  if (!SCHEDULE_STATE) {
+    try {
+      SCHEDULE_STATE = JSON.parse(await readFile(path.join(ROOT, 'data', 'schedule-state.json'), 'utf-8'));
+    } catch { SCHEDULE_STATE = {}; }
+  }
+  return SCHEDULE_STATE;
 }
 
 /**
@@ -642,6 +672,8 @@ export function redactPersonal(r) {
   return out;
 }
 
+const hashOf = (v) => createHash('sha256').update(JSON.stringify(v)).digest('hex').slice(0, 16);
+
 export async function writeObservations(sourceId, records, { entity = 'event' } = {}) {
   const errors = [];
   const ok = [];
@@ -671,19 +703,24 @@ export async function writeObservations(sourceId, records, { entity = 'event' } 
   for (const r of ok) {
     const id = `${r._source}:${r._sourceRecordId}`;
     seen.add(id);
-    const hash = createHash('sha256').update(JSON.stringify(r)).digest('hex').slice(0, 16);
+    // _fetchedAt 不算內容：來源重抓一次、內容沒變，不能讓整支記錄都算「變更」。
+    const { _fetchedAt, ...content } = r;
+    const hash = hashOf(content);
     const old = prev.get(id);
+    // 2026-09-15 以前的雜湊含 _fetchedAt。用舊值的 _fetchedAt 重算一次比得上，就是內容沒變。
+    const sameContent = old && (old.contentHash === hash
+      || old.contentHash === hashOf({ ...r, _fetchedAt: old.payload?._fetchedAt }));
     if (!old) {
       added += 1;
       out.push({ id, sourceRecordId: String(r._sourceRecordId), entityKind: r._entity ?? entity,
         contentHash: hash, firstObservedAt: day(r), lastVerifiedAt: day(r), lastChangedAt: day(r),
         sourceUpdatedAt: r.sourceUpdatedAt, disappearedAt: null, payload: r });
-    } else if (old.contentHash !== hash) {
+    } else if (!sameContent) {
       changed += 1;
       out.push({ ...old, entityKind: r._entity ?? entity, contentHash: hash, lastVerifiedAt: day(r), lastChangedAt: day(r),
         sourceUpdatedAt: r.sourceUpdatedAt, disappearedAt: null, payload: r });
     } else {
-      out.push({ ...old, lastVerifiedAt: day(r), disappearedAt: null });
+      out.push({ ...old, contentHash: hash, lastVerifiedAt: day(r), disappearedAt: null });
     }
   }
   // 這次沒回傳的不刪除。來源暫時抽掉一筆不代表那個活動不存在過，

@@ -281,8 +281,8 @@ test('emit-state 記的是內容變動日，不是執行日', async () => {
 test('來源重新確認（_fetchedAt 變了）不改 md，確認日寫進 verified-state', async () => {
   // md 裡放確認日的話，每次來源重抓就是幾千個 md 的 diff，sitemap lastmod 也跟著說謊
   // （2026-09-15 第一次 CI ingest：4,207 個 md 只因 lastVerifiedAt 而改動）。
-  const at = (d) => ({ _fetchedAt: `${d}T09:00:00+08:00` });
-  const root = await pipeline({ ev: [obs({ ...event('ev', '1'), ...at('2026-09-01') })] });
+  const at = (d) => ({ ...obs({ ...event('ev', '1'), _fetchedAt: `${d}T09:00:00+08:00` }), lastVerifiedAt: d });
+  const root = await pipeline({ ev: [at('2026-09-01')] });
   const [md] = (await readdir(path.join(root, 'src', 'data', 'events')));
   const before = await readFile(path.join(root, 'src', 'data', 'events', md), 'utf-8');
   assert.doesNotMatch(before, /lastVerifiedAt/);
@@ -290,7 +290,7 @@ test('來源重新確認（_fetchedAt 變了）不改 md，確認日寫進 verif
   assert.deepEqual(v1, [{ key: 'ev:1', verifiedAt: '2026-09-01' }]);
 
   await writeFile(path.join(root, 'data', 'observation', 'ev.ndjson'),
-    JSON.stringify(obs({ ...event('ev', '1'), ...at('2026-09-15') })) + '\n', 'utf-8');
+    JSON.stringify(at('2026-09-15')) + '\n', 'utf-8');
   for (const s of ['cluster.mjs', 'resolve-relations.mjs', 'emit-md.mjs']) {
     assert.equal((await runStage(root, s)).code, 0);
   }

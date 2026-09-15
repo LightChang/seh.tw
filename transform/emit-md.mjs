@@ -393,7 +393,9 @@ async function main() {
     // 也會讓 emit-state 的 changedAt（sitemap lastmod）跟著說謊。另存 verified-state。
     if (trackVerified) {
       for (const m of members) {
-        verifiedNow.set(`${m._source}:${m._sourceRecordId}`, String(m._fetchedAt).slice(0, 10));
+        // 用 observation 的 lastVerifiedAt，不用 payload._fetchedAt——內容沒變的記錄保留舊 payload
+        verifiedNow.set(`${m._source}:${m._sourceRecordId}`,
+          m._observation?.lastVerifiedAt ?? String(m._fetchedAt).slice(0, 10));
       }
     }
     const sources = members.slice()

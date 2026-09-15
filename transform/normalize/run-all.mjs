@@ -22,6 +22,7 @@ const failed = [];
 // ingest/raw/ 不進版控。CI 是全新 checkout，只有這一輪抓到變動的來源才有 raw；
 // 其餘來源的 observation 已經在 repo 裡，跳過就是維持原狀（不會被標成 disappeared）。
 const noRaw = [];
+const staleRaw = [];   // 本機 raw 比 CI 最後一次抓取舊（見 _lib.mjs readRaw）
 for (const f of files) {
   const mod = await import(path.join(DIR, f));
   if (typeof mod.run !== 'function') { failed.push([f, '沒有 export run()']); continue; }
@@ -31,11 +32,17 @@ for (const f of files) {
     dropped += r?.dropped ?? 0;
   } catch (err) {
     if (err?.code === 'ENOENT' && path.dirname(err.path ?? '') === RAW_DIR) { noRaw.push(f); continue; }
+    if (err?.code === 'STALE_RAW') { staleRaw.push(f); continue; }
     failed.push([f, String(err?.message ?? err).slice(0, 160)]);
   }
 }
-const ran = files.length - noRaw.length;
+const ran = files.length - noRaw.length - staleRaw.length;
 console.error(`\n${ran - failed.length}/${ran} 支成功，共 ${total} 筆，丟棄 ${dropped} 筆`);
 if (noRaw.length) console.error(`沒有 raw，跳過 ${noRaw.length} 支（observation 維持原狀）`);
+if (staleRaw.length) {
+  console.error(`raw 過期，跳過 ${staleRaw.length} 支（observation 維持原狀）：`
+    + staleRaw.map((f) => f.replace(/\.mjs$/, '')).join(' '));
+  console.error('  CI 已經抓過更新的版本。先 git pull；要在本機重跑這幾支，用 node transform/scheduler.mjs --force <id> 重抓');
+}
 for (const [f, e] of failed) console.error(`  ✗ ${f}  ${e}`);
 if (failed.length) process.exit(1);
