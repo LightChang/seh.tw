@@ -141,3 +141,7 @@
 {"at":"2026-09-15T17:10:12+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1065,"ms":2740}
 {"at":"2026-09-15T17:10:12+08:00","id":"weiwuying-programs","outcome":"unchanged","via":"fetch","count":210,"ms":5627}
 {"at":"2026-09-15T17:10:12+08:00","id":"tainan-culture-events","outcome":"failed","error":"fetch failed","ms":32789}
+{"at":"2026-09-15T19:55:20+08:00","id":"twtourism-events","outcome":"unchanged","via":"304","ms":164}
+{"at":"2026-09-15T19:55:20+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":432}
+{"at":"2026-09-15T19:55:20+08:00","id":"chiayi-county-event-board","outcome":"unchanged","via":"fetch","count":7,"ms":435}
+{"at":"2026-09-15T19:55:20+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1588,"ms":1935}
