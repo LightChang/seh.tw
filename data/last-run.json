@@ -1,12 +1,18 @@
 {
-  "at": "2026-09-16T01:42:22+08:00",
-  "attempted": 13,
+  "at": "2026-09-16T05:31:46+08:00",
+  "attempted": 11,
   "changed": [
-    "taipei-gov-hot-events"
+    "ntt-programs",
+    "taipei-gov-hot-events",
+    "taoyuan-tourism-events",
+    "twtourism-events",
+    "boch-heritage-arts-crafts",
+    "weiwuying-programs",
+    "tcmb-culture"
   ],
   "failed": [
     "moc-events",
-    "tainan-culture-events"
+    "chiayi-county-event-board"
   ],
   "alerting": [],
   "skipped": []
