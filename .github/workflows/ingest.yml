@@ -40,7 +40,11 @@ jobs:
       # 用 runner 機器上的 node，不用 setup-node：在這台 Mac 上它卡在下載、10 分鐘沒有輸出。
       - name: 確認 node 版本
         run: node -e "const m = +process.versions.node.split('.')[0]; console.log(process.version); if (m < 22) process.exit(1)"
+      # ~/.npm 裡有 root 擁有的快取檔（EACCES），npm 抓不到的 optional 套件會靜靜漏掉。
+      # runner 用自己的快取目錄，不碰使用者的 ~/.npm。
       - run: npm ci
+        env:
+          npm_config_cache: ${{ runner.tool_cache }}/npm-cache
 
       # inputs.force 一律走 env，不內插進 run:。內插等於把使用者輸入當 shell 指令跑。
       - name: 抓取到期來源
