@@ -6,6 +6,10 @@
 夠不夠格請搜尋引擎收錄每天重算。所以下表的「網址」與「收錄」差距很大是設計如此，
 不是還沒做完——已結束的活動退出收錄但網址保留，一個場地明天有活動就自動進來。
 
+**部署**：2026-09-15 上線。repo `LightChang/seh.tw`（public），GitHub Pages 走 Actions，
+custom domain `seh.tw`，強制 HTTPS。`.github/workflows/ingest.yml` 每小時觸發，抓到變動才建置部署；
+手動觸發（`gh workflow run ingest.yml`）一律建置部署。
+
 ---
 
 ## 已完成
@@ -40,7 +44,6 @@
 
 | 項目 | 狀況 |
 |---|---|
-| **部署** | 程式面備妥：`.github/workflows/ingest.yml` 每小時觸發，抓到變動才跑 pipeline，跑完在同一個 job 內部署到 GitHub Pages（`public/CNAME` = `seh.tw`）。**還缺的是 repo 的 git remote，以及 `seh.tw` 的 DNS 指向 GitHub Pages。這兩件要人做。** |
 | review queue | 14 筆（合併候選 2、場館對不上 11、場館有歧義 1）。工具是 `npm run review`。其中 11 筆是名錄查不到、活動資料也沒有地址座標的場館，要等來源補資料 |
 | `/organization/{slug}` | **做不了**。演藝團體名錄與活動主辦是不同母體，`organizedBy` 只有 2.1% 連得上 |
 | `/artist/{slug}` | **做不了**。`performer` 只有 2.1% 連得上，25,977 筆多為街頭藝人名冊 |
