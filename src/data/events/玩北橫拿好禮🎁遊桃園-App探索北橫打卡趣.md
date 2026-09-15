@@ -16,7 +16,7 @@ sources:
   - id: "taoyuan-tourism-events"
     recordId: "6997"
     url: "https://travel.tycg.gov.tw/zh-tw/Event/CalendarDetail/6997"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

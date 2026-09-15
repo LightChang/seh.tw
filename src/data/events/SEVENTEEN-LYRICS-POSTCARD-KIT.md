@@ -23,7 +23,7 @@ sources:
     recordId: "69557cfa26b32416dc3491e5"
     sourceName: "年代"
     url: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P14EBDG1"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

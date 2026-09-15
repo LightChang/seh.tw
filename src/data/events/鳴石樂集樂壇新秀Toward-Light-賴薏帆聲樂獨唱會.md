@@ -35,7 +35,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "a15a998b-fa43-42f1-95a0-6d19e4e8bc2c"
     url: "https://www.accupass.com/go/TTMusic260919"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

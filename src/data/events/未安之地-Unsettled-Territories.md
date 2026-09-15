@@ -30,7 +30,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "ad7d3ba8-d168-47e0-9557-fad3271d7048"
     url: "https://kdmofa.tnua.edu.tw/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

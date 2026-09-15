@@ -42,7 +42,7 @@ sources:
     recordId: "6a21d77426b3243414cccf09"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.facebook.com/Taigibun0505"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

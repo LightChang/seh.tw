@@ -36,7 +36,7 @@ sources:
     recordId: "69bc48e626b3242a48a9dce9"
     sourceName: "全國藝文活動資訊系統"
     url: "https://event.culture.tw/mocweb/reg/NTSO/Detail.init.ctr?actId=60080"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -106,7 +106,7 @@ sources:
     recordId: "689cf56626b324477c8a15f3"
     sourceName: "全國藝文活動資訊系統"
     url: "https://event.culture.tw/mocweb/reg/NTCRI/Index.init.ctr?openExternalBrowser=1"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

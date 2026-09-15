@@ -52,7 +52,7 @@ sources:
           lng: 121.55145
   - id: "twtourism-events"
     recordId: "Event_382000000A_003892"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "status"
       - "sessions"

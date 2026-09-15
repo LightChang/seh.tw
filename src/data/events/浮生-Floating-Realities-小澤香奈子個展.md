@@ -28,7 +28,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "ecf58ee9-5720-4115-a0d2-29a481090537"
     url: "https://www.instagram.com/iart_gallery/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

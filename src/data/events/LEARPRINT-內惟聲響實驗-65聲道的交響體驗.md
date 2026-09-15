@@ -43,7 +43,7 @@ sources:
     recordId: "695ecb3726b3243dd4e6ac1a"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.nwac.org.tw/tw/news-content/0378575Ae540"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

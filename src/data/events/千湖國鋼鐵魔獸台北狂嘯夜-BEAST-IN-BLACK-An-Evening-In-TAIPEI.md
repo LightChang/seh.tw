@@ -5,7 +5,7 @@ title: "千湖國鋼鐵魔獸台北狂嘯夜 BEAST IN BLACK An Evening In TAIPEI
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 4
+popularity: 5
 priceText: "??魔獸攝魂區 VIP (站立) 早鳥$4,888, 原價$5,088 (限量50張) ??魔獸爆擊區 PREMIER (站立) 早鳥$2,888, 原價$3,088 ??魔獸鋼鐵區 GA(站立) 早鳥$1,888 原價$2,088 ??早鳥至2026/7/31止，8月1日起恢復原價"
 ticketUrl: "https://kktix.com/"
 performers: 
@@ -68,7 +68,7 @@ sources:
     recordId: "6a28645026b3243414ccd0a7"
     sourceName: "全國藝文活動資訊系統"
     url: "https://rockempire.kktix.cc/events/ad848569"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -5,7 +5,7 @@ title: "Opus音樂節《閉幕之夜：林易與朋友們》"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 0
+popularity: 2
 isFree: false
 priceText: "600/900/1300/1600/2000/2400/2800/3200/3700"
 ticketUrl: "https://www.opentix.life/program/2081581856561176577"
@@ -28,7 +28,7 @@ sources:
     recordId: "6a70ca6926b32427d0604334"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2081581856561176577"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -41,7 +41,7 @@ sources:
     recordId: "c-bAVgMkleKvq"
     sourceName: "臺中國家歌劇院 節目資料"
     url: "https://www.npac-ntt.org/program/events/c-bAVgMkleKvq"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "isFree"
       - "priceText"

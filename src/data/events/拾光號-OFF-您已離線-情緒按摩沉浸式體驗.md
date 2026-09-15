@@ -8,396 +8,6 @@ status: "scheduled"
 popularity: 0
 ticketUrl: "https://www.opentix.life/program/2065339535983161345"
 sessions: 
-  - startAt: "2026-09-12T14:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T14:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T15:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T15:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T15:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T15:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T16:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T16:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T16:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T16:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T17:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T17:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T17:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T17:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T18:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T20:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T20:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T20:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T20:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T21:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T21:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T21:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T21:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T22:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T22:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T22:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T22:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T23:20:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T14:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T14:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T15:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T15:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T15:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T15:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T16:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T16:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T16:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T16:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T17:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T17:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T17:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T17:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T18:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T20:20:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T20:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T20:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T20:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T21:20:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T21:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T21:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T21:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T22:00:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T22:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T22:30:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T22:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T23:20:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-21T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T20:00:00+08:00"
@@ -426,7 +36,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-21T20:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-21T21:20:00+08:00"
+    endAt: "2026-10-21T21:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -790,7 +400,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-23T19:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-23T20:00:00+08:00"
+    endAt: "2026-10-23T22:20:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -1011,7 +621,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-24T20:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-24T21:00:00+08:00"
+    endAt: "2026-10-24T21:20:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -1128,7 +738,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-25T16:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-25T16:50:00+08:00"
+    endAt: "2026-10-25T16:30:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -1154,7 +764,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-25T17:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-25T17:50:00+08:00"
+    endAt: "2026-10-25T17:30:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -1274,7 +884,7 @@ sources:
     recordId: "6a396ad126b3243414ccd4da"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2065339535983161345"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

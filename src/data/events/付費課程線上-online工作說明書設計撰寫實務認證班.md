@@ -21,7 +21,7 @@ sources:
     recordId: "619e1cadd083a3a56c535538"
     sourceName: "KKTIX"
     url: "https://kktix.com/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

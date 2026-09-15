@@ -10,7 +10,8 @@ addressPrecision: "street"
 lat: 25.072631
 lng: 121.524686
 buildingId: "bld_25.0726_121.5247"
-eventCount: 1
+eventCount: 2
 eventClusterIds: 
   - "evt_taipei-culture-events_43613a780609e290"
+  - "evt_taipei-culture-events_1e9ecf2990a8ddc1"
 ---

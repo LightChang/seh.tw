@@ -7,6 +7,9 @@ categoryRaw: "2"
 status: "scheduled"
 popularity: 1
 ticketUrl: "https://www.opentix.life/program/2072516129034670080"
+minimumAge: 6
+images: 
+  - url: "https://backstage.tpac-taipei.org/storage/uploads/program/images/6067106611e07c0113e6a333dfbf9e36.jpg"
 sessions: 
   - startAt: "2026-10-31T14:30:00+08:00"
     granularity: "datetime"
@@ -195,7 +198,7 @@ sources:
     recordId: "6a5125ff26b32427d0604197"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2072516129034670080"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -203,4 +206,25 @@ sources:
       - "ticketUrl"
       - "sessions"
       - "sourceUrl"
+  - id: "tpac-programs"
+    recordId: "2088"
+    sourceName: "臺北表演藝術中心 節目資料"
+    url: "https://tpac.org.taipei/program/2088"
+    lastVerifiedAt: "2026-09-15"
+    provides: 
+      - "images"
+      - "minimumAge"
+    rejected: 
+      sessions: 
+        - startAt: "2026-11-04"
+          granularity: "date"
+          endAt: "2026-11-14"
+          venueNameRaw: "臺北表演藝術中心"
+          lat: 25.084706
+          lng: 121.524399
+          city: "臺北市"
+          district: "士林區"
+          address: "臺北市士林區劍潭路1號"
+          addressPrecision: "street"
+      sourceUrl: "https://tpac.org.taipei/program/2088"
 ---

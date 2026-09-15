@@ -82,7 +82,7 @@ sources:
     recordId: "6a04af0426b3243414ccc811"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2051618495298912257"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -95,7 +95,7 @@ sources:
     recordId: "69c3a71e125d0700076053b0"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69c3a71e125d0700076053b0"
-    lastVerifiedAt: "2026-09-13"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
       - "priceText"

@@ -23,7 +23,7 @@ sources:
   - id: "moc-events"
     recordId: "6aa10d2b26b324165c32e391"
     sourceName: "花蓮縣文化局"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

@@ -31,7 +31,7 @@ sources:
     recordId: "6a7ff47feb436c2506e0fba9"
     sourceName: "安卓藝術"
     url: "https://www.art-msac.com/exhibitions/155/overview/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "popularity"
@@ -48,7 +48,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "aa38168d-0218-43b4-bd9f-26989d29e887"
     url: "https://www.art-msac.com/exhibitions/155/overview/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
       - "images"

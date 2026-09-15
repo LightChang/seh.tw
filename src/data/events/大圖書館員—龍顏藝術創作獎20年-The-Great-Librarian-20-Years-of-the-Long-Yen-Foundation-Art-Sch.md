@@ -28,7 +28,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "1de01195-0c56-4388-a6be-0f5eddcfe92b"
     url: "https://kdmofa.tnua.edu.tw/mod/exhibition/index.php?REQUEST_ID=e1626ae68798853bcff9a390f902a9dfba4fbfa094efe4fe640b9db20b991a95"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

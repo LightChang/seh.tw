@@ -34,7 +34,7 @@ sources:
     recordId: "6a1604ea26b3243414cccbc9"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.ntcri.gov.tw/home/zh-tw"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -1,10 +1,44 @@
 {
-  "at": "2026-09-12T20:11:55+08:00",
-  "attempted": 1,
+  "at": "2026-09-15T11:17:14+08:00",
+  "attempted": 61,
   "changed": [
-    "ntm-activities"
+    "arte-events",
+    "hsinchu-county-culture-events",
+    "kmfa-events",
+    "moc-emap-poi",
+    "moca-taipei-events",
+    "moc-events",
+    "ncfta-activities",
+    "ncl-events",
+    "ntch-programs",
+    "nstm-activities",
+    "ntmofa-events",
+    "ntpc-culture-events",
+    "ntt-programs",
+    "ntm-activities",
+    "taipei-gov-hot-events",
+    "taipei-culture-events",
+    "taoyuan-tourism-events",
+    "tpac-programs",
+    "twtourism-events",
+    "weiwuying-programs"
   ],
-  "failed": [],
+  "failed": [
+    "boch-heritage-folklore",
+    "hsinchu-city-culture-events",
+    "chiayi-county-event-board",
+    "hsinchu-county-culture-venues",
+    "hsinchu-city-culture-venues",
+    "kaohsiung-busker-venues",
+    "hsinchu-county-performing-groups",
+    "moc-community",
+    "kaohsiung-public-libraries",
+    "kaohsiung-buskers",
+    "kaohsiung-neighborhood-centers",
+    "pingtung-public-libraries",
+    "tainan-culture-events",
+    "boch-heritage"
+  ],
   "alerting": [],
   "skipped": []
 }

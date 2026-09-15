@@ -8,32 +8,6 @@ status: "scheduled"
 popularity: 0
 ticketUrl: "https://www.opentix.life/program/2056657152138346497"
 sessions: 
-  - startAt: "2026-09-12T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T16:30:00+08:00"
-    onSales: true
-    venueNameRaw: "彰化縣文化局員林演藝廳小劇場"
-    city: "彰化縣"
-    district: "員林市"
-    address: "彰化縣員林市員林大道二段99號"
-    addressPrecision: "street"
-    lat: 23.9491767
-    lng: 120.5791263
-    venueId: "ven_derived_彰化縣文化局員林演藝廳小劇場"
-    venueSlug: "彰化縣文化局員林演藝廳小劇場"
-  - startAt: "2026-09-12T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T21:30:00+08:00"
-    onSales: true
-    venueNameRaw: "彰化縣文化局員林演藝廳小劇場"
-    city: "彰化縣"
-    district: "員林市"
-    address: "彰化縣員林市員林大道二段99號"
-    addressPrecision: "street"
-    lat: 23.9491767
-    lng: 120.5791263
-    venueId: "ven_derived_彰化縣文化局員林演藝廳小劇場"
-    venueSlug: "彰化縣文化局員林演藝廳小劇場"
   - startAt: "2026-10-03T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-03T16:30:00+08:00"
@@ -78,7 +52,7 @@ sources:
     recordId: "6a26f5d926b3243414cccfda"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2056657152138346497"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

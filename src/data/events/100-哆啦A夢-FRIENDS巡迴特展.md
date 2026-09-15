@@ -201,7 +201,7 @@ sources:
       title: "100%哆啦A夢&FRIENDS巡迴特展"
   - id: "twtourism-events"
     recordId: "Event_397000000A_007263"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "images"

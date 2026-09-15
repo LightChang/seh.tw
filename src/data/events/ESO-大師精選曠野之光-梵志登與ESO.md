@@ -42,7 +42,7 @@ sources:
     recordId: "6a639b4726b32427d0604254"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2070351493885812737"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -54,7 +54,7 @@ sources:
     recordId: "2059"
     sourceName: "臺北表演藝術中心 節目資料"
     url: "https://tpac.org.taipei/program/2059"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
       - "minimumAge"

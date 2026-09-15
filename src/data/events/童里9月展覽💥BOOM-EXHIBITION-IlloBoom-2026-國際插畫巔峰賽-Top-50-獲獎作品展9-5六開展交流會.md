@@ -30,7 +30,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "6c4bb3b2-8741-4eb5-a503-43226a0fc910"
     url: "https://www.maisontempsreves.com/products/202609-boom-exhibition-illoboom"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

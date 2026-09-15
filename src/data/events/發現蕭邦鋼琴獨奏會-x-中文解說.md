@@ -8,19 +8,6 @@ status: "scheduled"
 popularity: 1
 ticketUrl: "https://www.opentix.life/program/2059838478100336641"
 sessions: 
-  - startAt: "2026-09-12T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T21:30:00+08:00"
-    onSales: true
-    venueNameRaw: "國立雲林科技大學-雲泰表演廳"
-    city: "雲林縣"
-    district: "斗六市"
-    address: "雲林縣斗六市大學路三段123號"
-    addressPrecision: "street"
-    lat: 23.6958498
-    lng: 120.5340119
-    venueId: "ven_derived_國立雲林科技大學-雲泰表演廳"
-    venueSlug: "國立雲林科技大學-雲泰表演廳"
   - startAt: "2026-09-19T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-09-19T16:30:00+08:00"
@@ -65,7 +52,7 @@ sources:
     recordId: "6a30305b26b3243414ccd2c6"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2059838478100336641"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

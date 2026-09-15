@@ -5,113 +5,9 @@ title: "拾光號｜《ON/我來開箱》來自比利時互動式劇場"
 category: "戲劇"
 categoryRaw: "2"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2064991753921044481"
 sessions: 
-  - startAt: "2026-09-12T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T15:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T16:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T17:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T20:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-12T21:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T22:50:00+08:00"
-    onSales: false
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T15:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T16:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T17:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T20:50:00+08:00"
-    onSales: false
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
-  - startAt: "2026-09-13T21:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T22:50:00+08:00"
-    onSales: true
-    venueNameRaw: "可能存在的遊樂園 CollaPlay"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區武昌街二段83之6號3樓"
-    addressPrecision: "street"
-    lat: 25.0455426
-    lng: 121.5052275
-    venueId: "ven_derived_可能存在的遊樂園-CollaPlay"
-    venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-21T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T20:50:00+08:00"
@@ -299,7 +195,7 @@ sources:
     recordId: "6a396ad126b3243414ccd4d9"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2064991753921044481"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

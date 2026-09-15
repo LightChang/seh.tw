@@ -8,7 +8,7 @@ status: "scheduled"
 popularity: 0
 ticketUrl: "https://www.opentix.life/program/2083093985552293888"
 sessions: 
-  - startAt: "2026-09-12T11:00:00+08:00"
+  - startAt: "2026-09-15T11:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-11-22T16:34:00+08:00"
     onSales: true
@@ -26,7 +26,7 @@ sources:
     recordId: "6a91c06b26b32434f4358083"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2083093985552293888"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

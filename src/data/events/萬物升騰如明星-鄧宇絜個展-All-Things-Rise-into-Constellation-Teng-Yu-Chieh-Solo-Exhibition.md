@@ -28,7 +28,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "2392cafd-9aeb-466f-9dfa-c9de77ad3fd0"
     url: "https://www.instagram.com/joyfulart_gallery/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

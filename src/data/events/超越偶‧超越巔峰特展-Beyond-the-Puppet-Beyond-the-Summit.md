@@ -24,7 +24,7 @@ sessions:
 sources: 
   - id: "twtourism-events"
     recordId: "Event_376490000A_000005"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

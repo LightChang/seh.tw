@@ -5,7 +5,7 @@ title: "《 在枝葉之下 Beneath The Leaves 》"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 2
+popularity: 3
 images: 
   - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-08-13/8993ad0a-bf89-4379-a074-41a40b3b307a/電子展覽資訊圖_818x426.jpg"
 description: |-
@@ -47,7 +47,7 @@ sources:
   - id: "moc-events"
     recordId: "6a7d1dd1eb436c2506e0fba2"
     sourceName: "THE 201 ART"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

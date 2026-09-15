@@ -39,7 +39,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "0ec9f9d5-3a7f-4221-b5b8-ebb49a49c93b"
     url: "https://tixfun.com/UTK0201_?PRODUCT_ID=Q027PH96"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

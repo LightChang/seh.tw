@@ -28,7 +28,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "d5eb5a3d-7260-4693-aeea-e387c37656ea"
     url: "https://www.facebook.com/LinkLion2016/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

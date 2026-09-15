@@ -66,7 +66,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "de688a31-6e5e-4fac-ba73-5e691bf17b2f"
     url: "https://www.facebook.com/share/1Jf3jEVeEt/?mibextid=wwXIfr"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

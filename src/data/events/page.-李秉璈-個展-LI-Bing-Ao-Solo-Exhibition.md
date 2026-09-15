@@ -31,7 +31,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "9aa1336a-1f8f-4f3c-8bc6-b380726db379"
     url: "https://sissyleelee1.wixsite.com/agallery/%E5%89%AF%E6%9C%AC-%E5%B1%95%E8%A6%BD%E8%A8%8A%E6%81%AF-1/%E5%89%AF%E6%9C%AC-2026-%E9%BB%91%E5%A4%A9%E9%B5%9D-%E8%A8%B1%E8%81%96%E6%B3%93%E5%80%8B%E5%B1%95"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

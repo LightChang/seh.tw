@@ -48,7 +48,7 @@ sources:
     recordId: "6a7a91db647ad700eb56cce9"
     sourceName: "陳玟晴"
     url: "https://ayda.tw/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -60,7 +60,7 @@ sources:
     recordId: "6a4397ed26b32427d0603fa5"
     sourceName: "全國藝文活動資訊系統"
     url: "https://www.nwac.org.tw/tw/art-content/311902c82362"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
@@ -72,7 +72,7 @@ sources:
       - "sourceUrl"
   - id: "twtourism-events"
     recordId: "Event_397000000A_007735"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "images"
       - "status"

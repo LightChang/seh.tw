@@ -36,7 +36,7 @@ sources:
     recordId: "60191"
     sourceName: "國立臺灣博物館 活動資料"
     url: "https://event.culture.tw/mocweb/reg/NTM/Detail.init.ctr?actId=60191"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

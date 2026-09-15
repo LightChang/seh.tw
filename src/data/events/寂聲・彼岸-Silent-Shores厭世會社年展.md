@@ -53,7 +53,7 @@ sources:
   - id: "moc-events"
     recordId: "69843545eb43ce229cb24535"
     sourceName: "陳熙和"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

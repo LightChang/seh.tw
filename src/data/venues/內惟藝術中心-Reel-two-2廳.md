@@ -7,11 +7,10 @@ city: "高雄市"
 district: "鼓山區"
 address: "高雄市鼓山區馬卡道路329號"
 addressPrecision: "street"
-eventCount: 16
+eventCount: 15
 eventClusterIds: 
   - "evt_moc-events_6a83722826b32427d0604408"
   - "evt_moc-events_6a83722826b32427d0604409"
-  - "evt_moc-events_6a83722826b32427d060440a"
   - "evt_moc-events_6a83722826b32427d060440f"
   - "evt_moc-events_6a84c8f026b32427d060443e"
   - "evt_moc-events_6a84c8f026b32427d060443f"

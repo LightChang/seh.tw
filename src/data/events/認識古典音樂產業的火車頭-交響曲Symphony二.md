@@ -5,7 +5,7 @@ title: "認識古典音樂產業的火車頭 - 交響曲Symphony(二)"
 category: "講座"
 categoryRaw: "7"
 status: "scheduled"
-popularity: 8
+popularity: 9
 priceText: |-
   ※每人每場NT$500，或收取新月藝文鑑賞券一張
   
@@ -54,7 +54,7 @@ sources:
     recordId: "6a3a4746647a40ec65297aac"
     sourceName: "新月社"
     url: "https://artfocus.com.tw/?,1296"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

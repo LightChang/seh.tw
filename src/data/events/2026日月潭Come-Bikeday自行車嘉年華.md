@@ -25,7 +25,7 @@ sources:
   - id: "twtourism-events"
     recordId: "Event_A15010000H_081642"
     url: "https://theme.sunmoonlake.gov.tw/ComeBikeDay/Index.aspx?l=1"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

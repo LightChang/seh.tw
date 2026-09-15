@@ -38,7 +38,7 @@ sources:
     recordId: "6a97a313eb43f566f29c88db"
     sourceName: "國立陽明交通大學藝文中心"
     url: "https://arts.nycu.edu.tw/cello-in-between-music-without-borders/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

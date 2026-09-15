@@ -13,7 +13,7 @@ sources:
     recordId: "VR線上展覽"
     sourceName: "臺北當代藝術館 展覽與活動"
     url: "https://www.mocataipei.org.tw/tw/ExhibitionAndEvent/Info/VR線上展覽"
-    lastVerifiedAt: "2026-09-13"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

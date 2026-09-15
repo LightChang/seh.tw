@@ -33,7 +33,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "e1fa9624-f4e5-4905-993e-11688bfb8511"
     url: "https://www.facebook.com/SLYartspace/"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

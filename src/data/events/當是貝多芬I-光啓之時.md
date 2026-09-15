@@ -69,7 +69,7 @@ sources:
     recordId: "6a3181c626b3243414ccd35f"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2063969687791849473"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"
@@ -82,7 +82,7 @@ sources:
     recordId: "6a608124eb43f5f34e518845"
     sourceName: "財團法人高雄市愛樂文化藝術基金會"
     url: "https://lihi1.me/g8LiO"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "description"
       - "images"

@@ -8,58 +8,6 @@ status: "scheduled"
 popularity: 0
 ticketUrl: "https://www.opentix.life/program/2054406826574860289"
 sessions: 
-  - startAt: "2026-09-12T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T16:10:00+08:00"
-    onSales: true
-    venueNameRaw: "西門紅樓二樓劇場"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區成都路10號"
-    addressPrecision: "street"
-    lat: 25.04214
-    lng: 121.5072876
-    venueId: "ent_taipei-culture-venues_58"
-    venueSlug: "西門紅樓-二樓劇場"
-  - startAt: "2026-09-12T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-12T21:10:00+08:00"
-    onSales: true
-    venueNameRaw: "西門紅樓二樓劇場"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區成都路10號"
-    addressPrecision: "street"
-    lat: 25.04214
-    lng: 121.5072876
-    venueId: "ent_taipei-culture-venues_58"
-    venueSlug: "西門紅樓-二樓劇場"
-  - startAt: "2026-09-13T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T16:10:00+08:00"
-    onSales: true
-    venueNameRaw: "西門紅樓二樓劇場"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區成都路10號"
-    addressPrecision: "street"
-    lat: 25.04214
-    lng: 121.5072876
-    venueId: "ent_taipei-culture-venues_58"
-    venueSlug: "西門紅樓-二樓劇場"
-  - startAt: "2026-09-13T19:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-13T21:10:00+08:00"
-    onSales: true
-    venueNameRaw: "西門紅樓二樓劇場"
-    city: "臺北市"
-    district: "萬華區"
-    address: "臺北市萬華區成都路10號"
-    addressPrecision: "street"
-    lat: 25.04214
-    lng: 121.5072876
-    venueId: "ent_taipei-culture-venues_58"
-    venueSlug: "西門紅樓-二樓劇場"
   - startAt: "2026-09-16T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-09-16T16:10:00+08:00"
@@ -286,7 +234,7 @@ sources:
     recordId: "6a15d2cd26b3243414cccb74"
     sourceName: "OPENTIX兩廳院文化生活"
     url: "https://www.opentix.life/program/2054406826574860289"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "categoryRaw"

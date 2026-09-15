@@ -34,7 +34,7 @@ sources:
   - id: "moc-events"
     recordId: "63ef217c31be352145f9ff2b"
     sourceName: "熠曙國際有限公司"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "popularity"
       - "performers"
@@ -54,7 +54,7 @@ sources:
   - id: "taipei-culture-events"
     recordId: "4b43d8a8-6593-4eda-b60d-1a792ba2431c"
     url: "https://www.platform-a.art/creators"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"

@@ -35,7 +35,7 @@ sources:
     recordId: "6a2b070126b3243414ccd188"
     sourceName: "全國藝文活動資訊系統"
     url: "https://reurl.cc/0mNmob"
-    lastVerifiedAt: "2026-09-12"
+    lastVerifiedAt: "2026-09-15"
     provides: 
       - "title"
       - "description"
