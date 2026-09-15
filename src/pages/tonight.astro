@@ -15,13 +15,14 @@ import Nav from '../components/Nav.astro';
   </div>
 </Base>
 <script>
-  import { relTime, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+  import { relTime, dateLabel, fmtNum, catVar, midnight } from '../lib/format.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const all = await loadSessions();
   const now = Date.now();
-  const d0 = new Date(); d0.setHours(19, 0, 0, 0);
-  const d1 = new Date(); d1.setHours(23, 59, 59, 999);
+  // 台灣的今晚，不看訪客時區
+  const d0 = new Date(midnight(now) + 19 * 3600000);
+  const d1 = new Date(midnight(now) + 86400000 - 1);
   const rows = all.map((d) => ({ ...d, ts: new Date(d.at).getTime() }))
     .filter((d) => d.ts >= d0.getTime() && d.ts <= d1.getTime() && d.at.slice(11) !== '00:00')
     .sort((a, b) => a.ts - b.ts);

@@ -22,8 +22,14 @@ concurrency:
 
 jobs:
   ingest:
-    runs-on: ubuntu-latest
+    # 跑在台灣的 self-hosted runner（~/actions-runner/seh.tw，launchd 常駐）。
+    # 13 支政府來源擋海外 IP，GitHub 主機一律 fetch failed（2026-09-15 實測）。
+    # macOS 上 upload-pages-artifact 需要 gtar（brew install gnu-tar）。
+    # 這台機器關機或睡眠時排程會排隊等待，網站維持上一版。
+    runs-on: [self-hosted, seh-tw]
     timeout-minutes: 60
+    env:
+      TZ: Asia/Taipei   # 與本機開發一致；顯示用的時間已在 format.mjs 固定台灣時間，這是保險
     environment:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}

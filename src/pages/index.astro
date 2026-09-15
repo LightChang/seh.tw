@@ -73,6 +73,7 @@ import Base from '../layouts/Base.astro';
 
 <script>
   import { loadSessions } from '../lib/index-client.mjs';
+  import { midnight, twHour, hhmm } from '../lib/format.mjs';
   import { select } from 'd3-selection';
   import { scaleLinear } from 'd3-scale';
   import { geoMercator, geoPath } from 'd3-geo';
@@ -93,12 +94,12 @@ import Base from '../layouts/Base.astro';
   ]);
   // 「今天」「今晚」跟當下時間有關，不能是 build 時算好的靜態值——那隔天就過期了。
   // 只有 dateOnly=false 的場次才判得出 19:00 之後（常設展的時刻是不存在不是零點）。
-  const _d0 = new Date(); _d0.setHours(0, 0, 0, 0);
+  const _d0 = new Date(midnight(Date.now()));   // 台灣的今天，不看訪客時區
   const _d1 = _d0.getTime() + 86400000;
   const _inToday = (d) => { const t = new Date(d.at).getTime(); return t >= _d0.getTime() && t < _d1; };
   s.today = new Set(sessions.filter(_inToday).map((d) => d.slug)).size;
   s.tonight = new Set(sessions.filter((d) => !d.dateOnly && _inToday(d)
-    && new Date(d.at).getHours() >= 19).map((d) => d.slug)).size;
+    && twHour(d.at) >= 19).map((d) => d.slug)).size;
 
   const fmt = (n) => n.toLocaleString('en-US');
   // 這些數字每天都會變，寫死就會過期——實測寫死的「2,376 個場館、70 個來源」
@@ -152,9 +153,10 @@ import Base from '../layouts/Base.astro';
   const up = await loadSessions();
   const geo = await (await fetch('/tw-counties.json')).json();
   const now = new Date();
-  const today = now.toISOString().slice(0, 10);
-  document.getElementById('now-h').textContent =
-    `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+  // 台灣的日期與時刻。toISOString() 是 UTC，台灣 00:00–08:00 會變成前一天。
+  const today = new Date(midnight(now) + 8 * 3600000).toISOString().slice(0, 10);
+  document.getElementById('now-h').textContent = hhmm(now);
+  const [nowH, nowM] = hhmm(now).split(':').map(Number);
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   // 每個效果回傳自己的播放函式，接受 0–1 的進度；skip=true 時直接畫最終狀態
@@ -176,7 +178,7 @@ import Base from '../layouts/Base.astro';
       .attr('y', H).attr('height', 0)
       .attr('fill', (v, i) => (cat[i] ? catColor(cat[i]) : css('--border-subtle')))
       .attr('opacity', 0.55);
-    const nowX = (now.getHours() + now.getMinutes() / 60) * w;
+    const nowX = (nowH + nowM / 60) * w;
     const cursor = svg.append('line').attr('y1', 0).attr('y2', H)
       .attr('stroke', css('--text-primary')).attr('stroke-width', 1.5)
       .attr('opacity', 0.5).attr('x1', 0).attr('x2', 0);

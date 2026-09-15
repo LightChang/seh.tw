@@ -2,11 +2,23 @@
 export const WD = ['日', '一', '二', '三', '四', '五', '六'];
 export const fmtNum = (n) => Number(n).toLocaleString('en-US');
 
+// 一律以台灣時間（UTC+8，無日光節約）計算，不看執行環境的時區。
+// build 主機是 UTC、訪客可能在海外，用 getHours() 會把 19:30 的場次寫成 11:30。
+// 做法是把時刻平移 8 小時後讀 UTC 欄位。
+const TW_OFFSET = 8 * 3600e3;
+const tw = (t) => new Date(new Date(t).getTime() + TW_OFFSET);
+const pad = (n) => String(n).padStart(2, '0');
+
+export const twHour = (t) => tw(t).getUTCHours();
 export const hhmm = (t) => {
-  const d = new Date(t);
-  return `${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+  const d = tw(t);
+  return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
 };
-export const midnight = (t) => { const d = new Date(t); d.setHours(0, 0, 0, 0); return d.getTime(); };
+/** 台灣當天 00:00 的 epoch 毫秒。 */
+export const midnight = (t) => {
+  const ms = new Date(t).getTime() + TW_OFFSET;
+  return ms - (((ms % 86400000) + 86400000) % 86400000) - TW_OFFSET;
+};
 export const dayGap = (t, base = Date.now()) => Math.round((midnight(t) - midnight(base)) / 86400000);
 
 // 一小時內講「還有多久」，跨天講「明天 19:30」
@@ -23,13 +35,13 @@ export function relTime(t, base = Date.now()) {
   }
   if (g === 1) return `明天 ${hhmm(t)}`;
   if (g === 2) return `後天 ${hhmm(t)}`;
-  const d = new Date(t);
-  return `${d.getMonth() + 1}/${d.getDate()}（${WD[d.getDay()]}）${hhmm(t)}`;
+  const d = tw(t);
+  return `${d.getUTCMonth() + 1}/${d.getUTCDate()}（${WD[d.getUTCDay()]}）${hhmm(t)}`;
 }
 
 export const dateLabel = (t) => {
-  const d = new Date(t);
-  return `${d.getFullYear()}/${String(d.getMonth() + 1).padStart(2, '0')}/${String(d.getDate()).padStart(2, '0')}（${WD[d.getDay()]}）`;
+  const d = tw(t);
+  return `${d.getUTCFullYear()}/${pad(d.getUTCMonth() + 1)}/${pad(d.getUTCDate())}（${WD[d.getUTCDay()]}）`;
 };
 
 // 類型固定配色，全站一致

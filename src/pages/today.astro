@@ -16,12 +16,12 @@ import Nav from '../components/Nav.astro';
 </Base>
 
 <script>
-  import { relTime, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+  import { relTime, dateLabel, fmtNum, catVar, midnight } from '../lib/format.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const all = await loadSessions();
   const now = Date.now();
-  const t0 = new Date(); t0.setHours(0, 0, 0, 0);
+  const t0 = new Date(midnight(now));   // 台灣的今天，不看訪客時區
   const t1 = t0.getTime() + 86400000;
 
   const today = all.map((d) => ({ ...d, ts: new Date(d.at).getTime() }))
