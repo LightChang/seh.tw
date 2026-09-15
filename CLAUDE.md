@@ -6,7 +6,7 @@
 ## 收手前一定要跑
 
 ```
-npm test           # 251 條，任何一條紅就是還沒做完
+npm test           # 261 條，任何一條紅就是還沒做完
 npm run pipeline   # 連跑第二次要「寫入 0」，有數字就是輸出不穩定
 npm run links      # build 之後，站內連結不能有壞的
 ```
@@ -57,6 +57,15 @@ npm run links      # build 之後，站內連結不能有壞的
 
 各階段都讀寫檔案，不能在正式資料上測。`SEH_ROOT` 環境變數換掉資料位置
 （程式位置不變），fixture 產生器在 `test/helpers/fixture.mjs`。
+
+## 上線後（2026-09-15 起）
+
+repo `LightChang/seh.tw`，GitHub Pages。`ingest.yml` 每小時抓取、commit、部署；手動觸發一律部署。
+**CI 會 commit `data/` 與 `src/data/`，本機動手前先 `git pull`。**
+
+本機的 `ingest/raw/` 不會跟著 CI 更新。`readRaw` 會擋掉比 CI 最後一次抓取還舊的 raw
+（跳過並列出 id），別繞過它——舊 raw 會把 CI 新增的記錄標成 disappeared。
+本機要重跑某支就 `node transform/scheduler.mjs --force <id>` 重抓。
 
 ## 踩過、會再踩的坑
 
