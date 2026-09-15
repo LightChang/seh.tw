@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 // 站內連結檢查。build 完跑：`node scripts/check-links.mjs`
 //
-// trailingSlash: 'never' ＋ build.format: 'directory'，所以 /event/foo 對應的檔案是
-// dist/event/foo/index.html。網址是 percent-encoded 而檔名是原字元，要解碼過才比得起來。
+// trailingSlash: 'never' ＋ build.format: 'file'，所以 /event/foo 對應的檔案是
+// dist/event/foo.html。網址是 percent-encoded 而檔名是原字元，要解碼過才比得起來。
+// 不接受 dist/event/foo/index.html：GitHub Pages 對資料夾會 301 到 /event/foo/，
+// 跟 canonical 對不上（2026-09-15 上線時實測）。
 
 import { readdir, readFile, stat } from 'node:fs/promises';
 import path from 'node:path';
@@ -18,13 +20,13 @@ async function* walk(dir) {
   }
 }
 
-const exists = async (p) => { try { await stat(p); return true; } catch { return false; } };
+const isFile = async (p) => { try { return (await stat(p)).isFile(); } catch { return false; } };
 
 async function resolves(href) {
   const clean = decodeURIComponent(href.split('#')[0].split('?')[0]);
   if (clean === '' || clean === '/') return true;
   const base = path.join(DIST, clean.replace(/^\//, ''));
-  return (await exists(path.join(base, 'index.html'))) || (await exists(base));
+  return (await isFile(`${base}.html`)) || (await isFile(base));
 }
 
 const pages = [];

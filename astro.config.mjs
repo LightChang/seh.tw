@@ -29,7 +29,9 @@ const BUILD_DAY = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 export default defineConfig({
   site: 'https://seh.tw',
   trailingSlash: 'never',
-  build: { format: 'directory' },
+  // 'file' 不是 'directory'：GitHub Pages 對資料夾一律 301 補斜線，跟 trailingSlash never 與 canonical 衝突。
+  // x.html 與 x/ 並存時 Pages 回 x.html 不轉址（2026-09-15 以 public/_probe 實測）。
+  build: { format: 'file' },
   integrations: [
     sitemap({
       // 只收錄內容足夠的頁面。搜尋與定位頁沒有自己的內容（結果由前端即時算），
