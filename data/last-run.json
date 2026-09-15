@@ -1,19 +1,12 @@
 {
-  "at": "2026-09-15T23:35:47+08:00",
-  "attempted": 17,
+  "at": "2026-09-16T01:42:22+08:00",
+  "attempted": 13,
   "changed": [
-    "boch-heritage-folklore",
-    "moc-emap-poi",
-    "ntt-programs",
-    "taipei-gov-hot-events",
-    "moc-events",
-    "ntm-activities",
-    "taoyuan-tourism-events",
-    "weiwuying-programs"
+    "taipei-gov-hot-events"
   ],
   "failed": [
-    "moc-community",
-    "boch-heritage"
+    "moc-events",
+    "tainan-culture-events"
   ],
   "alerting": [],
   "skipped": []

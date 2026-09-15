@@ -172,3 +172,16 @@
 {"at":"2026-09-15T23:35:47+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":65,"ms":6235}
 {"at":"2026-09-15T23:35:47+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":33,"ms":8191}
 {"at":"2026-09-15T23:35:47+08:00","id":"weiwuying-programs","outcome":"changed","via":"fetch","count":210,"ms":5583}
+{"at":"2026-09-16T01:42:22+08:00","id":"nantou-arts-events","outcome":"unchanged","via":"304","ms":1263}
+{"at":"2026-09-16T01:42:22+08:00","id":"moca-taipei-events","outcome":"unchanged","via":"fetch","count":17,"ms":3379}
+{"at":"2026-09-16T01:42:22+08:00","id":"ncl-events","outcome":"unchanged","via":"fetch","count":15,"ms":2704}
+{"at":"2026-09-16T01:42:22+08:00","id":"kmfa-events","outcome":"unchanged","via":"fetch","count":35,"ms":5062}
+{"at":"2026-09-16T01:42:22+08:00","id":"ntch-programs","outcome":"unchanged","via":"fetch","count":16,"ms":663}
+{"at":"2026-09-16T01:42:22+08:00","id":"moc-events","outcome":"shrank","prev":1601,"count":649,"error":"筆數異常縮水 1601 → 649，未覆蓋 raw","ms":6840}
+{"at":"2026-09-16T01:42:22+08:00","id":"taichung-culture-events","outcome":"unchanged","via":"fetch","count":871,"ms":1996}
+{"at":"2026-09-16T01:42:22+08:00","id":"nmns-exhibitions","outcome":"unchanged","via":"fetch","count":10,"ms":4576}
+{"at":"2026-09-16T01:42:22+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":4698}
+{"at":"2026-09-16T01:42:22+08:00","id":"tfam-exhibitions","outcome":"unchanged","via":"fetch","count":584,"ms":5025}
+{"at":"2026-09-16T01:42:22+08:00","id":"tnam-events","outcome":"unchanged","via":"fetch","count":18,"ms":5190}
+{"at":"2026-09-16T01:42:22+08:00","id":"npm-events","outcome":"unchanged","via":"fetch","count":15,"ms":19259}
+{"at":"2026-09-16T01:42:22+08:00","id":"tainan-culture-events","outcome":"failed","error":"fetch failed","ms":32651}
