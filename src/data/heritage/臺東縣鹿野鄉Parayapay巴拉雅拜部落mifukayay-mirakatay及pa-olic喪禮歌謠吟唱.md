@@ -17,9 +17,9 @@ addressPrecision: "district"
 images: 
   - url: "https://data.boch.gov.tw/upload/representImageFile/2021-07-20/7eaa3f82-792e-44bf-81fc-b13c2d7e8f3e/口述傳統1-臺東縣鹿野鄉Parayapay(巴拉雅拜)部落mifukayay、mirakatay及pa'olic喪禮歌謠吟唱-永保.jpg"
     caption: "口述傳統1-臺東縣鹿野鄉Parayapay(巴拉雅拜)部落mifukayay、mirakatay及pa'olic喪禮歌謠吟唱-永保"
-  - url: "https://data.boch.gov.tw/upload/media/2022-07-29/92eddbde-b8a1-493b-91c6-51813cd2c95c/巴拉雅拜歌謠吟唱發表會 20210803_06_賴蘭妹稟告祖靈_姜.jpg"
-    caption: "巴拉雅拜歌謠吟唱發表會-賴蘭妹稟告祖靈"
   - url: "https://data.boch.gov.tw/upload/media/2022-09-05/d33fc5d3-4980-419c-a937-620ee6d8e8c7/巴拉雅拜歌謠吟唱發表會 20210803_02_保存者賴蘭妹_姜_調.jpg"
+    caption: "巴拉雅拜歌謠吟唱發表會-賴蘭妹稟告祖靈"
+  - url: "https://data.boch.gov.tw/upload/media/2022-07-29/92eddbde-b8a1-493b-91c6-51813cd2c95c/巴拉雅拜歌謠吟唱發表會 20210803_06_賴蘭妹稟告祖靈_姜.jpg"
     caption: "巴拉雅拜歌謠吟唱發表會-賴蘭妹稟告祖靈"
 history: |-
   在喪禮中吟唱歌謠為阿美族的傳統，藉由吟唱緬懷亡者、慰藉親友，起始年代已不可考。阿美族傳統喪禮相當複雜，依照死亡原因、死者身分等進行相對應之祭儀，一般會經過臨終禮miangang、化妝禮mitaden、入殮禮pacomod、喪禮misalisin、下葬禮mitadem、祝福禮mitapdoh、超渡禮pacakat、漁撈除喪禮paklang、巡訪禮parakat等，巫師、家屬、族人在不同的階段參與儀式(臺東縣鹿野鄉公所，849)。
@@ -48,4 +48,12 @@ sources:
     provides: 
       - "level"
       - "history"
+    rejected: 
+      images: 
+        - url: "https://data.boch.gov.tw/upload/representImageFile/2021-07-20/7eaa3f82-792e-44bf-81fc-b13c2d7e8f3e/口述傳統1-臺東縣鹿野鄉Parayapay(巴拉雅拜)部落mifukayay、mirakatay及pa'olic喪禮歌謠吟唱-永保.jpg"
+          caption: "口述傳統1-臺東縣鹿野鄉Parayapay(巴拉雅拜)部落mifukayay、mirakatay及pa'olic喪禮歌謠吟唱-永保"
+        - url: "https://data.boch.gov.tw/upload/media/2022-07-29/92eddbde-b8a1-493b-91c6-51813cd2c95c/巴拉雅拜歌謠吟唱發表會 20210803_06_賴蘭妹稟告祖靈_姜.jpg"
+          caption: "巴拉雅拜歌謠吟唱發表會-賴蘭妹稟告祖靈"
+        - url: "https://data.boch.gov.tw/upload/media/2022-09-05/d33fc5d3-4980-419c-a937-620ee6d8e8c7/巴拉雅拜歌謠吟唱發表會 20210803_02_保存者賴蘭妹_姜_調.jpg"
+          caption: "巴拉雅拜歌謠吟唱發表會-賴蘭妹稟告祖靈"
 ---
