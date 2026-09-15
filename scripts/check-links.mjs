@@ -33,8 +33,11 @@ const pages = [];
 for await (const f of walk(DIST)) if (f.endsWith('.html')) pages.push(f);
 
 const targets = new Map();   // href → 第一個引用它的頁面
+const htmlExt = [];          // canonical、og:url 等對外網址不能帶 .html（format: 'file' 的 Astro.url 會帶）
 for (const f of pages) {
   const html = await readFile(f, 'utf-8');
+  const leak = html.match(/https:\/\/seh\.tw\/[^"'\s<>]*\.html(?=["'\s<>])/);
+  if (leak) htmlExt.push([leak[0], path.relative(DIST, f)]);
   for (const m of html.matchAll(/\shref="([^"]+)"/g)) {
     const h = m[1];
     if (!h.startsWith('/') || h.startsWith('//')) continue;
@@ -46,6 +49,11 @@ const broken = [];
 for (const [href, from] of targets) if (!await resolves(href)) broken.push([href, from]);
 
 console.log(`${pages.length} 頁、${targets.size} 種站內連結目標`);
+if (htmlExt.length) {
+  console.log(`對外網址帶了 .html 的有 ${htmlExt.length} 頁：`);
+  for (const [u, from] of htmlExt.slice(0, 10)) console.log(`  ${u}   ← ${from}`);
+  process.exit(1);
+}
 if (broken.length) {
   console.log(`壞掉 ${broken.length} 條：`);
   for (const [href, from] of broken.slice(0, 30)) console.log(`  ${href}   ← ${from}`);

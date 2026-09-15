@@ -54,7 +54,10 @@ jobs:
         env:
           SEH_GA_ID: ${{ vars.SEH_GA_ID }}
           SEH_GSC_TOKEN: ${{ vars.SEH_GSC_TOKEN }}
-        run: npm run pipeline
+        # links 沒過就不部署：壞連結、canonical 帶 .html 都在這裡擋
+        run: |
+          npm run pipeline
+          npm run links
 
       - name: 回寫排程狀態
         run: |

@@ -10,7 +10,10 @@ interface Props {
 }
 const { title, description, noindex = false, canonical } = Astro.props;
 const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
-const url = canonical ?? `${site}${Astro.url.pathname}`;
+// build.format 是 'file'，Astro.url.pathname 會帶 `.html`（首頁是 `/index.html`）。
+// 對外網址不帶副檔名，canonical 與 og:url 要拿掉。
+const pathname = Astro.url.pathname.replace(/(?:^\/index)?\.html$/, '') || '/';
+const url = canonical ?? `${site}${pathname}`;
 ---
 <!doctype html>
 <html lang="zh-Hant-TW">
