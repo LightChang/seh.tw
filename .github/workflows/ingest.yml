@@ -46,10 +46,11 @@ jobs:
           grep -q '^PIPELINE=1' run.log && echo 'changed=true' >> "$GITHUB_OUTPUT" || echo 'changed=false' >> "$GITHUB_OUTPUT"
 
       # 沒有任何來源變動就到此為止：不跑後續、不 build、不 commit、不部署
+      # 手動觸發例外：一律建置並部署（第一次上線、改了版面但資料沒變時用）
       # GA 與 Search Console 的值放 repository variables（vars，不是 secrets——
       # 它們本來就會出現在每一頁的原始碼裡）。沒設就什麼都不輸出。
       - name: 轉換與建置
-        if: steps.fetch.outputs.changed == 'true'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         env:
           SEH_GA_ID: ${{ vars.SEH_GA_ID }}
           SEH_GSC_TOKEN: ${{ vars.SEH_GSC_TOKEN }}
@@ -68,11 +69,11 @@ jobs:
       # 部署必須跟 ingest 同一個 job。GITHUB_TOKEN 推出去的 commit 不會觸發任何
       # workflow，所以「push 觸發 deploy」那條路在這裡是死的。
       - uses: actions/configure-pages@v5
-        if: steps.fetch.outputs.changed == 'true'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
       - uses: actions/upload-pages-artifact@v3
-        if: steps.fetch.outputs.changed == 'true'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
         with:
           path: dist
       - uses: actions/deploy-pages@v4
         id: deploy
-        if: steps.fetch.outputs.changed == 'true'
+        if: steps.fetch.outputs.changed == 'true' || github.event_name == 'workflow_dispatch'
