@@ -118,3 +118,6 @@
 {"at":"2026-09-15T11:17:14+08:00","id":"weiwuying-programs","outcome":"changed","via":"fetch","count":210,"ms":6359}
 {"at":"2026-09-15T11:17:14+08:00","id":"boch-heritage","outcome":"failed","error":"Unexpected token '<', \"<html><hea\"... is not valid JSON","ms":99353}
 {"at":"2026-09-15T11:17:14+08:00","id":"tcmb-culture","outcome":"unchanged","via":"fetch","count":11527,"ms":141095}
+{"at":"2026-09-15T12:58:30+08:00","id":"twtourism-events","outcome":"unchanged","via":"304","ms":939}
+{"at":"2026-09-15T12:58:30+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":1244}
+{"at":"2026-09-15T12:58:30+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1604,"ms":7513}

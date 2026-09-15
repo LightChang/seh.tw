@@ -8,7 +8,7 @@ status: "scheduled"
 popularity: 0
 ticketUrl: "https://www.opentix.life/program/2083093985552293888"
 sessions: 
-  - startAt: "2026-09-15T11:00:00+08:00"
+  - startAt: "2026-09-15T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-11-22T16:34:00+08:00"
     onSales: true

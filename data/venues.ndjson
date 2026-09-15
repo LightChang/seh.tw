@@ -10332,7 +10332,6 @@
 {"id":"ven_derived_衛武營國家藝術文化中心","slug":"衛武營國家藝術文化中心","origin":"derived","name":"衛武營國家藝術文化中心","city":"高雄市","district":"鳳山區","address":"高雄市鳳山區高雄市鳳山區三多一路 1 號","addressPrecision":"street","sessionCount":1}
 {"id":"ven_derived_漢聲巷――是書店-也是書院","slug":"漢聲巷――是書店-也是書院","origin":"derived","name":"漢聲巷――是書店，也是書院","city":"臺北市","district":"松山區","address":"台北市松山區八德路四段72巷16弄1號","addressPrecision":"street","sessionCount":1}
 {"id":"ven_derived_童里","slug":"童里","origin":"derived","name":"童里","address":"潮州街15號（近捷運古亭站）","addressPrecision":"venue-name-only","sessionCount":1}
-{"id":"ven_derived_高雄展覽館301a會議室","slug":"高雄展覽館301a會議室","origin":"derived","name":"高雄展覽館301a會議室","city":"高雄市","district":"前鎮","address":"高雄市前鎮區成功二路39號3樓","addressPrecision":"street","lat":22.607921601732517,"lng":120.29833719774383,"sessionCount":1,"buildingId":"bld_22.6079_120.2983"}
 {"id":"ven_derived_新北市三重區綜合體育館二樓演藝廳","slug":"新北市三重區綜合體育館二樓演藝廳","origin":"derived","name":"新北市三重區綜合體育館二樓演藝廳","city":"新北市","district":"三重區","address":"新北市三重區中山里新北大道一段2號","addressPrecision":"street","lat":25.0618491,"lng":121.4914074,"sessionCount":1,"buildingId":"bld_25.0618_121.4914"}
 {"id":"ven_derived_屏東縣","slug":"屏東縣","origin":"derived","name":"屏東縣","city":"屏東縣","district":"全區","address":"屏東縣全區域","addressPrecision":"district","sessionCount":1}
 {"id":"ven_derived_臺南市安平區公所","slug":"臺南市安平區公所","origin":"derived","name":"臺南市安平區公所","city":"臺南市","district":"安平區","address":"臺南市安平區安北路42號","addressPrecision":"street","sessionCount":1}
