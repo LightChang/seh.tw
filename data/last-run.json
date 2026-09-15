@@ -1,11 +1,19 @@
 {
-  "at": "2026-09-15T12:58:30+08:00",
-  "attempted": 3,
+  "at": "2026-09-15T17:10:12+08:00",
+  "attempted": 20,
   "changed": [
+    "moca-taipei-events",
+    "kmfa-events",
+    "ncl-events",
+    "moc-events",
     "taipei-gov-hot-events",
-    "moc-events"
+    "taoyuan-tourism-events",
+    "ntm-activities",
+    "twtourism-events"
   ],
-  "failed": [],
+  "failed": [
+    "tainan-culture-events"
+  ],
   "alerting": [],
   "skipped": []
 }

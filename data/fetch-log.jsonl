@@ -121,3 +121,23 @@
 {"at":"2026-09-15T12:58:30+08:00","id":"twtourism-events","outcome":"unchanged","via":"304","ms":939}
 {"at":"2026-09-15T12:58:30+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":1244}
 {"at":"2026-09-15T12:58:30+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1604,"ms":7513}
+{"at":"2026-09-15T17:10:12+08:00","id":"hsinchu-county-culture-events","outcome":"unchanged","via":"fetch","count":9,"ms":1006}
+{"at":"2026-09-15T17:10:12+08:00","id":"arte-events","outcome":"unchanged","via":"fetch","count":24,"ms":2390}
+{"at":"2026-09-15T17:10:12+08:00","id":"moca-taipei-events","outcome":"changed","via":"fetch","count":17,"ms":2380}
+{"at":"2026-09-15T17:10:12+08:00","id":"kmfa-events","outcome":"changed","via":"fetch","count":35,"ms":4444}
+{"at":"2026-09-15T17:10:12+08:00","id":"ncl-events","outcome":"changed","via":"fetch","count":15,"ms":1266}
+{"at":"2026-09-15T17:10:12+08:00","id":"ntch-programs","outcome":"unchanged","via":"fetch","count":16,"ms":686}
+{"at":"2026-09-15T17:10:12+08:00","id":"ncfta-activities","outcome":"unchanged","via":"fetch","count":49,"ms":3429}
+{"at":"2026-09-15T17:10:12+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1588,"ms":7642}
+{"at":"2026-09-15T17:10:12+08:00","id":"npm-events","outcome":"unchanged","via":"fetch","count":15,"ms":3376}
+{"at":"2026-09-15T17:10:12+08:00","id":"ntpc-culture-events","outcome":"unchanged","via":"fetch","count":60,"ms":1062}
+{"at":"2026-09-15T17:10:12+08:00","id":"ntt-programs","outcome":"unchanged","via":"fetch","count":106,"ms":1381}
+{"at":"2026-09-15T17:10:12+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":855}
+{"at":"2026-09-15T17:10:12+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":65,"ms":4356}
+{"at":"2026-09-15T17:10:12+08:00","id":"ntmofa-events","outcome":"unchanged","via":"fetch","count":38,"ms":9214}
+{"at":"2026-09-15T17:10:12+08:00","id":"tfam-exhibitions","outcome":"unchanged","via":"fetch","count":584,"ms":5273}
+{"at":"2026-09-15T17:10:12+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":33,"ms":5558}
+{"at":"2026-09-15T17:10:12+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":26,"ms":15419}
+{"at":"2026-09-15T17:10:12+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1065,"ms":2740}
+{"at":"2026-09-15T17:10:12+08:00","id":"weiwuying-programs","outcome":"unchanged","via":"fetch","count":210,"ms":5627}
+{"at":"2026-09-15T17:10:12+08:00","id":"tainan-culture-events","outcome":"failed","error":"fetch failed","ms":32789}
