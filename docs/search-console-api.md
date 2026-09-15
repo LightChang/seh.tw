@@ -19,7 +19,8 @@ schema.org `Event`，不在支援範圍。拿它推送別種內容是違反使�
 | 啟用的 API | Search Console、Site Verification、Analytics Data、Analytics Admin |
 | 服務帳號 | `seh-gsc-reader@seh-tw.iam.gserviceaccount.com` |
 | 金鑰 | 本機 `~/.config/seh-tw/gsc-key.json`（600）；CI 用 Secret `GSC_SERVICE_ACCOUNT_JSON` |
-| Search Console 資源 | `https://seh.tw/`（網址前置字元）。服務帳號用 Site Verification API 的 META 驗證，驗證碼在 repository variable `SEH_GSC_TOKEN` |
+| Search Console 資源 | `sc-domain:seh.tw`（預設，服務帳號為擁有者）；`https://seh.tw/` 由服務帳號用 Site Verification API 的 META 驗證，驗證碼在 repository variable `SEH_GSC_TOKEN` |
+| GA4 | 帳戶 `accounts/407864693`、資源 `properties/553989114`、串流 `G-DKGLPQJD2N`；服務帳號可用 Analytics Data API 讀報表 |
 | 擁有者 | 服務帳號、`lightman.chang@gmail.com` |
 | sitemap | 已用 API 送出 `https://seh.tw/sitemap-index.xml` |
 

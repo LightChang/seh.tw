@@ -19,9 +19,9 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = process.env.SEH_ROOT
   ?? path.resolve(fileURLToPath(import.meta.url), '..', '..');
-// 網址前置字元資源，不是 sc-domain：2026-09-15 由服務帳號透過 Site Verification API（META）驗證，
-// 不必動 DNS。要改用網域資源，設 GSC_PROPERTY=sc-domain:seh.tw。
-const PROPERTY = process.env.GSC_PROPERTY ?? 'https://seh.tw/';
+// 網域資源涵蓋 www／http／https。服務帳號另外也是 `https://seh.tw/` 的擁有者（META 驗證），
+// 要只看網址前置字元資源就設 GSC_PROPERTY=https://seh.tw/。
+const PROPERTY = process.env.GSC_PROPERTY ?? 'sc-domain:seh.tw';
 const SCOPE = 'https://www.googleapis.com/auth/webmasters.readonly';
 const API = 'https://www.googleapis.com/webmasters/v3';
 const ROW_LIMIT = 25000;   // API 上限
