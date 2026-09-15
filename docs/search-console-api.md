@@ -9,6 +9,26 @@ schema.org `Event`，不在支援範圍。拿它推送別種內容是違反使�
 
 ---
 
+## 現況（2026-09-15 已完成）
+
+全部用 API 做完，沒有動 DNS：
+
+| 項目 | 值 |
+|---|---|
+| GCP 專案 | `seh-tw`（gcloud 設定 `seh-tw`，不影響預設專案） |
+| 啟用的 API | Search Console、Site Verification、Analytics Data、Analytics Admin |
+| 服務帳號 | `seh-gsc-reader@seh-tw.iam.gserviceaccount.com` |
+| 金鑰 | 本機 `~/.config/seh-tw/gsc-key.json`（600）；CI 用 Secret `GSC_SERVICE_ACCOUNT_JSON` |
+| Search Console 資源 | `https://seh.tw/`（網址前置字元）。服務帳號用 Site Verification API 的 META 驗證，驗證碼在 repository variable `SEH_GSC_TOKEN` |
+| 擁有者 | 服務帳號、`lightman.chang@gmail.com` |
+| sitemap | 已用 API 送出 `https://seh.tw/sitemap-index.xml` |
+
+**`SEH_GSC_TOKEN` 不能刪。** 驗證是持續檢查的，meta 標記消失，擁有權會被收回。
+
+下面六步是手動做法，留作參考（例如要改成 `sc-domain` 網域資源時）。
+
+---
+
 ## 你要做的六步
 
 ### 1. 建 Google Cloud 專案
