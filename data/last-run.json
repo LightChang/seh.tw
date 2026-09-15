@@ -1,7 +1,11 @@
 {
-  "at": "2026-09-15T20:09:31+08:00",
-  "attempted": 3,
-  "changed": [],
+  "at": "2026-09-15T20:18:39+08:00",
+  "attempted": 7,
+  "changed": [
+    "taoyuan-tourism-events",
+    "tnam-events",
+    "ntm-activities"
+  ],
   "failed": [],
   "alerting": [],
   "skipped": []
