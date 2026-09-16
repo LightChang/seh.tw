@@ -682,6 +682,7 @@
 {"clusterId":"ent_boch-heritage_20040409000005","kind":"heritage","slug":"美麗島雜誌社高雄服務處原址","assignedAt":"2026-09-13"}
 {"clusterId":"ent_boch-heritage_20040413000001","kind":"heritage","slug":"林振芳古墓","assignedAt":"2026-09-13"}
 {"clusterId":"ent_boch-heritage_20040413000002","kind":"heritage","slug":"清水震災紀念碑","assignedAt":"2026-09-13"}
+{"clusterId":"ent_boch-heritage_20040428000001","kind":"heritage","slug":"士林潘宅","assignedAt":"2026-09-16"}
 {"clusterId":"ent_boch-heritage_20040429000001","kind":"heritage","slug":"中壢新街國小日式宿舍","assignedAt":"2026-09-13"}
 {"clusterId":"ent_boch-heritage_20040430000001","kind":"heritage","slug":"原台南大正公園","assignedAt":"2026-09-13"}
 {"clusterId":"ent_boch-heritage_20040430000002","kind":"heritage","slug":"原台南州立農事試驗場宿舍群","assignedAt":"2026-09-13"}
@@ -4846,6 +4847,7 @@
 {"clusterId":"evt_nstm-activities_31b8e2d209de64b0","kind":"event","slug":"二胡研習班-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_326e5fa11955bebb","kind":"event","slug":"吉卜力動畫雙主題料理營-飛行冒險與烘焙魔法-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_327cc8a601fa5425","kind":"event","slug":"Apitor創意積木-僅1梯","assignedAt":"2026-09-13"}
+{"clusterId":"evt_nstm-activities_35411944b7ca5b2d","kind":"event","slug":"瑜珈研習班-僅1梯人數不足取消","assignedAt":"2026-09-16"}
 {"clusterId":"evt_nstm-activities_35f998931cbb2f1f","kind":"event","slug":"數感魔法冬令營-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_36702f40dc993dc1","kind":"event","slug":"博物學家的地質系列-地球岩究所-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_36ae763908e3121c","kind":"event","slug":"程式設計與邏輯思維創新體驗活動-第1梯","assignedAt":"2026-09-13"}
@@ -4872,6 +4874,7 @@
 {"clusterId":"evt_nstm-activities_4e7a3c56d2d5fb3f","kind":"event","slug":"程式設計-Python遊戲創作-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_4ea6731a91d27458","kind":"event","slug":"Fun城市-go-go-變速齒輪的神奇魔法-第9梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_4ed6bac67048e66b","kind":"event","slug":"飛天遁地實驗室-作用力與氣流大解密-僅1梯","assignedAt":"2026-09-13"}
+{"clusterId":"evt_nstm-activities_4fb976b41ca853da","kind":"event","slug":"科學節-工作坊-基本資訊建檔中-第二梯","assignedAt":"2026-09-16"}
 {"clusterId":"evt_nstm-activities_50c7f3e5d32a64dc","kind":"event","slug":"科學節-工作坊-基本資訊建檔中-第一梯-2","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_52f8c8c1418b53ff","kind":"event","slug":"程式設計與邏輯思維創新體驗活動-第2梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_53a3e549f8211cc3","kind":"event","slug":"農業廳展廳活動-下午場","assignedAt":"2026-09-13"}
@@ -4887,6 +4890,7 @@
 {"clusterId":"evt_nstm-activities_5e38667b44e08fa2","kind":"event","slug":"鬼滅之刃動畫主題料理營-炎柱讚嘆的蕎麥麵-×-戀柱的櫻餅-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_6461acac74c12c40","kind":"event","slug":"科學節-工作坊-基本資訊建檔中-大人的五行系列-僅1梯-3","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_6687cf5a6ca361a4","kind":"event","slug":"長毛象-冰原古生物探索-僅1梯","assignedAt":"2026-09-13"}
+{"clusterId":"evt_nstm-activities_67341e24facde721","kind":"event","slug":"科學節-工作坊-基本資訊建檔中-第二梯-2","assignedAt":"2026-09-16"}
 {"clusterId":"evt_nstm-activities_683be0dc7b30842c","kind":"event","slug":"科學節-工作坊-基本資訊建檔中-大人的五行系列-僅1梯-4","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_6b54217490cd4e73","kind":"event","slug":"國中科學實驗系列-化學實驗科學營-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_7372b9a917ea57a6","kind":"event","slug":"玩蛋總動員-一顆雞蛋的基礎物理探索營-僅1梯","assignedAt":"2026-09-13"}
@@ -5235,6 +5239,7 @@
 {"clusterId":"evt_nstm-exhibitions_d71aa02c2b6918ed","kind":"event","slug":"儀相萬千-量測儀器特展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-exhibitions_d7ebe5c393eb7255","kind":"event","slug":"金門國際和平海報獎","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-exhibitions_d91fd8175a773b6b","kind":"event","slug":"SAY夜市-直覺x推理x科學機率特展","assignedAt":"2026-09-13"}
+{"clusterId":"evt_nstm-exhibitions_d9bba2a244a2cf5e","kind":"event","slug":"船之所向-探索船舶-遊艇與海洋科技的航行展","assignedAt":"2026-09-16"}
 {"clusterId":"evt_nstm-exhibitions_da3deed5c8cf8355","kind":"event","slug":"明察秋毫-度量衡-特展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-exhibitions_da8de37c9e91fed6","kind":"event","slug":"漫步南非-陳田圃先生個人攝影展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-exhibitions_dc41af70718fbbc7","kind":"event","slug":"秦.俑-秦文化與兵馬俑特展","assignedAt":"2026-09-13"}
@@ -5428,6 +5433,7 @@
 {"clusterId":"evt_ntt-programs_c-I3ZN4DV5gsf","kind":"event","slug":"老男孩音樂劇","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-I7Zb9mUeyPl","kind":"event","slug":"主題講座被音樂耽誤的工程師—歌劇院駐館藝術家賴奇霞創作計畫與歷程分享","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-kY06HvRaDrN","kind":"event","slug":"米特動物樂園Do-Re-Mi-喜咧兜","assignedAt":"2026-09-13"}
+{"clusterId":"evt_ntt-programs_c-LqfDi3g7Z4o","kind":"event","slug":"2026-NTT遇見巨人—2025-2026歌劇院駐館藝術家賴奇霞-Open-Studio-共振進行中","assignedAt":"2026-09-16"}
 {"clusterId":"evt_ntt-programs_c-MK1iTAudaQD","kind":"event","slug":"2026-NTT劇院展開-✕-大兵市集蓬萊留聲機","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-NIh2qmoeYT7","kind":"event","slug":"2026-SMIMC萬聖節主題營-臺中場限定","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-nPjai2Bd6YI","kind":"event","slug":"時刻在藝起-NTT10週年回顧展","assignedAt":"2026-09-13"}
@@ -6371,6 +6377,7 @@
 {"clusterId":"evt_taipei-culture-events_06f2ddf64572d069","kind":"event","slug":"1839當代植物の獨白松本幸之KOSHI-MATSUMOTO攝影個展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_071519eec71df1ef","kind":"event","slug":"2026中山堂廣場音樂節","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_08fe648a74cdd459","kind":"event","slug":"她-kneril-畚斗仔車旁的身影特展","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_09a462c1697215c2","kind":"event","slug":"下午兩點半-來場有儀式感的對味午茶","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_0b30c1a635fd4a7f","kind":"event","slug":"微塵與日暈-——-陳睿淵-個展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_0b70f1afae4cf8b4","kind":"event","slug":"第34屆視障音樂節與愛同行-樂在其中音樂會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_0e919611dc60ad7f","kind":"event","slug":"千年流光─梵印古舞宴-霏旋舞團","assignedAt":"2026-09-13"}
@@ -6415,8 +6422,10 @@
 {"clusterId":"evt_taipei-culture-events_3152ea6e5e771234","kind":"event","slug":"基礎刺繡2日課程-新手魔法師-10種針法組合-靈活運用-毛髮-花瓣漸層表現","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_31d1c8267f4b1b10","kind":"event","slug":"琴揚弦舞皆是樂長宏吉他樂坊","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_31d6d41bf141ecfd","kind":"event","slug":"我們的繁榮-來自她們的每個清晨-平仙妮個展-2","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_3219d04088d2c9bd","kind":"event","slug":"哲攝-x-洄游屯屯街拍攝影書沙龍","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_345526af6e793dc4","kind":"event","slug":"鳴石樂集樂壇新秀-致清晨-李昌勳聲樂獨唱會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_359eaefae37ba099","kind":"event","slug":"鳴石樂集樂壇新秀-王宥紘鋼琴獨奏會","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_3663844bcc7ee60a","kind":"event","slug":"這一天-問題到底出在哪-上班族增肌減脂實戰課","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_3668b31190041093","kind":"event","slug":"十週年座談會宗教在博物館中的詮釋與轉化","assignedAt":"2026-09-15"}
 {"clusterId":"evt_taipei-culture-events_370993da1a8e45b8","kind":"event","slug":"中華詩學研究會2026年第二場全球徵聯活動","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_389eb5058ed4fd6a","kind":"event","slug":"燈宵月夕遊光城2024上元春燈祭","assignedAt":"2026-09-13"}
@@ -6434,6 +6443,7 @@
 {"clusterId":"evt_taipei-culture-events_422f2af45fb195ff","kind":"event","slug":"胡克敏水墨蔬菜長卷特展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_4323bf4ce8770e05","kind":"event","slug":"The-Pocket-Hour-喜歡我吧-小魏","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_43613a780609e290","kind":"event","slug":"撿起九千片光斑後-陳代如-個展-DaiRooChen-solo-exhibition","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_44b290fcd693d085","kind":"event","slug":"鳴石樂集樂壇新秀-蔣秩玄鋼琴獨奏會舞","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_475e02cb88d5dbc1","kind":"event","slug":"The-Armory-Show-2026","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_47b760cb1084cc6a","kind":"event","slug":"新月.藝文講座中國藝術史","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_48dd20a113d49171","kind":"event","slug":"遺響曲第三屆漢服音樂會","assignedAt":"2026-09-13"}
@@ -6467,6 +6477,7 @@
 {"clusterId":"evt_taipei-culture-events_73f4dd41f7b4630b","kind":"event","slug":"兩把吉他環遊世界","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_74994f7b225c197e","kind":"event","slug":"Paul-Gilbert-WROC-World-Tour-2026","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_7586292a0b4e093e","kind":"event","slug":"飛行訊號窗景共創工作坊-2","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_779ab91957574f89","kind":"event","slug":"筆記-15黃楷馨個展","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_77ef4995016b84e3","kind":"event","slug":"2026曉韵秋冬號懷古釀新樂-談20世紀以降大鍵琴復興運動所興起的懷古與創新思潮","assignedAt":"2026-09-14"}
 {"clusterId":"evt_taipei-culture-events_7b24f27bfed8e3a4","kind":"event","slug":"新芳春茶行魔法使的草本調香工坊-中藥文化-×-手作防蚊包工作坊","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_7faad07bd361ff2e","kind":"event","slug":"鳴石樂集樂壇新秀-言之未盡-所以歌-女高音汪九如獨唱會","assignedAt":"2026-09-13"}
@@ -6480,10 +6491,12 @@
 {"clusterId":"evt_taipei-culture-events_87a655d5ad69c7f4","kind":"event","slug":"七海講堂從現代主義到後現代主義-臺灣現代詩在-70年代的轉折","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8846011b8f3097cb","kind":"event","slug":"心靈與藝術對話-陳馥芷個展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8959a7a03754891c","kind":"event","slug":"誠心暖壽-土地公壽桃麵塔文化手作","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_89938d3e343c5a52","kind":"event","slug":"Animate-Inanimate-生與非生之間2026-駐村藝術家計畫-Open-Lab","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_8a9b058671b96302","kind":"event","slug":"台灣鄉土風情-2026林和杉油畫展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8abca8812691fc89","kind":"event","slug":"大圖書館員—龍顏藝術創作獎20年-The-Great-Librarian-20-Years-of-the-Long-Yen-Foundation-Art-Sch","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8b8a6a91f99df250","kind":"event","slug":"萬象福爾摩沙-線上短片徵件競賽","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8c60d87f11de26df","kind":"event","slug":"TCO閃亮亮系列TCO劇院-臺灣歌劇姊妹","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_8e5d571a888b75bb","kind":"event","slug":"2026-李奉-—境","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_8e74da46e416cf7a","kind":"event","slug":"EMBA雜誌我們學堂9月場20260917","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8edddecfb0f835c7","kind":"event","slug":"鳴石樂集樂壇新秀-淬鍊陳彥羽-胡仲璵聯合音樂會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_8f18faccb0b69d91","kind":"event","slug":"2026-生活寫作班","assignedAt":"2026-09-13"}
@@ -6566,6 +6579,7 @@
 {"clusterId":"evt_taipei-culture-events_e9ff81ba7baeb3d3","kind":"event","slug":"管絃祭-X-裝束繪卷天寶服飾誌2023漢服走秀","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_eac5569c8865c252","kind":"event","slug":"page.-李秉璈-個展-LI-Bing-Ao-Solo-Exhibition","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_eba3b8ae3091aa17","kind":"event","slug":"115-3家庭樂學堂-兒童說唱新花-Young","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_ec2eacb443715178","kind":"event","slug":"在多變的世界裡找到自己的節奏","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-culture-events_ed16c6c9ede05fd2","kind":"event","slug":"第四屆台積電硬筆書法大賞得獎作品特展","assignedAt":"2026-09-15"}
 {"clusterId":"evt_taipei-culture-events_f05cd3fc4e579453","kind":"event","slug":"鳴石樂集樂壇新秀Toward-Light-賴薏帆聲樂獨唱會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_f11e1ad8eabcfdb8","kind":"event","slug":"微觀廟會-神轎美學與模型工藝","assignedAt":"2026-09-13"}
@@ -6632,6 +6646,8 @@
 {"clusterId":"evt_taipei-gov-hot-events_9707454","kind":"event","slug":"清江分館玩拼布手作研習班-9月23日布拼不可","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-gov-hot-events_9707458","kind":"event","slug":"六合分館-英語會話讀書會","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taipei-gov-hot-events_9707459","kind":"event","slug":"南港分館小方老師的親子摺紙課","assignedAt":"2026-09-16"}
+{"clusterId":"evt_taipei-gov-hot-events_9708615","kind":"event","slug":"文山分館斷捨離—找回生活的節奏講座-歡迎報名","assignedAt":"2026-09-16"}
+{"clusterId":"evt_taipei-gov-hot-events_9708620","kind":"event","slug":"李科永紀念圖書館綠意繪讀-生態探索趣——北市圖李科永紀念圖書館-×-芝山文化生態綠園-親子共讀生態特展","assignedAt":"2026-09-16"}
 {"clusterId":"evt_taoyuan-tourism-events_5230","kind":"event","slug":"2026桃園-ON-AIR-跨年晚會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6633","kind":"event","slug":"2026國際自由車環台賽-桃園市站","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6639","kind":"event","slug":"全方位職場療癒班-IP-插畫展","assignedAt":"2026-09-13"}

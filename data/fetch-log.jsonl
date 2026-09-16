@@ -214,3 +214,27 @@
 {"at":"2026-09-16T08:32:03+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":33,"ms":5626}
 {"at":"2026-09-16T08:32:03+08:00","id":"weiwuying-programs","outcome":"unchanged","via":"fetch","count":209,"ms":6194}
 {"at":"2026-09-16T08:32:03+08:00","id":"tainan-culture-events","outcome":"failed","error":"fetch failed","ms":32909}
+{"at":"2026-09-16T13:29:53+08:00","id":"hsinchu-city-culture-events","outcome":"unchanged","via":"fetch","count":68,"ms":124}
+{"at":"2026-09-16T13:29:53+08:00","id":"hakka-liudui-events","outcome":"unchanged","via":"fetch","count":205,"ms":380}
+{"at":"2026-09-16T13:29:53+08:00","id":"nmmba-exhibitions","outcome":"unchanged","via":"fetch","count":30,"ms":1509}
+{"at":"2026-09-16T13:29:53+08:00","id":"moc-emap-poi","outcome":"changed","via":"fetch","count":14382,"ms":8127}
+{"at":"2026-09-16T13:29:53+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1612,"ms":1744}
+{"at":"2026-09-16T13:29:53+08:00","id":"nstm-activities","outcome":"changed","via":"fetch","count":187,"ms":301}
+{"at":"2026-09-16T13:29:53+08:00","id":"nstm-exhibitions","outcome":"changed","via":"fetch","count":358,"ms":902}
+{"at":"2026-09-16T13:29:53+08:00","id":"ntch-programs","outcome":"unchanged","via":"fetch","count":16,"ms":492}
+{"at":"2026-09-16T13:29:53+08:00","id":"npm-events","outcome":"unchanged","via":"fetch","count":15,"ms":12752}
+{"at":"2026-09-16T13:29:53+08:00","id":"ntpc-culture-events","outcome":"unchanged","via":"fetch","count":61,"ms":185}
+{"at":"2026-09-16T13:29:53+08:00","id":"ntt-programs","outcome":"changed","via":"fetch","count":107,"ms":285}
+{"at":"2026-09-16T13:29:53+08:00","id":"tainan-culture-events","outcome":"unchanged","via":"fetch","count":51,"ms":299}
+{"at":"2026-09-16T13:29:53+08:00","id":"taipei-culture-events","outcome":"changed","via":"fetch","count":334,"ms":5827}
+{"at":"2026-09-16T13:29:53+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":171}
+{"at":"2026-09-16T13:29:53+08:00","id":"taipei-performing-groups","outcome":"unchanged","via":"fetch","count":1797,"ms":498}
+{"at":"2026-09-16T13:29:53+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":65,"ms":284}
+{"at":"2026-09-16T13:29:53+08:00","id":"tfam-exhibitions","outcome":"unchanged","via":"fetch","count":584,"ms":666}
+{"at":"2026-09-16T13:29:53+08:00","id":"twtourism-events","outcome":"unchanged","via":"304","ms":55}
+{"at":"2026-09-16T13:29:53+08:00","id":"boch-heritage-folklore","outcome":"changed","via":"fetch","count":288,"ms":23563}
+{"at":"2026-09-16T13:29:53+08:00","id":"weiwuying-programs","outcome":"changed","via":"fetch","count":209,"ms":3092}
+{"at":"2026-09-16T13:29:53+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":26,"ms":14437}
+{"at":"2026-09-16T13:29:53+08:00","id":"ysnp-activities","outcome":"unchanged","via":"fetch","count":30,"ms":2612}
+{"at":"2026-09-16T13:29:53+08:00","id":"moc-community","outcome":"changed","via":"fetch","count":529,"ms":157390}
+{"at":"2026-09-16T13:29:53+08:00","id":"boch-heritage","outcome":"changed","via":"fetch","count":6412,"ms":150748}
