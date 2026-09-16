@@ -5,7 +5,7 @@ title: "男高音止步 V.3"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2087731398782976001"
 sessions: 
   - startAt: "2026-09-18T19:30:00+08:00"

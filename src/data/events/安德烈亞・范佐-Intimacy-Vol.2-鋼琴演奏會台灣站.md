@@ -5,7 +5,7 @@ title: "安德烈亞・范佐 Intimacy Vol.2 鋼琴演奏會台灣站"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 26
+popularity: 27
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1COVZN7"
 sessions: 
   - startAt: "2026-12-04T19:30:00+08:00"

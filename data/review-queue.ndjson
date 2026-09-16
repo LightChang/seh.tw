@@ -6,6 +6,7 @@
 {"id":"rq_bld_bld_22.6202_120.2786","kind":"building-unnamed","payload":{"buildingId":"bld_22.6202_120.2786","halls":["駁二正港小劇場","高雄駁二藝術特區 蓬萊區B4倉庫"],"lat":22.6201549,"lng":120.2786076},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0127_121.5353","kind":"building-unnamed","payload":{"buildingId":"bld_25.0127_121.5353","halls":["CLASSROOM 1廳","金石堂汀洲店地下1樓龍顏講堂"],"lat":25.012683512154307,"lng":121.53531478036733},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0445_121.5168","kind":"building-unnamed","payload":{"buildingId":"bld_25.0445_121.5168","halls":["崇友文教基金會","齊文藝室- 共享工作吧"],"lat":25.04445,"lng":121.51684},"suggested":"name","status":"open","decidedAt":null}
+{"id":"rq_bld_bld_25.0441_121.5609","kind":"building-unnamed","payload":{"buildingId":"bld_25.0441_121.5609","halls":["松山文創園區 2、3、4 號倉庫","松山文創園區 5號倉庫","誠品電影院A廳"],"lat":25.04409,"lng":121.5609},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_cat_1","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、兒童活動","events":4},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_2","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、圖書館利用教育","events":2},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_3","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、研習班","events":2},"suggested":"map","status":"open","decidedAt":null}

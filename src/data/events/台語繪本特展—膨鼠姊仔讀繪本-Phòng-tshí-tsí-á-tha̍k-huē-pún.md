@@ -10,9 +10,9 @@ performers:
   - nameRaw: "台語文創意園區"
     country: "中華民國"
 organizers: 
-  - nameRaw: "關懷文教基金會"
-    role: "master"
   - nameRaw: "彰化縣文化局"
+    role: "master"
+  - nameRaw: "關懷文教基金會"
     role: "master"
   - nameRaw: "(指導)文化部"
     role: "other"

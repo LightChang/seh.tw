@@ -5,7 +5,7 @@ title: "【2026 TSO 首席指揮】里柏瑞契與TSO─抒情‧交響曲"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 34
+popularity: 35
 ticketUrl: "https://www.opentix.life/program/1992888855001788417"
 sessions: 
   - startAt: "2026-10-02T19:30:00+08:00"

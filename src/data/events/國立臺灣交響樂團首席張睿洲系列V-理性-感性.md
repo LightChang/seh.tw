@@ -5,7 +5,7 @@ title: "國立臺灣交響樂團首席張睿洲系列V  理性&感性"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 6
+popularity: 8
 isFree: false
 priceText: "800"
 ticketUrl: "https://www.opentix.life/program/2066429324153389057"

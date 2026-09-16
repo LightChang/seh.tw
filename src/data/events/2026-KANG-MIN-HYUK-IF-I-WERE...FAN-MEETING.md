@@ -5,7 +5,7 @@ title: "2026 KANG MIN HYUK IF I WERE...FAN MEETING"
 category: "演唱會"
 categoryRaw: "17"
 status: "scheduled"
-popularity: 0
+popularity: 6
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1FMF3AD"
 sessions: 
   - startAt: "2026-10-10T16:00:00+08:00"

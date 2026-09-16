@@ -196,3 +196,21 @@
 {"at":"2026-09-16T05:31:46+08:00","id":"chiayi-county-event-board","outcome":"failed","error":"fetch failed","ms":32922}
 {"at":"2026-09-16T05:31:46+08:00","id":"boch-heritage-preservers","outcome":"unchanged","via":"fetch","count":1046,"ms":46214}
 {"at":"2026-09-16T05:31:46+08:00","id":"tcmb-culture","outcome":"changed","via":"fetch","count":11522,"ms":112459}
+{"at":"2026-09-16T08:32:03+08:00","id":"hsinchu-county-culture-events","outcome":"unchanged","via":"fetch","count":9,"ms":1347}
+{"at":"2026-09-16T08:32:03+08:00","id":"arte-events","outcome":"unchanged","via":"fetch","count":24,"ms":1673}
+{"at":"2026-09-16T08:32:03+08:00","id":"cip-indigenous-festivals","outcome":"unchanged","via":"fetch","count":66,"ms":2226}
+{"at":"2026-09-16T08:32:03+08:00","id":"ncfta-activities","outcome":"unchanged","via":"fetch","count":49,"ms":1875}
+{"at":"2026-09-16T08:32:03+08:00","id":"moca-taipei-events","outcome":"unchanged","via":"fetch","count":17,"ms":2555}
+{"at":"2026-09-16T08:32:03+08:00","id":"ncl-events","outcome":"unchanged","via":"fetch","count":15,"ms":1082}
+{"at":"2026-09-16T08:32:03+08:00","id":"kmfa-events","outcome":"unchanged","via":"fetch","count":35,"ms":5285}
+{"at":"2026-09-16T08:32:03+08:00","id":"ntpc-culture-events","outcome":"changed","via":"fetch","count":61,"ms":1419}
+{"at":"2026-09-16T08:32:03+08:00","id":"ntt-programs","outcome":"unchanged","via":"fetch","count":106,"ms":1654}
+{"at":"2026-09-16T08:32:03+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1612,"ms":5812}
+{"at":"2026-09-16T08:32:03+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":65,"ms":4194}
+{"at":"2026-09-16T08:32:03+08:00","id":"ntmofa-events","outcome":"unchanged","via":"fetch","count":38,"ms":10398}
+{"at":"2026-09-16T08:32:03+08:00","id":"tnam-events","outcome":"unchanged","via":"fetch","count":18,"ms":5632}
+{"at":"2026-09-16T08:32:03+08:00","id":"twtourism-events","outcome":"unchanged","via":"304","ms":986}
+{"at":"2026-09-16T08:32:03+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":12080}
+{"at":"2026-09-16T08:32:03+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":33,"ms":5626}
+{"at":"2026-09-16T08:32:03+08:00","id":"weiwuying-programs","outcome":"unchanged","via":"fetch","count":209,"ms":6194}
+{"at":"2026-09-16T08:32:03+08:00","id":"tainan-culture-events","outcome":"failed","error":"fetch failed","ms":32909}

@@ -5,7 +5,7 @@ title: "Paul Gilbert WROC World Tour 2026"
 category: "音樂"
 categoryRaw: "音樂現場"
 status: "scheduled"
-popularity: 3
+popularity: 4
 isFree: false
 priceText: "KKTIX、全台全家便利商店FamiPort機台"
 ticketUrl: "https://rockempire.kktix.cc/events/4e2ae0df"

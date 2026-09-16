@@ -5,7 +5,7 @@ title: "千湖國鋼鐵魔獸台北狂嘯夜 BEAST IN BLACK with Special Guest D
 category: "音樂"
 categoryRaw: "音樂現場"
 status: "scheduled"
-popularity: 9
+popularity: 10
 isFree: false
 priceText: "KKTIX、全台全家便利商店FamiPort機台"
 ticketUrl: "https://rockempire.kktix.cc/events/ad848569"

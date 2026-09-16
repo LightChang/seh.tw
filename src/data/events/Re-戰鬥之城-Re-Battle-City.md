@@ -5,7 +5,7 @@ title: "Re：戰鬥之城 Re: Battle City"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 1
+popularity: 2
 images: 
   - url: "https://khh.travel/image/64432/640x480"
     caption: "Re：戰鬥之城"

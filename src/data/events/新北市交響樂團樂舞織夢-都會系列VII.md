@@ -5,7 +5,7 @@ title: "新北市交響樂團《樂舞織夢－都會系列Ⅶ》"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2092181342224326657"
 sessions: 
   - startAt: "2026-09-20T14:30:00+08:00"

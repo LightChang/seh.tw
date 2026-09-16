@@ -5,7 +5,7 @@ title: "PILIGILI奇幻冒險記"
 category: "戲劇"
 categoryRaw: "2"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2090340198001360896"
 sessions: 
   - startAt: "2026-10-03T14:30:00+08:00"
