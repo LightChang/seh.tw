@@ -154,7 +154,7 @@ hakka-liudui-events       宣告「每 3 年」  與資料內容明顯不符
 
 ## 6. 實作
 
-`transform/scheduler.mjs`（`npm run ingest`）。觸發器 `.github/workflows/ingest.yml`，每小時一次。
+`transform/scheduler.mjs`（`npm run ingest`，或連同 pipeline 的 `npm run update`）。**沒有自動觸發器**：13 支政府來源擋海外 IP，GitHub 主機抓不到，所以在台灣的機器上手動跑。`.github/workflows/deploy.yml` 只在 push 時建置部署。
 
 ```
 node transform/scheduler.mjs              只抓到期的

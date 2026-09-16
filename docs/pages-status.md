@@ -7,8 +7,8 @@
 不是還沒做完——已結束的活動退出收錄但網址保留，一個場地明天有活動就自動進來。
 
 **部署**：2026-09-15 上線。repo `LightChang/seh.tw`（public），GitHub Pages 走 Actions，
-custom domain `seh.tw`，強制 HTTPS。`.github/workflows/ingest.yml` 每小時觸發，抓到變動才建置部署；
-手動觸發（`gh workflow run ingest.yml`）一律建置部署。
+custom domain `seh.tw`，強制 HTTPS。`.github/workflows/deploy.yml` 在 push 到 main 時建置、檢查連結、部署，
+不抓資料——抓取在台灣的機器上跑（`npm run update`），見 CLAUDE.md。
 
 ---
 

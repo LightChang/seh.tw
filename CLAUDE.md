@@ -60,12 +60,19 @@ npm run links      # build 之後，站內連結不能有壞的
 
 ## 上線後（2026-09-15 起）
 
-repo `LightChang/seh.tw`，GitHub Pages。`ingest.yml` 每小時抓取、commit、部署；手動觸發一律部署。
-**CI 會 commit `data/` 與 `src/data/`，本機動手前先 `git pull`。**
+repo `LightChang/seh.tw`，GitHub Pages。**GitHub 不抓資料、沒有排程**——13 支政府來源擋海外 IP。
 
-本機的 `ingest/raw/` 不會跟著 CI 更新。`readRaw` 會擋掉比 CI 最後一次抓取還舊的 raw
-（跳過並列出 id），別繞過它——舊 raw 會把 CI 新增的記錄標成 disappeared。
-本機要重跑某支就 `node transform/scheduler.mjs --force <id>` 重抓。
+更新資料在台灣的機器上做：
+
+```
+npm run update       # git pull → scheduler 抓到期來源 → pipeline
+git add -A && git commit && git push    # push 到 main，GitHub 才建置並部署
+```
+
+`.github/workflows/deploy.yml` 只做建置、連結檢查、部署，不跑 normalize（需要 `ingest/raw/`，那不進版控）。
+
+`readRaw` 會擋掉比 `schedule-state` 記錄的最後抓取還舊的 raw（跳過並列出 id），別繞過它
+——舊 raw 會把新記錄標成 disappeared。要重跑某支就 `node transform/scheduler.mjs --force <id>` 重抓。
 
 ## 踩過、會再踩的坑
 

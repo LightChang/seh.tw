@@ -1,0 +1,55 @@
+# 建置並部署到 GitHub Pages。
+#
+# 抓取資料不在這裡：13 支政府來源擋海外 IP，GitHub 主機抓不到（2026-09-15 實測）。
+# 更新流程是在台灣的機器上跑 `npm run ingest` → `npm run pipeline`，commit 後 push，
+# 這支 workflow 再把 push 上來的結果建置、檢查連結、部署。
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write      # 部署
+  id-token: write   # deploy-pages 的 OIDC
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false   # 部署到一半被砍會留下半套產出
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      TZ: Asia/Taipei   # 與本機一致；顯示用的時間已在 format.mjs 固定台灣時間，這是保險
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '26'
+      - run: npm ci
+
+      # 只跑 emit 之後的階段：normalize 需要 ingest/raw/，那不進版控，CI 沒有。
+      # GA 與 Search Console 的值放 repository variables（vars，不是 secrets——
+      # 它們本來就會出現在每一頁的原始碼裡）。沒設就什麼都不輸出。
+      - name: 建置
+        env:
+          SEH_GA_ID: ${{ vars.SEH_GA_ID }}
+          SEH_GSC_TOKEN: ${{ vars.SEH_GSC_TOKEN }}
+        # links 沒過就不部署：壞連結、canonical 帶 .html 都在這裡擋
+        run: |
+          npm run build
+          npm run links
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - uses: actions/deploy-pages@v4
+        id: deploy

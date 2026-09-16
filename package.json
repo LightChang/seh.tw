@@ -8,6 +8,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "ingest": "node transform/scheduler.mjs",
+    "update": "git pull --rebase --autostash && node transform/scheduler.mjs && node transform/pipeline.mjs",
     "emit": "node transform/emit-md.mjs",
     "sync:tokens": "node scripts/sync-tokens.mjs",
     "sources": "node scripts/gen-sources.mjs",
