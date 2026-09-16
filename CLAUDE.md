@@ -74,6 +74,11 @@ git add -A && git commit && git push    # push 到 main，GitHub 才建置並部
 `readRaw` 會擋掉比 `schedule-state` 記錄的最後抓取還舊的 raw（跳過並列出 id），別繞過它
 ——舊 raw 會把新記錄標成 disappeared。要重跑某支就 `node transform/scheduler.mjs --force <id>` 重抓。
 
+## 監看
+
+上線後的指標與查詢指令：`docs/SEO.md`（收錄與技術）、`docs/AEO.md`（結構化資料）、
+`docs/GEO.md`（生成式引擎）。三份都只寫指令不寫數字——現況一律跑指令查。
+
 ## 踩過、會再踩的坑
 
 - **欄位名會騙人。** `hsinchu-county` 的 `wgs84aX` 是緯度，`ntpc-city-museums` 的

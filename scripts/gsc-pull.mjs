@@ -4,6 +4,9 @@
 //   node scripts/gsc-pull.mjs --check           只驗證憑證與權限，不寫檔
 //   node scripts/gsc-pull.mjs                   拉最近 28 天
 //   node scripts/gsc-pull.mjs --days 90         指定天數
+//   node scripts/gsc-pull.mjs --sitemaps        sitemap 的提交狀態與錯誤數
+//   node scripts/gsc-pull.mjs --inspect <網址>  單一網址的收錄狀態與結構化資料
+//   node scripts/gsc-pull.mjs --inspect-sample 12   從線上 sitemap 抽樣檢查，彙總各種狀態
 //
 // 憑證從環境變數來，二選一（服務帳號金鑰是**機密**，不可進版控）：
 //   GSC_KEY_FILE=/path/to/key.json     本機用
@@ -111,6 +114,80 @@ async function queryAll(token, dimensions, startDate, endDate) {
 const day = (offset) =>
   new Date(Date.now() + 8 * 3600e3 + offset * 86400e3).toISOString().slice(0, 10);
 
+/** sitemap 的提交狀態。errors／warnings 不是 0 就要進 Search Console 看細節。 */
+async function sitemaps(token) {
+  const { sitemap = [] } = await api(token, `/sites/${encodeURIComponent(PROPERTY)}/sitemaps`);
+  if (!sitemap.length) return console.log('這個資源沒有提交過 sitemap。');
+  for (const s of sitemap) {
+    const web = (s.contents ?? []).find((c) => c.type === 'web');
+    console.log(`${s.path}`);
+    console.log(`  提交 ${s.lastSubmitted ?? '—'}　下載 ${s.lastDownloaded ?? '（還沒下載）'}`
+      + `　處理中 ${s.isPending ? '是' : '否'}`);
+    console.log(`  錯誤 ${s.errors ?? '0'}　警告 ${s.warnings ?? '0'}　網址 ${web?.submitted ?? '—'}`);
+  }
+}
+
+/** URL 檢查 API。配額每天 2,000 次、每分鐘 600 次。 */
+async function inspect(token, inspectionUrl) {
+  const res = await fetch('https://searchconsole.googleapis.com/v1/urlInspection/index:inspect', {
+    method: 'POST',
+    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ inspectionUrl, siteUrl: PROPERTY, languageCode: 'zh-TW' }),
+  });
+  const json = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    console.error(`URL 檢查 HTTP ${res.status}：${JSON.stringify(json).slice(0, 300)}`);
+    process.exit(1);
+  }
+  return json.inspectionResult ?? {};
+}
+
+const issuesOf = (r) => (r.richResultsResult?.detectedItems ?? [])
+  .flatMap((d) => (d.items ?? []).flatMap((it) => (it.issues ?? [])
+    .map((i) => `${i.severity} ${i.issueMessage}`)));
+
+async function inspectOne(token, url) {
+  if (!url) { console.error('--inspect 後面要接網址'); process.exit(2); }
+  const r = await inspect(token, url);
+  const idx = r.indexStatusResult ?? {};
+  console.log(`${url}`);
+  console.log(`  ${idx.verdict ?? '—'}　${idx.coverageState ?? '—'}`);
+  console.log(`  robots ${idx.robotsTxtState ?? '—'}　抓取 ${idx.pageFetchState ?? '—'}　最後檢索 ${idx.lastCrawlTime ?? '—'}`);
+  if (idx.googleCanonical && idx.googleCanonical !== idx.userCanonical) {
+    console.log(`  ⚠️ canonical 不一致：頁面說 ${idx.userCanonical}　Google 選 ${idx.googleCanonical}`);
+  }
+  if (r.richResultsResult) console.log(`  結構化資料 ${r.richResultsResult.verdict}`);
+  for (const i of issuesOf(r)) console.log(`    ${i}`);
+  console.log(`  細節：${r.inspectionResultLink ?? '—'}`);
+}
+
+/** 從線上 sitemap 抽樣，各類頁面平均取樣，彙總狀態與結構化資料問題。 */
+async function inspectSample(token, n) {
+  const xml = await (await fetch('https://seh.tw/sitemap-0.xml')).text();
+  const locs = [...xml.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+  const kinds = ['/event/', '/venue/', '/heritage/', '/city/', '/calendar/', '/category/'];
+  const per = Math.max(1, Math.floor(n / (kinds.length + 1)));
+  const picked = ['https://seh.tw/'];
+  for (const k of kinds) {
+    const of = locs.filter((u) => u.includes(k));
+    for (let i = 0; i < per && i < of.length; i++) picked.push(of[Math.floor(i * of.length / per)]);
+  }
+  const agg = new Map();
+  for (const u of picked) {
+    const r = await inspect(token, u);
+    const idx = r.indexStatusResult ?? {};
+    const add = (k) => agg.set(k, [...(agg.get(k) ?? []), u]);
+    add(`${idx.verdict ?? '—'}｜${idx.coverageState ?? '—'}`);
+    if (idx.googleCanonical && idx.googleCanonical !== idx.userCanonical) add('⚠️ canonical 不一致');
+    for (const i of issuesOf(r)) add(`結構化資料 ${i}`);
+  }
+  console.log(`抽樣 ${picked.length} 頁（配額每天 2,000 次）`);
+  for (const [k, v] of [...agg].sort((a, b) => b[1].length - a[1].length)) {
+    console.log(`  ${String(v.length).padStart(3)}  ${k}`);
+    console.log(`       例：${decodeURIComponent(v[0])}`);
+  }
+}
+
 async function main() {
   const key = await loadKey();
   const token = await accessToken(key);
@@ -127,6 +204,10 @@ async function main() {
   }
   console.log(`${PROPERTY}　權限：${mine.permissionLevel}　服務帳號：${key.client_email}`);
   if (has('--check')) return;
+
+  if (has('--sitemaps')) return sitemaps(token);
+  if (has('--inspect')) return inspectOne(token, arg('--inspect'));
+  if (has('--inspect-sample')) return inspectSample(token, Number(arg('--inspect-sample', '12')));
 
   // Search Console 的資料有 2～3 天延遲，最後兩天一定不完整，不要拉
   const days = Number(arg('--days', '28'));
