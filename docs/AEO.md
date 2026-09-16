@@ -50,10 +50,10 @@ for (const k of keys) console.log(` ${k.padEnd(12)} ${c[k] ?? 0}  ${Math.round((
 
 1. 先跑指標 5。md 裡就沒有這個欄位 → 是**來源沒給**，要從 `ingest/` 那一層補，
    或接受它。不要為了消警告在頁面上填假值。
-2. md 裡有、JSON-LD 沒輸出 → 這才是 bug，改 `src/pages/event/[...slug].astro`。
-   目前的對應：`description`→`description`、`images`→`image`、`performers`→`performer`、
-   `organizers`（只取 `role === 'master'`）→`organizer`、`isFree`／`ticketUrl`→`offers`、
-   場次的 `endAt`→`endDate`、`lat`／`lng`→`location.geo`。
+2. md 裡有、JSON-LD 沒輸出 → 這才是 bug，改 `src/lib/event-ld.mjs`（連同測試）。
+   目前的對應：`description`→`description`（缺值用可見事實）、`images`→`image`、
+   `performers`→`performer`、`organizers`（主辦優先，沒有主辦就退回其他角色）→`organizer`、
+   `isFree`／`ticketUrl`→`offers`、場次的 `endAt`→`endDate`、`lat`／`lng`→`location.geo`。
 3. `priceText` 是自由文字（例如「NT$500、800」），**不要**自動解析成 `offers.price`。
    解析錯的價格比沒有價格更糟。
 
@@ -69,5 +69,5 @@ for (const k of keys) console.log(` ${k.padEnd(12)} ${c[k] ?? 0}  ${Math.round((
 curl -s <網址> | sed 's/<[^>]*>/ /g' | tr -s ' \n' ' ' | head -c 600
 ```
 
-`/today`、`/tonight` 的清單由前端產生，這個指令看不到任何活動——這是已知缺口，
-追蹤方式見 `SEO.md`。活動頁、場館頁、文資頁則應該看得到標題、時間、地點。
+每一種頁面都要看得到標題、時間、地點。`/today`、`/tonight` 的清單自 2026-09-17 起
+也在 build 時寫進 HTML（見 `SEO.md`），不執行 JS 一樣讀得到。

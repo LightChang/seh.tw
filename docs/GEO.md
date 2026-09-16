@@ -37,6 +37,9 @@ Generative Engine Optimization：ChatGPT、Perplexity、Claude、Gemini 這些�
   但**頁面目前沒有顯示它**（`src/pages/event/[...slug].astro` 只渲染 `provides`）。
   要確認某頁有沒有落選值：`grep -A3 'rejected:' src/data/events/<slug>.md`。
   把它呈現在頁面上會是一個 GEO 加分項，還沒做。
+- **彙整頁不靠 JavaScript。** `/today`、`/tonight` 的清單在 build 時就寫進 HTML
+  （2026-09-17 改的），不執行 JS 的抓取器也讀得到。代價是清單日期停在最後一次 build，
+  資料更新後要 push 才會重建。驗證：`curl -s https://seh.tw/today | grep -c "ev-t"`。
 - **網址永久不變。** `data/slug-registry.ndjson` 是 append-only。被引用過的網址
   之後仍然打得開，這對累積引用信任很重要。
 - **時間一律是台灣時間。** `src/lib/format.mjs` 固定 UTC+8，不看執行環境時區。
