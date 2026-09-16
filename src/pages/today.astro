@@ -1,47 +1,56 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import { flatSessions } from '../lib/build-data.mjs';
+import { todaySessions, mergeRuns } from '../lib/day-lists.mjs';
+import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+
+// 清單在 build 時就寫進 HTML：搜尋引擎與答案引擎不保證會執行 JS，
+// 只留空清單等前端填，它們看到的就是一頁沒有內容的頁面。
+// 下面的 <script> 載入後會用當下時間重畫（build 之後日期就前進了），
+// 兩邊共用 day-lists.mjs，邏輯不會分岔。
+const buildNow = Date.now();
+const rows = todaySessions(await flatSessions(), buildNow);
+const merged = mergeRuns(rows);
 ---
 <Base title="今天有什麼｜seh" description="今天台灣各地正在發生的文化活動，依開始時間排列。">
   <div class="shell">
     <Nav current="today" />
     <header class="page-hd">
       <h1>今天</h1>
-      <p class="sub" id="sub">載入中⋯</p>
+      <p class="sub" id="sub">{dateLabel(buildNow)}　{fmtNum(merged.length)} 個活動、{fmtNum(rows.length)} 場次</p>
       <nav class="chips" id="chips" aria-label="類型篩選"></nav>
     </header>
-    <ol class="ev-list" id="list"></ol>
-    <p class="empty-note" id="empty" hidden>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
+    <ol class="ev-list" id="list">
+      {merged.map((d) => (
+        <li>
+          <a href={`/event/${encodeURIComponent(d.slug)}`}>
+            <time class="ev-lead tabular" datetime={d.at}>{d.dateOnly ? '整天' : hhmm(d.ts)}</time>
+            <span class="ev-body"><span class="ev-t">{d.title}</span>
+              <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+            <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+            {d.times.length > 1 && <span class="ev-x">今天還有 {d.times.length - 1} 場</span>}
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="empty-note" id="empty" hidden={merged.length > 0}>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
   </div>
 </Base>
 
 <script>
   import { relTime, dateLabel, fmtNum, catVar, midnight } from '../lib/format.mjs';
+  import { todaySessions, mergeRuns } from '../lib/day-lists.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const all = await loadSessions();
   const now = Date.now();
-  const t0 = new Date(midnight(now));   // 台灣的今天，不看訪客時區
-  const t1 = t0.getTime() + 86400000;
-
-  const today = all.map((d) => ({ ...d, ts: new Date(d.at).getTime() }))
-    .filter((d) => d.ts >= t0.getTime() && d.ts < t1)
-    .sort((a, b) => {
-      const ap = a.ts <= now, bp = b.ts <= now;
-      if (ap !== bp) return ap ? 1 : -1;
-      return ap ? b.ts - a.ts : a.ts - b.ts;
-    });
-
-  // 同名同場館的多場次收成一筆，避免一齣戲洗掉整個列表
-  const merged = []; const seen = new Map();
-  for (const d of today) {
-    const key = `${d.title}@@${d.venue}`;
-    if (seen.has(key)) { seen.get(key).times.push(d.ts); continue; }
-    const row = { ...d, times: [d.ts] }; seen.set(key, row); merged.push(row);
-  }
+  // build 時已經畫過一份（日期停在 build 當天），這裡用當下時間重畫
+  const today = todaySessions(all, now);
+  const merged = mergeRuns(today);
 
   document.getElementById('sub').textContent =
-    `${dateLabel(t0)}　${fmtNum(merged.length)} 個活動、${fmtNum(today.length)} 場次`;
+    `${dateLabel(midnight(now))}　${fmtNum(merged.length)} 個活動、${fmtNum(today.length)} 場次`;
 
   const counts = new Map();
   merged.forEach((d) => counts.set(d.cat, (counts.get(d.cat) ?? 0) + 1));

@@ -62,8 +62,11 @@ for (const [k, v] of Object.entries(bad)) console.log(k, v.length, v.slice(0, 3)
   而不是 `directory`，理由寫在 `astro.config.mjs`。
 - **`SEH_GSC_TOKEN` 這個 repository variable 不能刪。** Search Console 的擁有權靠頁面上的
   `google-site-verification` meta 持續驗證，標記消失擁有權會被收回。
-- **`/today`、`/tonight` 的清單由前端 JavaScript 產生**，HTML 裡沒有內容。Google 會執行 JS
-  但不保證拿來建索引。用指標 3、4 追蹤這兩頁的狀態；要改善就得在 build 時先寫一份清單進 HTML。
+- **`/today`、`/tonight` 的清單在 build 時就寫進 HTML**（2026-09-17 改的，之前是空清單等前端填）。
+  清單日期停在 build 當下，瀏覽器載入後會用當下時間重畫；建置期與前端共用
+  `src/lib/day-lists.mjs`，改動時兩邊會一起變。**資料更新後要 push 才會重建**，
+  太久沒 push，搜尋引擎讀到的就是舊清單。驗證：
+  `curl -s https://seh.tw/today | grep -c "ev-t"`（0 就是又退回空清單了）。
 
 ## 收錄門檻
 

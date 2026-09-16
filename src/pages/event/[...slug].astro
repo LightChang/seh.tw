@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
+import { eventLd } from '../../lib/event-ld.mjs';
 import { allEvents, isIndexable, builtCategories, verifiedState } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
@@ -15,52 +16,8 @@ const first = sessions[0];
 const last = sessions[sessions.length - 1];
 const primary = sessions.find((s) => s.venueNameRaw) ?? first;
 
-// 只有 street 精度才輸出 streetAddress。臺北那批的 Address 欄位等於行政區，
-// 照填會產出與頁面可見內容不符的 structured data（規格 §24）。
-const addr = primary.city ? {
-  '@type': 'PostalAddress',
-  addressCountry: 'TW',
-  addressRegion: primary.city,
-  ...(primary.district ? { addressLocality: primary.district } : {}),
-  ...(primary.addressPrecision === 'street' && primary.address ? { streetAddress: primary.address } : {}),
-} : undefined;
-
-const ld = {
-  '@context': 'https://schema.org',
-  '@type': 'Event',
-  name: e.title,
-  ...(e.description ? { description: e.description.slice(0, 500) } : {}),
-  startDate: first.startAt,
-  ...(last.endAt ?? last.startAt !== first.startAt ? { endDate: last.endAt ?? last.startAt } : {}),
-  eventStatus: e.status === 'cancelled'
-    ? 'https://schema.org/EventCancelled' : 'https://schema.org/EventScheduled',
-  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-  ...(primary.venueNameRaw || primary.city ? {
-    location: {
-      '@type': 'Place',
-      name: primary.venueNameRaw || primary.city,
-      ...(addr ? { address: addr } : {}),
-      ...(primary.lat && primary.lng
-        ? { geo: { '@type': 'GeoCoordinates', latitude: primary.lat, longitude: primary.lng } } : {}),
-    },
-  } : {}),
-  ...(e.performers?.length ? {
-    performer: e.performers.map((p) => ({ '@type': 'PerformingGroup', name: p.nameRaw })),
-  } : {}),
-  ...(e.organizers?.length ? {
-    organizer: e.organizers.filter((o) => o.role === 'master')
-      .map((o) => ({ '@type': 'Organization', name: o.nameRaw })),
-  } : {}),
-  ...(e.isFree === true || e.ticketUrl ? {
-    offers: {
-      '@type': 'Offer',
-      ...(e.isFree === true ? { price: '0', priceCurrency: 'TWD' } : {}),
-      ...(e.ticketUrl ? { url: e.ticketUrl } : {}),
-      availability: sessions.some((s) => s.onSales) ? 'https://schema.org/InStock' : undefined,
-    },
-  } : {}),
-  ...(e.images?.length ? { image: e.images.map((i) => i.url) } : {}),
-};
+// JSON-LD 與 <meta description> 用同一份事實，組裝在 src/lib/event-ld.mjs（有測試守著）
+const { ld, factLine } = eventLd(e);
 
 const srcUrl = e.sources.find((x) => x.url)?.url;
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
@@ -72,7 +29,7 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
 ---
 <Base
   title={`${e.title}｜seh`}
-  description={`${e.title}。${[primary.venueNameRaw, primary.city].filter(Boolean).join('、')}，${dateLabel(first.startAt)} 起。`}
+  description={factLine}
   noindex={!indexable}
 >
   <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />

@@ -17,7 +17,7 @@ Answer Engine Optimization：頁面能不能被答案引擎（Google 精選摘�
 |---|---|---|---|
 | 1 | 結構化資料判定 | `node scripts/gsc-pull.mjs --inspect-sample 12` | 每頁會印 `結構化資料 PASS/FAIL` 與逐條問題 |
 | 2 | ERROR 等級問題 | 同上，看 `ERROR` 開頭的行 | **一條都不該有**。有就是我們產錯了，改 `src/pages/event/[...slug].astro` 的 JSON-LD |
-| 3 | WARNING 等級問題 | 同上，看 `WARNING` 開頭的行 | 都是選填欄位。多半代表來源沒給值，不是程式漏輸出——先跑指標 5 對照 |
+| 3 | WARNING 等級問題 | 同上，看 `WARNING` 開頭的行 | 都是選填欄位。`description`、`endDate`、`organizer`、`offers.url` 已經補到「有資料就一定輸出」；還會出現的是 `image`、`performer`、`price`，那是來源沒給——先跑指標 5 對照 |
 | 4 | JSON-LD 覆蓋率 | `grep -l 'application/ld+json' dist/event/*.html \| wc -l` 對照 `ls dist/event/*.html \| wc -l` | 兩個數字要一樣。不一樣代表有頁面漏了結構化資料 |
 | 5 | 來源欄位覆蓋率 | 見下方「欄位覆蓋率」 | 用來分辨「來源沒給」與「我們沒輸出」 |
 | 6 | 單頁人工複驗 | `https://search.google.com/test/rich-results?url=<網址>` | Google 官方測試工具，跟指標 1 的結果應該一致 |
@@ -41,7 +41,12 @@ for (const k of keys) console.log(` ${k.padEnd(12)} ${c[k] ?? 0}  ${Math.round((
 
 **WARNING 不是都要消掉。** Google 對 `Event` 的必填只有 `name`、`startDate`、`location`，
 其餘（`image`、`description`、`offers`、`organizer`、`performer`、`endDate`）是選填。
-缺這些欄位的正確處理順序是：
+
+組裝規則寫在 `src/lib/event-ld.mjs`，每條都有測試（`test/lib-event-ld.test.mjs`）：
+空陣列不輸出、`description` 缺值時用頁面上看得到的事實、`endDate` 依可信度取值、
+只有確定免費才給價格。**改這個檔先看那份測試。**
+
+缺欄位的正確處理順序是：
 
 1. 先跑指標 5。md 裡就沒有這個欄位 → 是**來源沒給**，要從 `ingest/` 那一層補，
    或接受它。不要為了消警告在頁面上填假值。
