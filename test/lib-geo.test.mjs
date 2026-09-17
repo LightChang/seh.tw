@@ -145,8 +145,15 @@ test('latLng', async (t) => {
   });
 });
 
+// 測資是 test/fixtures/ 裡的固定快照，不是 ingest/raw/ 的當次抓取結果。
+// 原本讀 ../ingest/raw/ntpc-museum-venues.json：那個目錄在 .gitignore 裡，現在的管線也不再寫它
+// （scheduler.mjs 只把它當首次建狀態的舊基準讀），所以任何新 clone 上這條都是紅的——
+// 而 CLAUDE.md 寫「任何一條紅就是還沒做完」，一條永遠紅的測試會讓那句話失去意義。
+// 快照只留座標四欄＋名稱（來源：新北市政府文化局「新北市博物館家族清單」，
+// 政府資料開放授權條款-第1版，見 SOURCES.md）。這是座標轉換的回歸測試，
+// 要釘住的是「同一組輸入永遠轉出同一組輸出」，本來就該用固定測資而不是每天會變的抓取結果。
 test('tm2ToWgs84：ntpc-museum-venues 34 筆回歸', async (t) => {
-  const url = new URL('../ingest/raw/ntpc-museum-venues.json', import.meta.url);
+  const url = new URL('./fixtures/ntpc-museum-venues-coords.json', import.meta.url);
   const recs = JSON.parse(await readFile(url, 'utf-8'));
   const pairs = recs.filter((r) => r.twd97x && r.twd97y && r.wgs84ax && r.wgs84ay);
 
