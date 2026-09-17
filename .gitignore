@@ -19,3 +19,6 @@ node_modules/
 *-key.json
 gsc-key*.json
 service-account*.json
+
+# seo-ops 每日 SEO 數據（公開 repo，流量與搜尋數據不入版控）
+data/seo-daily/
