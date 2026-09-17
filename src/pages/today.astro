@@ -12,8 +12,37 @@ import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
 const buildNow = Date.now();
 const rows = todaySessions(await flatSessions(), buildNow);
 const merged = mergeRuns(rows);
+
+// ItemList／Event 結構化資料（GEO：/today 是常青樞紐，AI 問「今天台灣有什麼活動」
+// 最可能引用這頁）。只用畫面上真的會列出來的 merged，資料來源與可見內容同一份，
+// 不會有「結構化資料講得比畫面多」的問題。name/startDate/location 都缺才整筆丟掉
+// （schema.org Event 三個必填欄位，寧缺勿濫）。
+const withTz = /[Z+]|-\d{2}:\d{2}$/;
+const isoStart = (at) => (withTz.test(at.slice(11)) ? at : `${at}:00+08:00`);
+const itemListElement = merged
+  .filter((d) => d.title && d.at && (d.venue || d.city))
+  .map((d, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    item: {
+      '@type': 'Event',
+      name: d.title,
+      startDate: isoStart(d.at),
+      location: { '@type': 'Place', name: d.venue || d.city },
+      url: `https://seh.tw/event/${encodeURIComponent(d.slug)}`,
+    },
+  }));
+const todayLd = itemListElement.length ? {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: '今天台灣的文化活動',
+  itemListOrder: 'https://schema.org/ItemListOrderAscending',
+  numberOfItems: itemListElement.length,
+  itemListElement,
+} : null;
 ---
 <Base title="今天有什麼｜seh" description="今天台灣各地正在發生的文化活動，依開始時間排列。">
+  {todayLd && <script type="application/ld+json" set:html={JSON.stringify(todayLd)} slot="head" />}
   <div class="shell">
     <Nav current="today" />
     <header class="page-hd">
