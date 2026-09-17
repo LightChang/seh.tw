@@ -2,6 +2,10 @@
 const { current } = Astro.props;
 const items = [
   { k: 'today', label: '今天', href: '/today' },
+  { k: 'tonight', label: '今晚', href: '/tonight' },
+  { k: 'city', label: '縣市', href: '/city' },
+  { k: 'venues', label: '場館', href: '/venues' },
+  { k: 'heritage', label: '文化資產', href: '/heritage' },
   { k: 'nearby', label: '附近', href: '/nearby' },
   { k: 'map', label: '地圖', href: '/map' },
   { k: 'search', label: '搜尋', href: '/search' },
@@ -21,7 +25,7 @@ const items = [
   .brand { font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg);
            text-decoration: none; letter-spacing: -0.01em; }
   .brand span { color: var(--text-muted); font-weight: 400; }
-  .nav ul { display: flex; gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
+  .nav ul { display: flex; flex-wrap: wrap; row-gap: var(--space-2); gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
   .nav a { text-decoration: none; font-size: var(--text-sm); color: var(--text-secondary); }
   .nav a:hover { color: var(--color-link); }
   .nav a.on { color: var(--text-primary); font-weight: 700; }
