@@ -19,19 +19,28 @@ const merged = mergeRuns(rows);
 // （schema.org Event 三個必填欄位，寧缺勿濫）。
 const withTz = /[Z+]|-\d{2}:\d{2}$/;
 const isoStart = (at) => (withTz.test(at.slice(11)) ? at : `${at}:00+08:00`);
+// citation：同一份邏輯 event-ld.mjs 也有一份（沒有 url 的來源整筆丟棄，陣列空就不輸出
+// 屬性）——這裡資料來源是 flatSessions() 的 d.sources，跟活動明細頁同一份 e.sources。
+const citationOf = (d) => (d.sources ?? [])
+  .filter((s) => s.url)
+  .map((s) => ({ '@type': 'CreativeWork', name: s.sourceName || s.id, url: s.url }));
 const itemListElement = merged
   .filter((d) => d.title && d.at && (d.venue || d.city))
-  .map((d, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    item: {
-      '@type': 'Event',
-      name: d.title,
-      startDate: isoStart(d.at),
-      location: { '@type': 'Place', name: d.venue || d.city },
-      url: `https://seh.tw/event/${encodeURIComponent(d.slug)}`,
-    },
-  }));
+  .map((d, i) => {
+    const citation = citationOf(d);
+    return {
+      '@type': 'ListItem',
+      position: i + 1,
+      item: {
+        '@type': 'Event',
+        name: d.title,
+        startDate: isoStart(d.at),
+        location: { '@type': 'Place', name: d.venue || d.city },
+        url: `https://seh.tw/event/${encodeURIComponent(d.slug)}`,
+        ...(citation.length ? { citation } : {}),
+      },
+    };
+  });
 const todayLd = itemListElement.length ? {
   '@context': 'https://schema.org',
   '@type': 'ItemList',

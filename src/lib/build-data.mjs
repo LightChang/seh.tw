@@ -86,6 +86,10 @@ export async function flatSessions() {
         end: s.endAt ?? null,
         dateOnly,
         url: `/event/${encodeURIComponent(e.slug)}`,
+        // 活動的資料來源（event-ld.mjs 的 citation 用同一份）。同一活動的每個場次
+        // 都帶一份是跟既有欄位（isFree／popularity／cat…）一致的重複，換取 today.astro
+        // 不用另外查表。
+        sources: e.sources ?? [],
       });
     }
   }

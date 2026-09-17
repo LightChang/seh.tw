@@ -46,6 +46,13 @@ export function eventLd(e) {
 
   const availability = sessions.some((s) => s.onSales) ? `${SCHEMA}/InStock` : undefined;
 
+  // GEO：citation 讓答案引擎能溯源到原始出處（頁面上的「資料來源」區塊，
+  // event/[...slug].astro 的 footer.prov）。沒有 url 的來源整筆丟棄——
+  // 殘缺的 CreativeWork（沒有 url）在 Google 眼裡是「無效項目」，比沒有 citation 更糟。
+  const citation = (e.sources ?? [])
+    .filter((s) => s.url)
+    .map((s) => ({ '@type': 'CreativeWork', name: s.sourceName || s.id, url: s.url }));
+
   const ld = {
     '@context': SCHEMA,
     '@type': 'Event',
@@ -81,6 +88,7 @@ export function eventLd(e) {
       },
     } : {}),
     ...(e.images?.length ? { image: e.images.map((i) => i.url) } : {}),
+    ...(citation.length ? { citation } : {}),
   };
 
   return { ld, factLine, canonical };

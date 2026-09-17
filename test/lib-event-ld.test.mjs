@@ -74,6 +74,22 @@ test('streetAddress 只在 street 精度時輸出', () => {
   assert.equal(street.streetAddress, '臺北市中正區中山南路21-1號');
 });
 
+test('citation：只收有 url 的來源，沒有來源就不輸出這個欄位', () => {
+  const withUrl = eventLd(ev({
+    sources: [
+      { id: 'a', sourceName: '文化局', url: 'https://example.org/a' },
+      { id: 'b', url: '' },
+    ],
+  })).ld.citation;
+  assert.deepEqual(withUrl, [{ '@type': 'CreativeWork', name: '文化局', url: 'https://example.org/a' }]);
+
+  const noName = eventLd(ev({ sources: [{ id: 'c', url: 'https://example.org/c' }] })).ld.citation;
+  assert.equal(noName[0].name, 'c', '沒有 sourceName 就退回 id');
+
+  assert.equal('citation' in eventLd(ev({ sources: [{ id: 'd', url: '' }] })).ld, false, '全部沒有 url 就不輸出這個欄位');
+  assert.equal('citation' in eventLd(ev()).ld, false, '沒有 sources 就不輸出這個欄位');
+});
+
 test('不輸出空陣列或空物件', () => {
   const { ld } = eventLd(ev({ performers: [], organizers: [], images: [] }));
   for (const [k, v] of Object.entries(ld)) {
