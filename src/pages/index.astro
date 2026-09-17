@@ -1,10 +1,39 @@
 ---
 import Base from '../layouts/Base.astro';
+
+const SITE_URL = 'https://seh.tw';
+// 首頁的實體識別（GEO：AI 助理要知道「seh 是誰」才敢引用）。只填站上查得到的事實：
+// name/description 取自 README 與 <meta description>，logo 用真的存在的 icon-512.png，
+// potentialAction 對應 /search?q= 這個真的能用的搜尋功能（src/pages/search.astro 有讀
+// ?q 參數），不是為了湊欄位虛構的能力。沒有法人登記資訊（地址/電話/統編）可查證，不填。
+const organizationNode = {
+  '@type': 'Organization',
+  '@id': `${SITE_URL}/#organization`,
+  name: 'seh',
+  url: SITE_URL,
+  logo: `${SITE_URL}/icon-512.png`,
+  description: 'seh 整理台灣各地正在發生的文化活動，以及活動所在的場館、城市與文化資產，資料來自公開政府開放資料。',
+};
+const websiteNode = {
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  name: 'seh',
+  url: SITE_URL,
+  inLanguage: 'zh-Hant-TW',
+  publisher: { '@id': `${SITE_URL}/#organization` },
+  potentialAction: {
+    '@type': 'SearchAction',
+    target: `${SITE_URL}/search?q={search_term_string}`,
+    'query-input': 'required name=search_term_string',
+  },
+};
+const homeLd = { '@context': 'https://schema.org', '@graph': [organizationNode, websiteNode] };
 ---
 <Base
   title="seh — 開始探索台灣文化"
   description="台灣各地正在發生的文化活動、場館、城市與文化資產。從「今天去哪裡」開始探索。"
 >
+  <script type="application/ld+json" set:html={JSON.stringify(homeLd)} slot="head" />
   <main class="page">
     <!-- 上：一個問題 ＋ 一個輸入框 -->
     <header class="ask">
