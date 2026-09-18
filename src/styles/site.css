@@ -100,7 +100,11 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
 .ev-list > li { border-top: var(--hairline) solid var(--border-subtle); }
 .ev-list > li:last-child { border-bottom: var(--hairline) solid var(--border-subtle); }
 .ev-list a {
-  display: grid; grid-template-columns: 8rem minmax(0, 1fr) auto;
+  /* 第一欄用 minmax(8rem, max-content)：today/tonight 只放時間（19:30）時維持 8rem 對齊，
+     category/venue/city 放「日期（週幾） 時間」時讓欄位長到放得下。寫死 8rem ＋ .ev-lead 的
+     nowrap 會讓長字串直接壓到標題上（2026-09-18 實測 /category/展覽 的 06/03（三） 00:00
+     蓋住標題）；欄位長不夠時 nowrap 不會換行，只會溢出，所以要改的是欄寬不是 nowrap。 */
+  display: grid; grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr) auto;
   gap: 1.5rem; align-items: baseline;
   padding: 1rem 0.6rem; margin-inline: -0.6rem; text-decoration: none;
 }
