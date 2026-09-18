@@ -39,3 +39,42 @@ for (const tz of ['UTC', 'America/Los_Angeles', 'Asia/Taipei']) {
     assert.equal(merged.find((d) => d.title === '同一齣').times.length, 2);
   });
 }
+
+// 「近期」清單（分類／縣市／場館頁共用）。2026-09-18：這三頁原本直接列 flatSessions()
+// 的前 N 筆，於是「近期活動」底下出現 1998 年的展覽。
+test('upcomingSessions：進行中與未開始才算近期，展期末日當天仍在', async () => {
+  const { upcomingSessions } = await import('../src/lib/day-lists.mjs');
+  const NOW = Date.parse('2026-10-09T15:00:00+08:00');
+  const all = [
+    { ...row('1998-06-03T00:00', { title: '1998 舊展' }), end: null },
+    { ...row('2026-09-01T00:00', { title: '展期中' }), end: '2026-12-31' },
+    { ...row('2026-10-09T00:00', { title: '今天整天' }), end: null },
+    { ...row('2026-10-09T09:00:00+08:00', { title: '今天早上已開始' }), end: null },
+    { ...row('2026-10-20T19:30:00+08:00', { title: '未來' }), end: null },
+    { ...row('2026-08-01T00:00', { title: '昨天結束' }), end: '2026-10-08' },
+    { ...row('2026-08-01T00:00', { title: '今天最後一天' }), end: '2026-10-09' },
+  ];
+  const got = upcomingSessions(all, NOW).map((d) => d.title);
+  // 一律依開始時刻由早到晚，所以開展較早的展覽排在前面。
+  assert.deepEqual(got, ['今天最後一天', '展期中', '今天整天', '今天早上已開始', '未來']);
+  assert.ok(!got.includes('1998 舊展'));
+  assert.ok(!got.includes('昨天結束'));
+});
+
+test('upcomingSessions：進行中的依結束日排，快結束的先；leadText 分得出三種狀態', async () => {
+  const { upcomingSessions, pastSessions, leadText } = await import('../src/lib/day-lists.mjs');
+  const NOW = Date.parse('2026-10-09T15:00:00+08:00');
+  const all = [
+    { ...row('2026-01-01T00:00', { title: '長展' }), end: '2026-12-31' },
+    { ...row('2026-09-01T00:00', { title: '短展' }), end: '2026-10-15' },
+    { ...row('2026-11-01T19:30:00+08:00', { title: '未來' }), end: null },
+    { ...row('2025-05-05T00:00', { title: '去年結束' }), end: '2025-06-06' },
+  ];
+  const up = upcomingSessions(all, NOW);
+  assert.deepEqual(up.map((d) => d.title), ['短展', '長展', '未來']);
+  assert.equal(leadText(up[0], NOW), '展期中');
+  assert.equal(leadText(up[2], NOW), '11/01（日） 19:30');
+  const past = pastSessions(all, NOW);
+  assert.deepEqual(past.map((d) => d.title), ['去年結束']);
+  assert.equal(leadText(past[0], NOW), '2025/05/05');
+});

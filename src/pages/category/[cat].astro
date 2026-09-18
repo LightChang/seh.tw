@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { catVar, dateLabel, hhmm } from '../../lib/format.mjs';
 import { flatSessions, countBy, CATEGORY_MIN } from '../../lib/build-data.mjs';
+import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
   const all = await flatSessions();
@@ -12,7 +13,12 @@ export async function getStaticPaths() {
     params: { cat }, props: { cat, rows: all.filter((d) => d.cat === cat) },
   }));
 }
-const { cat, rows } = Astro.props;
+const { cat, rows: allRows } = Astro.props;
+// 頁面列的是「近期」＝進行中或還沒開始的場次。分類頁本身仍以全部場次是否達門檻決定要不要生成
+// （網址穩定優先），但畫面上的數字與清單一律只算近期，否則標題的「近期活動」名不副實
+// ——2026-09-18 實測這裡列的是 1998／2000 年的展覽。
+const buildNow = Date.now();
+const rows = upcomingSessions(allRows, buildNow);
 const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
 ---
@@ -32,7 +38,7 @@ const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) 
     <ol class="ev-list">
       {rows.slice(0, 40).map((d) => (
         <li><a href={`/event/${d.slug}`}>
-          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)}{d.dateOnly ? '' : ` ${hhmm(d.at)}`}</time>
+          <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
           <span class="ev-body"><span class="ev-t">{d.title}</span>
             <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
         </a></li>

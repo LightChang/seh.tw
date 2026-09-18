@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { catVar } from '../../lib/format.mjs';
 import { flatSessions, countBy, builtCategories } from '../../lib/build-data.mjs';
+import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
   const all = await flatSessions();
@@ -13,7 +14,12 @@ export async function getStaticPaths() {
     return { params: { city }, props: { city, rows, n: new Set(rows.map((d) => d.slug)).size } };
   });
 }
-const { city, n, rows } = Astro.props;
+const { city, rows: allRows } = Astro.props;
+// 只列近期（進行中或未開始）；活動數同樣只算近期的 cluster 數，
+// 標題寫「正在或即將發生」就不能拿全部歷史場次來數。
+const buildNow = Date.now();
+const rows = upcomingSessions(allRows, buildNow);
+const n = new Set(rows.map((d) => d.slug)).size;
 const catPages = await builtCategories();
 const cats = [...rows.reduce((m, d) => m.set(d.cat, (m.get(d.cat) ?? 0) + 1), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -35,7 +41,7 @@ const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venu
         <ol class="ev-list">
           {rows.slice(0, 12).map((d) => (
             <li><a href={`/event/${d.slug}`}>
-              <time class="ev-lead tabular" datetime={d.at}>{d.at.slice(5, 10).replace('-', '/')}{d.dateOnly ? '' : ` ${d.at.slice(11, 16)}`}</time>
+              <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
               <span class="ev-body"><span class="ev-t">{d.title}</span><span class="ev-m">{d.venue}</span></span>
               <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
             </a></li>

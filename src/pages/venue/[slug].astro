@@ -3,15 +3,23 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { catVar, relTime, dateLabel, hhmm } from '../../lib/format.mjs';
 import { allVenues, flatSessions, isIndexable } from '../../lib/build-data.mjs';
+import { upcomingSessions, pastSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
   const all = await flatSessions();
   return (await allVenues()).map((v) => ({
     params: { slug: v.slug },
-    props: { v, rows: all.filter((d) => d.venueSlug === v.slug).slice(0, 40) },
+    props: { v, rows: all.filter((d) => d.venueSlug === v.slug) },
   }));
 }
-const { v, rows } = Astro.props;
+const { v, rows: allRows } = Astro.props;
+// 「近期活動」就要是近期的：進行中或還沒開始，最多 40 筆。
+const buildNow = Date.now();
+const rows = upcomingSessions(allRows, buildNow).slice(0, 40);
+// 這個站大多數場館手上只有已結束的活動（2026-09-18 實測 10,478 個場館頁有 9,822 個沒有近期活動）。
+// 只列近期會讓那些頁整頁空白，對讀者與搜尋引擎都更糟，所以沒有近期活動時退而列已結束的，
+// 並在標題講清楚是已結束——列表的第一欄會連年份一起印，不會再看起來像今年的活動。
+const past = rows.length ? [] : pastSessions(allRows, buildNow).slice(0, 20);
 const indexable = await isIndexable(`/venue/${v.slug}`);
 // 只有 street 精度才輸出 streetAddress，否則會產出與頁面不符的 structured data
 const ld = {
@@ -24,30 +32,32 @@ const ld = {
 };
 ---
 <Base title={`${v.name}｜seh`} noindex={!indexable}
-  description={`${v.name}${v.eventCount ? `近期有 ${v.eventCount} 個活動` : ''}。${[v.city, v.district].filter(Boolean).join('')}`}>
+  description={`${v.name}${rows.length ? `近期有 ${rows.length} 個活動` : ''}。${[v.city, v.district].filter(Boolean).join('')}`}>
   <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
   <div class="shell">
     <Nav />
     <header class="page-hd">
       <nav class="crumb"><a href="/venues">場館</a>{v.city && <><span>/</span><a href={`/city/${v.city}`}>{v.city}</a></>}</nav>
       <h1 class="vname">{v.name}</h1>
-      <p class="sub"><strong class="tabular">{v.eventCount}</strong> 個活動
+      <p class="sub"><strong class="tabular">{rows.length}</strong> 個近期活動<span class="orig">　收錄 {v.eventCount} 個</span>
         <span class="orig">{v.origin === 'derived' ? '　場地資料由活動資料建立' : '　來自場館名錄'}</span></p>
     </header>
 
     {v.address && <p class="addr">{v.address}</p>}
 
-    <h2 class="h-sm">近期活動</h2>
+    {(rows.length > 0 || past.length > 0) && (
+      <h2 class="h-sm">{rows.length ? '近期活動' : '已結束的活動'}</h2>
+    )}
     <ol class="ev-list">
-      {rows.map((d) => (
+      {(rows.length ? rows : past).map((d) => (
         <li><a href={`/event/${d.slug}`}>
-          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)}{d.dateOnly ? '' : ` ${hhmm(d.at)}`}</time>
+          <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
           <span class="ev-body"><span class="ev-t">{d.title}</span></span>
           <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
         </a></li>
       ))}
     </ol>
-    {rows.length === 0 && <p class="empty-note">目前沒有收錄到這個場館的活動。</p>}
+    {rows.length === 0 && past.length === 0 && <p class="empty-note">目前沒有收錄到這個場館的活動。</p>}
   </div>
 </Base>
 <style>
