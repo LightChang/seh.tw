@@ -32,7 +32,7 @@ const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) 
     <ol class="ev-list">
       {rows.slice(0, 40).map((d) => (
         <li><a href={`/event/${d.slug}`}>
-          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)} {hhmm(d.at)}</time>
+          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)}{d.dateOnly ? '' : ` ${hhmm(d.at)}`}</time>
           <span class="ev-body"><span class="ev-t">{d.title}</span>
             <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
         </a></li>

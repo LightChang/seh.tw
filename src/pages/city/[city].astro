@@ -35,7 +35,7 @@ const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venu
         <ol class="ev-list">
           {rows.slice(0, 12).map((d) => (
             <li><a href={`/event/${d.slug}`}>
-              <time class="ev-lead tabular" datetime={d.at}>{d.at.slice(5, 10).replace('-', '/')} {d.at.slice(11, 16)}</time>
+              <time class="ev-lead tabular" datetime={d.at}>{d.at.slice(5, 10).replace('-', '/')}{d.dateOnly ? '' : ` ${d.at.slice(11, 16)}`}</time>
               <span class="ev-body"><span class="ev-t">{d.title}</span><span class="ev-m">{d.venue}</span></span>
               <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
             </a></li>

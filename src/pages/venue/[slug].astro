@@ -41,7 +41,7 @@ const ld = {
     <ol class="ev-list">
       {rows.map((d) => (
         <li><a href={`/event/${d.slug}`}>
-          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)} {hhmm(d.at)}</time>
+          <time class="ev-lead tabular" datetime={d.at}>{dateLabel(d.at).slice(5)}{d.dateOnly ? '' : ` ${hhmm(d.at)}`}</time>
           <span class="ev-body"><span class="ev-t">{d.title}</span></span>
           <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
         </a></li>
