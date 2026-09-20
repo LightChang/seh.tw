@@ -12,6 +12,10 @@ export async function getStaticPaths() {
 }
 const { h } = Astro.props;
 const indexable = await isIndexable(`/heritage/${h.slug}`);
+const descLead = [h.city, h.type].filter(Boolean).join('');
+const description = descLead
+  ? `${descLead}，${h.history.slice(0, Math.max(0, 80 - descLead.length - 1))}`
+  : h.history.slice(0, 80);
 const ld = {
   '@context': 'https://schema.org', '@type': 'LandmarksOrHistoricalBuildings', name: h.name,
   ...(h.city ? { address: { '@type': 'PostalAddress',
@@ -21,7 +25,7 @@ const ld = {
   ...(h.lat ? { geo: { '@type': 'GeoCoordinates', latitude: h.lat, longitude: h.lng } } : {}),
 };
 ---
-<Base title={`${h.name}｜文化資產｜seh`} description={h.history.slice(0, 80)} noindex={!indexable}>
+<Base title={`${h.name}｜文化資產｜seh`} description={description} noindex={!indexable}>
   <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
   <div class="shell">
     <Nav />
@@ -31,8 +35,8 @@ const ld = {
       <dl class="facts">
         {h.type && <div><dt>類別</dt><dd>{h.type}</dd></div>}
         {h.level && <div><dt>級別</dt><dd>{h.level}</dd></div>}
-        {h.reg && <div><dt>登錄</dt><dd class="tabular">{h.reg}</dd></div>}
-        {(h.city || h.address) && <div><dt>地點</dt><dd>{[h.city, h.dist, h.address].filter(Boolean).join(' ')}</dd></div>}
+        {h.registeredAt && <div><dt>登錄</dt><dd class="tabular">{h.registeredAt}</dd></div>}
+        {(h.city || h.address) && <div><dt>地點</dt><dd>{[h.city, h.district, h.address].filter(Boolean).join(' ')}</dd></div>}
         {h.open && <div><dt>開放</dt><dd>{h.open}</dd></div>}
       </dl>
       <h2 class="h-sm">歷史沿革</h2>
