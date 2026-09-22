@@ -17,7 +17,7 @@ const last = sessions[sessions.length - 1];
 const primary = sessions.find((s) => s.venueNameRaw) ?? first;
 
 // JSON-LD 與 <meta description> 用同一份事實，組裝在 src/lib/event-ld.mjs（有測試守著）
-const { ld, factLine } = eventLd(e);
+const { ld } = eventLd(e);
 
 const srcUrl = e.sources.find((x) => x.url)?.url;
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
@@ -29,7 +29,7 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
 ---
 <Base
   title={`${e.title}｜seh`}
-  description={factLine}
+  description={ld.description}
   noindex={!indexable}
 >
   <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
