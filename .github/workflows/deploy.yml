@@ -1,7 +1,7 @@
 # 建置並部署到 GitHub Pages。
 #
 # 抓取資料不在這裡：13 支政府來源擋海外 IP，GitHub 主機抓不到（2026-09-15 實測）。
-# 更新流程是在台灣的機器上跑 `npm run ingest` → `npm run pipeline`，commit 後 push，
+# 更新流程是在台灣的機器上跑 `pnpm run ingest` → `pnpm run pipeline`，commit 後 push，
 # 這支 workflow 再把 push 上來的結果建置、檢查連結、部署。
 name: deploy
 
@@ -30,10 +30,16 @@ jobs:
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+      # pnpm/action-setup 必須在 setup-node 之前：setup-node 的 cache: pnpm
+      # 要先找到 pnpm 執行檔才算得出 store 路徑。
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
       - uses: actions/setup-node@v4
         with:
           node-version: '26'
-      - run: npm ci
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
 
       # 只跑 emit 之後的階段：normalize 需要 ingest/raw/，那不進版控，CI 沒有。
       # GA 與 Search Console 的值放 repository variables（vars，不是 secrets——
@@ -44,8 +50,8 @@ jobs:
           SEH_GSC_TOKEN: ${{ vars.SEH_GSC_TOKEN }}
         # links 沒過就不部署：壞連結、canonical 帶 .html 都在這裡擋
         run: |
-          npm run build
-          npm run links
+          pnpm run build
+          pnpm run links
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
