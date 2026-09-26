@@ -69,6 +69,9 @@ npm run update       # git pull → scheduler 抓到期來源 → pipeline
 git add -A && git commit && git push    # push 到 main，GitHub 才建置並部署
 ```
 
+唯一的主機排程：`/etc/cron.d/seh-tw-venue-hours`（來源檔 `ops/seh-tw-venue-hours.cron`），台北週一 05:30
+跑 `ops/refresh-venue-hours.sh` 重查 `overrides/venue-hours.json` 並 push main。
+
 `.github/workflows/deploy.yml` 只做建置、連結檢查、部署，不跑 normalize（需要 `ingest/raw/`，那不進版控）。
 
 `readRaw` 會擋掉比 `schedule-state` 記錄的最後抓取還舊的 raw（跳過並列出 id），別繞過它

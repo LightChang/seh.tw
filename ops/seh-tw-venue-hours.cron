@@ -1,0 +1,10 @@
+# /etc/cron.d/seh-tw-venue-hours — seh.tw 場館開放時間每週查核（2026-09-26 起）
+# 來源檔：/mnt/yao-care/seh.tw/ops/seh-tw-venue-hours.cron（改這裡再 install，不要直接改 /etc/cron.d）
+#   install -m 644 -o root -g root /mnt/yao-care/seh.tw/ops/seh-tw-venue-hours.cron /etc/cron.d/seh-tw-venue-hours
+# 腳本：ops/refresh-venue-hours.sh（抓館方公告 → overrides/venue-hours.json → emit → 測試 → push main → GitHub Pages 部署）
+# 與 seo-ops 的反思／大腦層共用 /tmp/seo-claude-seh.tw.lock，搶不到會等（最多 65 分）。
+# 時區：系統為 UTC、Vixie cron 忽略 CRON_TZ。UTC 週日 21:30 ＝ 台北週一 05:30。
+# log：/mnt/yao-care/seo-ops/logs/seh.tw-venue-hours.log
+SHELL=/bin/bash
+PATH=/root/.local/bin:/usr/local/bin:/usr/bin:/bin
+30 21 * * 0 root /mnt/yao-care/seh.tw/ops/refresh-venue-hours.sh

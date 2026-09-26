@@ -85,6 +85,12 @@ const rows = upcomingSessions(allRows, buildNow).slice(0, LIMIT);
 // 只列近期會讓那些頁整頁空白，對讀者與搜尋引擎都更糟，所以沒有近期活動時退而列已結束的，
 // 並在標題講清楚是已結束——列表的第一欄會連年份一起印，不會再看起來像今年的活動。
 const past = rows.length ? [] : pastSessions(allRows, buildNow).slice(0, 20);
+// 開放時間的最後查核日期：超過 30 天沒重新查核（每週排程抓不到或看不懂館方頁），
+// 提醒讀者時間可能已變。以建置當下判斷，每次部署都會重算。
+const hoursCheckedAt = v.openingHoursSource?.checkedAt;
+const hoursStale = hoursCheckedAt
+  ? (buildNow - Date.parse(`${hoursCheckedAt}T00:00:00+08:00`)) / 86400000 > 30
+  : false;
 const totalEvents = halls.length ? new Set(allRows.map((d) => d.slug)).size : v.eventCount;
 
 // 館區頁（沒有自己 md 的）不在 page-state 裡，isIndexable 會當成可收錄；
@@ -164,9 +170,10 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
           {v.openingHoursSource && <span class="n">
             出處：{v.openingHoursSource.url
               ? <a href={v.openingHoursSource.url} target="_blank" rel="nofollow noopener">{v.openingHoursSource.name}</a>
-              : v.openingHoursSource.name}
-            {v.openingHoursSource.checkedAt && `（${v.openingHoursSource.checkedAt} 查核）`}，實際以館方公告為準
+              : v.openingHoursSource.name}，實際以館方公告為準
           </span>}
+          {hoursCheckedAt && <span class="n">最後查核日期　<time datetime={hoursCheckedAt}>{hoursCheckedAt}</time></span>}
+          {hoursStale && <span class="n stale">已超過 30 天未重新查核，時間可能已變動，請先向館方確認</span>}
         </dd></div>}
         {v.phone && <div><dt>電話</dt><dd class="tabular">{v.phone}</dd></div>}
         {v.website && <div><dt>網站</dt><dd><a href={v.website} target="_blank" rel="nofollow noopener">館方網站</a></dd></div>}
@@ -239,6 +246,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
   .facts dd { margin: 0; font-size: var(--text-base); display: grid; gap: 0.3rem; }
   .facts .n, .halls .n { color: var(--text-muted); font-size: var(--text-sm); }
   .hours { white-space: pre-line; }
+  .facts .stale { color: var(--color-warn); }
   .halls ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }
   .halls li { display: flex; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
   .catrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); max-width: none; }
