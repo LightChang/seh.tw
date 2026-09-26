@@ -3,7 +3,8 @@
     "來源資料沒有開放時間、但館方官網有公告的場館。每一組都附官網網址與查核日期，",
     "頁面會把出處與查核日期一起印出來；館方改了時間就要回來改這裡。",
     "match 是對場館名稱的正規表示式（整個名稱要吻合），exceptions 以完整場館名稱覆蓋。",
-    "只收館方公告的一般時段；國定假日、選舉日等休館日寫進 text，不寫進 spec。"
+    "只收館方公告的一般時段；國定假日、選舉日等休館日寫進 text，不寫進 spec。",
+    "ingest/venue-hours.mjs 有解析器的規則每週自動重查（ops/refresh-venue-hours.sh）；失敗時保留舊值、寫 source.stale。"
   ],
   "rules": [
     {
@@ -13,7 +14,7 @@
       "source": {
         "name": "臺中市立圖書館官網「開放時間」",
         "url": "https://www.library.taichung.gov.tw/content/index?Parser=1%2C3%2C72%2C32",
-        "checkedAt": "2026-09-26"
+        "checkedAt": "2026-09-27"
       },
       "default": {
         "text": "週二至週六 08:30-21:00\n週日 08:30-17:30\n週一、國定假日、選舉日、公民投票日休館",
