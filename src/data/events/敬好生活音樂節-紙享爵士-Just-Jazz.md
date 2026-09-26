@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_376420000A_000228"
 slug: "敬好生活音樂節-紙享爵士-Just-Jazz"
 title: "敬好生活音樂節－紙享爵士 Just Jazz"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

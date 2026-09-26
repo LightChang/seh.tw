@@ -9,6 +9,10 @@ address: "花蓮縣花蓮市節約街27號1樓"
 addressPrecision: "street"
 lat: 23.977088
 lng: 121.59184
+openingHours: "週一、三、四、日12:00-19:00；週五六12:00-20:00（週二公休）"
+openingHoursSource: 
+  name: "文化部 iCulture 文化地圖 POI（場館/景點/文化資產）"
+  url: "https://cloud.culture.tw/"
 eventCount: 0
 eventClusterIds: []
 ---

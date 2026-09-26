@@ -6,6 +6,7 @@ origin: "registry"
 city: "屏東縣"
 address: "屏東縣仁德路43號巷6號"
 addressPrecision: "street"
+phone: "08-7558048 #705"
 eventCount: 0
 eventClusterIds: []
 ---

@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_376550000A_000959"
 slug: "2026第15屆IDBF世界俱樂部龍舟錦標賽CCWC"
 title: "2026第15屆IDBF世界俱樂部龍舟錦標賽(CCWC)"
-category: "藝文活動"
+category: "競賽"
 categoryRaw: "2"
 status: "scheduled"
 images: 

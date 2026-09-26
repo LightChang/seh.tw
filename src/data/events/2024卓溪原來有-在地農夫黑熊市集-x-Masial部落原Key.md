@@ -2,6 +2,7 @@
 clusterId: "evt_ysnp-activities_51b257346667dea3"
 slug: "2024卓溪原來有-在地農夫黑熊市集-x-Masial部落原Key"
 title: "2024卓溪原來有-在地農夫黑熊市集 x Masial部落原Key"
+category: "市集"
 categoryRaw: "活動列車"
 status: "scheduled"
 description: "協助宣傳活動 花蓮縣卓溪鄉公所辦理 2024卓溪原來有-在地農夫黑熊市集 x Masial部落原Key 活動時間 : 113/09/14(14:00~20:00) 活動地點 :..."

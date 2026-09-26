@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_371020000A_004242"
 slug: "HOPE草地野餐音樂節"
 title: "HOPE草地野餐音樂節"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

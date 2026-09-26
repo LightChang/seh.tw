@@ -9,6 +9,10 @@ address: "花蓮縣壽豐鄉中正路168號"
 addressPrecision: "street"
 lat: 23.904306
 lng: 121.602986
+openingHours: "11:00 - 21:00 （無公休日）"
+openingHoursSource: 
+  name: "文化部 iCulture 文化地圖 POI（場館/景點/文化資產）"
+  url: "https://cloud.culture.tw/"
 eventCount: 0
 eventClusterIds: []
 ---

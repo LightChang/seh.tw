@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_A15010300H_007142"
 slug: "2026年秀林kndsan海洋生活音樂節系列活動-Hi-Iyah-tuhu"
 title: "2026年秀林kndsan海洋生活音樂節系列活動-Hi! Iyah tuhu"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

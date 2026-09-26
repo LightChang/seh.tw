@@ -9,6 +9,10 @@ address: "台北市松山區民生東路三段101 號9 樓"
 addressPrecision: "street"
 lat: 25.048305
 lng: 121.544833
+openingHours: "https://tsutaya.com.tw"
+openingHoursSource: 
+  name: "文化部 iCulture 文化地圖 POI（場館/景點/文化資產）"
+  url: "https://cloud.culture.tw/"
 eventCount: 0
 eventClusterIds: []
 ---

@@ -6,6 +6,7 @@ origin: "registry"
 city: "宜蘭縣"
 address: "宜蘭縣青雲路三段750號"
 addressPrecision: "street"
+phone: "03-9779700#115"
 eventCount: 0
 eventClusterIds: []
 ---

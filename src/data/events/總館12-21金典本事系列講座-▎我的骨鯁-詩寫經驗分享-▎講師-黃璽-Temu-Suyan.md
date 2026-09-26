@@ -2,6 +2,7 @@
 clusterId: "evt_taichung-culture-events_223"
 slug: "總館12-21金典本事系列講座-▎我的骨鯁-詩寫經驗分享-▎講師-黃璽-Temu-Suyan"
 title: "【總館】12/21金典本事系列講座 ▎我的骨鯁--詩寫經驗分享 ▎講師:黃璽 Temu Suyan"
+category: "講座"
 status: "scheduled"
 sessions: 
   - startAt: "2024-12-21T14:00:00+08:00"

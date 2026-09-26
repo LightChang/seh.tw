@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_397000000A_007298"
 slug: "KSAF加勒比海盜-神鬼奇航-鬼盜船魔咒電影草地音樂會"
 title: "KSAF《加勒比海盜 神鬼奇航：鬼盜船魔咒》電影草地音樂會"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

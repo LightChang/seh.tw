@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_376550000A_000878"
 slug: "2026縱谷-HAKKA-音樂節"
 title: "2026縱谷 HAKKA 音樂節"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

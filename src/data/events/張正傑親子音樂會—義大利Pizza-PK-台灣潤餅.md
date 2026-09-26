@@ -2,6 +2,7 @@
 clusterId: "evt_ntt-programs_c-F70OsD35gGi"
 slug: "張正傑親子音樂會—義大利Pizza-PK-台灣潤餅"
 title: "張正傑親子音樂會—義大利Pizza PK 台灣潤餅"
+category: "音樂"
 status: "scheduled"
 isFree: false
 priceText: "300"

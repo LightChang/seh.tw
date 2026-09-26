@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_397000000A_007845"
 slug: "WATERBOMB-KAOHSIUNG-水炸彈音樂節"
 title: "WATERBOMB KAOHSIUNG 水炸彈音樂節"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

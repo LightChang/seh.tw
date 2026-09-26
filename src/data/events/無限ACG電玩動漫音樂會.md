@@ -2,6 +2,7 @@
 clusterId: "evt_tpac-programs_2057"
 slug: "無限ACG電玩動漫音樂會"
 title: "《無限》ACG電玩動漫音樂會"
+category: "音樂"
 status: "scheduled"
 minimumAge: 3
 images: 

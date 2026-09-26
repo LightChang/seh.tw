@@ -9,6 +9,11 @@ address: "臺北市  中山區南京西路9號2樓（捷運中山站3號出口�
 addressPrecision: "street"
 lat: 25.072631
 lng: 121.524686
+phone: "02-25236173"
+openingHours: "週三至週日下午13:00 - 19:00；週六上午10:00 - 19:00"
+openingHoursSource: 
+  name: "文化部 iCulture 文化地圖 POI（場館/景點/文化資產）"
+  url: "https://cloud.culture.tw/"
 buildingId: "bld_25.0726_121.5247"
 eventCount: 2
 eventClusterIds: 

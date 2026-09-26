@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_387000000A_010070"
 slug: "頑童MJ116-OGS-台中洲際演唱會"
 title: "頑童MJ116 OGS 台中洲際演唱會"
-category: "藝文活動"
+category: "演唱會"
 categoryRaw: "2"
 status: "scheduled"
 images: 

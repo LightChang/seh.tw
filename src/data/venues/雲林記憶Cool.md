@@ -5,6 +5,7 @@ name: "雲林記憶Cool"
 origin: "registry"
 address: "林森路一段501號"
 addressPrecision: "venue-name-only"
+phone: "05-6327282"
 eventCount: 0
 eventClusterIds: []
 ---

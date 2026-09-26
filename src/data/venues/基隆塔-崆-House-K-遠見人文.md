@@ -7,6 +7,7 @@ city: "基隆市"
 district: "信義區"
 address: "基隆市  信義區義二路128號"
 addressPrecision: "street"
+phone: "02 2424 2351"
 eventCount: 0
 eventClusterIds: []
 ---

@@ -2,6 +2,7 @@
 clusterId: "evt_weiwuying-programs_6aa26ed28979e70007eb2544"
 slug: "大師講座林懷民-X-阿喀郎.汗—談身體-文化與創作"
 title: "【大師講座】林懷民 X 阿喀郎．汗—談身體、文化與創作"
+category: "講座"
 status: "scheduled"
 isFree: true
 description: |-

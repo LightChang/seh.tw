@@ -2,6 +2,7 @@
 clusterId: "evt_ntt-programs_c-fuk9MnjrJbR"
 slug: "NTSO啟蒙與狂飆臺灣近現代音樂的先行者—許常惠教授紀念音樂會"
 title: "NTSO《啟蒙與狂飆》臺灣近現代音樂的先行者—許常惠教授紀念音樂會"
+category: "音樂"
 status: "scheduled"
 isFree: false
 priceText: "100/300/500/800/1000"

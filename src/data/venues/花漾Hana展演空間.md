@@ -7,6 +7,8 @@ city: "臺北市"
 district: "中正區"
 address: "臺北市中正區仁愛路1段17號10樓"
 addressPrecision: "street"
+phone: "(02)23932058"
+website: "https://hanaspace.com.tw/"
 eventCount: 0
 eventClusterIds: []
 ---

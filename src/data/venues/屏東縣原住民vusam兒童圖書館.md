@@ -7,6 +7,7 @@ city: "屏東縣"
 district: "霧台鄉"
 address: "屏東縣霧台鄉霧台村魯凱街200號"
 addressPrecision: "street"
+phone: "08-7610088"
 eventCount: 0
 eventClusterIds: []
 ---

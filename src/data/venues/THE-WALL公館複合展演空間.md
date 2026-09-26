@@ -7,6 +7,8 @@ city: "臺北市"
 district: "文山區"
 address: "臺北市文山區羅斯福路4段200號B1"
 addressPrecision: "street"
+phone: "(02)29300162"
+website: "https://www.facebook.com/pg/thewall.tw"
 eventCount: 0
 eventClusterIds: []
 ---

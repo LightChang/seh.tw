@@ -2,6 +2,7 @@
 clusterId: "evt_ntt-programs_c-gsSmAxZBKaR"
 slug: "取消演出公告美國-Metro-Vocal-Group-臺灣限定演唱會"
 title: "【取消演出公告】美國 Metro Vocal Group 臺灣限定演唱會"
+category: "演唱會"
 status: "scheduled"
 isFree: false
 priceText: "1200/1500/1800/2200/2600/3200"

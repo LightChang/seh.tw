@@ -7,6 +7,8 @@ city: "臺北市"
 district: "中正區"
 address: "臺北市中正區仁愛路1段17號"
 addressPrecision: "street"
+phone: "(02)23514078#1418"
+website: "https://tpyd.gov.taipei/"
 eventCount: 0
 eventClusterIds: []
 ---

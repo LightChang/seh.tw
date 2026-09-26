@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_397000000A_007242"
 slug: "KSAF喵的奇幻漂流-電影草地音樂會"
 title: "KSAF《喵的奇幻漂流》 電影草地音樂會"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

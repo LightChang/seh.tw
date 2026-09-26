@@ -7,6 +7,8 @@ city: "臺北市"
 district: "大同區"
 address: "臺北市  大同區興城街36號1樓"
 addressPrecision: "street"
+phone: "02 2557 7027"
+website: "https://www.instagram.com/licorice.bookservice/"
 eventCount: 0
 eventClusterIds: []
 ---

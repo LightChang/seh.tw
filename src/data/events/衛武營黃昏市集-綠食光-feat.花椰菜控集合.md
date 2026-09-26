@@ -2,6 +2,7 @@
 clusterId: "evt_weiwuying-programs_6a9549d509ea090008f27a69"
 slug: "衛武營黃昏市集-綠食光-feat.花椰菜控集合"
 title: "衛武營黃昏市集-綠食光 feat.花椰菜控集合"
+category: "市集"
 status: "scheduled"
 isFree: true
 description: |-

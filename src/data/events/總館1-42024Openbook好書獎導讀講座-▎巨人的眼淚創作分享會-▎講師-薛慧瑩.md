@@ -2,6 +2,7 @@
 clusterId: "evt_taichung-culture-events_46"
 slug: "總館1-42024Openbook好書獎導讀講座-▎巨人的眼淚創作分享會-▎講師-薛慧瑩"
 title: "【總館】1/4《2024Openbook好書獎》導讀講座 ▎《巨人的眼淚》創作分享會 ▎講師:薛慧瑩"
+category: "講座"
 status: "scheduled"
 sessions: 
   - startAt: "2025-01-04T14:00:00+08:00"

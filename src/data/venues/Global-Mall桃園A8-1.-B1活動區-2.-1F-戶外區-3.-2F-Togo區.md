@@ -6,6 +6,7 @@ origin: "registry"
 district: "龜山區"
 address: "龜山區復興一路8號"
 addressPrecision: "district"
+phone: "033287599 分機6031~6032"
 eventCount: 0
 eventClusterIds: []
 ---

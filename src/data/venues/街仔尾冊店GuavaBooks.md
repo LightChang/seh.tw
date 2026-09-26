@@ -7,6 +7,7 @@ city: "臺中市"
 district: "梧棲區"
 address: "臺中市  梧棲區民生街91巷4號"
 addressPrecision: "street"
+phone: "04 2656 0049"
 eventCount: 0
 eventClusterIds: []
 ---

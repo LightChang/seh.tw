@@ -2,6 +2,7 @@
 clusterId: "evt_weiwuying-programs_6a72defdb9145f0007d60354"
 slug: "終章-Finale2026-東京佼成管樂團音樂會台灣站"
 title: "《終章 Finale》2026 東京佼成管樂團音樂會台灣站"
+category: "音樂"
 status: "scheduled"
 priceText: "NT$ 500、1800、2600、3400、3800、4800、5800"
 ticketUrl: "https://ticket.sight-music.com/Event/Page/c48c77db93bb5c231c66e39a50812782"

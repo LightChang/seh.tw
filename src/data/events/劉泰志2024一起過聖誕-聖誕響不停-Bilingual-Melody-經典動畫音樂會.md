@@ -2,6 +2,7 @@
 clusterId: "evt_taichung-culture-events_212"
 slug: "劉泰志2024一起過聖誕-聖誕響不停-Bilingual-Melody-經典動畫音樂會"
 title: "劉泰志《2024一起過聖誕-聖誕響不停 Bilingual Melody-經典動畫音樂會》"
+category: "音樂"
 status: "scheduled"
 priceText: "演出前1小時票口免費索票，1人1票，恕不選位，索完為止"
 images: 

@@ -2,6 +2,7 @@
 clusterId: "evt_taichung-culture-events_197"
 slug: "總館12-21Research-Rocket線上推廣講座"
 title: "【總館】12/21Research Rocket線上推廣講座"
+category: "講座"
 status: "scheduled"
 sessions: 
   - startAt: "2024-12-21T09:00:00+08:00"

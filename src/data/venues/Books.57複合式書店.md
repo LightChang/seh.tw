@@ -9,6 +9,7 @@ address: "台南市安南區安和路三段57號2F"
 addressPrecision: "street"
 lat: 23.059201
 lng: 120.235319
+phone: "06 355 4468"
 eventCount: 0
 eventClusterIds: []
 ---

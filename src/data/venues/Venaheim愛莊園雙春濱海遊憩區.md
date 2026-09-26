@@ -5,6 +5,7 @@ name: "Venaheim愛莊園（雙春濱海遊憩區）"
 origin: "registry"
 address: "雙春里雙春73之11號"
 addressPrecision: "venue-name-only"
+phone: "06-7865307"
 eventCount: 0
 eventClusterIds: []
 ---

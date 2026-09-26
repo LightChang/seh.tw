@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_397000000A_007558"
 slug: "邊緣人市集EDGEMAN-MARKET-X-趴哩趴哩"
 title: "邊緣人市集EDGEMAN MARKET X 趴哩趴哩"
-category: "藝文活動"
+category: "市集"
 categoryRaw: "2"
 status: "scheduled"
 images: 

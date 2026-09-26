@@ -5,6 +5,7 @@ name: "中興文化創意園區(A區:紅磚小屋周邊石磚區域 B區:草皮�
 origin: "registry"
 address: "中正路二段6-8號"
 addressPrecision: "venue-name-only"
+phone: "03-9655440#110"
 eventCount: 0
 eventClusterIds: []
 ---

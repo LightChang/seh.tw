@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_376540000A_006290"
 slug: "2026-Taiwan-PASIWALI-Festival-國際原住民音樂節"
 title: "2026 Taiwan PASIWALI Festival 國際原住民音樂節"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

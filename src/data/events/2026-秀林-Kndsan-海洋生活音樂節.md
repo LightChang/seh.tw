@@ -2,7 +2,7 @@
 clusterId: "evt_twtourism-events_Event_376550000A_000064"
 slug: "2026-秀林-Kndsan-海洋生活音樂節"
 title: "2026 秀林 Kndsan 海洋生活音樂節"
-category: "藝文活動"
+category: "音樂"
 categoryRaw: "2"
 status: "scheduled"
 images: 

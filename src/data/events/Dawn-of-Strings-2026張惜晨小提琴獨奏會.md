@@ -2,6 +2,7 @@
 clusterId: "evt_ntt-programs_c-dWEkgl2YeOF"
 slug: "Dawn-of-Strings-2026張惜晨小提琴獨奏會"
 title: "《Dawn of Strings》 2026張惜晨小提琴獨奏會"
+category: "音樂"
 status: "scheduled"
 isFree: false
 priceText: "500"

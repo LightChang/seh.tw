@@ -7,6 +7,7 @@ city: "雲林縣"
 district: "虎尾鎮"
 address: "雲林縣虎尾鎮林森路1段501號"
 addressPrecision: "street"
+phone: "05-6327282"
 eventCount: 0
 eventClusterIds: []
 ---
