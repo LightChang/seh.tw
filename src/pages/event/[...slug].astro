@@ -19,6 +19,25 @@ const primary = sessions.find((s) => s.venueNameRaw) ?? first;
 // JSON-LD 與 <meta description> 用同一份事實，組裝在 src/lib/event-ld.mjs（有測試守著）
 const { ld } = eventLd(e);
 
+// 來源說明文字帶著沒解開的 HTML 實體（「Ga&iuml;a」「&hellip;」），
+// 不解開就會原樣印在頁面、meta description 與搜尋結果摘要上。
+const ENTITY = {
+  amp: '&', lt: '<', gt: '>', quot: '"', nbsp: ' ', emsp: ' ', shy: '', zwj: '',
+  mdash: '—', ndash: '–', hellip: '…', middot: '·', bull: '•', rarr: '→', harr: '↔',
+  times: '×', divide: '÷', deg: '°', reg: '®', copy: '©', sect: '§', sup2: '²', ordm: 'º',
+  ldquo: '“', rdquo: '”', lsquo: '‘', rsquo: '’', iexcl: '¡', uml: '¨', infin: '∞',
+  Aacute: 'Á', aacute: 'á', agrave: 'à', Eacute: 'É', eacute: 'é', egrave: 'è', ecirc: 'ê',
+  Iacute: 'Í', iacute: 'í', iuml: 'ï', ntilde: 'ñ', Ocirc: 'Ô', ocirc: 'ô', oacute: 'ó',
+  Ouml: 'Ö', ouml: 'ö', Oslash: 'Ø', oelig: 'œ', Scaron: 'Š', scaron: 'š', uuml: 'ü', yacute: 'ý',
+  Omicron: 'Ο', omicron: 'ο', Tau: 'Τ', pi: 'π', lambda: 'λ', gamma: 'γ', alpha: 'α',
+};
+const decodeEntities = (s) => String(s ?? '').replace(/&(?:#(\d+)|#x([0-9a-f]+)|([A-Za-z][A-Za-z0-9]*));/gi, (m, dec, hex, name) => {
+  if (name) return ENTITY[name] ?? m;
+  const cp = dec ? Number(dec) : parseInt(hex, 16);
+  return cp > 0 && cp <= 0x10ffff ? String.fromCodePoint(cp) : m;
+});
+ld.description = decodeEntities(ld.description);
+
 const srcUrl = e.sources.find((x) => x.url)?.url;
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
@@ -80,7 +99,7 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
         </dd></div>}
       </dl>
 
-      {e.description && <div class="desc">{e.description}</div>}
+      {e.description && <div class="desc">{decodeEntities(e.description)}</div>}
 
       {sessions.length > 1 && (
         <section class="sessions">
