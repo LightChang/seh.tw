@@ -2,6 +2,7 @@
 // 「一個場次一列」這種展開只寫一次，各頁面的篩選邏輯才不會各自長出一份。
 import { readFile } from 'node:fs/promises';
 import { getCollection } from 'astro:content';
+import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
 
 /**
  * 收錄與否由 transform/score-pages.mjs 每天重算，存在 data/page-state.ndjson。
@@ -119,4 +120,45 @@ export function countBy(rows, key) {
     m.set(v, (m.get(v) ?? 0) + 1);
   }
   return [...m].sort((a, b) => b[1] - a[1]);
+}
+
+/**
+ * 場館別名與館區（overrides/venue-names.json，規則在 src/lib/venue-names.mjs）。
+ * groups：館區 slug → { name, children, hasVenuePage… }；parent：廳 slug → 館區 slug。
+ */
+let VN = null;
+export async function venueNames() {
+  if (VN) return VN;
+  let config = {};
+  try {
+    config = JSON.parse(await readFile(`${process.cwd()}/overrides/venue-names.json`, 'utf-8'));
+  } catch { /* 沒有這個檔就沒有別名與館區 */ }
+  const groups = resolveGroups(config, await allVenues());
+  VN = {
+    config,
+    groups,
+    parent: parentOf(groups),
+    aliases: (slug, name) => aliasesOf(config, groups, slug, name),
+  };
+  return VN;
+}
+
+/**
+ * 類型 × 縣市頁（/category/<類型>/<縣市>）。門檻用全部場次（含已結束）算，
+ * 網址才不會隨著近期場次增減而一下有一下沒有。近期沒有場次時頁面改列最近結束的（同場館頁）。
+ * 總類（藝文活動、其他、年度活動）不做——那只是「這個縣市的活動」，縣市頁已經是了。
+ */
+export const CAT_CITY_MIN = 20;
+export const GENERIC_CATS = new Set(['藝文活動', '其他', '年度活動']);
+let CATCITY = null;
+export async function builtCatCities() {
+  if (CATCITY) return CATCITY;
+  const n = new Map();
+  for (const d of await flatSessions()) {
+    if (!d.cat || !d.city || GENERIC_CATS.has(d.cat)) continue;
+    const k = `${d.cat}|${d.city}`;
+    n.set(k, (n.get(k) ?? 0) + 1);
+  }
+  CATCITY = new Set([...n].filter(([, c]) => c >= CAT_CITY_MIN).map(([k]) => k));
+  return CATCITY;
 }
