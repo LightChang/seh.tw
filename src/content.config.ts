@@ -70,6 +70,18 @@ const venues = defineCollection({
     lat: z.number().optional(),
     lng: z.number().optional(),
     buildingId: z.string().optional(),
+    phone: z.string().optional(),
+    website: z.string().optional(),
+    // 開放時間：text 是原文照印；spec 只有確定解析得出來才有，頁面據此輸出
+    // openingHoursSpecification。source 是出處（人工查核的還有 checkedAt）。
+    openingHours: z.string().optional(),
+    openingHoursSpec: z.array(z.object({
+      days: z.array(z.enum(['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'])),
+      opens: z.string(), closes: z.string(),
+    })).optional(),
+    openingHoursSource: z.object({
+      name: z.string(), url: z.string().optional(), checkedAt: z.string().optional(),
+    }).optional(),
     eventCount: z.number().default(0),
     eventClusterIds: z.array(z.string()).default([]),
   }),

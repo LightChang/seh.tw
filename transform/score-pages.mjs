@@ -16,6 +16,7 @@
 import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { resolveGroups } from '../src/lib/venue-names.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
 // 各階段都讀寫檔案，不能在正式資料上測——測試會改到 data/ 與 src/data/。
@@ -67,6 +68,7 @@ async function readCollection(kind) {
       sourceCount: (fm.match(/^ {2}- id:/gm) ?? []).length,
       hasDescription: /^description: /m.test(fm),
       hasHistory: /^history: /m.test(fm),
+      hasHours: /^openingHours: /m.test(fm),
       hasImages: /^images: /m.test(fm),
       venueName: (fm.match(/^\s*venueNameRaw: "([^"]*)"/m) ?? [])[1],
       lastSession: [...fm.matchAll(/startAt: "([^"]+)"/g)].map((m) => m[1]).sort().pop(),
@@ -121,6 +123,8 @@ function scoreVenue(p) {
   else if (p.city) add(0.5, '只到縣市');
   if (p.hasDescription) add(1, '有介紹');
   if (p.origin === 'registry') add(0.5, '對得上場館名錄');
+  // 圖書館、博物館的搜尋多半是在找開放時間；有官方出處的時段本身就是答案
+  if (p.hasHours) add(1, '有開放時間');
   return { score: s, why };
 }
 
@@ -152,8 +156,23 @@ const firstRun = prev.size === 0;
 const out = [];
 const dist = {};
 
+// 館區（overrides/venue-names.json）：一個場館頁底下還有好幾個廳，
+// 活動數要把各廳的一起算，否則「高雄市文化中心」自己 0 個活動、至德堂 5 個，館區頁永遠進不了收錄。
+let venueNamesConfig = {};
+try { venueNamesConfig = JSON.parse(await readFile(path.join(ROOT, 'overrides', 'venue-names.json'), 'utf-8')); }
+catch { /* 沒有館區設定 */ }
+
 for (const k of KINDS) {
   const pages = await readCollection(k.dir);
+  if (k.dir === 'venues') {
+    const bySlug = new Map(pages.map((p) => [p.slug, p]));
+    const groups = resolveGroups(venueNamesConfig, pages.map((p) => ({ slug: p.slug, name: p.title, city: p.city })));
+    for (const g of groups.values()) {
+      const parent = bySlug.get(g.slug);
+      if (!parent) continue;
+      parent.eventCount += g.children.reduce((n, c) => n + (bySlug.get(c)?.eventCount ?? 0), 0);
+    }
+  }
   let idx = 0;
   for (const p of pages) {
     const { score } = k.score(p);

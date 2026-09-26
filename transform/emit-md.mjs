@@ -12,6 +12,7 @@ import { readdir, readFile, writeFile, mkdir, unlink } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { parseOpeningHours } from '../src/lib/opening-hours.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
 // 各階段都讀寫檔案，不能在正式資料上測——測試會改到 data/ 與 src/data/。
@@ -29,6 +30,32 @@ const readNd = async (p) => {
   try { return (await readFile(p, 'utf-8')).split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l)); }
   catch { return []; }
 };
+
+// ── 場館開放時間 ────────────────────────────────────────────────────
+/**
+ * 人工查核的官網公告（overrides/venue-hours.json）優先，其次是名錄來源自己給的文字。
+ * spec 只在確定解析得出來時才有（src/lib/opening-hours.mjs），頁面據此輸出
+ * openingHoursSpecification；解析不了的只印原文。
+ * 出處一定要帶：開放時間會變，讀者要知道去哪裡核對。
+ */
+function venueHours(v, rules, metaBySource) {
+  for (const r of rules) {
+    if (r.city && v.city && r.city !== v.city) continue;
+    if (!new RegExp(r.match).test(v.name ?? '')) continue;
+    let h = r.exceptions?.[v.name] ?? r.default;
+    if (h?.ref) h = r.variants?.[h.ref];
+    if (!h?.text) continue;
+    return { text: h.text, spec: h.spec, source: { name: r.source.name, url: r.source.url, checkedAt: r.source.checkedAt } };
+  }
+  const text = v.openingHoursRaw && String(v.openingHoursRaw).trim();
+  if (!text) return undefined;
+  const meta = metaBySource.get(v.openingHoursSource);
+  return {
+    text,
+    spec: parseOpeningHours(text) ?? undefined,
+    source: meta ? { name: meta.name, url: meta.homepage } : undefined,
+  };
+}
 
 // ── 品質分 ──────────────────────────────────────────────────────────
 let QUALITY = {};
@@ -52,6 +79,17 @@ function canonCategory(source, raw) {
   const k = `${source}\u0000${key}`;
   unmappedCats.set(k, (unmappedCats.get(k) ?? 0) + 1);
   return undefined;
+}
+/**
+ * 來源只給總類或沒給分類時，用標題裡明確的字眼補上形式（overrides/category-title-rules.json）。
+ * 來源給了具體分類就照來源。
+ */
+let TITLE_RULES = { applyTo: [], rules: [] };
+function eventCategory(canon, title) {
+  if (!TITLE_RULES.applyTo.includes(canon ?? '')) return canon;
+  const t = String(title ?? '');
+  for (const r of TITLE_RULES.rules) if (new RegExp(r.pattern).test(t)) return r.category;
+  return canon;
 }
 function baseScore(source, sourceName, field) {
   const s = QUALITY[source];
@@ -308,8 +346,10 @@ const HERITAGE_FIELDS = [...PLACE_FIELDS, 'level', 'heritageTypes', 'history', '
 async function main() {
   QUALITY = await readJson(path.join(ROOT, 'overrides', 'source-field-quality.json'), {});
   CATMAP = await readJson(path.join(ROOT, 'overrides', 'category-map.json'), {});
+  TITLE_RULES = await readJson(path.join(ROOT, 'overrides', 'category-title-rules.json'), { applyTo: [], rules: [] });
 
   const kindBySource = new Map();
+  const metaBySource = new Map();
   const srcDir = path.join(ROOT, 'ingest', 'sources');
   let srcFiles = [];
   try { srcFiles = (await readdir(srcDir)).filter((x) => x.endsWith('.mjs') && !x.startsWith('_')); }
@@ -317,7 +357,9 @@ async function main() {
   for (const f of srcFiles) {
     const { meta } = await import(path.join(srcDir, f));
     if (meta?.id) kindBySource.set(meta.id, meta.entity);
+    if (meta?.id) metaBySource.set(meta.id, meta);
   }
+  const hoursRules = (await readJson(path.join(ROOT, 'overrides', 'venue-hours.json'), { rules: [] })).rules ?? [];
 
   const obs = new Map();
   const obsDir = DATA('observation');
@@ -450,7 +492,7 @@ async function main() {
     eventDirKeep.add(`${c.slug}.md`);
     await writeIfChanged(path.join(eventDir, `${c.slug}.md`), frontmatter({
       clusterId: c.id, slug: c.slug, title: out.title,
-      category: canonCategory(catSourceOf(c, out), out.categoryRaw),
+      category: eventCategory(canonCategory(catSourceOf(c, out), out.categoryRaw), out.title),
       categoryRaw: out.categoryRaw, status: out.status ?? 'scheduled',
       popularity: out.popularity, isFree: out.isFree, priceText: out.priceText,
       ticketUrl: out.ticketUrl, minimumAge: out.minimumAge,
@@ -463,7 +505,7 @@ async function main() {
     // 索引分成 e（活動）與 s（場次）兩張表。一個活動平均 1.3 個場次，
     // 把 slug 與 title 塞進每個場次列會重複一遍，實測差 3.6 倍體積。
     const ei = indexEvents.length;
-    const cat = canonCategory(catSourceOf(c, out), out.categoryRaw) ?? '';
+    const cat = eventCategory(canonCategory(catSourceOf(c, out), out.categoryRaw), out.title) ?? '';
     indexEvents.push([c.slug, out.title, cat]);
     catSlugPairs.push([c.slug, cat]);
     for (const s of sessions) {
@@ -494,10 +536,13 @@ async function main() {
     venueSlugTaken.add(slug);
     const evs = [...(eventsAtVenue.get(vid) ?? [])];
     venueDirKeep.add(`${slug}.md`);
+    const hours = venueHours(v, hoursRules, metaBySource);
     await writeIfChanged(path.join(venueDir, `${slug}.md`), frontmatter({
       venueId: vid, slug, name: v.name, origin: v.origin,
       city: v.city, district: v.district, address: v.address,
       addressPrecision: v.addressPrecision, lat: v.lat, lng: v.lng,
+      phone: v.phone, website: v.website,
+      openingHours: hours?.text, openingHoursSpec: hours?.spec, openingHoursSource: hours?.source,
       buildingId: v.buildingId, eventCount: evs.length,
       eventClusterIds: evs.slice(0, 200),
     }), 'utf-8');

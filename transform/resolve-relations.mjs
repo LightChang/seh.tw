@@ -206,6 +206,11 @@ async function main() {
       name: pick('name'), city: pick('city'), district: pick('district'),
       address: pick('address'), addressPrecision: pick('addressPrecision'),
       lat: pick('lat'), lng: pick('lng'),
+      // 開放時間、電話、網站只有名錄給得出來（活動資料不帶）。開放時間記下是哪個來源給的，
+      // 頁面要標出處——自由文字會過期，讀者要知道去哪裡核對。
+      openingHoursRaw: pick('openingHoursRaw'),
+      openingHoursSource: members.find((m) => m.openingHoursRaw)?._source,
+      phone: pick('phone'), website: pick('website'),
       sourceCount: members.length,
     };
     venues.set(v.id, v);

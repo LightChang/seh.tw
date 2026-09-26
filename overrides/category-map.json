@@ -22,7 +22,8 @@
     "其他",
     "節慶活動",
     "遊憩活動",
-    "地方社區"
+    "地方社區",
+    "市集"
   ],
   "moc-events": {
     "_source": "官方 OpenAPI 說明文件 schema.Activity.category.description（cloud.culture.tw doFindTypeJOpenApi）",
