@@ -7,11 +7,12 @@ import Nav from '../components/Nav.astro';
     <Nav current="search" />
     <header class="page-hd">
       <h1>搜尋</h1>
-      <form class="sform" id="f" role="search">
-        <input id="q" type="search" autocomplete="off" placeholder="活動名稱、場館、城市⋯" aria-label="搜尋" />
+      <form class="sform" id="f" role="search" action="/search" method="get">
+        <input id="q" name="q" type="search" autocomplete="off" placeholder="活動名稱、場館、城市⋯" aria-label="搜尋" />
       </form>
       <p class="sub" id="sub">輸入關鍵字開始搜尋</p>
     </header>
+    <ul class="vlist" id="vlist" aria-label="場館"></ul>
     <ol class="ev-list" id="list"></ol>
   </div>
 </Base>
@@ -20,27 +21,78 @@ import Nav from '../components/Nav.astro';
   import { relTime, fmtNum, catVar } from '../lib/format.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const all = (await loadSessions())
-    .map((d) => ({ ...d, ts: new Date(d.at).getTime(), hay: `${d.title}${d.venue ?? ''}${d.city ?? ''}${d.cat ?? ''}` }));
+  // 臺／台視為同一個字：來源兩種都寫，搜尋的人也兩種都打
+  const fold = (s) => String(s ?? '').replaceAll('臺', '台').replace(/\s+/g, '').toLowerCase();
+  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  const [sessions, names] = await Promise.all([
+    loadSessions(),
+    fetch('/venue-names.json').then((r) => r.json()).catch(() => []),
+  ]);
+  const all = sessions
+    .map((d) => ({ ...d, ts: new Date(d.at).getTime(), hay: fold(`${d.title}${d.venue ?? ''}${d.city ?? ''}${d.cat ?? ''}`) }));
+  // 別名 → 正式名稱：「台中歌劇院」要找得到場地寫成「臺中國家歌劇院大劇院」的場次
+  const aliasPairs = names.flatMap(([name, , aliases]) => aliases.map((a) => [fold(a), fold(name)]))
+    .sort((a, b) => b[0].length - a[0].length);
+  const venues = names.map(([name, slug, aliases]) => ({ name, slug, keys: [name, ...aliases].map(fold) }));
   const now = Date.now();
-  const q = document.getElementById('q'), sub = document.getElementById('sub'), list = document.getElementById('list');
+  const q = document.getElementById('q'), sub = document.getElementById('sub'),
+    list = document.getElementById('list'), vlist = document.getElementById('vlist');
 
-  function run(v) {
-    if (!v) { sub.textContent = '輸入關鍵字開始搜尋'; list.innerHTML = ''; return; }
-    const hits = all.filter((d) => d.hay.includes(v)).sort((a, b) => a.ts - b.ts);
-    sub.innerHTML = hits.length ? `找到 <strong class="tabular">${fmtNum(hits.length)}</strong> 場` : `找不到「${v}」，換個說法試試`;
+  function variants(v) {
+    const out = new Set([v]);
+    for (const [a, name] of aliasPairs) if (v.includes(a)) out.add(v.replace(a, name));
+    return [...out];
+  }
+
+  function run(raw) {
+    const v = fold(raw);
+    if (!v) { sub.textContent = '輸入關鍵字開始搜尋'; list.innerHTML = ''; vlist.innerHTML = ''; return 0; }
+    const vs = variants(v);
+    const hits = all.filter((d) => vs.some((x) => d.hay.includes(x))).sort((a, b) => a.ts - b.ts);
+    const vhits = venues.filter((x) => x.keys.some((k) => k.includes(v) || (v.length >= 2 && v.includes(k)))).slice(0, 6);
+    vlist.innerHTML = (vhits.length ? '<li class="vl">相關場館</li>' : '') + vhits.map((x) => `<li><a href="/venue/${encodeURIComponent(x.slug)}">${esc(x.name)}</a></li>`).join('');
+    sub.innerHTML = hits.length ? `找到 <strong class="tabular">${fmtNum(hits.length)}</strong> 場` : `找不到「${esc(raw)}」的活動，換個說法試試`;
     list.innerHTML = hits.slice(0, 40).map((d) => `
       <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
         <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
-        <span class="ev-body"><span class="ev-t">${d.title}</span>
-          <span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
-        <span class="ev-cat" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
+        <span class="ev-body"><span class="ev-t">${esc(d.title)}</span>
+          <span class="ev-m">${esc([d.venue, d.city].filter(Boolean).join('　'))}</span></span>
+        <span class="ev-cat" style="color:${css(catVar(d.cat))}">${esc(d.cat ?? '')}</span>
       </a></li>`).join('');
+    return hits.length;
   }
-  q.addEventListener('input', () => run(q.value.trim()));
-  document.getElementById('f').addEventListener('submit', (e) => { e.preventDefault(); run(q.value.trim()); });
+
+  // 搜尋詞寫進網址（?q=），結果頁可以分享、上一頁回得來；
+  // 停手 1.2 秒或按 Enter 才送 GA4 的 search 事件，逐字送會把「台」「台中」「台中歌」都記成一次搜尋。
+  let lastSent = '';
+  let timer = 0;
+  function track(term, count) {
+    if (!term || term === lastSent) return;
+    lastSent = term;
+    window.gtag?.('event', 'search', { search_term: term });
+    window.gtag?.('event', 'view_search_results', { search_term: term, results_count: count });
+  }
+  function update(term, { push = false, now: immediate = false } = {}) {
+    const count = run(term);
+    const url = new URL(location.href);
+    if (term) url.searchParams.set('q', term); else url.searchParams.delete('q');
+    if (url.href !== location.href) history[push ? 'pushState' : 'replaceState'](null, '', url);
+    clearTimeout(timer);
+    if (immediate) track(term, count);
+    else timer = setTimeout(() => track(term, count), 1200);
+  }
+  q.addEventListener('input', () => update(q.value.trim()));
+  document.getElementById('f').addEventListener('submit', (e) => {
+    e.preventDefault();
+    update(q.value.trim(), { push: true, now: true });
+  });
+  addEventListener('popstate', () => {
+    const t = new URLSearchParams(location.search).get('q') ?? '';
+    q.value = t;
+    run(t.trim());
+  });
   const pre = new URLSearchParams(location.search).get('q');
-  if (pre) { q.value = pre; run(pre); }
+  if (pre) { q.value = pre; update(pre.trim(), { now: true }); }
   q.focus();
 </script>
 
@@ -50,5 +102,8 @@ import Nav from '../components/Nav.astro';
     width: 100%; font: inherit; font-size: var(--text-lg); padding: 0.8rem 1.1rem;
     background: var(--bg-surface); border: var(--hairline) solid var(--border-subtle); color: var(--text-primary);
   }
+  .vlist { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
+  .vlist a { font-size: var(--text-sm); }
+  .vlist .vl { font-size: var(--text-sm); color: var(--text-muted); }
   .sform input:focus { outline: 2px solid var(--color-link); outline-offset: 2px; }
 </style>
