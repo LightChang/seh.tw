@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { catVar, dateLabel, hhmm } from '../../lib/format.mjs';
-import { flatSessions, countBy, CATEGORY_MIN } from '../../lib/build-data.mjs';
+import { flatSessions, countBy, CATEGORY_MIN, builtCatCities } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
@@ -19,10 +19,14 @@ const { cat, rows: allRows } = Astro.props;
 // ——2026-09-18 實測這裡列的是 1998／2000 年的展覽。
 const buildNow = Date.now();
 const rows = upcomingSessions(allRows, buildNow);
+const catCities = await builtCatCities();
+const PERFORM = new Set(['音樂', '戲劇', '舞蹈', '演唱會', '獨立音樂', '綜藝']);
+const year = new Date(buildNow + 8 * 3600e3).getUTCFullYear();
+const title = PERFORM.has(cat) ? `${cat}節目表｜${year} 台灣近期${cat}演出｜seh` : `${cat}活動｜${year} 台灣近期${cat}｜seh`;
 const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
 ---
-<Base title={`${cat}｜seh`} description={`台灣近期的${cat}活動，共 ${rows.length} 場。`}>
+<Base title={title} description={`台灣近期的${cat}活動，共 ${rows.length} 場，可依縣市篩選。`}>
   <div class="shell">
     <Nav />
     <header class="page-hd">
@@ -32,7 +36,7 @@ const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) 
     </header>
 
     {cities.length > 0 && (
-      <p class="cityrow">{cities.map(([c, n]) => <a href={`/city/${c}`}>{c}<b class="tabular">{n}</b></a>)}</p>
+      <p class="cityrow">{cities.map(([c, n]) => <a href={catCities.has(`${cat}|${c}`) ? `/category/${cat}/${c}` : `/city/${c}`}>{c}<b class="tabular">{n}</b></a>)}</p>
     )}
 
     <ol class="ev-list">

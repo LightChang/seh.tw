@@ -1,0 +1,75 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Nav from '../../../components/Nav.astro';
+import { catVar } from '../../../lib/format.mjs';
+import { flatSessions, builtCatCities } from '../../../lib/build-data.mjs';
+import { upcomingSessions, pastSessions, leadText } from '../../../lib/day-lists.mjs';
+
+// 類型 × 縣市：「臺北市戲劇」「高雄市音樂會」這類搜尋要的是一個縣市裡同一種活動的清單。
+// 哪些組合建頁由 builtCatCities 決定（全部場次 ≥20，總類不做），分類頁與縣市頁用同一份判斷連過來。
+export async function getStaticPaths() {
+  const all = await flatSessions();
+  const built = await builtCatCities();
+  return [...built].map((k) => {
+    const [cat, city] = k.split('|');
+    return { params: { cat, city }, props: { cat, city, rows: all.filter((d) => d.cat === cat && d.city === city) } };
+  });
+}
+const { cat, city, rows: allRows } = Astro.props;
+const buildNow = Date.now();
+const rows = upcomingSessions(allRows, buildNow);
+const past = rows.length ? [] : pastSessions(allRows, buildNow).slice(0, 20);
+const PERFORM = new Set(['音樂', '戲劇', '舞蹈', '演唱會', '獨立音樂', '綜藝']);
+const isPerform = PERFORM.has(cat);
+// 場地排行：這個縣市這類活動最常在哪裡辦，連到場館頁
+const venues = [...rows.reduce((m, d) => {
+  if (!d.venue) return m;
+  const e = m.get(d.venue) ?? { n: 0, slug: d.venueSlug };
+  e.n += 1;
+  return m.set(d.venue, e);
+}, new Map())].sort((a, b) => b[1].n - a[1].n).slice(0, 8);
+const year = new Date(buildNow + 8 * 3600e3).getUTCFullYear();
+const title = isPerform ? `${city}${cat}節目表｜${year} 近期演出｜seh` : `${city}${cat}活動｜${year} 近期場次｜seh`;
+const description = `${city}近期的${cat}${isPerform ? '演出' : '活動'}共 ${rows.length} 場`
+  + (venues.length ? `，常見場地：${venues.slice(0, 3).map(([v]) => v).join('、')}。` : '。')
+  + '依日期排列，附場地與時間。';
+---
+<Base title={title} description={description}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <nav class="crumb"><a href={`/category/${cat}`}>{cat}</a><span>/</span><a href={`/city/${city}`}>{city}</a></nav>
+      <h1><span style={`color:var(${catVar(cat)})`}>{city}{cat}</span>{isPerform ? '節目表' : '活動'}</h1>
+      <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期{isPerform ? '演出' : '活動'}</p>
+    </header>
+
+    {venues.length > 0 && (
+      <p class="cityrow">{venues.map(([v, e]) => e.slug
+        ? <a href={`/venue/${e.slug}`}>{v}<b class="tabular">{e.n}</b></a>
+        : <span>{v}<b class="tabular">{e.n}</b></span>)}</p>
+    )}
+
+    {(rows.length > 0 || past.length > 0) && (
+      <h2 class="h-sm">{rows.length ? '近期場次' : '最近結束的場次'}</h2>
+    )}
+    <ol class="ev-list">
+      {(rows.length ? rows.slice(0, 60) : past).map((d) => (
+        <li><a href={`/event/${d.slug}`}>
+          <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
+          <span class="ev-body"><span class="ev-t">{d.title}</span>
+            <span class="ev-m">{[d.venue, d.district].filter(Boolean).join('　')}</span></span>
+        </a></li>
+      ))}
+    </ol>
+    {rows.length > 60 && <p class="more">另有 {rows.length - 60} 場，<a href={`/category/${cat}`}>看全部{cat}</a>或<a href={`/city/${city}`}>{city}所有活動</a></p>}
+  </div>
+</Base>
+<style>
+  .cityrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; }
+  .cityrow a, .cityrow span { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
+  .cityrow span { color: var(--text-secondary); }
+  .cityrow b { color: var(--text-muted); font-weight: 400; }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+          color: var(--text-secondary); margin-top: var(--space-6); }
+  .more { margin-bottom: var(--space-9); font-size: var(--text-sm); color: var(--text-muted); }
+</style>

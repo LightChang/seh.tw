@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { catVar } from '../../lib/format.mjs';
-import { flatSessions, countBy, builtCategories } from '../../lib/build-data.mjs';
+import { flatSessions, countBy, builtCategories, builtCatCities } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
@@ -21,6 +21,7 @@ const buildNow = Date.now();
 const rows = upcomingSessions(allRows, buildNow);
 const n = new Set(rows.map((d) => d.slug)).size;
 const catPages = await builtCategories();
+const catCities = await builtCatCities();
 const cats = [...rows.reduce((m, d) => m.set(d.cat, (m.get(d.cat) ?? 0) + 1), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
 const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venue) ?? 0) + 1) : m), new Map())]
@@ -54,7 +55,7 @@ const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venu
         <h2 class="h-sm">類型</h2>
         <ul class="tags">
           {cats.filter(([c]) => catPages.has(c)).map(([c, v]) => (
-            <li><a href={`/category/${c}`} style={`color:var(${catVar(c)})`}>{c}<span class="tabular">{v}</span></a></li>
+            <li><a href={catCities.has(`${c}|${city}`) ? `/category/${c}/${city}` : `/category/${c}`} style={`color:var(${catVar(c)})`}>{c}<span class="tabular">{v}</span></a></li>
           ))}
         </ul>
         <h2 class="h-sm" style="margin-top:2rem">常見場地</h2>
