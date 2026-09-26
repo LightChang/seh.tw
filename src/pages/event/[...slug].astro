@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import { eventLd } from '../../lib/event-ld.mjs';
+import { ticketLink } from '../../lib/ticket.mjs';
 import { allEvents, isIndexable, builtCategories, verifiedState } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
@@ -39,6 +40,8 @@ const decodeEntities = (s) => String(s ?? '').replace(/&(?:#(\d+)|#x([0-9a-f]+)|
 ld.description = decodeEntities(ld.description);
 
 const srcUrl = e.sources.find((x) => x.url)?.url;
+// 來源給的購票／報名連結（JSON-LD 的 offers.url 用同一個），沒有就不顯示，不自己找
+const ticket = ticketLink(e.ticketUrl, e.isFree);
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
@@ -89,6 +92,9 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
         {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
           {e.isFree === true ? '免費' : e.priceText || '售票'}
         </dd></div>}
+        {ticket && <div><dt>{ticket.label}</dt><dd>
+          <a href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.platform}</a>
+        </dd></div>}
         {e.minimumAge !== undefined && <div><dt>年齡</dt><dd>{e.minimumAge} 歲以上</dd></div>}
         {e.performers?.length > 0 && <div><dt>演出者</dt><dd>
           {e.performers.map((p) => p.nameRaw).join('、')}
@@ -116,9 +122,12 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
         </section>
       )}
 
-      {srcUrl && (
-        <p class="cta"><a class="btn" href={srcUrl} target="_blank" rel="noopener">前往原始出處</a>
-        <span class="src">{srcNames[0]}</span></p>
+      {(ticket || srcUrl) && (
+        <p class="cta">
+          {ticket && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.label}（{ticket.platform}）</a>}
+          {srcUrl && srcUrl !== ticket?.href && <a class={ticket ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener">前往原始出處</a>}
+          {srcUrl && <span class="src">{srcNames[0]}</span>}
+        </p>
       )}
 
       <footer class="prov">
@@ -164,6 +173,10 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
     display: inline-block; text-decoration: none; font-weight: 700;
     background: var(--color-link); color: var(--bg-base);
     padding: 0.7rem 1.4rem; font-size: var(--text-base);
+  }
+  .btn2 {
+    display: inline-block; text-decoration: none; font-weight: 700; font-size: var(--text-base);
+    padding: 0.7rem 1.4rem; border: var(--hairline) solid var(--color-link); color: var(--color-link);
   }
   .src { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); }
   .prov {
