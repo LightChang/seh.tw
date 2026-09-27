@@ -338,3 +338,20 @@
 {"at":"2026-09-27T16:25:01+08:00","id":"tainan-indigenous-performing-groups","outcome":"unchanged","via":"fetch","count":3,"ms":38}
 {"at":"2026-09-27T16:25:01+08:00","id":"tainan-public-libraries","outcome":"unchanged","via":"fetch","count":45,"ms":44}
 {"at":"2026-09-27T16:25:01+08:00","id":"moc-community","outcome":"failed","error":"moc-community: page=31 重試 2 次仍失敗（This operation was aborted），已取得 600 / 8309 筆。分頁不完整，這輪不覆蓋 raw。","ms":140561}
+{"at":"2026-09-27T16:36:01+08:00","id":"chiayi-city-buskers","outcome":"unchanged","via":"fetch","count":1515,"ms":272}
+{"at":"2026-09-27T16:36:01+08:00","id":"hsinchu-city-buskers","outcome":"unchanged","via":"fetch","count":236,"ms":283}
+{"at":"2026-09-27T16:36:01+08:00","id":"changhua-performing-groups","outcome":"unchanged","via":"fetch","count":233,"ms":357}
+{"at":"2026-09-27T16:36:01+08:00","id":"hsinchu-county-culture-venues","outcome":"unchanged","via":"fetch","count":6,"ms":114}
+{"at":"2026-09-27T16:36:01+08:00","id":"kaohsiung-busker-venues","outcome":"unchanged","via":"fetch","count":49,"ms":120}
+{"at":"2026-09-27T16:36:01+08:00","id":"chiayi-county-event-board","outcome":"unchanged","via":"fetch","count":6,"ms":506}
+{"at":"2026-09-27T16:36:01+08:00","id":"kaohsiung-buskers","outcome":"unchanged","via":"fetch","count":124,"ms":124}
+{"at":"2026-09-27T16:36:01+08:00","id":"hsinchu-city-culture-events","outcome":"unchanged","via":"fetch","count":68,"ms":18}
+{"at":"2026-09-27T16:36:01+08:00","id":"hsinchu-county-performing-groups","outcome":"unchanged","via":"fetch","count":82,"ms":121}
+{"at":"2026-09-27T16:36:01+08:00","id":"kaohsiung-public-libraries","outcome":"unchanged","via":"fetch","count":61,"ms":37}
+{"at":"2026-09-27T16:36:01+08:00","id":"kaohsiung-neighborhood-centers","outcome":"unchanged","via":"fetch","count":107,"ms":92}
+{"at":"2026-09-27T16:36:01+08:00","id":"tainan-culture-events","outcome":"unchanged","via":"fetch","count":66,"ms":278}
+{"at":"2026-09-27T16:36:01+08:00","id":"hsinchu-city-culture-venues","outcome":"unchanged","via":"fetch","count":9,"ms":18}
+{"at":"2026-09-27T16:36:01+08:00","id":"tainan-culture-halls","outcome":"unchanged","via":"fetch","count":4,"ms":44}
+{"at":"2026-09-27T16:36:01+08:00","id":"tainan-indigenous-performing-groups","outcome":"unchanged","via":"fetch","count":3,"ms":38}
+{"at":"2026-09-27T16:36:01+08:00","id":"tainan-public-libraries","outcome":"unchanged","via":"fetch","count":45,"ms":75}
+{"at":"2026-09-27T16:36:01+08:00","id":"moc-community","outcome":"failed","error":"moc-community: page=32 重試 2 次仍失敗（This operation was aborted），已取得 620 / 8309 筆。分頁不完整，這輪不覆蓋 raw。","ms":140320}

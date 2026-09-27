@@ -1,14 +1,12 @@
 {
-  "at": "2026-09-27T16:25:01+08:00",
+  "at": "2026-09-27T16:36:01+08:00",
   "attempted": 17,
-  "changed": [
-    "chiayi-county-event-board",
-    "tainan-culture-events",
-    "tainan-culture-halls"
-  ],
+  "changed": [],
   "failed": [
     "moc-community"
   ],
-  "alerting": [],
+  "alerting": [
+    "moc-community"
+  ],
   "skipped": []
 }
