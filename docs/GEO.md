@@ -1,5 +1,7 @@
 # GEO 監看
 
+往哪裡長、下一步做什麼：`GROWTH.md`。這份只管監看。
+
 Generative Engine Optimization：ChatGPT、Perplexity、Claude、Gemini 這些生成式引擎
 會不會拿 seh 的內容回答，以及會不會把使用者帶回來。
 
@@ -51,5 +53,5 @@ Generative Engine Optimization：ChatGPT、Perplexity、Claude、Gemini 這些�
   編出來的描述會破壞它，也違反資料授權（見 `LICENSE-DATA.md`）。
 - **不要在 robots.txt 同時 `Disallow` 又依賴 noindex。** 擋住之後引擎讀不到 noindex，
   反而可能以「只有網址、沒有內容」的形式被收錄。理由寫在 `public/robots.txt` 裡。
-- **llms.txt 目前沒有做。** 那是提案中的慣例、不是標準，且各家支援情況未查證。
-  要做之前先確認目標引擎真的會讀，不要為了做而做。
+- **llms.txt 已在 2026-09-17 做了**（`src/pages/llms.txt.js`、`src/pages/llms-full.txt.js`，build 時現算）。
+  那是提案中的慣例、不是標準，各家支援情況未查證；要往裡面加東西前先看 `GROWTH.md` 的 GEO 節。
