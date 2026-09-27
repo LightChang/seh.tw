@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { catVar } from '../../lib/format.mjs';
-import { flatSessions, countBy, builtCategories, builtCatCities } from '../../lib/build-data.mjs';
+import { flatSessions, countBy, builtCategories, builtCatCities, newListings } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
@@ -21,6 +21,8 @@ const buildNow = Date.now();
 const rows = upcomingSessions(allRows, buildNow);
 const n = new Set(rows.map((d) => d.slug)).size;
 const catPages = await builtCategories();
+// 這個縣市新上架、還沒結束的活動（src/lib/new-listings.mjs），build 時寫進 HTML
+const fresh = await newListings({ city, limit: 6, now: buildNow });
 const catCities = await builtCatCities();
 const cats = [...rows.reduce((m, d) => m.set(d.cat, (m.get(d.cat) ?? 0) + 1), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -54,6 +56,19 @@ const description = `${city}正在發生的文化活動、展覽與演出，共 
           ))}
         </ol>
         {rows.length === 0 && <p class="empty-note">目前沒有收錄到{city}的活動。</p>}
+
+        {fresh.length > 0 && <>
+          <h2 class="h-sm" style="margin-top:2rem">新上架</h2>
+          <ol class="ev-list">
+            {fresh.map((d) => (
+            <li><a href={`/event/${d.slug}`}>
+              <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
+              <span class="ev-body"><span class="ev-t">{d.title}</span><span class="ev-m">{[ d.venue].filter(Boolean).join('・')}　{+d.listedAt.slice(5, 7)}/{+d.listedAt.slice(8)} 上架</span></span>
+              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+            </a></li>
+          ))}
+          </ol>
+        </>}
       </section>
 
       <aside class="side">

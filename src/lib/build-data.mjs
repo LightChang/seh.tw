@@ -2,6 +2,7 @@
 // 「一個場次一列」這種展開只寫一次，各頁面的篩選邏輯才不會各自長出一份。
 import { readFile } from 'node:fs/promises';
 import { seriesIndex } from './event-series.mjs';
+import { newlyListed } from './new-listings.mjs';
 import { getCollection } from 'astro:content';
 import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
 
@@ -58,6 +59,29 @@ const dataOf = (e) => e.data;
 export async function allEvents() {
   return (await getCollection('events')).map(dataOf);
 }
+// 活動網址第一次發出的日期（data/slug-registry.ndjson 的 assignedAt，append-only）
+let LISTED = null;
+async function listedAt() {
+  if (LISTED) return LISTED;
+  LISTED = new Map();
+  try {
+    const text = await readFile(`${process.cwd()}/data/slug-registry.ndjson`, 'utf-8');
+    for (const line of text.split('\n')) {
+      if (!line.trim()) continue;
+      const r = JSON.parse(line);
+      if (r.kind === 'event' && !LISTED.has(r.slug)) LISTED.set(r.slug, r.assignedAt);
+    }
+  } catch { /* 沒有 registry 就沒有「新上架」 */ }
+  return LISTED;
+}
+
+/** 新上架、還沒結束、可收錄的活動（src/lib/new-listings.mjs）。city 有給就只看該縣市的場次。 */
+export async function newListings({ city, limit = 10, now = Date.now() } = {}) {
+  const [rows, listed, st] = await Promise.all([flatSessions(), listedAt(), pageState()]);
+  const keep = (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
+  return newlyListed(city ? rows.filter((d) => d.city === city) : rows, listed, now, { limit, keep });
+}
+
 // 同一年度活動的歷年版本（src/lib/event-series.mjs）。每個活動頁都會查，快取一次。
 let SERIES = null;
 export async function eventSeries() {

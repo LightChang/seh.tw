@@ -1,8 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
-import { flatSessions } from '../lib/build-data.mjs';
-import { todaySessions, mergeRuns } from '../lib/day-lists.mjs';
+import { flatSessions, newListings } from '../lib/build-data.mjs';
+import { todaySessions, mergeRuns, leadText } from '../lib/day-lists.mjs';
 import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
 
 // 清單在 build 時就寫進 HTML：搜尋引擎與答案引擎不保證會執行 JS，
@@ -11,6 +11,8 @@ import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
 // 兩邊共用 day-lists.mjs，邏輯不會分岔。
 const buildNow = Date.now();
 const rows = todaySessions(await flatSessions(), buildNow);
+// 新上架、還沒結束的活動（src/lib/new-listings.mjs）。不受上方類型篩選影響，build 時寫死。
+const fresh = await newListings({ limit: 8, now: buildNow });
 const merged = mergeRuns(rows);
 
 // ItemList／Event 結構化資料（GEO：/today 是常青樞紐，AI 問「今天台灣有什麼活動」
@@ -73,6 +75,22 @@ const todayLd = itemListElement.length ? {
       ))}
     </ol>
     <p class="empty-note" id="empty" hidden={merged.length > 0}>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
+
+    {fresh.length > 0 && (
+      <section class="fresh">
+        <h2 class="h-sm">新上架</h2>
+        <ol class="ev-list">
+          {fresh.map((d) => (
+            <li><a href={`/event/${encodeURIComponent(d.slug)}`}>
+              <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
+              <span class="ev-body"><span class="ev-t">{d.title}</span>
+                <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}　{+d.listedAt.slice(5, 7)}/{+d.listedAt.slice(8)} 上架</span></span>
+              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+            </a></li>
+          ))}
+        </ol>
+      </section>
+    )}
   </div>
 </Base>
 
@@ -127,3 +145,8 @@ const todayLd = itemListElement.length ? {
   }
   chips(); draw();
 </script>
+
+<style>
+  .fresh { margin-top: var(--space-8); }
+  .fresh .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+</style>
