@@ -26,8 +26,13 @@ const cats = [...rows.reduce((m, d) => m.set(d.cat, (m.get(d.cat) ?? 0) + 1), ne
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
 const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venue) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
+// 摘要帶上頁面列出的類型與場地，搜「某地＋音樂會」「某館 活動」的人看得出這頁有沒有
+const shownCats = cats.filter(([c]) => c && catPages.has(c)).slice(0, 3);
+const description = `${city}正在發生的文化活動、展覽與演出，共 ${n} 個活動。`
+  + (shownCats.length ? `${shownCats.map(([c, k]) => `${c} ${k} 場`).join('、')}。` : '')
+  + (venues.length ? `場地：${venues.slice(0, 3).map(([v]) => v).join('、')}。` : '');
 ---
-<Base title={`${city}有什麼文化活動｜seh`} description={`${city}正在發生的文化活動、展覽與演出，共 ${n} 個活動。`}>
+<Base title={`${city}有什麼文化活動｜seh`} description={description}>
   <div class="shell">
     <Nav />
     <header class="page-hd">

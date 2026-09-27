@@ -7,7 +7,8 @@
 //   1. 只輸出頁面上看得到的事實。結構化資料與可見內容不符是違規，不是小問題。
 //   2. 來源沒給的欄位就是沒有，不要為了消掉 Search Console 的 WARNING 填假值。
 //   3. 不輸出空陣列／空物件——Google 會當成「欄位存在但沒值」而報警告。
-import { dateLabel } from './format.mjs';
+import { primarySession, placeLabel, eventFacts } from './event-meta.mjs';
+import { ticketLink } from './ticket.mjs';
 
 const SCHEMA = 'https://schema.org';
 
@@ -15,12 +16,13 @@ export function eventLd(e) {
   const sessions = e.sessions ?? [];
   const first = sessions[0] ?? {};
   const last = sessions[sessions.length - 1] ?? {};
-  const primary = sessions.find((s) => s.venueNameRaw) ?? first;
+  const primary = primarySession(sessions);
 
-  // 頁面上看得到的事實。description 缺值時當備援，也給 <meta name="description"> 用，
-  // 兩邊同一份，結構化資料才不會與可見內容不符。
-  const factLine = `${e.title}。${[primary.venueNameRaw, primary.city].filter(Boolean).join('、')}，`
-    + `${dateLabel(first.startAt)} 起。`;
+  // 頁面上看得到的事實（時間、地點、票價、主辦、演出者）。description 缺值時當備援，
+  // 與 <meta name="description"> 的前半段同一份（event-meta.mjs），結構化資料才不會與可見內容不符。
+  const factLine = `${e.title}。${eventFacts(e, ticketLink(e.ticketUrl, e.isFree))}`;
+  // 沒有場館名時，比縣市更具體的地址（「臺東縣成功鎮海濱公園」）也在頁面「地點」欄
+  const place = placeLabel(primary);
   const canonical = `https://seh.tw/event/${encodeURIComponent(e.slug)}`;
 
   // 只有 street 精度才輸出 streetAddress。臺北那批的 Address 欄位等於行政區，
@@ -57,15 +59,16 @@ export function eventLd(e) {
     '@context': SCHEMA,
     '@type': 'Event',
     name: e.title,
+    url: canonical,
     description: (e.description ?? factLine).slice(0, 500),
     startDate: first.startAt,
     ...(endDate ? { endDate } : {}),
     eventStatus: e.status === 'cancelled' ? `${SCHEMA}/EventCancelled` : `${SCHEMA}/EventScheduled`,
     eventAttendanceMode: `${SCHEMA}/OfflineEventAttendanceMode`,
-    ...(primary.venueNameRaw || primary.city ? {
+    ...(place || primary.city ? {
       location: {
         '@type': 'Place',
-        name: primary.venueNameRaw || primary.city,
+        name: place || primary.city,
         ...(address ? { address } : {}),
         ...(primary.lat && primary.lng
           ? { geo: { '@type': 'GeoCoordinates', latitude: primary.lat, longitude: primary.lng } } : {}),

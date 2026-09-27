@@ -51,3 +51,10 @@ export const CAT_COLOR = {
   舞蹈: '--color-medium', 親子: '--color-pass', 表演: '--color-pink',
 };
 export const catVar = (n) => CAT_COLOR[n] ?? '--text-muted';
+
+// 搜尋結果標題用的短日期「9/21」，跨年時帶年份「2026/12/20」
+export const mdShort = (t, withYear = false) => {
+  const d = tw(t);
+  return `${withYear ? `${d.getUTCFullYear()}/` : ''}${d.getUTCMonth() + 1}/${d.getUTCDate()}`;
+};
+export const twYear = (t) => tw(t).getUTCFullYear();

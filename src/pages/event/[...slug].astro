@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import { eventLd } from '../../lib/event-ld.mjs';
+import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
 import { allEvents, isIndexable, builtCategories, verifiedState } from '../../lib/build-data.mjs';
 
@@ -13,12 +14,9 @@ export async function getStaticPaths() {
 const { e } = Astro.props;
 const verified = await verifiedState();
 const sessions = e.sessions;
-const first = sessions[0];
-const last = sessions[sessions.length - 1];
-const primary = sessions.find((s) => s.venueNameRaw) ?? first;
-
-// JSON-LD 與 <meta description> 用同一份事實，組裝在 src/lib/event-ld.mjs（有測試守著）
-const { ld } = eventLd(e);
+const primary = primarySession(sessions);
+// 沒有場館名時，比縣市更具體的地址也算地點（「臺東縣成功鎮海濱公園」）
+const place = placeLabel(primary);
 
 // 來源說明文字帶著沒解開的 HTML 實體（「Ga&iuml;a」「&hellip;」），
 // 不解開就會原樣印在頁面、meta description 與搜尋結果摘要上。
@@ -37,11 +35,17 @@ const decodeEntities = (s) => String(s ?? '').replace(/&(?:#(\d+)|#x([0-9a-f]+)|
   const cp = dec ? Number(dec) : parseInt(hex, 16);
   return cp > 0 && cp <= 0x10ffff ? String.fromCodePoint(cp) : m;
 });
+
+// JSON-LD 與 <meta description> 用同一份事實，組裝在 src/lib/event-ld.mjs；
+// 標題與首屏時間在 src/lib/event-meta.mjs（都有測試守著）。
+const { ld } = eventLd(e);
 ld.description = decodeEntities(ld.description);
+const desc = e.description ? decodeEntities(e.description) : '';
 
 const srcUrl = e.sources.find((x) => x.url)?.url;
 // 來源給的購票／報名連結（JSON-LD 的 offers.url 用同一個），沒有就不顯示，不自己找
 const ticket = ticketLink(e.ticketUrl, e.isFree);
+const metaTitle = eventTitle(e);
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
@@ -50,7 +54,7 @@ const indexable = await isIndexable(`/event/${e.slug}`);
 const hasCatPage = e.category && (await builtCategories()).has(e.category);
 ---
 <Base
-  title={`${e.title}｜seh`}
+  title={metaTitle}
   description={ld.description}
   noindex={!indexable}
 >
@@ -68,17 +72,23 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
-          {dateLabel(first.startAt)}{!first.granularity.startsWith('date') || first.granularity === 'datetime' ? ` ${hhmm(first.startAt)}` : ''}
+          {whenText(sessions)}
           {sessions.length > 1 && <span class="n">　共 {sessions.length} 場次</span>}
         </dd></div>
-        {primary.venueNameRaw && <div><dt>地點</dt><dd>
-          {primary.venueSlug
-            ? <a href={`/venue/${primary.venueSlug}`}>{primary.venueNameRaw}</a>
-            : primary.venueNameRaw}
-          {primary.address && primary.addressPrecision === 'street' && <span class="n">　{primary.address}</span>}
+        {place && <div><dt>地點</dt><dd>
+          {primary.venueSlug && primary.venueNameRaw
+            ? <a href={`/venue/${primary.venueSlug}`}>{place}</a>
+            : place}
+          {primary.venueNameRaw && primary.address && primary.addressPrecision === 'street' && <span class="n">　{primary.address}</span>}
         </dd></div>}
         {primary.city && <div><dt>縣市</dt><dd>
           <a href={`/city/${primary.city}`}>{primary.city}</a>{primary.district && <span class="n">　{primary.district}</span>}
+        </dd></div>}
+        {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
+          {e.isFree === true ? '免費' : e.priceText || '售票'}
+        </dd></div>}
+        {ticket && <div><dt>{ticket.label}</dt><dd>
+          <a href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.platform}</a>
         </dd></div>}
         {(e.category || e.categoryRaw) && <div><dt>類型</dt><dd>
           {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，
@@ -88,12 +98,6 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
             : <span class="raw" style={e.category ? `color:var(${catVar(e.category)})` : undefined}>
                 {e.category ?? e.categoryRaw}{!e.category && <span class="n">　（尚未對照）</span>}
               </span>}
-        </dd></div>}
-        {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
-          {e.isFree === true ? '免費' : e.priceText || '售票'}
-        </dd></div>}
-        {ticket && <div><dt>{ticket.label}</dt><dd>
-          <a href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.platform}</a>
         </dd></div>}
         {e.minimumAge !== undefined && <div><dt>年齡</dt><dd>{e.minimumAge} 歲以上</dd></div>}
         {e.performers?.length > 0 && <div><dt>演出者</dt><dd>
@@ -105,7 +109,16 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
         </dd></div>}
       </dl>
 
-      {e.description && <div class="desc">{decodeEntities(e.description)}</div>}
+      {/* 購票／報名與原始出處放在說明文字之前：說明常常很長，放後面就掉出首屏 */}
+      {(ticket || srcUrl) && (
+        <p class="cta">
+          {ticket && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.label}（{ticket.platform}）</a>}
+          {srcUrl && srcUrl !== ticket?.href && <a class={ticket ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener">前往原始出處</a>}
+          {srcUrl && <span class="src">{srcNames[0]}</span>}
+        </p>
+      )}
+
+      {desc && <div class="desc">{desc}</div>}
 
       {sessions.length > 1 && (
         <section class="sessions">
@@ -120,14 +133,6 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
           ))}</ul>
           {sessions.length > shown.length && <p class="more">另有 {sessions.length - shown.length} 場次</p>}
         </section>
-      )}
-
-      {(ticket || srcUrl) && (
-        <p class="cta">
-          {ticket && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.label}（{ticket.platform}）</a>}
-          {srcUrl && srcUrl !== ticket?.href && <a class={ticket ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener">前往原始出處</a>}
-          {srcUrl && <span class="src">{srcNames[0]}</span>}
-        </p>
       )}
 
       <footer class="prov">
@@ -168,7 +173,7 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
   .sessions ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.35rem; }
   .sessions li { font-size: var(--text-sm); color: var(--text-secondary); }
   .more { margin-top: 0.6rem; font-size: var(--text-sm); color: var(--text-muted); }
-  .cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: var(--space-7); }
+  .cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: var(--space-6); }
   .btn {
     display: inline-block; text-decoration: none; font-weight: 700;
     background: var(--color-link); color: var(--bg-base);
