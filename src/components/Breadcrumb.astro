@@ -1,0 +1,28 @@
+---
+// 看得到的麵包屑。trail 由 src/lib/jsonld 的 crumbTrail() 產生，同一份也交給 Base.astro
+// 輸出 BreadcrumbList——畫面與結構化資料讀同一份資料，不會對不上。
+interface Props {
+  trail: { name: string; href?: string }[];
+}
+const { trail } = Astro.props;
+const last = trail.length - 1;
+---
+<nav class="crumb" aria-label="麵包屑">
+  {trail.map((c, i) => (
+    <>
+      {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+      {i < last && c.href
+        ? <a href={c.href}>{c.name}</a>
+        : <span class="here" aria-current="page">{c.name}</span>}
+    </>
+  ))}
+</nav>
+<style>
+  .crumb { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.5rem; min-width: 0;
+           font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4); }
+  .crumb a { flex: none; text-decoration: none; }
+  .crumb a:hover { color: var(--color-link); }
+  .sep { flex: none; }
+  /* 本頁名稱就是下面的標題，長的活動名只留一行；窄螢幕排不下就換行，不撐出橫向捲動 */
+  .here { min-width: 0; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>

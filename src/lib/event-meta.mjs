@@ -2,11 +2,11 @@
 //
 // 搜尋結果只看得到標題與摘要。活動名查詢在 6–15 名、點擊率趨近 0 的頁，
 // 標題原本只有活動名，沒有說明文字的頁摘要只有「場館、縣市，某日 起。」——
-// 看不出何時何地、要不要錢。所以標題帶短日期與場館；事實句（event-ld.mjs 的 factLine，
+// 看不出何時何地、要不要錢。所以標題帶短日期與場館；事實句（jsonld/event.mjs 的 factLine，
 // 沒有來源說明時也是 meta description）帶上頁面首屏已有的時間、地點、票價、主辦、演出者。
 // 有來源說明的頁，meta description 照 2026-09-23 的做法用說明文字，不在這裡動。
 //
-// 原則同 event-ld.mjs：只用頁面上看得到的事實，沒有的欄位就不寫。
+// 原則同 jsonld/event.mjs：只用頁面上看得到的事實，沒有的欄位就不寫。
 import { dateLabel, hhmm, mdShort, twYear } from './format.mjs';
 
 const uniq = (a) => [...new Set(a.filter(Boolean))];

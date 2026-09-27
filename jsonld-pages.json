@@ -1,0 +1,40 @@
+{
+  "$comment": "seh.tw 頁型 → 必須／禁止的 JSON-LD 類型。build 結束時由 scripts/check-jsonld.mjs 以 vendor/seo-ops-jsonld/validate.mjs 檢查，有錯誤 build 就失敗。build.format 是 'file'：頁面路徑帶 .html，首頁是 /。basis 指向 vendor/seo-ops-jsonld/rules.json 的條目（官方來源在該條目的 source）。轉址頁（meta refresh）由檢查腳本自動略過。說明見 docs/AEO.md「結構化資料規範」。",
+  "pages": [
+    {
+      "match": "/",
+      "require": ["WebSite", "Organization"],
+      "basis": ["rules.json#types.WebSite", "rules.json#types.Organization"],
+      "note": "WebSite 供 site names（臺灣、中文可用）；Organization 無必填。"
+    },
+    {
+      "match": "/event/*.html",
+      "require": ["BreadcrumbList"],
+      "basis": ["rules.json#types.BreadcrumbList", "rules.json#types.Event"],
+      "note": "Event 不列為必須：資料裡沒有實體地點或地址的活動不輸出 Event（types.Event.required 的 location.address、eligibility 的實體地點），不捏造。有輸出的 Event 仍逐欄驗必填與日期。"
+    },
+    {
+      "match": "/venue/*.html",
+      "require": ["BreadcrumbList"],
+      "basis": ["rules.json#types.BreadcrumbList", "rules.json#types.LocalBusiness"],
+      "note": "場館類型依名稱為 Library／PerformingArtsTheater／Museum／Place，不列為必須；Library 屬 LocalBusiness，address 必填，沒有地址時退回 Place。"
+    },
+    {
+      "match": "/heritage/*.html",
+      "require": ["LandmarksOrHistoricalBuildings", "BreadcrumbList"],
+      "basis": ["rules.json#noGoogleFeature", "rules.json#types.BreadcrumbList"]
+    },
+    { "match": "/city/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/city/*/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/category/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/category/*/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    {
+      "match": "/**",
+      "forbid": ["FAQPage", "HowTo", "SpecialAnnouncement"],
+      "basis": ["rules.json#deprecatedTypes"],
+      "note": "Google 已停止顯示的類型，不輸出。"
+    }
+  ],
+  "exclude": ["/404.html"],
+  "severity": {}
+}

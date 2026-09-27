@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { heritageNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { allHeritage, isIndexable } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
@@ -19,27 +21,21 @@ const description = descLead
 // 標題帶所在地與類別（「淡水中正段日式宿舍群｜新北市淡水區歷史建築｜seh」），
 // 搜古蹟名的人一眼看得出是哪裡、哪一種；都沒有才退回「文化資產」。
 const title = `${h.name}｜${[h.city, h.district].filter(Boolean).join('')}${h.type || (h.city ? '' : '文化資產')}｜seh`;
-const ld = {
-  '@context': 'https://schema.org', '@type': 'LandmarksOrHistoricalBuildings', name: h.name,
-  ...(h.city ? { address: { '@type': 'PostalAddress',
-    addressCountry: 'TW', addressRegion: h.city,
-    ...(h.district ? { addressLocality: h.district } : {}),
-    ...(h.addressPrecision === 'street' && h.address ? { streetAddress: h.address } : {}) } } : {}),
-  ...(h.lat ? { geo: { '@type': 'GeoCoordinates', latitude: h.lat, longitude: h.lng } } : {}),
-};
+const ld = heritageNode(h);
+// 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs 的 crumbTrail）
+const trail = crumbTrail([{ name: '文化資產', href: '/heritage' }, h.city && { name: h.city, href: `/city/${h.city}` }], h.name);
 ---
-<Base title={title} description={description} noindex={!indexable}>
-  <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
+<Base title={title} description={description} noindex={!indexable} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
     <article class="her">
-      <nav class="crumb"><a href="/heritage">文化資產</a>{h.city && <><span>/</span><a href={`/city/${h.city}`}>{h.city}</a></>}</nav>
+      <Breadcrumb trail={trail} />
       <h1>{h.name}</h1>
       <dl class="facts">
         {h.type && <div><dt>類別</dt><dd>{h.type}</dd></div>}
         {h.level && <div><dt>級別</dt><dd>{h.level}</dd></div>}
         {h.registeredAt && <div><dt>登錄</dt><dd class="tabular">{h.registeredAt}</dd></div>}
-        {(h.city || h.address) && <div><dt>地點</dt><dd>{[h.city, h.district, h.address].filter(Boolean).join(' ')}</dd></div>}
+        {(h.city || h.district || h.address) && <div><dt>地點</dt><dd>{[h.city, h.district, h.address].filter(Boolean).join(' ')}</dd></div>}
         {h.open && <div><dt>開放</dt><dd>{h.open}</dd></div>}
       </dl>
       <h2 class="h-sm">歷史沿革</h2>
@@ -50,8 +46,6 @@ const ld = {
 </Base>
 <style>
   .her { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
-  .crumb { display: flex; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4); }
-  .crumb a { text-decoration: none; }
   h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); letter-spacing: 0; line-height: 1.35; }
   .facts { margin: var(--space-6) 0 0; border-top: var(--hairline) solid var(--border-subtle); }
   .facts > div { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.5rem;

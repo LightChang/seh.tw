@@ -91,6 +91,12 @@ export async function eventSeries() {
 export async function allVenues() {
   return (await getCollection('venues')).map(dataOf);
 }
+// 活動頁借場館地址用（src/lib/jsonld/event.mjs 的 eventLocation）。每個活動頁都會呼叫，要快取。
+let VENUE_BY_SLUG = null;
+export async function venueBySlug() {
+  if (!VENUE_BY_SLUG) VENUE_BY_SLUG = new Map((await allVenues()).map((v) => [v.slug, v]));
+  return VENUE_BY_SLUG;
+}
 export async function allHeritage() {
   return (await getCollection('heritage')).map(dataOf);
 }
@@ -118,7 +124,7 @@ export async function flatSessions() {
         end: s.endAt ?? null,
         dateOnly,
         url: `/event/${encodeURIComponent(e.slug)}`,
-        // 活動的資料來源（event-ld.mjs 的 citation 用同一份）。同一活動的每個場次
+        // 活動的資料來源（src/lib/jsonld/event.mjs 的 citation 用同一份）。同一活動的每個場次
         // 都帶一份是跟既有欄位（isFree／popularity／cat…）一致的重複，換取 today.astro
         // 不用另外查表。
         sources: e.sources ?? [],

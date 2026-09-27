@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar, dateLabel, hhmm } from '../../lib/format.mjs';
 import { flatSessions, countBy, CATEGORY_MIN, builtCatCities } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
@@ -25,12 +27,14 @@ const year = new Date(buildNow + 8 * 3600e3).getUTCFullYear();
 const title = PERFORM.has(cat) ? `${cat}節目表｜${year} 台灣近期${cat}演出｜seh` : `${cat}活動｜${year} 台灣近期${cat}｜seh`;
 const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
+// 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
+const trail = crumbTrail([{ name: '今天', href: '/today' }], cat);
 ---
-<Base title={title} description={`台灣近期的${cat}活動，共 ${rows.length} 場，可依縣市篩選。`}>
+<Base title={title} description={`台灣近期的${cat}活動，共 ${rows.length} 場，可依縣市篩選。`} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
     <header class="page-hd">
-      <nav class="crumb"><a href="/today">今天</a></nav>
+      <Breadcrumb trail={trail} />
       <h1 style={`color:var(${catVar(cat)})`}>{cat}</h1>
       <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期活動</p>
     </header>

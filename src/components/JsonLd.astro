@@ -1,0 +1,12 @@
+---
+// 全站唯一輸出 JSON-LD 的地方（由 Base.astro 放進 <head>）。
+// serializeJsonLd 把 < 換成 <：活動說明來自外部，含 </script> 也不會把區塊截斷
+// （vendor/seo-ops-jsonld/rules.json#global.scriptContent）。
+import { serializeJsonLd } from '../lib/jsonld/index.mjs';
+
+interface Props {
+  nodes: unknown[];
+}
+const blocks = (Astro.props.nodes ?? []).filter(Boolean);
+---
+{blocks.map((b) => <script type="application/ld+json" is:inline set:html={serializeJsonLd(b)} />)}

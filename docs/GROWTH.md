@@ -130,7 +130,7 @@ for (const r of rows) { const q = norm(r.query); const hit = q.length >= 2 && ti
 
 ### 結構化資料
 
-- **已完成**：活動頁 Event JSON-LD（`src/lib/event-ld.mjs`，含 `url` — `b6a66e95`）；
+- **已完成**：活動頁 Event JSON-LD（`src/lib/event-ld.mjs`（2026-09-27 移到 `src/lib/jsonld/event.mjs`），含 `url` — `b6a66e95`）；
   `/today` ItemList — `6a594eb0`；首頁 Organization／WebSite — `907ba27f`；
   文化資產、場館頁 JSON-LD（`src/pages/heritage/[slug].astro`、`src/pages/venue/[slug].astro`）。
 - **待做**：`/tonight`、`/city/*`、`/city/*/*`、`/category/*`、`/category/*/*` 補 ItemList，

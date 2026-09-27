@@ -1,14 +1,21 @@
 ---
 import '../styles/site.css';
 import { GA_MEASUREMENT_ID, GA_HOSTS, GSC_VERIFICATION } from '../site.config.mjs';
+import JsonLd from '../components/JsonLd.astro';
+import { breadcrumbList } from '../lib/jsonld/index.mjs';
 
 interface Props {
   title: string;
   description?: string;
   noindex?: boolean;
   canonical?: string;
+  /** 本頁的 JSON-LD 節點（src/lib/jsonld 產生），可為單一物件或陣列 */
+  jsonld?: object | object[] | null;
+  /** crumbTrail() 的結果；同一份交給 <Breadcrumb>，這裡輸出 BreadcrumbList */
+  breadcrumbs?: { name: string; href?: string }[];
 }
-const { title, description, noindex = false, canonical } = Astro.props;
+const { title, description, noindex = false, canonical, jsonld, breadcrumbs } = Astro.props;
+const ldNodes = [...[jsonld ?? []].flat(), breadcrumbList(breadcrumbs)];
 const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
 // build.format 是 'file'，Astro.url.pathname 會帶 `.html`（首頁是 `/index.html`）。
 // 對外網址不帶副檔名，canonical 與 og:url 要拿掉。
@@ -46,6 +53,7 @@ const url = canonical ?? `${site}${pathname}`;
     <meta property="og:locale" content="zh_TW" />
 
     {GSC_VERIFICATION && <meta name="google-site-verification" content={GSC_VERIFICATION} />}
+    <JsonLd nodes={ldNodes} />
     <slot name="head" />
   </head>
   <body>

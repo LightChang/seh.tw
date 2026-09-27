@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { venueNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar } from '../../lib/format.mjs';
 import { allVenues, flatSessions, isIndexable, venueNames } from '../../lib/build-data.mjs';
 import { upcomingSessions, pastSessions, leadText } from '../../lib/day-lists.mjs';
@@ -126,36 +128,28 @@ const description = [
   v.openingHours ? `開放時間：${v.openingHours.split('\n')[0]}。` : '',
 ].join('').replace('。。', '。').slice(0, 160);
 
-// 只有 street 精度才輸出 streetAddress，否則會產出與頁面不符的 structured data
+// 結構化資料在 src/lib/jsonld/pages.mjs（venueNode）：只有 street 精度才輸出 streetAddress，
+// Library 沒有任何地址欄位時退回 Place。
 const ldType = isLibrary ? 'Library' : isPerform ? 'PerformingArtsTheater'
   : /博物館|美術館|文物館|紀念館/.test(v.name) ? 'Museum' : 'Place';
-const site = 'https://seh.tw';
-const ld = {
-  '@context': 'https://schema.org', '@type': ldType, name: v.name,
-  url: `${site}/venue/${encodeURIComponent(v.slug)}`,
-  ...(aliases.length ? { alternateName: aliases } : {}),
-  ...(v.city ? { address: { '@type': 'PostalAddress',
-    addressCountry: 'TW', addressRegion: v.city,
-    ...(v.district ? { addressLocality: v.district } : {}),
-    ...(v.addressPrecision === 'street' && v.address ? { streetAddress: v.address } : {}) } } : {}),
-  ...(v.lat ? { geo: { '@type': 'GeoCoordinates', latitude: v.lat, longitude: v.lng } } : {}),
-  ...(v.phone ? { telephone: v.phone } : {}),
-  ...(v.openingHoursSpec?.length ? { openingHoursSpecification: toSchemaSpec(v.openingHoursSpec) } : {}),
-  ...(parent ? { containedInPlace: { '@type': 'Place', name: parent.name,
-    url: `${site}/venue/${encodeURIComponent(parent.slug)}` } } : {}),
-  ...(halls.length ? { containsPlace: halls.map((h) => ({ '@type': 'Place', name: h.name,
-    url: `${site}/venue/${encodeURIComponent(h.slug)}` })) } : {}),
-};
+const ld = venueNode({
+  type: ldType, v, aliases, parent, halls,
+  openingHoursSpecification: v.openingHoursSpec?.length ? toSchemaSpec(v.openingHoursSpec) : undefined,
+});
+// 麵包屑：畫面與 BreadcrumbList 同一份
+const trail = crumbTrail([
+  { name: '場館', href: '/venues' },
+  v.city && { name: v.city, href: `/city/${v.city}` },
+  parent && { name: parent.name, href: `/venue/${parent.slug}` },
+], h1);
 const upcomingIn = (h) => upcomingSessions(h.rows, buildNow).length;
 const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
 ---
-<Base title={title} noindex={!indexable} description={description}>
-  <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
+<Base title={title} noindex={!indexable} description={description} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
     <header class="page-hd">
-      <nav class="crumb"><a href="/venues">場館</a>{v.city && <><span>/</span><a href={`/city/${v.city}`}>{v.city}</a></>}
-        {parent && <><span>/</span><a href={`/venue/${parent.slug}`}>{parent.name}</a></>}</nav>
+      <Breadcrumb trail={trail} />
       <h1 class="vname">{h1}</h1>
       {aliases.length > 0 && <p class="aka">又稱　{aliases.join('、')}</p>}
       <p class="sub"><strong class="tabular">{rows.length}</strong> 個近期{isPerform ? '節目' : '活動'}<span class="orig">　收錄 {totalEvents} 個</span>

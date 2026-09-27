@@ -1,6 +1,7 @@
 import { defineConfig } from 'astro/config';
 import { readFileSync, existsSync } from 'node:fs';
 import sitemap from '@astrojs/sitemap';
+import { jsonldCheck } from './scripts/check-jsonld.mjs';
 
 // 收錄與否由 transform/score-pages.mjs 每天重算（ARCHITECTURE.md §6）。
 // 只有 indexable = 1 的頁面進 sitemap，其餘照常存在、照常可連，只是帶 noindex。
@@ -72,5 +73,7 @@ export default defineConfig({
         return { ...item, lastmod: `${lastmodOf.get(p) ?? BUILD_DAY}T00:00:00+08:00` };
       },
     }),
+    // build 完掃 dist 的 JSON-LD（scripts/check-jsonld.mjs），有錯誤 build 就失敗、不會部署。
+    jsonldCheck(),
   ],
 });

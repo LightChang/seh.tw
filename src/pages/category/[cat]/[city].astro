@@ -1,6 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { crumbTrail } from '../../../lib/jsonld/index.mjs';
 import { catVar } from '../../../lib/format.mjs';
 import { flatSessions, builtCatCities } from '../../../lib/build-data.mjs';
 import { upcomingSessions, pastSessions, leadText } from '../../../lib/day-lists.mjs';
@@ -33,12 +35,14 @@ const title = isPerform ? `${city}${cat}節目表｜${year} 近期演出｜seh` 
 const description = `${city}近期的${cat}${isPerform ? '演出' : '活動'}共 ${rows.length} 場`
   + (venues.length ? `，常見場地：${venues.slice(0, 3).map(([v]) => v).join('、')}。` : '。')
   + '依日期排列，附場地與時間。';
+// 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
+const trail = crumbTrail([{ name: cat, href: `/category/${cat}` }, { name: city, href: `/city/${city}` }], `${city}${cat}${isPerform ? '節目表' : '活動'}`);
 ---
-<Base title={title} description={description}>
+<Base title={title} description={description} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
     <header class="page-hd">
-      <nav class="crumb"><a href={`/category/${cat}`}>{cat}</a><span>/</span><a href={`/city/${city}`}>{city}</a></nav>
+      <Breadcrumb trail={trail} />
       <h1><span style={`color:var(${catVar(cat)})`}>{city}{cat}</span>{isPerform ? '節目表' : '活動'}</h1>
       <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期{isPerform ? '演出' : '活動'}</p>
     </header>

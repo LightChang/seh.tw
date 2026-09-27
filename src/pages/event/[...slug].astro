@@ -2,10 +2,11 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
-import { eventLd } from '../../lib/event-ld.mjs';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
-import { allEvents, isIndexable, builtCategories, verifiedState, eventSeries } from '../../lib/build-data.mjs';
+import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
@@ -15,8 +16,6 @@ const { e } = Astro.props;
 const verified = await verifiedState();
 const sessions = e.sessions;
 const primary = primarySession(sessions);
-// 沒有場館名時，比縣市更具體的地址也算地點（「臺東縣成功鎮海濱公園」）
-const place = placeLabel(primary);
 
 // 來源說明文字帶著沒解開的 HTML 實體（「Ga&iuml;a」「&hellip;」），
 // 不解開就會原樣印在頁面、meta description 與搜尋結果摘要上。
@@ -36,10 +35,16 @@ const decodeEntities = (s) => String(s ?? '').replace(/&(?:#(\d+)|#x([0-9a-f]+)|
   return cp > 0 && cp <= 0x10ffff ? String.fromCodePoint(cp) : m;
 });
 
-// JSON-LD 與 <meta description> 用同一份事實，組裝在 src/lib/event-ld.mjs；
+// JSON-LD、<meta description>、「地點／縣市」欄用同一份事實，組裝在 src/lib/jsonld/event.mjs；
 // 標題與首屏時間在 src/lib/event-meta.mjs（都有測試守著）。
-const { ld } = eventLd(e);
-ld.description = decodeEntities(ld.description);
+// 場次沒有縣市時，地點退回「地點」欄連過去的場館頁的縣市與地址（eventLocation）。
+const venue = primary.venueSlug ? (await venueBySlug()).get(primary.venueSlug) : undefined;
+const { ld, description: rawDesc, location: loc } = eventLd(e, { venue });
+const metaDesc = decodeEntities(rawDesc);
+// ld 為 null：資料裡沒有實體地點或地址，這頁不輸出 Event（理由見 eventLd）
+if (ld) ld.description = metaDesc;
+// 沒有場館名時，比縣市更具體的地址也算地點（「臺東縣成功鎮海濱公園」）
+const place = placeLabel(primary);
 const desc = e.description ? decodeEntities(e.description) : '';
 
 const srcUrl = e.sources.find((x) => x.url)?.url;
@@ -54,21 +59,24 @@ const indexable = await isIndexable(`/event/${e.slug}`);
 const hasCatPage = e.category && (await builtCategories()).has(e.category);
 // 同一個年度活動的其他屆：搜「活動名＋去年」的人一步走到今年
 const editions = (await eventSeries()).get(e.slug) ?? [];
+// 麵包屑：畫面與 BreadcrumbList 同一份
+const trail = crumbTrail([
+  { name: '今天', href: '/today' },
+  loc.city && { name: loc.city, href: `/city/${loc.city}` },
+  hasCatPage && { name: e.category, href: `/category/${e.category}` },
+], e.title);
 ---
 <Base
   title={metaTitle}
-  description={ld.description}
+  description={metaDesc}
   noindex={!indexable}
+  jsonld={ld}
+  breadcrumbs={trail}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(ld)} slot="head" />
   <div class="shell">
     <Nav />
     <article class="ev">
-      <nav class="crumb" aria-label="麵包屑">
-        <a href="/today">今天</a>
-        {primary.city && <><span>/</span><a href={`/city/${primary.city}`}>{primary.city}</a></>}
-        {hasCatPage && <><span>/</span><a href={`/category/${e.category}`}>{e.category}</a></>}
-      </nav>
+      <Breadcrumb trail={trail} />
 
       <h1>{e.title}</h1>
 
@@ -82,7 +90,7 @@ const editions = (await eventSeries()).get(e.slug) ?? [];
           {primary.venueSlug && primary.venueNameRaw
             ? <a href={`/venue/${primary.venueSlug}`}>{place}</a>
             : place}
-          {primary.venueNameRaw && primary.address && primary.addressPrecision === 'street' && <span class="n">　{primary.address}</span>}
+          {primary.venueNameRaw && loc.street && <span class="n">　{loc.street}</span>}
         </dd></div>}
         {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
           {e.isFree === true ? '免費' : e.priceText || '售票'}
@@ -90,9 +98,9 @@ const editions = (await eventSeries()).get(e.slug) ?? [];
         {ticket && <div><dt>{ticket.label}</dt><dd>
           <a href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.platform}</a>
         </dd></div>}
-        {primary.city && <div><dt>縣市</dt><dd>
-          <a href={`/city/${primary.city}`}>{primary.city}</a>{primary.district && <span class="n">　{primary.district}</span>}
-        </dd></div>}
+        {loc.city ? <div><dt>縣市</dt><dd>
+          <a href={`/city/${loc.city}`}>{loc.city}</a>{loc.district && <span class="n">　{loc.district}</span>}
+        </dd></div> : loc.district && <div><dt>地區</dt><dd>{loc.district}</dd></div>}
         {(e.category || e.categoryRaw) && <div><dt>類型</dt><dd>
           {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，
               連原始值（「2」「特展」）會連到不存在的頁 */}
@@ -170,9 +178,6 @@ const editions = (await eventSeries()).get(e.slug) ?? [];
 
 <style>
   .ev { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
-  .crumb { display: flex; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-5); }
-  .crumb a { text-decoration: none; }
-  .crumb a:hover { color: var(--color-link); }
   h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); line-height: 1.35; letter-spacing: 0; }
   .facts { margin: var(--space-6) 0 0; display: grid; gap: 0; border-top: var(--hairline) solid var(--border-subtle); }
   .facts > div {
@@ -185,7 +190,6 @@ const editions = (await eventSeries()).get(e.slug) ?? [];
   .nw { white-space: nowrap; }
   @media (max-width: 760px) {
     .ev { padding-block: var(--space-5) var(--space-8); }
-    .crumb { margin-bottom: var(--space-4); }
     .facts { margin-top: var(--space-5); }
     .facts > div { grid-template-columns: 3rem minmax(0, 1fr); gap: 1rem; padding: 0.6rem 0; }
     .cta { margin-top: var(--space-5); }

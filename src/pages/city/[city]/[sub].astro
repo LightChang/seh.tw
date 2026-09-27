@@ -1,6 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
+import Breadcrumb from '../../../components/Breadcrumb.astro';
+import { crumbTrail } from '../../../lib/jsonld/index.mjs';
 import { catVar } from '../../../lib/format.mjs';
 import { flatSessions, builtCategories } from '../../../lib/build-data.mjs';
 
@@ -80,17 +82,18 @@ const others = (isMonth
                      n: rows.filter((d) => d.at.slice(0, 7) === m).length })));
 
 const sorted = rows.slice().sort((a, b) => a.at.localeCompare(b.at));
+// 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
+const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city, href: `/city/${city}` }], title);
 ---
 <Base
   title={`${title}有什麼文化活動｜seh`}
   description={`${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
+  breadcrumbs={trail}
 >
   <div class="shell">
     <Nav />
     <header class="page-hd">
-      <nav class="crumb">
-        <a href="/city">全部縣市</a><span>/</span><a href={`/city/${city}`}>{city}</a>
-      </nav>
+      <Breadcrumb trail={trail} />
       <h1>{title}</h1>
       <p class="sub">
         <strong class="tabular">{events}</strong> 個活動、
@@ -154,7 +157,5 @@ const sorted = rows.slice().sort((a, b) => a.at.localeCompare(b.at));
     padding: 0.55rem 0; text-decoration: none; font-size: var(--text-sm);
   }
   .tags .tabular { color: var(--text-muted); }
-  .crumb { display: flex; gap: 0.5rem; font-size: var(--text-sm); color: var(--text-muted); }
-  .crumb a { text-decoration: none; }
   @media (max-width: 860px) { .cols { grid-template-columns: minmax(0, 1fr); gap: var(--space-7); } }
 </style>
