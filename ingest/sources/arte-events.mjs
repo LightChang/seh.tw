@@ -52,6 +52,9 @@ export const meta = {
   entity: 'event',
   endpoints: FEEDS.map((f) => `${BASE}/${f.file}`),
   recordCount: 25, // 實測 2026-09-13：6 + 5 + 10 + 4
+  // 滾動清單：四支 RSS 各自只出最新 10 筆（見上方註解），舊的會被新的擠掉。
+  // window 取實測的正常筆數，健康檢查看單輪筆數，不看累積消失比例。
+  rollingWindow: 25,
   defaultVenue: {
     // 場館自營來源：活動地點即本場館。
     // 依據：moc-events 場次座標——locationName「國立臺灣藝術教育館南海劇場」，

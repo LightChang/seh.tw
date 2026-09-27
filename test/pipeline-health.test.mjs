@@ -155,3 +155,27 @@ test('check-health：還沒結束就大量消失，照樣中止', async () => {
   assert.match(r.stdout + r.stderr, /目前只剩 1 筆，歷史上有過 4 筆/);
   await cleanup(root);
 });
+
+// 滾動清單（meta.rollingWindow）：taipei-gov-hot-events 只留當下 50 則，
+// 公告在活動結束前就被擠掉，累積消失比例會一直掉。這類改看單輪抓回的筆數。
+test('check-health：滾動清單正常汰換不觸發', async () => {
+  const S = 'taipei-gov-hot-events';   // meta.rollingWindow = 50
+  const live = Array.from({ length: 50 }, (_, i) => obs(event(S, `a${i}`)));
+  const rotated = Array.from({ length: 80 }, (_, i) => gone(obs(event(S, `b${i}`))));   // 未結束就被擠掉
+  const root = await makeRoot({ [S]: [...live, ...rotated] });
+  await writeFile(path.join(root, 'data', 'schedule-state.json'), JSON.stringify({ [S]: { recordCount: 50 } }));
+  const r = await runStage(root, 'check-health.mjs');
+  assert.equal(r.code, 0, r.stdout + r.stderr);
+  await cleanup(root);
+});
+
+test('check-health：滾動清單單輪筆數驟降仍中止', async () => {
+  const S = 'taipei-gov-hot-events';
+  const live = Array.from({ length: 12 }, (_, i) => obs(event(S, `a${i}`)));
+  const root = await makeRoot({ [S]: live });
+  await writeFile(path.join(root, 'data', 'schedule-state.json'), JSON.stringify({ [S]: { recordCount: 12 } }));
+  const r = await runStage(root, 'check-health.mjs');
+  assert.equal(r.code, 1);
+  assert.match(r.stdout + r.stderr, /滾動清單這輪只抓回 12 筆/);
+  await cleanup(root);
+});

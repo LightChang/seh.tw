@@ -34,6 +34,19 @@ export function endedBefore(o, day) {
   return ends.sort().at(-1) < String(day).slice(0, 10);
 }
 
+// 滾動清單型來源（meta.rollingWindow）：來源只保留最新的 N 則，舊的會被擠掉，
+// 累積下來的「消失比例」必然一直往下掉，不代表壞了。這類改看單輪：scheduler 記在
+// data/schedule-state.json 的這次抓回筆數（正規化過濾之前）掉到 window 一半以下才算異常。只有真的是滾動清單的來源才標，
+// 不要拿來放寬一般來源。
+const SRC_DIR = path.resolve(fileURLToPath(import.meta.url), '..', '..', 'ingest', 'sources');
+const rolling = new Map();
+for (const f of (await readdir(SRC_DIR)).filter((x) => x.endsWith('.mjs') && !x.startsWith('_'))) {
+  const { meta } = await import(path.join(SRC_DIR, f));
+  if (meta?.rollingWindow) rolling.set(meta.id, meta.rollingWindow);
+}
+let fetched = {};
+try { fetched = JSON.parse(await readFile(path.join(ROOT, 'data', 'schedule-state.json'), 'utf-8')); } catch { /* 沒抓過 */ }
+
 const rows = [];
 for (const f of (await readdir(OBS_DIR)).filter((x) => x.endsWith('.ndjson')).sort()) {
   const id = f.slice(0, -7);
@@ -54,6 +67,14 @@ for (const f of (await readdir(OBS_DIR)).filter((x) => x.endsWith('.ndjson')).so
 const problems = [];
 for (const r of rows) {
   if (r.total === 0) { problems.push(['fail', r.id, '沒有任何記錄']); continue; }
+  if (rolling.has(r.id)) {
+    const w = rolling.get(r.id);
+    const n = fetched[r.id]?.recordCount;
+    if (n == null) problems.push(['warn', r.id, '滾動清單沒有抓取筆數紀錄，無法判斷']);
+    else if (n < w * SHRINK_FAIL) problems.push(['fail', r.id, `滾動清單這輪只抓回 ${n} 筆，正常約 ${w} 筆`]);
+    else if (n < w * SHRINK_WARN) problems.push(['warn', r.id, `滾動清單這輪抓回 ${n} 筆，正常約 ${w} 筆`]);
+    continue;
+  }
   // 歷史上曾經有過的總筆數當基準——observation 不刪除，所以 total 就是高點
   const ratio = r.live / r.total;
   if (ratio < SHRINK_FAIL) {

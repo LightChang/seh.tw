@@ -37,6 +37,9 @@ export const meta = {
   entity: 'event',
   endpoints: [ENDPOINT],
   recordCount: 50, // 實測 2026-09-13，伺服器端固定輸出 50 筆（見上方註解）
+  // 滾動清單：只留當下的熱門 50 則，公告常在活動結束前就被擠掉。健康檢查對這類
+  // 不看累積消失比例（會一直往下掉），只看這一輪抓回的筆數有沒有掉到 window 的一半以下。
+  rollingWindow: 50,
   verifiedAt: '2026-09-13',
 };
 

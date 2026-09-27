@@ -21,6 +21,8 @@ export const meta = {
   entity: 'event',
   endpoints: [ENDPOINT],
   recordCount: 10, // 實測 2026-09-09。來源 RSS 固定只吐最新 10 筆，無分頁可抓。
+  // 滾動清單：只出最新的幾筆（2026-09 實測 10～18），舊的會被擠掉。健康檢查看單輪筆數。
+  rollingWindow: 10,
   defaultVenue: {
     // 場館自營來源：活動地點即本場館。正規化時據此補上場地、座標與行政區。
     // 依據：地址經 https://www.ncl.edu.tw/ 確認；座標在 emap、活動資料、圖書館名錄中皆查無，待人工補
