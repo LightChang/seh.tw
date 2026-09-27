@@ -43,6 +43,10 @@ if ! flock -w 3900 200; then
 fi
 
 cd "$ROOT" || { log "找不到 $ROOT"; exit 1; }
+# 拿錯 node（例如系統舊版 v12）會死在語法錯誤、看不出原因；先講清楚再停。CI 釘 26。
+NODE_MAJOR=$("$NODE" -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)
+[ "${NODE_MAJOR:-0}" -ge 26 ] || { log "$NODE 版本不足（主版本 ${NODE_MAJOR}，需要 >=26）；用 SEH_NODE 指定正確的 node"; exit 1; }
+
 log "───── 開始 ─────"
 
 # 還原：這輪產生的變更全部丟掉（ingest/raw 不進版控，不受影響）

@@ -10,7 +10,7 @@ const BASE = 'https://communitytaiwan.moc.gov.tw/open-api/community';
 const PAGE_SIZE = 20; // 實測：size/pageSize/limit 等參數皆被忽略，固定回傳 20 筆一頁
 
 // ⚠️ 深分頁很慢：伺服器端 OFFSET 分頁，offset 越大查詢越貴、時好時壞。
-// 2026-09-09 實測 page>=~34 起大量逾時；2026-09-27 tw8 實測 page 16 起就逾時。
+// 深分頁逾時的起點每輪不同（實測 page 16、31、32；2026-09-09 曾到 34），是伺服器負載波動、不是固定門檻。
 //
 // 【只要有任何一頁失敗，這一輪就算失敗、不覆蓋 raw】以前是「失敗頁跳過、抓到多少算多少」，
 // 抓到 300/529 筆剛好高於 scheduler 的五成縮水門檻，被當成正常寫入，下游把沒抓到的
