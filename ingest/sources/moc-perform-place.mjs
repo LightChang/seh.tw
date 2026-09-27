@@ -1,7 +1,7 @@
 // ingest/sources/moc-perform-place.mjs
 // 文化部 街頭藝人展演空間資訊 — 全國開放給街頭藝人登記展演的公共空間清單
 // data.gov.tw dataset 35504。無經緯度欄位，只有 address 自由文字。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT =
@@ -27,7 +27,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const text = await res.text();
   if (!text.trim()) return [];
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

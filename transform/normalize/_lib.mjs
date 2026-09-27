@@ -574,7 +574,22 @@ export async function readRaw(sourceId) {
     err.code = 'STALE_RAW';
     throw err;
   }
-  return JSON.parse(body);
+  return parseRawJson(body);
+}
+
+/**
+ * raw 的 JSON，容忍 BOM：檔案開頭的，以及物件 key 前面的。抓取層已經會剝
+ * （ingest/sources/_util.mjs 的 parseJson），這裡再擋一次，舊 raw（2026-09-27 以前抓的，
+ * tainan-culture-halls 每筆第一個 key 是「\uFEFF廳館名稱」）直接重跑也對得上欄位。
+ */
+export function parseRawJson(body) {
+  let t = String(body);
+  if (t.charCodeAt(0) === 0xfeff) t = t.slice(1);
+  return JSON.parse(t, (_k, v) => {
+    if (!v || typeof v !== 'object' || Array.isArray(v)) return v;
+    if (!Object.keys(v).some((k) => k.charCodeAt(0) === 0xfeff)) return v;
+    return Object.fromEntries(Object.entries(v).map(([k, x]) => [k.replace(/^\uFEFF+/, ''), x]));
+  });
 }
 
 let SCHEDULE_STATE = null;

@@ -5,6 +5,7 @@
 // 但 /opendata/dataSet/culture 這支實測不需帶 Authorization headers 即可存取（見 probe/moc.md）。
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
 const BASE = 'https://tcmbdata.culture.tw/opendata/dataSet/culture';
@@ -39,7 +40,7 @@ async function fetchWithRetry(url, { retries = 2, timeoutMs = 90_000 } = {}) {
       });
       clearTimeout(timer);
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-      return await res.json();
+      return parseJson(await res.text());
     } catch (err) {
       clearTimeout(timer);
       lastErr = err;

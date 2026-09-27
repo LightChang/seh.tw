@@ -3,6 +3,7 @@
 // 資料集頁面: https://opendata.taichung.gov.tw/search/bcd52d6d-b279-4115-a03d-5154dbd23a45
 // 注意：資料集詮釋資料宣稱 number_of_data=51，但實際下載到的 JSON/CSV 資源都只有 17 筆，
 // 平台端資料量與實際內容不一致，以實測 17 筆為準。
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 const RID = '786ff446-8686-4f3d-a32a-b5b85f4c000a';
 const ENDPOINT = `https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=${RID}`;
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
@@ -45,7 +46,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT, {
     headers: { 'User-Agent': UA, Accept: 'application/json' },
   });
-  const data = await res.json();
+  const data = parseJson(await res.text());
   if (!Array.isArray(data)) throw new Error('unexpected response shape (not an array)');
   return data;
 }

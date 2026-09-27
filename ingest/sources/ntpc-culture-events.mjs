@@ -1,6 +1,7 @@
 // ingest/sources/ntpc-culture-events.mjs
 // 新北市 data.ntpc.gov.tw「新北市政府文化局藝文活動」
 // 資料集頁面: https://data.ntpc.gov.tw/datasets/781b822e-214a-4b9a-b4db-32c9f4626d98
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 const PID = '781b822e-214a-4b9a-b4db-32c9f4626d98';
 const ENDPOINT = `https://data.ntpc.gov.tw/api/v1/dataset.datastore.list?pid=${PID}&page_num=1&page_limit=200`;
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
@@ -48,7 +49,7 @@ export async function fetchRaw() {
     const res = await fetchWithRetry(url, {
       headers: { 'User-Agent': UA, Accept: 'application/json' },
     });
-    const json = await res.json();
+    const json = parseJson(await res.text());
     if (!json.success) throw new Error(`API error: ${json.s_message}`);
     const { total, content } = json.payload;
     all.push(...content);

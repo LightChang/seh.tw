@@ -4,7 +4,7 @@
 // 有活動名額、報名費用欄位，展覽資料沒有。
 // 實測 159 筆，日期迄 (日期迄) 涵蓋至 1160307（民國116年3月7日＝2027-03-07），資料是活的。
 // robots.txt: serv.nstm.gov.tw 本路徑無 robots.txt 限制（該網域根目錄回 404，等同無限制）。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT = 'https://serv.nstm.gov.tw/ActivityOpenData.ashx';
@@ -35,7 +35,7 @@ export const meta = {
 export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const text = await res.text();
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

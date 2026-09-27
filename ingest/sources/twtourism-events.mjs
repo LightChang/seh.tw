@@ -2,7 +2,7 @@
 // 交通部觀光署 觀光資訊資料庫 開放資料 V2.1 — 活動（Event，全台含經緯度，逐日更新）
 // 來源為 zip 壓縮檔（內含 EventList.json），用內建 zlib 解 deflate，不引入額外套件。
 import { inflateRawSync } from 'node:zlib';
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 
 export const meta = {
   id: 'twtourism-events',
@@ -67,7 +67,7 @@ export async function fetchRaw() {
   const buf = Buffer.from(await res.arrayBuffer());
   const jsonBuf = extractZipEntry(buf, 'EventList.json');
   const text = jsonBuf.toString('utf-8').replace(/^﻿/, '');
-  const parsed = JSON.parse(text);
+  const parsed = parseJson(text);
   return parsed.Events;
 }
 

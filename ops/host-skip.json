@@ -1,5 +1,5 @@
 {
-  "_note": "這台主機（海外 IP）抓不到的來源，每日自動更新跳過；留給台灣的機器手動跑（npm run update）。2026-09-27 實測：16 支 fetch failed（政府網站擋海外 IP）＋ moc-community 全部分頁 HTTP 403。",
+  "_note": "這台主機（海外 IP）抓不到的來源，每日自動更新跳過；留給台灣的機器手動跑（npm run update）。2026-09-27 實測：16 支連線逾時（政府網站擋海外 IP）＋ moc-community 全部分頁 HTTP 403。chiayi-county-event-board 在台灣另有 TLS「dh key too small」問題（已在來源腳本放寬 SECLEVEL），但從這台 TCP 連線就逾時，所以仍留在清單。",
   "skip": [
     "changhua-performing-groups",
     "chiayi-city-buskers",

@@ -6,7 +6,7 @@
 // 實測 30 筆，app用開始時間/結束時間多為民國年格式（1150618）也有西元年格式（2021-11-12）
 // 兩種並存，最新一筆 1150618～1160301（2026-06-18～2027-03-01），資料是活的。
 // robots.txt: www.nmmba.gov.tw 未 Disallow 本路徑。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT = 'https://www.nmmba.gov.tw/OpenData.aspx?SN=BF6D6EB9CB6876BB';
@@ -38,7 +38,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const buf = await res.arrayBuffer();
   const text = new TextDecoder('utf-8').decode(buf).replace(/^﻿/, '');
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

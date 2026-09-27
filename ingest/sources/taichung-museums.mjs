@@ -4,7 +4,7 @@
 // 注意：與既有 taichung-culture-venues.mjs（臺中市藝文館所）為不同資料集，前者是依博物館法
 // 完成立案登記的博物館清單，後者是文化局自行維護的藝文場館清冊。
 // 端點回傳 Content-Type: application/octet-stream，但內容本身是合法 JSON 陣列（實測確認）。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 
 const ENDPOINT =
   'https://newdatacenter.taichung.gov.tw/api/v1/no-auth/resource.download?rid=c22ab11f-3959-4e75-b5f1-cc0632cf7699';
@@ -26,7 +26,7 @@ export const meta = {
 export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const text = await res.text();
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) {

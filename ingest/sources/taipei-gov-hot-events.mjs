@@ -21,7 +21,7 @@
 // 不是場館自營來源，不宣告 defaultVenue。
 //
 // 【robots.txt】https://www.gov.taipei/robots.txt → HTTP 404（等同無限制）。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT = 'https://www.gov.taipei/OpenData.aspx?SN=DD102593FDB1A032';
@@ -48,7 +48,7 @@ export async function fetchRaw() {
   const buf = await res.arrayBuffer();
   // 回應開頭有 UTF-8 BOM，先剝掉再 parse。
   const text = new TextDecoder('utf-8').decode(buf).replace(/^﻿/, '');
-  const data = JSON.parse(text);
+  const data = parseJson(text);
   if (!Array.isArray(data)) throw new Error(`預期陣列，實得 ${typeof data}`);
   return data;
 }

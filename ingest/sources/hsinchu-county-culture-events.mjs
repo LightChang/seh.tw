@@ -5,7 +5,7 @@
 // 這是來源本身的行為，contract 規定 fetch 層不做去重，故原樣回傳全部 11 筆）。
 // 活動開始/結束日期涵蓋至 20261031（「2026新竹縣新響藝術季」），資料是活的。
 // robots.txt: www.hchcc.gov.tw 根目錄回應非標準內容，未見 Disallow 規則。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT = 'https://www.hchcc.gov.tw/WebApi/ActivityApi';
@@ -28,7 +28,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const buf = await res.arrayBuffer();
   const text = new TextDecoder('utf-8').decode(buf).replace(/^﻿/, '');
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

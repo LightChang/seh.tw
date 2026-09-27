@@ -6,6 +6,7 @@
 // 實測 Type=1(當期展覽)=4 筆、Type=2(貴賓卡/其他?)=3 筆、Type=3(歷年展覽)=577 筆。
 // 未見官方文件公開此 API，視為未公開內部 API（非登入專區、robots.txt 未限制）。
 // robots.txt: "User-agent: *"（無 Disallow）。
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
 const ENDPOINT = 'https://www.tfam.museum/ashx/Exhibition.ashx?ddlLang=zh-tw';
@@ -52,7 +53,7 @@ async function fetchWithRetry(type, retries = 2) {
       });
       clearTimeout(timer);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return await res.json();
+      return parseJson(await res.text());
     } catch (err) {
       clearTimeout(timer);
       if (attempt === retries) throw err;

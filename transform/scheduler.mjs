@@ -6,13 +6,14 @@
 //   node transform/scheduler.mjs              只抓到期的
 //   node transform/scheduler.mjs --dry-run    只列出會抓誰，不動網路
 //   node transform/scheduler.mjs --list       印出全部來源的排程狀態
-//   node transform/scheduler.mjs --force <id> 強制重抓指定來源（可給多個）
+//   node transform/scheduler.mjs --force <id> [<id>…] 強制重抓指定來源（可給多個，到下一個 -- 旗標為止）
 //   node transform/scheduler.mjs --all        強制重抓全部（謹慎使用）
 
 import { readdir, readFile, writeFile, mkdir, stat, appendFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { flagValues } from './cli-args.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
 // 各階段都讀寫檔案，不能在正式資料上測——測試會改到 data/ 與 src/data/。
@@ -256,10 +257,9 @@ async function trimLog() {
 // ── main ────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
 const has = (f) => argv.includes(f);
-const flagValues = (flag) => new Set(argv.filter((a, i) => argv[i - 1] === flag));
-const forced = flagValues('--force');
+const forced = flagValues(argv, '--force');
 // 來源真的變小了（機關砍資料）時，用這個放行
-const acceptShrink = flagValues('--accept-shrink');
+const acceptShrink = flagValues(argv, '--accept-shrink');
 
 const now = new Date();
 const sources = await loadSources();

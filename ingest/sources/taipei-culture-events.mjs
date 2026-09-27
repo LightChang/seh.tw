@@ -2,6 +2,7 @@
 // 台北市 data.taipei「臺北市政府文化局文化快遞資訊」
 // 資料集頁面: https://data.taipei/dataset/detail?id=9a7af75b-9abd-4ac1-b359-685fbd7dac23
 // 實際資料是文化局「文化快遞」系統直接介接，非 data.taipei 主機代管檔案。
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 const ENDPOINT = 'https://cultureexpress.taipei/OpenData/Event/C000003';
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
 const TIMEOUT_MS = 90_000;
@@ -43,7 +44,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT, {
     headers: { 'User-Agent': UA, Accept: 'application/json' },
   });
-  const data = await res.json();
+  const data = parseJson(await res.text());
   if (!Array.isArray(data)) throw new Error('unexpected response shape (not an array)');
   return data;
 }

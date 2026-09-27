@@ -5,7 +5,7 @@
 // data.hakka.gov.tw 入口不是同一個網站，不需要 key。
 // 實測 205 筆，time 欄位涵蓋至 2026-06-08（園區演出），資料是活的。
 // robots.txt: 只 Disallow /Account/ /Webservice/ /user/ /tour/，不影響 /Pub/Opendata/。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT = 'https://cloud.hakka.gov.tw/Pub/Opendata/DTST20260900007.json';
@@ -28,7 +28,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const buf = await res.arrayBuffer();
   const text = new TextDecoder('utf-8').decode(buf).replace(/^﻿/, '');
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

@@ -15,6 +15,9 @@ export async function fetchWithRetry(url, options = {}, retries = 2) {
       });
       clearTimeout(timer);
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+      // res.json() 不剝 BOM：開頭的 BOM 讓 parse 失敗，物件 key 裡的 BOM（tainan-culture-halls
+      // 的「\uFEFF廳館名稱」）讓欄位對不上、整批被丟棄。統一改走 parseJson。
+      res.json = async () => parseJson(await res.text());
       return res;
     } catch (err) {
       clearTimeout(timer);
@@ -26,6 +29,20 @@ export async function fetchWithRetry(url, options = {}, retries = 2) {
     }
   }
   throw lastErr;
+}
+
+/**
+ * JSON.parse，但剝掉 BOM：文字開頭的，以及物件 key 裡的（實測 tainan-culture-halls
+ * 每筆第一個 key 帶 BOM）。值裡的 BOM 不動——那是來源內容，ingest 不改寫。
+ */
+export function parseJson(text) {
+  let t = String(text);
+  if (t.charCodeAt(0) === 0xfeff) t = t.slice(1);
+  return JSON.parse(t, (_k, v) => {
+    if (!v || typeof v !== 'object' || Array.isArray(v)) return v;
+    if (!Object.keys(v).some((k) => k.includes('\uFEFF'))) return v;
+    return Object.fromEntries(Object.entries(v).map(([k, x]) => [k.replace(/\uFEFF/g, ''), x]));
+  });
 }
 
 // 極簡 CSV parser：處理雙引號欄位、欄位內換行、逗號。不做型別轉換。回傳陣列的陣列。

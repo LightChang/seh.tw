@@ -2,6 +2,7 @@
 // 文化部 iCulture 藝文活動 全類別（列表 API，逐 category 分批抓取後合併）
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
 const BASE = 'https://cloud.culture.tw/frontsite/trans/SearchShowAction.do';
@@ -52,7 +53,7 @@ async function fetchWithRetry(url, { retries = 2, timeoutMs = 90_000 } = {}) {
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
       const text = await res.text();
       if (!text || text.trim() === '') return [];
-      return JSON.parse(text);
+      return parseJson(text);
     } catch (err) {
       clearTimeout(timer);
       lastErr = err;

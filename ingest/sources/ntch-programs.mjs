@@ -3,6 +3,7 @@
 // 探測方式：curl 打 /tms/graphql，GraphQL introspection 已開放（未鎖），
 // 找到 query.programs(startFrom, endOn, limit, offset) 與 query.halls。
 // 未發現官方文件公開此 API，視為未公開內部 API（無需認證，非登入專區）。
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 
 const ENDPOINT = 'https://npac-ntch.org/tms/graphql';
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
@@ -68,7 +69,7 @@ async function fetchWithRetry(url, options, retries = 2) {
       const res = await fetch(url, { ...options, signal: controller.signal });
       clearTimeout(timer);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return await res.json();
+      return parseJson(await res.text());
     } catch (err) {
       clearTimeout(timer);
       if (attempt === retries) throw err;

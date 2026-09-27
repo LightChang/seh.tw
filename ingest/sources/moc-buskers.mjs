@@ -3,7 +3,7 @@
 // 是目前找到規模最大、覆蓋範圍最廣的 Person 類資料源。
 // ⚠️ 與 moc-emap-poi / moc-perform-place 同一網域，cloud.culture.tw/robots.txt 為全站
 // Disallow，但同一批資料在 data.gov.tw 正式掛牌開放，沿用既有處置（見該二檔 license 說明）。
-import { fetchWithRetry, writeRawAndReport } from './_util.mjs';
+import { fetchWithRetry, writeRawAndReport, parseJson } from './_util.mjs';
 import { fileURLToPath } from 'node:url';
 
 const ENDPOINT =
@@ -29,7 +29,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT);
   const text = await res.text();
   if (!text.trim()) return [];
-  return JSON.parse(text);
+  return parseJson(text);
 }
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {

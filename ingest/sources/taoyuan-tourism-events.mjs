@@ -4,6 +4,7 @@
 // 文化局，見探測報告），此資料集是觀光旅遊局提供的觀光行事曆，內容含展覽/藝文活動，
 // 是桃園在此平台上唯一可用的活動類資料。
 // 資料集頁面: https://opendata.tycg.gov.tw/datalist/b7998dff-8c65-428a-b9b9-a2e9e13fdfb3
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 const RID = '5ae41ecf-1ea0-420d-acbf-90c59cedf999';
 const ENDPOINT = `https://opendata.tycg.gov.tw/api/v1/dataset.datastore_view?rid=${RID}&format=JSON&limit=1000`;
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
@@ -48,7 +49,7 @@ export async function fetchRaw() {
   const res = await fetchWithRetry(ENDPOINT, {
     headers: { 'User-Agent': UA, Accept: 'application/json' },
   });
-  const json = await res.json();
+  const json = parseJson(await res.text());
   if (!json.success) throw new Error(`API error: ${json.s_message}`);
   const inner = JSON.parse(json.payload.api_view.json);
   if (!Array.isArray(inner)) throw new Error('unexpected response shape (not an array)');

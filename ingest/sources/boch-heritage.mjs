@@ -2,6 +2,7 @@
 // 文化部文化資產局 國家文化資產網 開放資料 — 全部 14 類文化資產案件清單
 import { writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
 const BASE = 'https://data.boch.gov.tw/opendata/v2/assetsCase';
@@ -47,7 +48,7 @@ async function fetchWithRetry(url, { retries = 2, timeoutMs = 90_000 } = {}) {
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
       const text = await res.text();
       if (!text || text.trim() === '') return [];
-      return JSON.parse(text);
+      return parseJson(text);
     } catch (err) {
       clearTimeout(timer);
       lastErr = err;

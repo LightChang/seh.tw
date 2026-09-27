@@ -1,6 +1,7 @@
 // ingest/sources/ntpc-museum-venues.mjs
 // 新北市 data.ntpc.gov.tw「新北市博物館家族清單」
 // 資料集頁面: https://data.ntpc.gov.tw/datasets/df63a853-aba9-4ec1-bd28-e74459e5d5c5
+import { parseJson } from './_util.mjs';   // 剝 BOM（開頭與物件 key）
 const PID = 'df63a853-aba9-4ec1-bd28-e74459e5d5c5';
 const UA = 'seh.tw-ingest/0.1 (+https://seh.tw)';
 const TIMEOUT_MS = 90_000;
@@ -49,7 +50,7 @@ export async function fetchRaw() {
     const res = await fetchWithRetry(url, {
       headers: { 'User-Agent': UA, Accept: 'application/json' },
     });
-    const json = await res.json();
+    const json = parseJson(await res.text());
     if (!json.success) throw new Error(`API error: ${json.s_message}`);
     const { total, content } = json.payload;
     all.push(...content);
