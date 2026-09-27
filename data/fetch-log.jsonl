@@ -318,3 +318,5 @@
 {"at":"2026-09-27T14:22:25+08:00","id":"tainan-indigenous-performing-groups","outcome":"failed","error":"fetch failed","ms":42902}
 {"at":"2026-09-27T14:22:25+08:00","id":"tainan-public-libraries","outcome":"failed","error":"fetch failed","ms":43477}
 {"at":"2026-09-27T15:15:50+08:00","id":"moc-perform-place","outcome":"unchanged","via":"fetch","count":758,"ms":4194}
+{"at":"2026-09-27T15:36:04+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":301}
+{"at":"2026-09-27T15:36:04+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1727,"ms":2839}
