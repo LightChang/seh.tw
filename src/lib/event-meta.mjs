@@ -8,6 +8,7 @@
 //
 // 原則同 jsonld/event.mjs：只用頁面上看得到的事實，沒有的欄位就不寫。
 import { dateLabel, hhmm, mdShort, twYear } from './format.mjs';
+import { hasClockTime } from './session-time.mjs';
 
 const uniq = (a) => [...new Set(a.filter(Boolean))];
 // 搜尋結果標題的寬度以像素截斷，中文字約是英數的兩倍寬
@@ -39,7 +40,7 @@ export function eventSpan(sessions = []) {
     const t = s.endAt ?? s.startAt;
     if (t && Date.parse(t) > Date.parse(end)) end = t;
   }
-  return { start: first.startAt, end, hasTime: first.granularity === 'datetime' };
+  return { start: first.startAt, end, hasTime: hasClockTime(first.startAt, first.granularity) };
 }
 
 /** 首屏「時間」：2026/09/21（一）19:30–21:30，或 2026/10/01（四）– 2026/11/30（一）。 */
@@ -49,7 +50,7 @@ export function whenText(sessions = []) {
   let s = dateLabel(start) + (hasTime ? ` ${hhmm(start)}` : '');
   if (dateLabel(start) !== dateLabel(end)) return `${s} – ${dateLabel(end)}`;
   const only = sessions.length === 1 ? sessions[0] : undefined;
-  if (hasTime && only?.endAt && /T/.test(only.endAt) && hhmm(only.endAt) !== hhmm(start)) s += `–${hhmm(only.endAt)}`;
+  if (hasTime && only?.endAt && hasClockTime(only.endAt) && hhmm(only.endAt) !== hhmm(start)) s += `–${hhmm(only.endAt)}`;
   return s;
 }
 

@@ -4,6 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { seriesIndex } from './event-series.mjs';
 import { newlyListed } from './new-listings.mjs';
 import { getCollection } from 'astro:content';
+import { hasClockTime } from './session-time.mjs';
 import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
 
 /**
@@ -113,14 +114,15 @@ export async function flatSessions() {
   const out = [];
   for (const e of await allEvents()) {
     for (const s of e.sessions) {
-      const dateOnly = s.granularity === 'date';
+      // 沒有真實時刻（granularity=date，或來源用 00:00 表示沒給時間）：清單只印日期（session-time.mjs）
+      const dateOnly = !hasClockTime(s.startAt, s.granularity);
       out.push({
         slug: e.slug, title: e.title, cat: e.category ?? '', catRaw: e.categoryRaw ?? '',
         isFree: e.isFree, popularity: e.popularity,
         venue: s.venueNameRaw ?? '', venueSlug: s.venueSlug,
         city: s.city ?? '', district: s.district ?? '',
         lat: s.lat ?? null, lng: s.lng ?? null,
-        at: dateOnly ? `${s.startAt}T00:00` : s.startAt,
+        at: s.granularity === 'date' ? `${s.startAt}T00:00` : s.startAt,
         end: s.endAt ?? null,
         dateOnly,
         url: `/event/${encodeURIComponent(e.slug)}`,

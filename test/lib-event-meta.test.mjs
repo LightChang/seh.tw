@@ -2,7 +2,7 @@
 // 搜尋結果裡看得出「何時、何地、要不要錢」，活動名查詢才點得進來。
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { eventTitle, eventFacts, whenText, titleDate, placeLabel } from '../src/lib/event-meta.mjs';
+import { eventTitle, eventFacts, whenText, titleDate, placeLabel, eventSpan } from '../src/lib/event-meta.mjs';
 import { ticketLink } from '../src/lib/ticket.mjs';
 
 const hall = { venueNameRaw: '國家音樂廳', city: '臺北市', district: '中正區' };
@@ -65,4 +65,15 @@ test('事實句：時間、地點、票務、主辦、演出者，沒有資料�
 
 test('賭注觀察頁暫用舊標題（到期 2026-10-08，屆時連同 LEGACY_TITLE_SLUGS 一起移除）', () => {
   assert.equal(eventTitle(ev({ slug: '2026桃園萬聖城', title: '2026桃園萬聖城' })), '2026桃園萬聖城｜seh');
+});
+
+test('來源用 00:00 表示沒給時間：首屏時間、標題、事實句都只印日期（session-time.mjs，與 JSON-LD 同一個判斷）', () => {
+  const e = { slug: 'x', title: '京戲展演', sessions: [{ startAt: '2026-10-31T00:00:00+08:00', granularity: 'datetime',
+    endAt: '2026-10-31T00:00:00+08:00', venueNameRaw: '演藝堂', city: '花蓮縣' }] };
+  assert.equal(whenText(e.sessions), '2026/10/31（六）');
+  assert.doesNotMatch(eventTitle(e), /00:00/);
+  assert.doesNotMatch(eventFacts(e, null), /00:00/);
+  assert.equal(eventSpan(e.sessions).hasTime, false);
+  // 真的有時刻的照印
+  assert.equal(whenText([{ startAt: '2026-10-31T19:30:00+08:00', granularity: 'datetime' }]), '2026/10/31（六） 19:30');
 });

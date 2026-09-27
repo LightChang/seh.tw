@@ -3,6 +3,8 @@
 // 依據一律是 seo-ops 的查證紀錄（vendor/seo-ops-jsonld/rules.json，每條附官方來源）。
 // 規則名寫成 rules.json 的路徑（例：types.Event.dateNote），改之前先看那一條。
 
+import { hasClockTime } from '../session-time.mjs';
+
 export const SITE = 'https://seh.tw';
 export const SCHEMA = 'https://schema.org';
 
@@ -31,7 +33,7 @@ const DATE_RE = /^(\d{4}-\d{2}-\d{2})(?:T(\d{2}):(\d{2})(?::(\d{2}(?:\.\d+)?))?(
  *   - 不知道時間就只寫日期（YYYY-MM-DD），這是官方建議寫法；
  *   - 有時間一定帶 UTC 偏移，本站全部是台灣時間，缺偏移補 +08:00；
  *   - T00:00 官方列為不建議。本站來源（文化部活動 API 等）用 00:00 表示「沒給時間」，
- *     所以 00:00 一律當成只有日期。
+ *     判斷在 src/lib/session-time.mjs（hasClockTime），畫面與這裡共用。
  * 看不懂的值回傳 undefined（不輸出，比輸出錯的好）。
  */
 export function ldDate(at, granularity) {
@@ -39,8 +41,7 @@ export function ldDate(at, granularity) {
   const m = DATE_RE.exec(at.trim());
   if (!m) return undefined;
   const [, day, hh, mm, ss, tz] = m;
-  if (granularity === 'date' || hh === undefined) return day;
-  if (hh === '00' && mm === '00' && (!ss || Number(ss) === 0)) return day;
+  if (!hasClockTime(at.trim(), granularity)) return day;
   return `${day}T${hh}:${mm}:${ss ?? '00'}${tz ?? '+08:00'}`;
 }
 

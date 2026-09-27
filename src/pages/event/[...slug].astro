@@ -6,6 +6,7 @@ import Breadcrumb from '../../components/Breadcrumb.astro';
 import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
+import { hasClockTime } from '../../lib/session-time.mjs';
 import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
@@ -137,7 +138,7 @@ const trail = crumbTrail([
           <ul>{shown.map((t) => (
             <li>
               <time class="tabular" datetime={t.startAt}>
-                {dateLabel(t.startAt)}{t.granularity === 'datetime' ? ` ${hhmm(t.startAt)}` : ''}
+                {dateLabel(t.startAt)}{hasClockTime(t.startAt, t.granularity) ? ` ${hhmm(t.startAt)}` : ''}
               </time>
               {t.venueNameRaw && t.venueNameRaw !== primary.venueNameRaw && <span class="sv">{t.venueNameRaw}</span>}
             </li>
