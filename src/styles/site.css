@@ -127,6 +127,7 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
 .empty-note { padding-block: var(--space-7); color: var(--text-muted); }
 
 @media (max-width: 760px) {
+  .shell, .shell-narrow { padding-inline: var(--space-4); }
   .ev-list a, .ev-list.cols-4 a { grid-template-columns: 1fr auto; gap: 0.5rem 1rem; }
   .ev-lead { grid-column: 1 / -1; }
   .ev-x { display: none; }

@@ -72,7 +72,8 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
-          {whenText(sessions)}
+          {/* 日期、時刻各自不斷行，窄螢幕只在空白處換行（原本會把「（二）」拆到下一行） */}
+          {whenText(sessions).split(' ').map((part, i) => <>{i > 0 && ' '}<span class="nw">{part}</span></>)}
           {sessions.length > 1 && <span class="n">　共 {sessions.length} 場次</span>}
         </dd></div>
         {place && <div><dt>地點</dt><dd>
@@ -81,14 +82,14 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
             : place}
           {primary.venueNameRaw && primary.address && primary.addressPrecision === 'street' && <span class="n">　{primary.address}</span>}
         </dd></div>}
-        {primary.city && <div><dt>縣市</dt><dd>
-          <a href={`/city/${primary.city}`}>{primary.city}</a>{primary.district && <span class="n">　{primary.district}</span>}
-        </dd></div>}
         {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
           {e.isFree === true ? '免費' : e.priceText || '售票'}
         </dd></div>}
         {ticket && <div><dt>{ticket.label}</dt><dd>
           <a href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.platform}</a>
+        </dd></div>}
+        {primary.city && <div><dt>縣市</dt><dd>
+          <a href={`/city/${primary.city}`}>{primary.city}</a>{primary.district && <span class="n">　{primary.district}</span>}
         </dd></div>}
         {(e.category || e.categoryRaw) && <div><dt>類型</dt><dd>
           {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，
@@ -167,6 +168,14 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
   .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
   .facts dd { margin: 0; font-size: var(--text-base); }
   .facts .n { color: var(--text-muted); font-size: var(--text-sm); }
+  .nw { white-space: nowrap; }
+  @media (max-width: 760px) {
+    .ev { padding-block: var(--space-5) var(--space-8); }
+    .crumb { margin-bottom: var(--space-4); }
+    .facts { margin-top: var(--space-5); }
+    .facts > div { grid-template-columns: 3rem minmax(0, 1fr); gap: 1rem; padding: 0.6rem 0; }
+    .cta { margin-top: var(--space-5); }
+  }
   .raw { color: var(--text-secondary); }
   .sessions { margin-top: var(--space-7); }
   .sessions h2 { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; }
