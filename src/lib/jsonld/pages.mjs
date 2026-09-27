@@ -1,7 +1,7 @@
 // 各頁型的 JSON-LD 節點。頁面只傳資料進來，不自己拼結構化資料；
 // 輸出由 src/components/JsonLd.astro（Base.astro 的 <head>）負責。
 // 頁型 → 必須有的類型寫在 jsonld-pages.json，建置時由驗證器檢查（docs/AEO.md）。
-import { SITE, SCHEMA, absUrl, ldDate, postalAddress, geoOf } from './common.mjs';
+import { SITE, SCHEMA, absUrl, isHttpUrl, ldDate, postalAddress, geoOf } from './common.mjs';
 
 // ---------- 首頁：Organization＋WebSite ----------
 
@@ -74,6 +74,8 @@ export function breadcrumbList(trail) {
  * 每一列都有 ListItem（position、name、url）；畫面上有縣市的才掛 Event——
  * Event 必須有 location.address（rules.json#types.Event.required），沒有縣市就不捏造。
  * 地址只放畫面上看得到的縣市。只有日期的場次輸出純日期（ldDate）。
+ * citation 跟 event.mjs 用同一套規則（沒有 url 的來源整筆丟棄），資料是 flatSessions()
+ * 帶的 d.sources，跟活動明細頁同一份。
  */
 export function todayItemList(rows) {
   const itemListElement = rows
@@ -82,12 +84,16 @@ export function todayItemList(rows) {
       const url = absUrl(`/event/${encodeURIComponent(d.slug)}`);
       const startDate = ldDate(d.at, d.dateOnly ? 'date' : 'datetime');
       const address = postalAddress({ city: d.city });
+      const citation = (d.sources ?? [])
+        .filter((s) => isHttpUrl(s.url))
+        .map((s) => ({ '@type': 'CreativeWork', name: s.sourceName || s.id, url: s.url }));
       const event = startDate && address ? {
         '@type': 'Event',
         name: d.title,
         startDate,
         location: { '@type': 'Place', name: d.venue || d.city, address },
         url,
+        ...(citation.length ? { citation } : {}),
       } : null;
       return { '@type': 'ListItem', position: i + 1, ...(event ? { item: event } : { name: d.title, url }) };
     });
