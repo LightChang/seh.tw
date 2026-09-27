@@ -320,3 +320,4 @@
 {"at":"2026-09-27T15:15:50+08:00","id":"moc-perform-place","outcome":"unchanged","via":"fetch","count":758,"ms":4194}
 {"at":"2026-09-27T15:36:04+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":301}
 {"at":"2026-09-27T15:36:04+08:00","id":"moc-events","outcome":"changed","via":"fetch","count":1727,"ms":2839}
+{"at":"2026-09-27T16:20:49+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1094,"ms":3211}
