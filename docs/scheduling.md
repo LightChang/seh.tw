@@ -162,7 +162,12 @@ hakka-liudui-events       宣告「每 3 年」  與資料內容明顯不符
   呼叫 `node transform/scheduler.mjs --skip-file ops/host-skip.json`。這台主機是海外 IP，
   `ops/host-skip.json` 列的 17 支（16 支 fetch failed、moc-community 全部 HTTP 403）整支跳過：
   不抓、不記失敗、排程狀態不動。有變動才接 pipeline，健康檢查沒過就還原、不 push。
-- **台灣的機器手動**：`npm run update`，不帶 `--skip-file`，那 17 支在這裡才抓得到。
+- **台灣主機每日抓取、投遞**：`ops/fetch-taiwan-only.sh` 以 `--force` 抓 host-skip 的 17 支，
+  raw＋`.sha256`＋`.meta.json` 用 rsync（`--partial --ignore-times`）投遞到境外主機的 write-only inbox。
+  境外 `run-update.sh` 第一步 `ops/import-inbox.mjs` 驗過才收進 `ingest/raw/`，並依 meta 回寫
+  `schedule-state`（`lastFetchedAt`、`contentHash`，`readRaw` 的新舊判斷靠它）與 `fetch-log`（`via: "taiwan-intake"`）。
+  有匯入變動就等同有來源變動，接 pipeline。台灣端不碰 git、不跑 pipeline。
+  那 17 支在 schedule-state 的 interval／nextDueAt 只是紀錄（台灣端每天全抓、境外整支跳過）。
 
 `--skip-file` 的清單格式是 `{ "skip": ["id", ...] }`；`--force <id>` 仍可強制抓清單裡的來源。
 

@@ -1,5 +1,5 @@
 {
-  "_note": "這台主機（海外 IP）抓不到的來源，每日自動更新跳過；留給台灣的機器手動跑（npm run update）。2026-09-27 實測：16 支連線逾時（政府網站擋海外 IP）＋ moc-community 全部分頁 HTTP 403。chiayi-county-event-board 在台灣另有 TLS「dh key too small」問題（已在來源腳本放寬 SECLEVEL），但從這台 TCP 連線就逾時，所以仍留在清單。",
+  "_note": "這台主機（海外 IP）抓不到的來源，run-update.sh 整支跳過。這 17 支由台灣主機的 ops/fetch-taiwan-only.sh 每日 --force 全抓，raw 投遞到 /root/.config/seh-tw/intake/inbox，再由 ops/import-inbox.mjs 收進來；所以 schedule-state 裡它們的 interval／nextDueAt 只是紀錄，不是 bug。moc-community 分頁只要缺一頁就不寫 raw，inbox 常態沒有它，不是故障。chiayi-county-event-board 在台灣另有 TLS「dh key too small」問題（來源腳本已放寬 SECLEVEL）。",
   "skip": [
     "changhua-performing-groups",
     "chiayi-city-buskers",

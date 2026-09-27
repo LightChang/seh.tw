@@ -1,5 +1,8 @@
 #!/bin/bash
 # ops/run-taiwan-only.sh
+# ⚠️ 已淘汰（2026-09-27）：由 ops/fetch-taiwan-only.sh 取代。台灣主機不再 push GitHub，
+#    改成只抓 raw、投遞到境外主機的 inbox；pipeline／commit／push 都在境外的 run-update.sh。
+#    檔案暫時保留供對照，不要再排程它。
 # seh.tw 台灣端每日更新（2026-09-27 起，tw8 主機）：只抓 ops/host-skip.json 列的來源（擋海外 IP，
 # 境外主機的 run-update.sh 跳過的那些）→ pipeline → 有變更才 commit 並 push main。
 #

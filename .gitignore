@@ -25,3 +25,4 @@ data/seo-daily/
 .tmp-*.json
 .run.lock
 .logs/
+.outbox/

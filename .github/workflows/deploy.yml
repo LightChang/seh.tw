@@ -1,8 +1,9 @@
 # 建置並部署到 GitHub Pages。
 #
 # 抓取資料不在這裡：部分政府來源擋海外 IP，GitHub 主機抓不到（清單見 ops/host-skip.json）。
-# 更新流程是在台灣的機器上跑 `pnpm run ingest` → `pnpm run pipeline`，commit 後 push，
-# 這支 workflow 再把 push 上來的結果建置、檢查連結、部署。
+# 更新流程（2026-09-27 起）：台灣主機只抓那幾支擋海外的來源、把 raw 投遞到境外主機
+# （ops/fetch-taiwan-only.sh）；境外主機的 ops/run-update.sh 收投遞、抓其餘來源、跑 pipeline／
+# 測試／建置／連結檢查，有變更才 push main。這支 workflow 再把 push 上來的結果建置、檢查連結、部署。
 name: deploy
 
 on:

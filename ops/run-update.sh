@@ -4,7 +4,8 @@
 # 測試／建置／連結檢查 → 有變更才 commit 並 push main（GitHub Actions 的 deploy.yml 再建置部署）。
 #
 # 這台主機是海外 IP，17 支政府來源擋掉（ops/host-skip.json），scheduler 用 --skip-file 整支跳過，
-# 不去撞、也不記失敗；那幾支由台灣主機的 ops/run-taiwan-only.sh 每日台北 02:00 抓。
+# 不去撞、也不記失敗；那幾支由台灣主機的 ops/fetch-taiwan-only.sh 抓，raw 投遞到這台的
+# write-only inbox（/root/.config/seh-tw/intake/inbox），這裡先用 ops/import-inbox.mjs 收進來。
 #
 # 排程：/etc/cron.d/seh-tw-update（來源檔 ops/seh-tw-update.cron），UTC 20:10＝台北 04:10。
 # 鎖：與 seo-ops 的 collect／reflect／brain 及 venue-hours 共用 /tmp/seo-claude-seh.tw.lock。
@@ -60,12 +61,21 @@ if [ -n "$(git status --porcelain)" ]; then
 fi
 git pull -q --rebase origin main || { git rebase --abort 2>/dev/null; log "git pull 失敗，中止"; exit 1; }
 
+# 台灣端投遞的 raw（host-skip 那 17 支）先收進來。有變動就等同有來源變動，要跑 pipeline。
+STAGE="import"
+imp=$("$NODE" ops/import-inbox.mjs 2>&1)
+code=$?
+printf '%s\n' "$imp"
+[ $code -eq 0 ] || { log "匯入 inbox 失敗（退出碼 $code）"; revert; exit 1; }
+IMPORTED=$(grep -o '^IMPORTED=[0-9]*' <<<"$imp" | cut -d= -f2)
+[ "${IMPORTED:-0}" -gt 0 ] && log "台灣端投遞：${IMPORTED} 支來源有變動"
+
 STAGE="scheduler"
 out=$("$NODE" transform/scheduler.mjs --skip-file ops/host-skip.json 2>&1)
 code=$?
 printf '%s\n' "$out"
 [ $code -eq 0 ] || { log "scheduler 失敗（退出碼 $code）"; revert; exit 1; }
-if ! grep -q '^PIPELINE=1' <<<"$out"; then
+if ! grep -q '^PIPELINE=1' <<<"$out" && [ "${IMPORTED:-0}" -eq 0 ]; then
   # 沒有來源變動：只有排程狀態（下次到期時間）變了，照樣回寫，否則明天又全部到期
   STAGE="commit"
   if [ -n "$(git status --porcelain -- data/schedule-state.json data/fetch-log.jsonl data/last-run.json)" ]; then

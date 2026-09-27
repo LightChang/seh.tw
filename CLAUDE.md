@@ -63,22 +63,23 @@ npm run links      # build 之後，站內連結不能有壞的
 
 ## 上線後（2026-09-15 起）
 
-repo `LightChang/seh.tw`，GitHub Pages。**GitHub 不抓資料、沒有排程**——13 支政府來源擋海外 IP。
+repo `LightChang/seh.tw`，GitHub Pages。**GitHub 不抓資料、沒有排程**——17 支政府來源擋海外 IP。
 
-更新資料在台灣的機器上做：
+兩台主機分工（2026-09-27 起）：
 
-```
-npm run update       # git pull → scheduler 抓到期來源 → pipeline
-git add -A && git commit && git push    # push 到 main，GitHub 才建置並部署
-```
+- **台灣主機（tw8）是純抓取器**：每天 `ops/fetch-taiwan-only.sh` 只 `--force` 抓 `ops/host-skip.json` 那 17 支，
+  每個 raw 配 `.sha256`、`.meta.json`，rsync 投遞到這台的 write-only inbox
+  `/root/.config/seh-tw/intake/inbox`（rrsync -wo -no-del）。**不碰 git、不跑 pipeline**。
+  舊的 `ops/run-taiwan-only.sh`（台灣端自己 push）已淘汰。
+- **這台（境外）做其餘全部**：見下方 `run-update.sh`，第一步用 `ops/import-inbox.mjs` 收 inbox
+  （驗 sha256 與 meta、只收比現有新的；收完移到 `intake/archive/<日期>/`，壞檔留在 inbox 並記 log）。
 
 主機排程（這台是海外 IP）：
 
 - `/etc/cron.d/seh-tw-update`（來源檔 `ops/seh-tw-update.cron`），每天台北 04:10 跑 `ops/run-update.sh`：
-  抓**這台抓得到**且到期的來源（`ops/host-skip.json` 列的 17 支擋海外 IP，整支跳過）→ pipeline →
+  收台灣端投遞 → 抓**這台抓得到**且到期的來源（`ops/host-skip.json` 列的 17 支整支跳過）→ pipeline →
   test／build／links → 有變更才 commit＋push main。健康檢查沒過就還原、不 push，不自動 `--force`。
   log 在 `/mnt/yao-care/seo-ops/logs/seh.tw-update.log`，最後一輪結果在同目錄 `seh.tw-update.last.json`。
-  那 17 支仍要在台灣的機器上 `npm run update`。
 - `/etc/cron.d/seh-tw-venue-hours`（來源檔 `ops/seh-tw-venue-hours.cron`），台北週一 05:30
   跑 `ops/refresh-venue-hours.sh` 重查 `overrides/venue-hours.json` 並 push main。
 
