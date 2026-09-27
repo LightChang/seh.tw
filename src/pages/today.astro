@@ -77,7 +77,7 @@ const todayLd = itemListElement.length ? {
     <p class="empty-note" id="empty" hidden={merged.length > 0}>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
 
     {fresh.length > 0 && (
-      <section class="fresh">
+      <section class="fresh" id="new">
         <h2 class="h-sm">新上架</h2>
         <ol class="ev-list">
           {fresh.map((d) => (

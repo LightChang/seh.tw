@@ -76,10 +76,10 @@ async function listedAt() {
 }
 
 /** 新上架、還沒結束、可收錄的活動（src/lib/new-listings.mjs）。city 有給就只看該縣市的場次。 */
-export async function newListings({ city, limit = 10, now = Date.now() } = {}) {
+export async function newListings({ city, limit = 10, days = 30, now = Date.now() } = {}) {
   const [rows, listed, st] = await Promise.all([flatSessions(), listedAt(), pageState()]);
   const keep = (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
-  return newlyListed(city ? rows.filter((d) => d.city === city) : rows, listed, now, { limit, keep });
+  return newlyListed(city ? rows.filter((d) => d.city === city) : rows, listed, now, { limit, days, keep });
 }
 
 // 同一年度活動的歷年版本（src/lib/event-series.mjs）。每個活動頁都會查，快取一次。
