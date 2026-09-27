@@ -12,20 +12,20 @@ images:
 description: |-
   曾在德國浸潤藝術學院十餘載並擦亮歐洲藝壇的畫者，回臺後厚積薄發，雲、霧＆園景系列，以瓊文式筆意，描摹具象與抽象油彩，階段性成績單，邀請您鑑賞。
   
-  開幕式：11 / 29(日)14：00
+  開幕式：11 / 29(日)14：00 新營文化中心雅藝館
 sessions: 
   - startAt: "2026-11-27T09:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-12-06T17:00:00+08:00"
-    venueNameRaw: "新營文化中心"
+    venueNameRaw: "新營文化中心雅藝館"
     city: "臺南市"
     district: "新營區"
     address: "臺南市新營區中正路23號"
     addressPrecision: "street"
     lat: 23.308522
     lng: 120.315871
-    venueId: "ent_moc-perform-place_203"
-    venueSlug: "新營文化中心"
+    venueId: "ven_derived_新營文化中心雅藝館"
+    venueSlug: "新營文化中心雅藝館"
 sources: 
   - id: "tainan-culture-events"
     recordId: "23331"
