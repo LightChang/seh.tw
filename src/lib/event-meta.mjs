@@ -77,8 +77,14 @@ function titlePlaces(sessions) {
 
 const TITLE_MAX = 30;
 
+// 暫時維持舊標題（「活動名｜seh」）的活動頁。站主 2026-09-27 拍板：
+// 2026桃園萬聖城 是 2026-09-23 meta description 賭注的觀察頁，換標題會讓判讀混進別的變因。
+// 到期日 2026-10-08：賭注判讀完就把這份清單清空（連同測試裡對應的那條）。
+export const LEGACY_TITLE_SLUGS = new Set(['2026桃園萬聖城']);
+
 /** 福爾摩沙醇釀史冊｜9/21 國家音樂廳｜seh；太長就退成縣市、再退成只有日期，最後才拿掉站名。 */
 export function eventTitle(e) {
+  if (LEGACY_TITLE_SLUGS.has(e.slug)) return `${e.title}｜seh`;
   const sessions = e.sessions ?? [];
   const date = titleDate(sessions);
   const tails = [...titlePlaces(sessions).map((p) => [date, p].filter(Boolean).join(' ')), date].filter(Boolean);

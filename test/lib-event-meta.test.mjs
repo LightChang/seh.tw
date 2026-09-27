@@ -58,3 +58,7 @@ test('事實句：時間、地點、票務、主辦、演出者，沒有資料�
   assert.match(eventFacts(ev({ priceText: 'NT$500、800' }), null), /票價 NT\$500、800。/);
   assert.doesNotMatch(eventFacts(ev(), null), /票價|免費|主辦|演出/);
 });
+
+test('賭注觀察頁暫用舊標題（到期 2026-10-08，屆時連同 LEGACY_TITLE_SLUGS 一起移除）', () => {
+  assert.equal(eventTitle(ev({ slug: '2026桃園萬聖城', title: '2026桃園萬聖城' })), '2026桃園萬聖城｜seh');
+});
