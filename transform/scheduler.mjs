@@ -305,7 +305,12 @@ if (has('--list')) {
   process.exit(0);
 }
 
+// --skip-file <json>：這台主機抓不到的來源（擋海外 IP），整支不碰——不抓、不記失敗、
+// 排程狀態不動，留給台灣的機器。清單是 { "skip": ["id", ...] }（ops/host-skip.json）。
+const skipPath = argv[argv.indexOf('--skip-file') + 1];
+const skip = has('--skip-file') ? new Set((await readJson(path.resolve(skipPath), { skip: [] })).skip ?? []) : new Set();
 const due = sources.filter((s) => {
+  if (skip.has(s.meta.id) && !forced.has(s.meta.id)) return false;
   if (has('--all') || forced.has(s.meta.id)) return true;
   if (forced.size) return false;
   const d = state[s.meta.id].nextDueAt;

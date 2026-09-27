@@ -1,0 +1,12 @@
+# /etc/cron.d/seh-tw-update — seh.tw 每日自動更新（2026-09-27 起）
+# 來源檔：/mnt/yao-care/seh.tw/ops/seh-tw-update.cron（改這裡再 install，不要直接改 /etc/cron.d）
+#   install -m 644 -o root -g root /mnt/yao-care/seh.tw/ops/seh-tw-update.cron /etc/cron.d/seh-tw-update
+# 腳本：ops/run-update.sh（抓這台抓得到的到期來源 → pipeline → test/build/links → 有變更才 push main）
+# 擋海外 IP 的來源在 ops/host-skip.json，不抓，留給台灣的機器。
+# 與 seo-ops 的 seh.tw 各層共用 /tmp/seo-claude-seh.tw.lock，搶不到會等（最多 65 分）。
+# 時區：系統為 UTC、Vixie cron 忽略 CRON_TZ。UTC 20:10 ＝ 台北 04:10。
+#   避開 seo-ops：collect 12:40、reflect 17:50、brain 18:25、weekly 週一 06:20；venue-hours 週日 21:30（UTC）。
+# log：/mnt/yao-care/seo-ops/logs/seh.tw-update.log（最後一輪：seh.tw-update.last.json）
+SHELL=/bin/bash
+PATH=/root/.local/bin:/usr/local/bin:/usr/bin:/bin
+10 20 * * * root /mnt/yao-care/seh.tw/ops/run-update.sh

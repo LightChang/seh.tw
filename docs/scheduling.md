@@ -154,7 +154,17 @@ hakka-liudui-events       宣告「每 3 年」  與資料內容明顯不符
 
 ## 6. 實作
 
-`transform/scheduler.mjs`（`npm run ingest`，或連同 pipeline 的 `npm run update`）。**沒有自動觸發器**：13 支政府來源擋海外 IP，GitHub 主機抓不到，所以在台灣的機器上手動跑。`.github/workflows/deploy.yml` 只在 push 時建置部署。
+`transform/scheduler.mjs`（`npm run ingest`，或連同 pipeline 的 `npm run update`）。GitHub 主機不抓（政府來源擋海外 IP）；`.github/workflows/deploy.yml` 只在 push 時建置部署。
+
+觸發方式有兩種（2026-09-27 起）：
+
+- **主機每日自動**：`/etc/cron.d/seh-tw-update` 台北 04:10 跑 `ops/run-update.sh`，
+  呼叫 `node transform/scheduler.mjs --skip-file ops/host-skip.json`。這台主機是海外 IP，
+  `ops/host-skip.json` 列的 17 支（16 支 fetch failed、moc-community 全部 HTTP 403）整支跳過：
+  不抓、不記失敗、排程狀態不動。有變動才接 pipeline，健康檢查沒過就還原、不 push。
+- **台灣的機器手動**：`npm run update`，不帶 `--skip-file`，那 17 支在這裡才抓得到。
+
+`--skip-file` 的清單格式是 `{ "skip": ["id", ...] }`；`--force <id>` 仍可強制抓清單裡的來源。
 
 ```
 node transform/scheduler.mjs              只抓到期的

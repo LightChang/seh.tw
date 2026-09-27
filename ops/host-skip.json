@@ -1,0 +1,22 @@
+{
+  "_note": "這台主機（海外 IP）抓不到的來源，每日自動更新跳過；留給台灣的機器手動跑（npm run update）。2026-09-27 實測：16 支 fetch failed（政府網站擋海外 IP）＋ moc-community 全部分頁 HTTP 403。",
+  "skip": [
+    "changhua-performing-groups",
+    "chiayi-city-buskers",
+    "chiayi-county-event-board",
+    "hsinchu-city-buskers",
+    "hsinchu-city-culture-events",
+    "hsinchu-city-culture-venues",
+    "hsinchu-county-culture-venues",
+    "hsinchu-county-performing-groups",
+    "kaohsiung-busker-venues",
+    "kaohsiung-buskers",
+    "kaohsiung-neighborhood-centers",
+    "kaohsiung-public-libraries",
+    "moc-community",
+    "tainan-culture-events",
+    "tainan-culture-halls",
+    "tainan-indigenous-performing-groups",
+    "tainan-public-libraries"
+  ]
+}
