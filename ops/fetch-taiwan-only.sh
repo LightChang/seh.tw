@@ -88,7 +88,7 @@ for id in $IDS; do
   raw="ingest/raw/$id.json"
   # 只打包這輪真的寫出的（失敗、縮水被擋、內容沒變的不會更新 mtime）
   { [ -f "$raw" ] && [ "$(stat -c %Y "$raw")" -ge "$START" ]; } || continue
-  cp "$raw" "$OUTBOX/$id.json"
+  cp -p "$raw" "$OUTBOX/$id.json"   # -p：fetchedAt 取自 mtime，要保留抓取時間而非打包時間
   if ! "$NODE" -e '
     const fs = require("fs"); const [id, p] = process.argv.slice(1);
     const body = fs.readFileSync(p); let rows;
