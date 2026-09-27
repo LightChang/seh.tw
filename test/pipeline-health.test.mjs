@@ -130,3 +130,28 @@ test('eval-cluster 量得出召回率', async () => {
   assert.match(r.stdout, /自動併門檻（≥0\.8）\s+1 \/ 1/, '年份前綴剝掉之後標題就一樣了');
   await cleanup(root);
 });
+
+// 活動結束後被來源下架不算縮水（2026-09-27：taipei-gov-hot-events 只留當下 50 筆，
+// 過期的一批批消失，每天都被誤擋）。只有「還沒結束就消失」的才算。
+const past = (s, id) => event(s, id, { sessions: [{ startAt: `${dayOffset(-10)}T19:30:00+08:00`, granularity: 'datetime', city: '臺北市' }] });
+
+test('check-health：活動結束後下架的不觸發', async () => {
+  const live = [obs(event('s', '1')), obs(event('s', '2'))];
+  const ended = [3, 4, 5, 6].map((i) => gone(obs(past('s', String(i)))));
+  const root = await makeRoot({ s: [...live, ...ended] });   // 活 2 / 總 6，但 4 筆都是結束下架
+  const r = await runStage(root, 'check-health.mjs');
+  assert.equal(r.code, 0, r.stdout + r.stderr);
+  assert.match(r.stdout, /活動結束後下架 4 筆/);
+  await cleanup(root);
+});
+
+test('check-health：還沒結束就大量消失，照樣中止', async () => {
+  const live = [obs(event('s', '1'))];
+  const ended = [gone(obs(past('s', '2')))];
+  const early = [3, 4, 5].map((i) => gone(obs(event('s', String(i)))));   // 場次在 7 天後，卻已消失
+  const root = await makeRoot({ s: [...live, ...ended, ...early] });
+  const r = await runStage(root, 'check-health.mjs');
+  assert.equal(r.code, 1, '未結束就消失 3 筆、活 1 筆，要擋');
+  assert.match(r.stdout + r.stderr, /目前只剩 1 筆，歷史上有過 4 筆/);
+  await cleanup(root);
+});

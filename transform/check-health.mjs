@@ -26,18 +26,29 @@ const STALE_DAYS = 90;      // 這麼久沒有任何一筆變動 → 警告（�
 const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400e3);
 
+/** 活動的最後一個場次（結束或開始）早於 day（台灣日期）。非活動一律 false。 */
+export function endedBefore(o, day) {
+  if (o.entityKind !== 'event') return false;
+  const ends = (o.payload?.sessions ?? []).map((s) => String(s.endAt ?? s.startAt ?? '').slice(0, 10)).filter(Boolean);
+  if (!ends.length) return false;
+  return ends.sort().at(-1) < String(day).slice(0, 10);
+}
+
 const rows = [];
 for (const f of (await readdir(OBS_DIR)).filter((x) => x.endsWith('.ndjson')).sort()) {
   const id = f.slice(0, -7);
-  let live = 0, gone = 0, newest = '', oldestFirst = '';
+  let live = 0, gone = 0, ended = 0, newest = '', oldestFirst = '';
   for (const line of (await readFile(path.join(OBS_DIR, f), 'utf-8')).split('\n')) {
     if (!line.trim()) continue;
     const o = JSON.parse(line);
-    if (o.disappearedAt) gone += 1; else live += 1;
+    // 活動結束後被來源下架是正常的，不算縮水——只算「還沒結束就消失」的。
+    // 滾動清單型的來源（taipei-gov-hot-events 只留當下 50 筆）不這樣算，每天都會被誤擋。
+    if (o.disappearedAt && endedBefore(o, o.disappearedAt)) ended += 1;
+    else if (o.disappearedAt) gone += 1; else live += 1;
     if (o.lastChangedAt > newest) newest = o.lastChangedAt;
     if (!oldestFirst || o.firstObservedAt < oldestFirst) oldestFirst = o.firstObservedAt;
   }
-  rows.push({ id, live, gone, total: live + gone, newest, oldestFirst });
+  rows.push({ id, live, gone, ended, total: live + gone, newest, oldestFirst });
 }
 
 const problems = [];
@@ -60,7 +71,8 @@ for (const r of rows) {
 const fails = problems.filter((p) => p[0] === 'fail');
 const warns = problems.filter((p) => p[0] === 'warn');
 console.log(`檢查 ${rows.length} 支來源，活著 ${rows.reduce((a, r) => a + r.live, 0).toLocaleString('en-US')} 筆、`
-  + `已消失 ${rows.reduce((a, r) => a + r.gone, 0).toLocaleString('en-US')} 筆`);
+  + `未結束就消失 ${rows.reduce((a, r) => a + r.gone, 0).toLocaleString('en-US')} 筆、`
+  + `活動結束後下架 ${rows.reduce((a, r) => a + r.ended, 0).toLocaleString('en-US')} 筆（不算縮水）`);
 for (const [, id, msg] of warns) console.log(`  ⚠ ${id}　${msg}`);
 for (const [, id, msg] of fails) console.log(`  ✗ ${id}　${msg}`);
 if (!problems.length) console.log('  沒有異常。');

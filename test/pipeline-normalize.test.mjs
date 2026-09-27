@@ -161,3 +161,18 @@ test('活動 ID 被來源重用：名稱換成另一件事就當新記錄，舊�
   assert.equal(rows2.find((o) => o.id === 'ev:3~2').payload.title, '澎湖大行軍 2026');
   await cleanup(root);
 });
+
+test('moc-buskers：刪掉幾筆、打亂順序，其餘藝人的 ID 不變；完全相同的列用 #2 區分', async () => {
+  const { assignStableIds } = await import('../transform/normalize/_lib.mjs');
+  const { buskerKey } = await import('../transform/normalize/moc-buskers.mjs');
+  const p = (name, city, theme) => ({ _source: 'moc-buskers', name, city, actType: '表演藝術', theme });
+  const all = [p('吳旻鴻', '雲林縣', '吉他彈唱'), p('李文生', '臺北市', '魔術'), p('李文生', '臺北市', '魔術'), p('陳翔', '高雄市', '薩克斯風')];
+  const legacy = { [buskerKey(all[0])]: 'moc-buskers#0', [buskerKey(all[3])]: 'moc-buskers#3' };
+  const ids = (rows) => assignStableIds(rows, buskerKey, legacy).map((r) => r._sourceRecordId);
+  const before = ids(all);
+  assert.equal(before[0], 'moc-buskers#0');
+  assert.equal(before[3], 'moc-buskers#3');
+  assert.notEqual(before[1], before[2], '完全相同的兩列 ID 不能相同');
+  const after = ids([all[3], all[1], all[0]]);   // 刪掉一筆重複、順序打亂
+  assert.deepEqual(after, [before[3], before[1], before[0]]);
+});
