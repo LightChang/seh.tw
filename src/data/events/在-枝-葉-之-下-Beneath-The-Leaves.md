@@ -49,15 +49,10 @@ sources:
       images: 
         - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-07-09/a414d064-895c-4d9b-a272-286b6e731036/電子展覽資訊圖_818x426.jpg"
   - id: "moc-events"
-    recordId: "6a4f3aa6647ad700eb56ccb6"
+    recordId: "6a4f3aa6647ad700eb56ccb6~2"
     sourceName: "THE 201 ART"
     url: "https://www.facebook.com/THE201ART"
-    provides: 
-      - "categoryRaw"
-      - "popularity"
-      - "organizers"
-      - "sessions"
-      - "sourceUrl"
+    provides: []
     rejected: 
       description: |-
         有些⽣命向上⽣⻑，迎向光與空氣； 有些⽣命則向下延伸，在⼟壤深處緩慢扎根。 枝葉、根系與⾻骼，都是時間在物質中留下的形狀。

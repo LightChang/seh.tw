@@ -1065,7 +1065,7 @@
 {"path":"/event/2026澎湖吸館-親子遊樂園","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/2026澎湖國際海上花火節","qualityScore":2.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/2026澎湖跳島101K自行車101K-Hopping-Bike活動","qualityScore":2.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
-{"path":"/event/2026澎湖跳島101K自行車活動","qualityScore":7.5,"indexable":1,"qualifiedSince":"2026-09-27","computedAt":"2026-09-27"}
+{"path":"/event/2026澎湖跳島101K自行車活動","qualityScore":3.5,"indexable":1,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/2026澎湖追風音樂燈光節","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/2026火燒島馬拉松","qualityScore":6.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-09-27"}
 {"path":"/event/2026火神祭搖滾區席位-星火計畫","qualityScore":5.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-09-27"}
@@ -4548,6 +4548,7 @@
 {"path":"/event/潭子分館12-26讀書會","qualityScore":-2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/潭子分館12-29-荳荳故事屋我蜘蛛小姐蜜斯絲白德開茶會","qualityScore":-2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/澎湖吸館奇巧劇團空空戒戒木偶奇遇記","qualityScore":1,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
+{"path":"/event/澎湖大行軍","qualityScore":7.5,"indexable":1,"qualifiedSince":"2026-09-27","computedAt":"2026-09-27"}
 {"path":"/event/澎湖生活博物館常設展","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/澳洲攝影展","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/event/澳洲派奇劇團我的影子好朋友","qualityScore":9.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-09-27"}
@@ -9534,6 +9535,7 @@
 {"path":"/venue/信望愛書房","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/信義徒步區","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/信義書局","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
+{"path":"/venue/信義香堤大道","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/信誼小太陽親子書房台中門市","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/信誼小太陽親子書房台北旗艦店","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/信誼小太陽親子書房高雄門市","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
@@ -19235,6 +19237,7 @@
 {"path":"/venue/鶯歌區-新北市立鶯歌陶瓷博物館","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/鶯歌區-新北市美術館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/鶯歌區-鶯歌美食廣場","qualityScore":0.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
+{"path":"/venue/鶯歌區-鶯歌美食廣場-2","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/鶯歌區-鶯歌老街陶館戶外舞台","qualityScore":0.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/鶯歌小將","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}
 {"path":"/venue/鶯歌強棒棒球投打場公共藝術","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-09-27"}

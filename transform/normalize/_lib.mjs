@@ -674,6 +674,74 @@ export function redactPersonal(r) {
 
 const hashOf = (v) => createHash('sha256').update(JSON.stringify(v)).digest('hex').slice(0, 16);
 
+// ── 來源重用記錄 ID ──────────────────────────────────────────────────
+// 來源會把舊 ID 給新的一筆：觀光署 Event_A15010200H_000003 原本是「2026澎湖跳島101K自行車活動」，
+// 活動結束下架後，同一個 ID 變成「澎湖大行軍」（2026-09-27 實測）。照 ID 直接覆蓋的話，
+// 101K 的網址會開始顯示澎湖大行軍，而且兩筆大行軍被併成一群、原本的網址消失。
+// 所以同一個 ID 的名稱變成另一個東西時，當成新記錄（ID 加 ~2、~3），舊的那筆照常標 disappeared。
+const normTitle = (t) => String(t ?? '').toLowerCase().replace(/[\s\p{P}\p{S}]/gu, '');
+const bigrams = (s) => { const a = [...s]; const out = new Set(); for (let i = 0; i < a.length - 1; i++) out.add(a[i] + a[i + 1]); return out; };
+/** 同一件事的名稱小改（補年份、加副標、改錯字）算相同；換成另一件事算不同。 */
+export function sameThing(a, b) {
+  const x = normTitle(a), y = normTitle(b);
+  if (!x || !y) return true;
+  if (x === y || x.includes(y) || y.includes(x)) return true;
+  const A = bigrams(x), B = bigrams(y);
+  if (!A.size || !B.size) return false;
+  let n = 0;
+  for (const g of A) if (B.has(g)) n += 1;
+  return (2 * n) / (A.size + B.size) >= 0.5;
+}
+
+/**
+ * 決定這筆來源記錄要寫到哪個 observation id。
+ * @param {string} base `${source}:${recordId}`
+ * @param {string} title 這次的名稱
+ * @param {Map<string, object>} prev 上一版 observation（id → 記錄）
+ * @param {Set<string>} taken 這一輪已經用掉的 id
+ */
+export function observationIdFor(base, title, prev, taken) {
+  const family = [...prev.keys()].filter((id) => id === base || id.startsWith(`${base}~`)).sort();
+  if (!family.length) return base;
+  const hit = family.find((id) => !taken.has(id) && sameThing(prev.get(id).payload?.title, title));
+  if (hit) return hit;
+  const n = Math.max(1, ...family.map((id) => Number(id.split('~')[1] ?? 1))) + 1;
+  return `${base}~${n}`;
+}
+
+// ── 沒有 ID 欄位的來源 ────────────────────────────────────────────────
+// 用列序當 ID，來源少一筆或換個順序，後面每一筆的 ID 就全部錯位——moc-perform-place
+// 少了 9 筆，735 個場館的名稱跟著移位（2026-09-27 實測）。改用內容鍵（名稱＋地址），
+// 已經發出去的舊 ID 由 legacy 對照表接住，cluster 與網址不變。
+/**
+ * @param {object[]} records 正規化後的記錄（已有 name、address）
+ * @param {(r: object) => string} keyOf 內容鍵
+ * @param {Record<string, string>} legacy 內容鍵 → 舊 ID（只在過渡時需要）
+ * @returns {object[]} 帶 _sourceRecordId 的記錄
+ */
+export function assignStableIds(records, keyOf, legacy = {}) {
+  const seen = new Map();
+  return records.map((r) => {
+    const k0 = keyOf(r);
+    const n = (seen.get(k0) ?? 0) + 1;
+    seen.set(k0, n);
+    // 完全同名同址的第二筆以後加序號（只在重複的那幾筆之間比順序）
+    const key = n > 1 ? `${k0}#${n}` : k0;
+    const id = legacy[key] ?? `k${createHash('sha256').update(key).digest('hex').slice(0, 12)}`;
+    // 欄位順序照舊（_source、_sourceRecordId 在前），contentHash 才不會因為換了寫法而全部變動
+    const { _source, ...rest } = r;
+    return { _source, _sourceRecordId: id, ...rest };
+  });
+}
+/** 名稱＋地址，去掉空白標點。 */
+export const nameAddressKey = (r) => `${normTitle(r.name)}|${normTitle(r.address)}`;
+/** transform/normalize/legacy-ids/<source>.json（沒有就是空表）。 */
+export async function legacyIds(sourceId) {
+  try {
+    return JSON.parse(await readFile(path.join(path.dirname(fileURLToPath(import.meta.url)), 'legacy-ids', `${sourceId}.json`), 'utf-8'));
+  } catch { return {}; }
+}
+
 export async function writeObservations(sourceId, records, { entity = 'event' } = {}) {
   const errors = [];
   const ok = [];
@@ -700,9 +768,15 @@ export async function writeObservations(sourceId, records, { entity = 'event' } 
   const out = [];
   let added = 0, changed = 0, gone = 0;
 
-  for (const r of ok) {
-    const id = `${r._source}:${r._sourceRecordId}`;
+  for (let r of ok) {
+    // 只看活動：場館、文資的 ID 是機關的正式編號，改名是同一個東西換名字
+    // （「南港煙囪」→「原南港輪胎南港廠煙囪」），不能拆。
+    const base = `${r._source}:${r._sourceRecordId}`;
+    const id = (r._entity ?? entity) === 'event' ? observationIdFor(base, r.title, prev, seen) : base;
     seen.add(id);
+    // 被重用的 ID 另給編號時，payload 裡的 _sourceRecordId 也要跟著改——分群與產出
+    // 都用 `${_source}:${_sourceRecordId}` 認記錄，兩邊不一致會變成同一個成員出現兩次。
+    if (id !== base) r = { ...r, _sourceRecordId: id.slice(r._source.length + 1) };
     // _fetchedAt 不算內容：來源重抓一次、內容沒變，不能讓整支記錄都算「變更」。
     const { _fetchedAt, ...content } = r;
     const hash = hashOf(content);

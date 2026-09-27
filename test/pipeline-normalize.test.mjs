@@ -122,3 +122,42 @@ test('observation：舊版雜湊（含 _fetchedAt）遷移時不誤判為變更'
   assert.equal(o.lastChangedAt, '2026-09-01', '只是雜湊算法換了，內容沒變');
   await cleanup(root);
 });
+
+// ── 沒有 ID 欄位的來源（transform/normalize/_lib.mjs 的 assignStableIds）──
+// 以前用列序，moc-perform-place 少了 9 筆之後 735 個場館名稱全部錯位（2026-09-27）。
+test('無 ID 來源：刪掉幾筆、打亂順序，其餘記錄的 ID 不變；舊 ID 由對照表接住', async () => {
+  const { assignStableIds, nameAddressKey } = await import('../transform/normalize/_lib.mjs');
+  const rec = (name, address) => ({ _source: 's', name, address });
+  const all = [rec('甲廣場', '臺北市一路1號'), rec('乙公園', '臺北市二路2號'), rec('丙站前', '南投縣三路3號'), rec('丁館', '高雄市四路4號')];
+  const legacy = { [nameAddressKey(all[0])]: '1', [nameAddressKey(all[2])]: '3' };
+  const idOf = (rows) => Object.fromEntries(assignStableIds(rows, nameAddressKey, legacy).map((r) => [r.name, r._sourceRecordId]));
+  const before = idOf(all);
+  assert.equal(before['甲廣場'], '1');
+  assert.equal(before['丙站前'], '3');
+  const after = idOf([all[3], all[2], all[0]]);   // 刪掉乙、順序打亂
+  for (const k of Object.keys(after)) assert.equal(after[k], before[k], k);
+  assert.deepEqual(Object.keys(assignStableIds([all[1]], nameAddressKey)[0]).slice(0, 2), ['_source', '_sourceRecordId']);
+});
+
+// 觀光署把下架活動的 ID 給了另一個活動（Event_A15010200H_000003：101K 自行車 → 澎湖大行軍）
+test('活動 ID 被來源重用：名稱換成另一件事就當新記錄，舊的標 disappeared', async () => {
+  const root = await makeRoot({});
+  const at = (d) => `${d}T09:00:00+08:00`;
+  const rec = (title, d) => ({ ...event('ev', '3'), title, _fetchedAt: at(d) });
+  assert.equal((await writeObs(root, [rec('2026澎湖跳島101K自行車活動', '2026-09-16')])).code, 0);
+  const r = await writeObs(root, [rec('澎湖大行軍', '2026-09-27')]);
+  assert.equal(r.code, 0, r.stderr);
+  const rows = await readNd(root, 'data/observation/ev.ndjson');
+  const byId = Object.fromEntries(rows.map((o) => [o.id, o]));
+  assert.equal(byId['ev:3'].payload.title, '2026澎湖跳島101K自行車活動');
+  assert.equal(byId['ev:3'].disappearedAt, new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10));
+  assert.equal(byId['ev:3~2'].payload.title, '澎湖大行軍');
+  assert.equal(byId['ev:3~2'].payload._sourceRecordId, '3~2', '下游用 payload 認記錄，要一致');
+  // 名稱小改（補副標）仍是同一筆
+  const r2 = await writeObs(root, [rec('澎湖大行軍 2026', '2026-09-28')]);
+  assert.equal(r2.code, 0, r2.stderr);
+  const rows2 = await readNd(root, 'data/observation/ev.ndjson');
+  assert.equal(rows2.length, 2);
+  assert.equal(rows2.find((o) => o.id === 'ev:3~2').payload.title, '澎湖大行軍 2026');
+  await cleanup(root);
+});

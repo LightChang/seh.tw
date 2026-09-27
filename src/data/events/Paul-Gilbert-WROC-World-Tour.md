@@ -64,18 +64,10 @@ sources:
         早鳥至2026/8/31止，9月1日起恢復原價
         「VIP」票福利：與藝人簽名合
   - id: "moc-events"
-    recordId: "6a7943c8eb4345557aab58e7"
+    recordId: "6a7943c8eb4345557aab58e7~2"
     sourceName: "狂人音樂演藝經紀有限公司"
     url: "https://www.facebook.com/rockempire"
-    provides: 
-      - "title"
-      - "categoryRaw"
-      - "popularity"
-      - "performers"
-      - "organizers"
-      - "sessions"
-      - "sourceUrl"
-      - "sourceUpdatedAt"
+    provides: []
     rejected: 
       description: |-
         Paul Gilbert WROC World Tour 2026

@@ -13,6 +13,7 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseOpeningHours } from '../src/lib/opening-hours.mjs';
+import { retirePages, liveSet } from './redirects.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
 // 各階段都讀寫檔案，不能在正式資料上測——測試會改到 data/ 與 src/data/。
@@ -622,6 +623,21 @@ async function main() {
   await writeFile(indexPath, JSON.stringify({ e: indexEvents, s: indexRows }), 'utf-8');
   const bytes = (await readFile(indexPath)).length;
 
+  // 要刪的活動／場館頁先記轉址（transform/redirects.mjs），網址不能變成 404
+  const doomed = [];
+  for (const [dir, keep, kind] of [[eventDir, eventDirKeep, 'event'], [venueDir, venueDirKeep, 'venue']]) {
+    let files = [];
+    try { files = await readdir(dir); } catch { /* 第一次 */ }
+    for (const f of files) {
+      if (!f.endsWith('.md') || keep.has(f)) continue;
+      doomed.push({ kind, path: `/${kind}/${f.slice(0, -3)}`, text: await readFile(path.join(dir, f), 'utf-8') });
+    }
+  }
+  if (doomed.length) {
+    const live = await liveSet(new Set(doomed.map((d) => d.path)));
+    const n = await retirePages(doomed, { clusters, venues: [...venuesById.values()], live, day: today() });
+    console.log(`  刪除的頁記轉址 ${n} 筆（data/redirects.ndjson）`);
+  }
   await pruneDir(eventDir, eventDirKeep);
   await pruneDir(venueDir, venueDirKeep);
   await pruneDir(herDir, herDirKeep);

@@ -2,7 +2,7 @@
 // 臺北市立圖書館各分館暨民眾閱覽室。70 筆。
 // 實測欄位覆蓋（2026-09-12）：閱覽單位/地址/郵遞區號/緯度/經度 皆 70，電話 63，傳真 59。
 // 地址 70/70 都以「臺北市」開頭；經緯度全部有效。沒有開放時間、網址欄位。
-import { readRaw, writeStaged, compact, parseAddress, fetchedAtOf } from './_lib.mjs';
+import { readRaw, writeStaged, assignStableIds, nameAddressKey, legacyIds, compact, parseAddress, fetchedAtOf } from './_lib.mjs';
 
 const SOURCE = 'taipei-public-libraries';
 
@@ -13,12 +13,10 @@ const num = (v) => {
 
 export async function normalize(fetchedAt) {
   const raw = await readRaw(SOURCE);
-  return raw.map((r, i) => {
+  const records = raw.map((r) => {
     const addr = parseAddress(r['地址'], { city: '臺北市' });
     return compact({
       _source: SOURCE,
-      // 來源沒有 id 欄位；閱覽單位 70/70 唯一但仍用列序，與其他無 id 來源一致。
-      _sourceRecordId: String(i + 1),
       _fetchedAt: fetchedAt,
 
       name: r['閱覽單位'],
@@ -30,6 +28,9 @@ export async function normalize(fetchedAt) {
       phone: r['電話'],
     });
   });
+  // 來源沒有 ID 欄位。以前用列序，來源少一筆後面就全部錯位（2026-09-27 實測），
+  // 改用名稱＋地址；已發出的舊 ID 由 legacy-ids/taipei-public-libraries.json 接住，網址不變。
+  return assignStableIds(records, nameAddressKey, await legacyIds(SOURCE));
 }
 
 export async function run() {

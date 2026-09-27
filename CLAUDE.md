@@ -27,6 +27,9 @@ npm run links      # build 之後，站內連結不能有壞的
    那個頁面就不存在，而且**沒有任何錯誤訊息**。`transform/cluster.mjs` 有兩趟配號，
    別繞過它。（實測踩過：68 個活動、38 個場館的頁面憑空消失。）
 3. **網址一旦發出就不能變。** 標題改了只改頁面標題。`data/slug-registry.ndjson` 是 append-only。
+   頁面因合併或衍生場館沒活動而刪掉時，emit-md 會在 `data/redirects.ndjson`（append-only）記
+   「舊網址 → 接手的頁」，build 由 `astro.config.mjs` 的 `redirects` 產生轉址頁
+   （noindex＋canonical＋meta refresh）。補記舊版本：`node transform/redirects.mjs --backfill <git-ref>`。
 4. **`data/observation/` 是 append-only。** 來源這次沒回傳的設 `disappearedAt`，不刪除
    ——刪掉會讓 cluster 少一個成員、URL 跟著消失。
 5. **個資不進 observation。** 09xx 手機、免費信箱、證照號碼由

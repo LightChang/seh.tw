@@ -3,7 +3,7 @@
 // 實測欄位覆蓋（2026-09-12）：placeName 767 / address 663 / managerUnit 746 /
 //   applyUnit 368 / officePhone 731 / email 241 / imageUrl 679 / register 668 / fax 93。
 // 沒有 id、沒有縣市、沒有經緯度欄位。
-import { readRaw, writeStaged, compact, parseAddress, normalizeCity, fetchedAtOf } from './_lib.mjs';
+import { readRaw, writeStaged, assignStableIds, nameAddressKey, legacyIds, compact, parseAddress, normalizeCity, fetchedAtOf } from './_lib.mjs';
 
 const SOURCE = 'moc-perform-place';
 
@@ -21,7 +21,7 @@ function cityHint(r) {
 
 export async function normalize(fetchedAt) {
   const raw = await readRaw(SOURCE);
-  return raw.map((r, i) => {
+  const records = raw.map((r) => {
     const city = cityHint(r);
     const addrRaw = String(r.address ?? '').trim();
     // address 幾乎都不含縣市，補上才是完整地址；已含縣市的 18 筆不重複加。
@@ -30,8 +30,6 @@ export async function normalize(fetchedAt) {
 
     return compact({
       _source: SOURCE,
-      // 來源沒有 id 欄位；placeName 有一組重複（766/767 唯一），改用列序，與其他無 id 的來源一致。
-      _sourceRecordId: String(i + 1),
       _fetchedAt: fetchedAt,
 
       name: r.placeName,
@@ -43,6 +41,9 @@ export async function normalize(fetchedAt) {
       email: r.email,
     });
   });
+  // 來源沒有 ID 欄位。以前用列序，來源少一筆後面就全部錯位（2026-09-27 實測），
+  // 改用名稱＋地址；已發出的舊 ID 由 legacy-ids/moc-perform-place.json 接住，網址不變。
+  return assignStableIds(records, nameAddressKey, await legacyIds(SOURCE));
 }
 
 export async function run() {

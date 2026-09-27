@@ -1,5 +1,5 @@
 import { defineConfig } from 'astro/config';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import sitemap from '@astrojs/sitemap';
 
 // 收錄與否由 transform/score-pages.mjs 每天重算（ARCHITECTURE.md §6）。
@@ -24,6 +24,25 @@ try {
     lastmodOf.set(r.path, r.changedAt);
   }
 } catch { /* 還沒 emit 過 */ }
+// 消失的頁面轉到接手的頁（data/redirects.ndjson，transform/redirects.mjs 寫的）。
+// GitHub Pages 沒有 301，Astro 的 redirects 在靜態輸出會產生 noindex＋canonical＋meta refresh。
+// 舊網址又有真頁面時以真頁面為準；接手的頁自己也消失了就沿著鏈走到底。
+const mdOf = (p) => {
+  const m = p.match(/^\/(event|venue)\/(.+)$/);
+  return m && `./src/data/${m[1] === 'event' ? 'events' : 'venues'}/${m[2]}.md`;
+};
+const redirects = {};
+try {
+  const rows = readFileSync('./data/redirects.ndjson', 'utf-8').split('\n').filter((l) => l.trim()).map((l) => JSON.parse(l));
+  const next = new Map(rows.map((r) => [r.from, r.to]));
+  const isLive = (p) => { const f = mdOf(p); return f ? existsSync(f) : true; };
+  for (const r of rows) {
+    if (isLive(r.from)) continue;
+    let to = r.to;
+    for (let i = 0; i < 10 && !isLive(to) && next.has(to); i++) to = next.get(to);
+    if (isLive(to)) redirects[r.from] = to;
+  }
+} catch { /* 沒有轉址 */ }
 const BUILD_DAY = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 
 export default defineConfig({
@@ -32,6 +51,7 @@ export default defineConfig({
   // 'file' 不是 'directory'：GitHub Pages 對資料夾一律 301 補斜線，跟 trailingSlash never 與 canonical 衝突。
   // x.html 與 x/ 並存時 Pages 回 x.html 不轉址（2026-09-15 以 public/_probe 實測）。
   build: { format: 'file' },
+  redirects,
   integrations: [
     sitemap({
       // 只收錄內容足夠的頁面。搜尋與定位頁沒有自己的內容（結果由前端即時算），
