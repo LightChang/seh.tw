@@ -5,7 +5,7 @@ title: "「爵士禾聲」系列音樂會 #06｜DonSir《康達效應》"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2064243052747730945"
 sessions: 
   - startAt: "2026-10-02T19:30:00+08:00"

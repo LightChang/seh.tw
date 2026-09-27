@@ -5,7 +5,7 @@ title: "生活工藝館-陶藝DIY手作體驗"
 category: "講座"
 categoryRaw: "演講／講座／研討會"
 status: "scheduled"
-popularity: 144
+popularity: 152
 priceText: "手捏動物小盆栽︰400 手捏毛小孩陶盤︰500 植物油彩系列課程︰1200 小幽靈線香座︰500 瓷盤彩繪︰500 〔燒製〕手拉坯-杯子成型︰500 〔不燒製〕手拉坯-杯子成型︰200"
 performers: 
   - nameRaw: "蘿倫美學空間"

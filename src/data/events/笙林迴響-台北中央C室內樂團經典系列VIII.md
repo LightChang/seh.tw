@@ -5,7 +5,7 @@ title: "笙林迴響-台北中央Ｃ室內樂團經典系列VIII"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 1
+popularity: 4
 ticketUrl: "https://www.opentix.life/program/2069250287043518465"
 sessions: 
   - startAt: "2026-10-02T19:30:00+08:00"

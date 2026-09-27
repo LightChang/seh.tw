@@ -5,7 +5,7 @@ title: "Novelbright 限量VIP Upgrade 升級加購"
 category: "演唱會"
 categoryRaw: "17"
 status: "scheduled"
-popularity: 40
+popularity: 47
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P19XNXK1"
 sessions: 
   - startAt: "2026-10-24T18:00:00+08:00"

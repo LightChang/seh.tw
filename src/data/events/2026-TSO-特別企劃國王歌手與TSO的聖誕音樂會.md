@@ -5,7 +5,7 @@ title: "【2026 TSO 特別企劃】國王歌手與TSO的聖誕音樂會"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 0
+popularity: 2
 ticketUrl: "https://www.opentix.life/program/2080142462134394880"
 sessions: 
   - startAt: "2026-12-18T19:30:00+08:00"

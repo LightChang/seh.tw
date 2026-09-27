@@ -5,7 +5,7 @@ title: "付費課程 【線上 online】任用管理師認證班"
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 47
+popularity: 48
 ticketUrl: "https://kktix.com/events/e67edaef/registrations/quickly"
 organizers: 
   - nameRaw: "中華人事主管協會"

@@ -1,6 +1,7 @@
 // 建置期的資料存取。頁面不要直接 getCollection，從這裡拿——
 // 「一個場次一列」這種展開只寫一次，各頁面的篩選邏輯才不會各自長出一份。
 import { readFile } from 'node:fs/promises';
+import { seriesIndex } from './event-series.mjs';
 import { getCollection } from 'astro:content';
 import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
 
@@ -56,6 +57,12 @@ const dataOf = (e) => e.data;
 
 export async function allEvents() {
   return (await getCollection('events')).map(dataOf);
+}
+// 同一年度活動的歷年版本（src/lib/event-series.mjs）。每個活動頁都會查，快取一次。
+let SERIES = null;
+export async function eventSeries() {
+  if (!SERIES) SERIES = seriesIndex(await allEvents());
+  return SERIES;
 }
 export async function allVenues() {
   return (await getCollection('venues')).map(dataOf);

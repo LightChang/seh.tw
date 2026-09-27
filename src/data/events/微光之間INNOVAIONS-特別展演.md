@@ -1,11 +1,11 @@
 ---
 clusterId: "evt_moc-events_6aa82bbc26b324165c32e3da"
 slug: "微光之間INNOVAIONS-特別展演"
-title: "《微光之間》INNOVAIONS 特別展演"
+title: "《微光之間》INNOVATIONS 開幕特別展演"
 category: "獨立音樂"
 categoryRaw: "5"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2096967414476181504"
 sessions: 
   - startAt: "2026-10-13T19:35:00+08:00"

@@ -5,7 +5,7 @@ title: "《大地洄翔 Circling Home》吳靜茹個展"
 category: "戲劇"
 categoryRaw: "2"
 status: "scheduled"
-popularity: 0
+popularity: 8
 sessions: 
   - startAt: "2026-09-12T00:00:00+08:00"
     granularity: "datetime"

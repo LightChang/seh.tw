@@ -134,7 +134,7 @@ sources:
     provides: []
     rejected: 
       title: "【2026衛武營小時光】韓國傳統說唱故事《水底王國，彼岸之歌》"
-      popularity: 0
+      popularity: 5
       ticketUrl: "https://www.opentix.life/program/2043627257385357312"
       sourceUrl: "https://www.opentix.life/program/2043627257385357312"
   - id: "moc-events"

@@ -5,7 +5,7 @@ title: "視界重構：Nawat Cubic筆下的多元意象"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 1
+popularity: 2
 performers: 
   - nameRaw: "長興美術館"
     country: "中華民國"

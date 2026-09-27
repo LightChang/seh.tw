@@ -5,7 +5,7 @@ title: "付費課程【線上 online】核心幹部管理實務認證班-線上�
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 50
+popularity: 51
 ticketUrl: "https://kktix.com/events/1b6b9057/registrations/quickly"
 organizers: 
   - nameRaw: "中華人事主管協會"

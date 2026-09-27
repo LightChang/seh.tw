@@ -5,7 +5,7 @@ title: "Novelbright ASIA TOUR 2026 ~PYRAMID~ IN TAIPEI"
 category: "演唱會"
 categoryRaw: "17"
 status: "scheduled"
-popularity: 67
+popularity: 74
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P19QK265"
 sessions: 
   - startAt: "2026-10-24T18:00:00+08:00"

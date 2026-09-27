@@ -3,9 +3,9 @@ clusterId: "evt_moc-events_6a4f3aa6647ad700eb56ccb6"
 slug: "在-枝-葉-之-下-Beneath-The-Leaves"
 title: "《 在 枝 葉 之 下 Beneath The Leaves 》"
 category: "展覽"
-categoryRaw: "展覽"
+categoryRaw: "6"
 status: "scheduled"
-popularity: 11
+popularity: 14
 isFree: true
 images: 
   - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01wgVBu%2b0JIHQ3qr4edJg1KwbYGcQeMMq4PGIvTobKk3N%2f3EivlislcQzsnPTEAoSPe5i97crOz3%2bA28MVir5G1U%3d"
@@ -37,6 +37,7 @@ sources:
     sourceName: "THE 201 ART"
     url: "https://www.facebook.com/THE201ART"
     provides: 
+      - "categoryRaw"
       - "popularity"
       - "organizers"
       - "sessions"
@@ -47,7 +48,22 @@ sources:
         在⾃然的世界裡，⽣⻑從來不是單⼀的⽅向。 它可能被修剪、被限制，也可能在隱密之處悄然展開； 有時向外延伸，有時則在
       images: 
         - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-07-09/a414d064-895c-4d9b-a272-286b6e731036/電子展覽資訊圖_818x426.jpg"
-      categoryRaw: "6"
+  - id: "moc-events"
+    recordId: "6a4f3aa6647ad700eb56ccb6"
+    sourceName: "THE 201 ART"
+    url: "https://www.facebook.com/THE201ART"
+    provides: 
+      - "categoryRaw"
+      - "popularity"
+      - "organizers"
+      - "sessions"
+      - "sourceUrl"
+    rejected: 
+      description: |-
+        有些⽣命向上⽣⻑，迎向光與空氣； 有些⽣命則向下延伸，在⼟壤深處緩慢扎根。 枝葉、根系與⾻骼，都是時間在物質中留下的形狀。
+        在⾃然的世界裡，⽣⻑從來不是單⼀的⽅向。 它可能被修剪、被限制，也可能在隱密之處悄然展開； 有時向外延伸，有時則在
+      images: 
+        - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-07-09/a414d064-895c-4d9b-a272-286b6e731036/電子展覽資訊圖_818x426.jpg"
   - id: "taipei-culture-events"
     recordId: "b202657f-4c2b-4757-909d-d08b2bb275e1"
     url: "https://www.facebook.com/THE201ART"
@@ -55,9 +71,9 @@ sources:
       - "title"
       - "description"
       - "images"
-      - "categoryRaw"
       - "isFree"
     rejected: 
+      categoryRaw: "展覽"
       organizers: 
         - nameRaw: "THE 201 ART 順天建築.文化.藝術中心"
           role: "master"

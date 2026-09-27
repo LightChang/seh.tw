@@ -54,13 +54,16 @@ export function whenText(sessions = []) {
 }
 
 /** 標題用的短日期：9/21、9/22–9/24，跨年才帶年份。 */
-export function titleDate(sessions = []) {
+export function titleDate(sessions = [], withYear = false) {
   const { start, end } = eventSpan(sessions);
   if (!start) return '';
-  if (dateLabel(start) === dateLabel(end)) return mdShort(start);
+  if (dateLabel(start) === dateLabel(end)) return mdShort(start, withYear);
   const cross = twYear(start) !== twYear(end);
-  return `${mdShort(start, cross)}–${mdShort(end, cross)}`;
+  return `${mdShort(start, cross || withYear)}–${mdShort(end, cross)}`;
 }
+
+// 名稱裡已經有年份（「2026桃園萬聖城」「115年…」）就不在日期再寫一次
+const HAS_YEAR = /(?:19|20)\d{2}|1[01]\d年/;
 
 /** 標題用的地點，由具體到籠統排好，放不下時往後退。 */
 function titlePlaces(sessions) {
@@ -86,7 +89,8 @@ export const LEGACY_TITLE_SLUGS = new Set(['2026桃園萬聖城']);
 export function eventTitle(e) {
   if (LEGACY_TITLE_SLUGS.has(e.slug)) return `${e.title}｜seh`;
   const sessions = e.sessions ?? [];
-  const date = titleDate(sessions);
+  // 搜尋主力是「活動名＋年份」，名稱沒有年份的就讓日期帶年份（「海宴美食嘉年華｜2026/9/26 …」）
+  const date = titleDate(sessions, !HAS_YEAR.test(e.title));
   const tails = [...titlePlaces(sessions).map((p) => [date, p].filter(Boolean).join(' ')), date].filter(Boolean);
   let t = e.title;
   for (const tail of tails) {

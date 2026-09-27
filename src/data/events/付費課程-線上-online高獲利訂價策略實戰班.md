@@ -5,7 +5,7 @@ title: "付費課程 【線上 online】高獲利訂價策略實戰班"
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 42
+popularity: 43
 ticketUrl: "https://kktix.com/events/91eab762/registrations/quickly"
 organizers: 
   - nameRaw: "中華人事主管協會"

@@ -5,7 +5,7 @@ import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import { eventLd } from '../../lib/event-ld.mjs';
 import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
-import { allEvents, isIndexable, builtCategories, verifiedState } from '../../lib/build-data.mjs';
+import { allEvents, isIndexable, builtCategories, verifiedState, eventSeries } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
@@ -52,6 +52,8 @@ const shown = sessions.slice(0, 20);
 const indexable = await isIndexable(`/event/${e.slug}`);
 // 分類頁有 ≥5 場的門檻，不檢查就會連到不存在的頁（實測「綜藝」只有 4 場）
 const hasCatPage = e.category && (await builtCategories()).has(e.category);
+// 同一個年度活動的其他屆：搜「活動名＋去年」的人一步走到今年
+const editions = (await eventSeries()).get(e.slug) ?? [];
 ---
 <Base
   title={metaTitle}
@@ -133,6 +135,18 @@ const hasCatPage = e.category && (await builtCategories()).has(e.category);
             </li>
           ))}</ul>
           {sessions.length > shown.length && <p class="more">另有 {sessions.length - shown.length} 場次</p>}
+        </section>
+      )}
+
+      {editions.length > 0 && (
+        <section class="sessions">
+          <h2>其他年份</h2>
+          <ul>{editions.map((x) => (
+            <li>
+              <time class="tabular" datetime={x.start}>{x.start.slice(0, 4)}</time>
+              <a href={`/event/${x.slug}`}>{x.title}</a>
+            </li>
+          ))}</ul>
         </section>
       )}
 

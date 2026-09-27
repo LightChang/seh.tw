@@ -2,8 +2,12 @@
 clusterId: "evt_weiwuying-programs_69dca7022dfc3b00083acb54"
 slug: "2026-Open-House興傳奇青年劇場-馬上封侯"
 title: "【2026 Open House】興傳奇青年劇場 《馬上封侯》"
+category: "戲劇"
+categoryRaw: "2"
 status: "scheduled"
+popularity: 0
 isFree: true
+ticketUrl: "https://www.opentix.life/program/2095106310969434112"
 description: |-
   美猴王現身衛武營
   
@@ -16,6 +20,8 @@ description: |-
    索票資訊
   
    第一波 - 電子索票：9/29(二)中午12:00 起，於OPENTIX開放網路索票，每人每場次限領2張。
+  
+   索票連結
   
    第二波 - 現場索票：10/10(六)中午12:00 起，於該場演出廳院售票處開放索票，每人每場次限領2張，索完為止。
   
@@ -37,36 +43,70 @@ description: |-
 sessions: 
   - startAt: "2026-10-10T15:00:00+08:00"
     granularity: "datetime"
+    endAt: "2026-10-10T15:30:00+08:00"
+    onSales: true
     venueNameRaw: "衛武營國家藝術文化中心歌劇院"
-    lat: 22.6230179
-    lng: 120.3424341
     city: "高雄市"
     district: "鳳山區"
     address: "高雄市鳳山區三多一路1號"
     addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
     venueId: "ven_derived_衛武營國家藝術文化中心歌劇院"
     venueSlug: "衛武營國家藝術文化中心歌劇院"
   - startAt: "2026-10-10T17:00:00+08:00"
     granularity: "datetime"
+    endAt: "2026-10-10T17:30:00+08:00"
+    onSales: true
     venueNameRaw: "衛武營國家藝術文化中心歌劇院"
-    lat: 22.6230179
-    lng: 120.3424341
     city: "高雄市"
     district: "鳳山區"
     address: "高雄市鳳山區三多一路1號"
     addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
     venueId: "ven_derived_衛武營國家藝術文化中心歌劇院"
     venueSlug: "衛武營國家藝術文化中心歌劇院"
 sources: 
+  - id: "moc-events"
+    recordId: "6ab2b7b026b324165c32e50e"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2095106310969434112"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+    rejected: 
+      sourceUrl: "https://www.opentix.life/program/2095106310969434112"
   - id: "weiwuying-programs"
     recordId: "69dca7022dfc3b00083acb54"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69dca7022dfc3b00083acb54"
     provides: 
-      - "title"
       - "description"
       - "isFree"
-      - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"
+    rejected: 
+      sessions: 
+        - startAt: "2026-10-10T15:00:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心歌劇院"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
+        - startAt: "2026-10-10T17:00:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心歌劇院"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
 ---

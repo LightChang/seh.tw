@@ -5,7 +5,7 @@ title: "2026NTSO遍撒音樂種子在社區室內樂經典音樂會：NTSO臺灣
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 17
+popularity: 21
 performers: 
   - nameRaw: "NTSO臺灣青年交響樂團"
     country: "中華民國"

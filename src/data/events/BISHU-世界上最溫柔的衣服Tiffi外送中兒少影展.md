@@ -5,7 +5,7 @@ title: "《BISHU：世界上最溫柔的衣服》Tiffi外送中兒少影展"
 category: "電影"
 categoryRaw: "8"
 status: "scheduled"
-popularity: 1
+popularity: 3
 ticketUrl: "https://www.opentix.life/program/2072492703297261568"
 sessions: 
   - startAt: "2026-09-27T15:10:00+08:00"

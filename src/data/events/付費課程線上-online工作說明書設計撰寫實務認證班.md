@@ -5,7 +5,7 @@ title: "付費課程【線上 online】工作說明書設計撰寫實務認證�
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 67
+popularity: 68
 ticketUrl: "https://kktix.com/events/e7a400f7/registrations/quickly"
 organizers: 
   - nameRaw: "中華人事主管協會"

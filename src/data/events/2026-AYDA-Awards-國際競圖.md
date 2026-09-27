@@ -5,7 +5,7 @@ title: "2026 AYDA Awards 國際競圖"
 category: "競賽"
 categoryRaw: "13"
 status: "scheduled"
-popularity: 9
+popularity: 10
 priceText: "免費報名參加！"
 images: 
   - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-08-11/26d06a26-03bf-4830-a4fc-e707f5b5b29c/文化部iCulture_1024x768.jpg"

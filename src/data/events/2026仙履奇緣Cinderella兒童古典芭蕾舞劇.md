@@ -5,7 +5,7 @@ title: "2026《仙履奇緣Cinderella》兒童古典芭蕾舞劇"
 category: "舞蹈"
 categoryRaw: "3"
 status: "scheduled"
-popularity: 0
+popularity: 5
 ticketUrl: "https://www.opentix.life/program/2071509801821732864"
 sessions: 
   - startAt: "2026-10-03T18:30:00+08:00"

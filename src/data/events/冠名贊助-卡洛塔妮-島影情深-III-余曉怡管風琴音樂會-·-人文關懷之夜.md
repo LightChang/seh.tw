@@ -5,7 +5,7 @@ title: "冠名贊助：卡洛塔妮 〈島影情深 III 余曉怡管風琴音樂
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 2
+popularity: 4
 ticketUrl: "https://www.opentix.life/program/2028779666870386688"
 sessions: 
   - startAt: "2026-10-23T19:30:00+08:00"

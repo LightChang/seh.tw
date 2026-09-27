@@ -8,19 +8,6 @@ status: "scheduled"
 popularity: 1
 ticketUrl: "https://www.opentix.life/program/2059838478100336641"
 sessions: 
-  - startAt: "2026-09-19T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-19T16:30:00+08:00"
-    onSales: true
-    venueNameRaw: "臺中市港區藝術中心演藝廳"
-    city: "臺中市"
-    district: "清水區"
-    address: "臺中市清水區忠貞路21號"
-    addressPrecision: "street"
-    lat: 24.2694644
-    lng: 120.5576552
-    venueId: "ent_moc-emap-poi_7a8489d423668aa2"
-    venueSlug: "臺中市港區藝術中心"
   - startAt: "2026-09-27T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-09-27T16:30:00+08:00"

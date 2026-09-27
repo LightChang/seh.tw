@@ -5,7 +5,7 @@ title: "《塔咪貓的新朋友》Tiffi外送中兒少影展"
 category: "電影"
 categoryRaw: "8"
 status: "scheduled"
-popularity: 1
+popularity: 2
 ticketUrl: "https://www.opentix.life/program/2072851484706402305"
 sessions: 
   - startAt: "2026-09-27T13:45:00+08:00"

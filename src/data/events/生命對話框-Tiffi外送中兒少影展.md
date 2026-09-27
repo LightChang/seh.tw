@@ -8,19 +8,6 @@ status: "scheduled"
 popularity: 1
 ticketUrl: "https://www.opentix.life/program/2074031939514331137"
 sessions: 
-  - startAt: "2026-09-24T13:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-09-24T14:42:00+08:00"
-    onSales: true
-    venueNameRaw: "喜樂時代影城高雄總圖店 2樓6廳"
-    city: "高雄市"
-    district: "前鎮"
-    address: "高雄市前鎮區振興里林森四路189號2樓"
-    addressPrecision: "street"
-    lat: 22.6093407
-    lng: 120.3023582
-    venueId: "ven_derived_喜樂時代影城高雄總圖店-2樓6廳"
-    venueSlug: "喜樂時代影城高雄總圖店-2樓6廳"
   - startAt: "2026-09-27T13:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-09-27T15:12:00+08:00"

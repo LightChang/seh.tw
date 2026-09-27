@@ -5,7 +5,7 @@ title: "《 在枝葉之下 Beneath The Leaves 》"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 3
+popularity: 7
 images: 
   - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-08-13/8993ad0a-bf89-4379-a074-41a40b3b307a/電子展覽資訊圖_818x426.jpg"
 description: |-

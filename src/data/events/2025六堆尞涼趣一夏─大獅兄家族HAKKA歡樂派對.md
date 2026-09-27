@@ -17,4 +17,7 @@ sources:
     provides: 
       - "title"
       - "sessions"
+  - id: "hakka-liudui-events"
+    recordId: "e7fabc3a67f45f96"
+    provides: []
 ---

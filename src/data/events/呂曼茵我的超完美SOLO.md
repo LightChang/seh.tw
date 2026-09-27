@@ -5,7 +5,7 @@ title: "呂曼茵《我的超完美SOLO》"
 category: "戲劇"
 categoryRaw: "2"
 status: "scheduled"
-popularity: 4
+popularity: 5
 performers: 
   - nameRaw: "呂曼茵"
     country: "中華民國"

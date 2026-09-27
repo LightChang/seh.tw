@@ -6,6 +6,7 @@ category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
 popularity: 0
+priceText: "NT$ 1000、1500、2000"
 ticketUrl: "https://www.opentix.life/program/2098255075466424321"
 description: |-
   聲琴樂語 VII 是由女高音演唱家戴旖旎、小提琴家陳沁紅、單簧管家楊蕙祺、大提琴家曾史妃與鋼琴家林欣潔自2019年首次合作演出大受好評後，今年第七度帶來多首不同室內樂形式演出，豐富而精采的樂曲將帶給聽眾一個歡愉的夜晚。
@@ -71,9 +72,11 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
       - "sourceUrl"
       - "sourceUpdatedAt"
     rejected: 
+      ticketUrl: "https://www.opentix.life/event/2098255075466424321"
       sessions: 
         - startAt: "2026-11-27T19:30:00+08:00"
           granularity: "datetime"

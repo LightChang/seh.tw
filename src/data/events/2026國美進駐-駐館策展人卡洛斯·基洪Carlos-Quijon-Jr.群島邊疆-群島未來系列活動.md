@@ -4,7 +4,7 @@ slug: "2026國美進駐-駐館策展人卡洛斯·基洪Carlos-Quijon-Jr.群島�
 title: "2026國美進駐 | 駐館策展人卡洛斯·基洪（Carlos Quijon, Jr.）「群島邊疆／群島未來」系列活動"
 categoryRaw: "活動－一般大眾"
 status: "scheduled"
-description: "國美館持續推動國際交流與藝術學術對話，第二屆「國美進駐」（NTMoFA International Residency）獲選人為來自菲律賓當代藝術館(CCP Contemporary Art Museum of the Philippines )的總策展人卡洛斯·基洪（Carlos Quijon, ..."
+description: "國美館持續推動國際交流與藝術學術對話，第二屆「國美進駐」（NTMoFA International Residency）獲選人為來自菲律賓當代藝術館(CCP Contemporary Art Museum of the Philippines )的首席策展人卡洛斯·基洪（Carlos Quijon,..."
 sessions: 
   - startAt: "2026-09-19"
     granularity: "date"

@@ -5,7 +5,7 @@ title: "生活工藝館-漆藝DIY手作體驗"
 category: "講座"
 categoryRaw: "演講／講座／研討會"
 status: "scheduled"
-popularity: 190
+popularity: 198
 priceText: "韶光拂葉－4吋點心盤︰200 一生愉筷－天然漆筷︰300 赤誠相守－根來塗項鍊︰300 漆溜溜球︰600 妙染華彩－美扇︰250 古琴紙鎮︰300 妙染華彩－漂流漆環保袋︰250 韶光碧玉－隨身鏡︰150"
 performers: 
   - nameRaw: "漆道坊"

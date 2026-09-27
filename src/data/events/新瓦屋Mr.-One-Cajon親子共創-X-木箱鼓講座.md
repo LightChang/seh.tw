@@ -5,7 +5,7 @@ title: "新瓦屋【Mr. One Cajon】親子共創 X 木箱鼓講座"
 category: "講座"
 categoryRaw: "7"
 status: "scheduled"
-popularity: 1
+popularity: 6
 performers: 
   - nameRaw: "王萬沂"
     country: "中華民國"

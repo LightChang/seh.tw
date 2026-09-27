@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_moc-events_6aa58aa726b324165c32e3cf"
 slug: "方寸之間-Fragments-of-Sound"
-title: "方寸之間 Fragments of Sound"
+title: "方寸之間"
 category: "舞蹈"
 categoryRaw: "3"
 status: "scheduled"

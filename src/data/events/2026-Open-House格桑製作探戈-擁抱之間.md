@@ -2,8 +2,12 @@
 clusterId: "evt_weiwuying-programs_69dc9d412dfc3b00083aca21"
 slug: "2026-Open-House格桑製作探戈-擁抱之間"
 title: "【2026 Open House】格桑製作《探戈：擁抱之間》"
+category: "舞蹈"
+categoryRaw: "3"
 status: "scheduled"
+popularity: 0
 isFree: true
+ticketUrl: "https://www.opentix.life/program/2080137080298598400"
 description: |-
   「探戈，是兩個世界的相遇。」-策展人耿一偉
   
@@ -17,7 +21,31 @@ description: |-
   
    第一波 - 電子索票：9/29(二)中午12:00 起，於OPENTIX開放網路索票，每人每場次限領2張。
   
+   索票連結
+  
    第二波 - 現場索票：10/10(六)中午12:00 起，於該場演出廳院售票處開放索票，每人每場次限領2張，索完為止。
+  
+   曲目
+  
+  〈極致布利諾艾利斯港口人〉
+  
+  〈假面舞會〉
+  
+  〈舞者〉
+  
+  〈布宜諾斯艾利斯的瑪麗亞－祈喚〉
+  
+  〈魔鬼的浪漫曲〉
+  
+  〈探戈〉
+  
+  〈鯊魚〉
+  
+  〈魔鬼探戈〉
+  
+  〈手風琴的嘆息〉
+  
+  〈一步之遙〉
   
    演出暨製作團隊
   
@@ -53,36 +81,70 @@ description: |-
 sessions: 
   - startAt: "2026-10-10T13:00:00+08:00"
     granularity: "datetime"
+    endAt: "2026-10-10T13:30:00+08:00"
+    onSales: true
     venueNameRaw: "衛武營國家藝術文化中心戲劇院"
-    lat: 22.6230179
-    lng: 120.3424341
     city: "高雄市"
     district: "鳳山區"
     address: "高雄市鳳山區三多一路1號"
     addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
     venueId: "ven_derived_衛武營國家藝術文化中心戲劇院"
     venueSlug: "衛武營國家藝術文化中心戲劇院"
   - startAt: "2026-10-10T15:30:00+08:00"
     granularity: "datetime"
+    endAt: "2026-10-10T16:00:00+08:00"
+    onSales: true
     venueNameRaw: "衛武營國家藝術文化中心戲劇院"
-    lat: 22.6230179
-    lng: 120.3424341
     city: "高雄市"
     district: "鳳山區"
     address: "高雄市鳳山區三多一路1號"
     addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
     venueId: "ven_derived_衛武營國家藝術文化中心戲劇院"
     venueSlug: "衛武營國家藝術文化中心戲劇院"
 sources: 
+  - id: "moc-events"
+    recordId: "6ab2b7b026b324165c32e512"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2080137080298598400"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+    rejected: 
+      sourceUrl: "https://www.opentix.life/program/2080137080298598400"
   - id: "weiwuying-programs"
     recordId: "69dc9d412dfc3b00083aca21"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69dc9d412dfc3b00083aca21"
     provides: 
-      - "title"
       - "description"
       - "isFree"
-      - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"
+    rejected: 
+      sessions: 
+        - startAt: "2026-10-10T13:00:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心戲劇院"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
+        - startAt: "2026-10-10T15:30:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心戲劇院"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
 ---

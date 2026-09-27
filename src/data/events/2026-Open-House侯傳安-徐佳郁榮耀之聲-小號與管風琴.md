@@ -2,8 +2,12 @@
 clusterId: "evt_weiwuying-programs_69dcb5f548f3f3000743a652"
 slug: "2026-Open-House侯傳安-徐佳郁榮耀之聲-小號與管風琴"
 title: "【2026 Open House】侯傳安 & 徐佳郁《榮耀之聲：小號與管風琴》"
+category: "音樂"
+categoryRaw: "1"
 status: "scheduled"
+popularity: 0
 isFree: true
+ticketUrl: "https://www.opentix.life/program/2082315498688065536"
 description: |-
   在衛武營 10/10 Open House 系列活動中，小號家侯傳安與管風琴家徐佳郁將帶來一場精緻的《榮耀之聲》。本場演出展現了音色對比鮮明的聽覺趣味：小號清透嘹亮的旋律，與管風琴厚實多變的音栓聲響交織在一起，在高低聲域間形成精彩的對話，呈現出樂器之間細膩的線條與舞台張力。
   
@@ -12,6 +16,8 @@ description: |-
    索票資訊
   
    第一波 - 電子索票：9/29(二)中午12:00 起，於OPENTIX開放網路索票，每人每場次限領2張。
+  
+   索票連結
   
    第二波 - 現場索票：10/10(六)中午12:00 起，於該場演出廳院售票處開放索票，每人每場次限領2張，索完為止。
   
@@ -45,36 +51,70 @@ description: |-
 sessions: 
   - startAt: "2026-10-10T14:30:00+08:00"
     granularity: "datetime"
+    endAt: "2026-10-10T15:00:00+08:00"
+    onSales: true
     venueNameRaw: "衛武營國家藝術文化中心音樂廳"
-    lat: 22.6230179
-    lng: 120.3424341
     city: "高雄市"
     district: "鳳山區"
     address: "高雄市鳳山區三多一路1號"
     addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
     venueId: "ven_derived_衛武營國家藝術文化中心音樂廳"
     venueSlug: "衛武營國家藝術文化中心音樂廳"
   - startAt: "2026-10-10T16:30:00+08:00"
     granularity: "datetime"
+    endAt: "2026-10-10T17:00:00+08:00"
+    onSales: true
     venueNameRaw: "衛武營國家藝術文化中心音樂廳"
-    lat: 22.6230179
-    lng: 120.3424341
     city: "高雄市"
     district: "鳳山區"
     address: "高雄市鳳山區三多一路1號"
     addressPrecision: "street"
+    lat: 22.6230179
+    lng: 120.3424341
     venueId: "ven_derived_衛武營國家藝術文化中心音樂廳"
     venueSlug: "衛武營國家藝術文化中心音樂廳"
 sources: 
+  - id: "moc-events"
+    recordId: "6ab2b7ae26b324165c32e507"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2082315498688065536"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+    rejected: 
+      sourceUrl: "https://www.opentix.life/program/2082315498688065536"
   - id: "weiwuying-programs"
     recordId: "69dcb5f548f3f3000743a652"
     sourceName: "衛武營國家藝術文化中心 節目資料"
     url: "https://www.npac-weiwuying.org/programs/69dcb5f548f3f3000743a652"
     provides: 
-      - "title"
       - "description"
       - "isFree"
-      - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"
+    rejected: 
+      sessions: 
+        - startAt: "2026-10-10T14:30:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心音樂廳"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
+        - startAt: "2026-10-10T16:30:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心音樂廳"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
 ---

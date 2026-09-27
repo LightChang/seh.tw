@@ -1,0 +1,36 @@
+---
+clusterId: "evt_moc-events_6aad71c426b324165c32e4f1"
+slug: "2026-賴昱如中提琴獨奏會-歸聲Nachklang"
+title: "2026 賴昱如中提琴獨奏會- 《歸聲Nachklang 》"
+category: "音樂"
+categoryRaw: "1"
+status: "scheduled"
+popularity: 0
+ticketUrl: "https://www.opentix.life/program/2100432152971939841"
+sessions: 
+  - startAt: "2026-10-25T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-25T21:30:00+08:00"
+    onSales: true
+    venueNameRaw: "國家兩廳院演奏廳"
+    city: "臺北市"
+    district: "中正區"
+    address: "臺北市中正區中山南路21-1號"
+    addressPrecision: "street"
+    lat: 25.0367564
+    lng: 121.519047
+    venueId: "ven_derived_國家兩廳院演奏廳"
+    venueSlug: "國家兩廳院演奏廳"
+sources: 
+  - id: "moc-events"
+    recordId: "6aad71c426b324165c32e4f1"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2100432152971939841"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+      - "sourceUrl"
+---

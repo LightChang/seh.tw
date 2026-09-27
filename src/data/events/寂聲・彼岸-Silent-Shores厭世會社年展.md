@@ -5,7 +5,7 @@ title: "《寂聲・彼岸 Silent Shores》厭世會社年展"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 14
+popularity: 15
 images: 
   - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-02-05/1ec12693-4217-4e6f-80b0-ba80462bc5e2/大展覽一隅-導覽圖.jpeg"
 performers: 

@@ -5,7 +5,7 @@ title: "生活工藝館-竹藝DIY手作體驗"
 category: "講座"
 categoryRaw: "演講／講座／研討會"
 status: "scheduled"
-popularity: 167
+popularity: 179
 priceText: "竹青蛙︰60 花風車︰200 鑰匙圈︰150 花形圓缽︰150 小竹扇︰200 魚兒︰150 四角杯墊︰200 花器︰150 筆記本-單面︰650 筆記本-雙面︰900"
 performers: 
   - nameRaw: "藏知工坊"

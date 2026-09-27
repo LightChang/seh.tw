@@ -5,7 +5,7 @@ title: "〈地獄懺 Hell Realm〉"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 6
+popularity: 7
 performers: 
   - nameRaw: "姚瑞中"
     country: "中華民國"

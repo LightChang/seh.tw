@@ -21,11 +21,15 @@ sessions:
     venueSlug: "國立科學工藝博物館北館4樓生物科技教室-本館與戶外"
 sources: 
   - id: "nstm-activities"
-    recordId: "91c257ea4cc925e5"
+    recordId: "2bf696f835be1f4f"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: 
       - "title"
       - "categoryRaw"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "91c257ea4cc925e5"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
 ---

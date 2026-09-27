@@ -5,7 +5,7 @@ title: "Let’s Play with MUTEK! 噪動未來：AI沉浸電波"
 category: "獨立音樂"
 categoryRaw: "5"
 status: "scheduled"
-popularity: 0
+popularity: 1
 ticketUrl: "https://www.opentix.life/program/2097669077352583169"
 sessions: 
   - startAt: "2026-10-16T19:00:00+08:00"

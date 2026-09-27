@@ -5,7 +5,7 @@ title: "新北市生音藝術節- C MUSICAL韓國授權親子音樂劇《月亮�
 category: "戲劇"
 categoryRaw: "2"
 status: "scheduled"
-popularity: 6
+popularity: 10
 ticketUrl: "https://www.opentix.life/program/2061716950617038849"
 images: 
   - url: "https://newtaipei.travel/image/71870/640x480"

@@ -5,7 +5,7 @@ title: "歡顏 II高雄吉他室內樂團音樂會"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 14
+popularity: 15
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1E8JW4Q"
 sessions: 
   - startAt: "2026-11-01T14:30:00+08:00"

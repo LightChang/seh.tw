@@ -5,7 +5,7 @@ title: "齊柏林空間年度特展《Re見：齊柏林俯瞰台灣》"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 4
+popularity: 5
 priceText: "團體票(15人以上)120元／優待票100元"
 performers: 
   - nameRaw: "看見‧齊柏林基金會"

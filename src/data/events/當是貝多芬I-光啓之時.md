@@ -5,7 +5,7 @@ title: "當是貝多芬I：光啓之時"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 7
+popularity: 10
 priceText: "詳見OPENTIX 售票系統"
 ticketUrl: "https://www.opentix.life/program/2063969687791849473"
 images: 
@@ -53,7 +53,7 @@ description: |-
 sessions: 
   - startAt: "2026-10-09T19:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-09T21:10:00+08:00"
+    endAt: "2026-10-09T21:35:00+08:00"
     onSales: true
     venueNameRaw: "大東文化藝術中心"
     city: "高雄市"

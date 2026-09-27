@@ -1,0 +1,361 @@
+---
+clusterId: "evt_moc-events_6aaaceca26b324165c32e438"
+slug: "蜂嘲男孩-TTXC-XR-DREAMLAND"
+title: "《蜂嘲男孩》｜TTXC XR DREAMLAND"
+category: "電影"
+categoryRaw: "8"
+status: "scheduled"
+popularity: 0
+ticketUrl: "https://www.opentix.life/program/2092910801518632961"
+sessions: 
+  - startAt: "2026-10-09T12:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-09T13:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-09T18:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-09T18:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-10T11:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-10T11:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-10T16:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-10T17:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-11T15:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-11T16:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-12T14:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-12T15:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-13T13:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-13T14:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-14T12:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-14T13:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-14T18:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-14T18:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-15T11:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-15T11:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-15T16:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-15T17:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-16T15:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-16T16:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-17T14:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-17T15:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-18T13:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-18T14:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-19T12:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-19T13:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-19T18:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-19T18:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-20T11:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-20T11:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-20T16:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-20T17:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-21T15:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-21T16:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-22T14:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-22T15:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-23T13:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-23T14:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-24T12:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-24T13:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-24T18:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-24T18:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-25T11:10:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-25T11:46:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-25T16:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-25T17:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+  - startAt: "2026-10-26T15:40:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-26T16:16:00+08:00"
+    onSales: true
+    venueNameRaw: "VR體感劇院-360影廳"
+    city: "高雄市"
+    district: "鹽埕區"
+    address: "高雄市鹽埕區大義街駁二大義區C9-8倉庫"
+    addressPrecision: "street"
+    lat: 22.6185646
+    lng: 120.2856751
+    venueId: "ven_derived_VR體感劇院-360影廳"
+    venueSlug: "VR體感劇院-360影廳"
+sources: 
+  - id: "moc-events"
+    recordId: "6aaaceca26b324165c32e438"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2092910801518632961"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+      - "sourceUrl"
+---

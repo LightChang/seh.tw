@@ -5,7 +5,7 @@ title: "基隆故事館「STORY100%」特展"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 162
+popularity: 169
 performers: 
   - nameRaw: "基隆市文化觀光局"
     country: "中華民國"

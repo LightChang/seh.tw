@@ -13,8 +13,11 @@ sessions:
     venueSlug: "六堆客家文化園區"
 sources: 
   - id: "hakka-liudui-events"
-    recordId: "7989fa451602f890"
+    recordId: "2191d2c2c8263c7b"
     provides: 
       - "title"
       - "sessions"
+  - id: "hakka-liudui-events"
+    recordId: "7989fa451602f890"
+    provides: []
 ---

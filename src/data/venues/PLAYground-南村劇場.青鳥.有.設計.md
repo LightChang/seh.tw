@@ -15,7 +15,8 @@ openingHoursSource:
   name: "文化部 iCulture 文化地圖 POI（場館/景點/文化資產）"
   url: "https://cloud.culture.tw/"
 buildingId: "bld_25.0355_121.5645"
-eventCount: 1
+eventCount: 2
 eventClusterIds: 
   - "evt_moc-events_6a14816326b3243414cccb52"
+  - "evt_moc-events_6ab7fdbd26b324165c32e540"
 ---

@@ -5,7 +5,7 @@ title: "Jason Mraz ASIA TOUR 2026 IN TAIPEI"
 category: "演唱會"
 categoryRaw: "17"
 status: "scheduled"
-popularity: 32
+popularity: 39
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1AT93WA"
 sessions: 
   - startAt: "2026-11-02T19:30:00+08:00"

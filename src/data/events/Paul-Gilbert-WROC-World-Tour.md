@@ -1,11 +1,11 @@
 ---
 clusterId: "evt_moc-events_6a7943c8eb4345557aab58e7"
 slug: "Paul-Gilbert-WROC-World-Tour"
-title: "Paul Gilbert WROC World Tour 2026"
-category: "音樂"
-categoryRaw: "音樂現場"
+title: "Paul Gilbert WROC World Tour"
+category: "演唱會"
+categoryRaw: "17"
 status: "scheduled"
-popularity: 4
+popularity: 9
 isFree: false
 priceText: "KKTIX、全台全家便利商店FamiPort機台"
 ticketUrl: "https://rockempire.kktix.cc/events/4e2ae0df"
@@ -38,6 +38,8 @@ sources:
     sourceName: "狂人音樂演藝經紀有限公司"
     url: "https://www.facebook.com/rockempire"
     provides: 
+      - "title"
+      - "categoryRaw"
       - "popularity"
       - "performers"
       - "organizers"
@@ -45,7 +47,6 @@ sources:
       - "sourceUrl"
       - "sourceUpdatedAt"
     rejected: 
-      title: "Paul Gilbert WROC World Tour"
       description: |-
         Paul Gilbert WROC World Tour 2026
         One Night In Taipei台北狂飆夜
@@ -56,7 +57,36 @@ sources:
         光速吉他大師 Paul Gilbert 再度技炫台
       images: 
         - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-08-10/bec68d3e-e91b-4b31-9f0e-bfeb76a3c8bd/1200x630 PG2026.png"
-      categoryRaw: "17"
+      priceText: |-
+        票　　價：
+        貴賓區 VIP (站立) 早鳥$3,800│ 原價$4,288 (限量50張)
+        搖滾區 GA (站立) 早鳥$1,800│ 原價$2,288
+        早鳥至2026/8/31止，9月1日起恢復原價
+        「VIP」票福利：與藝人簽名合
+  - id: "moc-events"
+    recordId: "6a7943c8eb4345557aab58e7"
+    sourceName: "狂人音樂演藝經紀有限公司"
+    url: "https://www.facebook.com/rockempire"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "popularity"
+      - "performers"
+      - "organizers"
+      - "sessions"
+      - "sourceUrl"
+      - "sourceUpdatedAt"
+    rejected: 
+      description: |-
+        Paul Gilbert WROC World Tour 2026
+        One Night In Taipei台北狂飆夜
+        
+        大人物掌弦人 炫技開演
+        
+        吉他魅力橫掃美國、亞洲和東南亞
+        光速吉他大師 Paul Gilbert 再度技炫台
+      images: 
+        - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-08-10/bec68d3e-e91b-4b31-9f0e-bfeb76a3c8bd/1200x630 PG2026.png"
       priceText: |-
         票　　價：
         貴賓區 VIP (站立) 早鳥$3,800│ 原價$4,288 (限量50張)
@@ -67,14 +97,14 @@ sources:
     recordId: "3047ba47-faff-4fb3-af07-c10237fb41d9"
     url: "http://www.rockempire.com.tw/"
     provides: 
-      - "title"
       - "description"
       - "images"
-      - "categoryRaw"
       - "isFree"
       - "priceText"
       - "ticketUrl"
     rejected: 
+      title: "Paul Gilbert WROC World Tour 2026"
+      categoryRaw: "音樂現場"
       organizers: 
         - nameRaw: "狂人音樂演藝經紀有限公司"
           role: "master"

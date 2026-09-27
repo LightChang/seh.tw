@@ -5,7 +5,7 @@ title: "SEVENTEEN LYRICS POSTCARD KIT"
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 38
+popularity: 39
 ticketUrl: "https://ticket.com.tw/Application/UTK02/UTK0201_.aspx?PRODUCT_ID=P14EBDG1"
 sessions: 
   - startAt: "2026-01-01T00:00:00+08:00"

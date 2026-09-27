@@ -5,7 +5,7 @@ title: "POP! POP! POP!流行音樂互動展"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 25
+popularity: 28
 ticketUrl: "https://kktix.com/"
 performers: 
   - nameRaw: "Backdesign- Jackson Tan等"

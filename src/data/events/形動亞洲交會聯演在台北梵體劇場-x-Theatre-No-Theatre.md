@@ -5,21 +5,127 @@ title: "《形動亞洲交會聯演在台北》梵體劇場 x Theatre No Theatre
 category: "戲劇"
 categoryRaw: "演出"
 status: "scheduled"
+popularity: 0
+ticketUrl: "https://www.opentix.life/program/2093186512661815296"
 description: "《形動亞洲交會聯演在台北》是梵體劇場籌辦的『形動亞洲——葛氏台灣聲體計畫』第三年呈現，也是Theatre No Theatre帶領【Across-Asia: Voices Unveiled】跨亞洲計畫的第三年豐收成果。本計畫的表演者透過《唱出身體記憶裡的歌》大師工作坊，與Grotowski嫡傳弟子T..."
 sessions: 
-  - startAt: "2026-10-29"
-    granularity: "date"
-    endAt: "2026-11-01"
+  - startAt: "2026-10-29T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-29T21:00:00+08:00"
+    onSales: true
     venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
-    lat: 25.102276
-    lng: 121.519778
     city: "臺北市"
     district: "士林區"
     address: "臺北市士林區文林路751號"
     addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-10-30T19:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-30T21:00:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-10-31T13:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-31T14:10:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-10-31T15:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-31T17:30:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-10-31T19:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-31T21:00:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-11-01T13:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-11-01T14:10:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-11-01T15:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-11-01T17:30:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
+    venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
+    venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
+  - startAt: "2026-11-01T19:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-11-01T21:00:00+08:00"
+    onSales: true
+    venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+    city: "臺北市"
+    district: "士林區"
+    address: "臺北市士林區文林路751號"
+    addressPrecision: "street"
+    lat: 25.1022766
+    lng: 121.5197787
     venueId: "ven_derived_臺灣戲曲中心臺灣音樂館B1視聽室"
     venueSlug: "臺灣戲曲中心臺灣音樂館B1視聽室"
 sources: 
+  - id: "moc-events"
+    recordId: "6aad71ca26b324165c32e4f5"
+    sourceName: "OPENTIX兩廳院文化生活"
+    url: "https://www.opentix.life/program/2093186512661815296"
+    provides: 
+      - "popularity"
+      - "ticketUrl"
+      - "sessions"
+    rejected: 
+      title: "形動亞洲交會聯演在台北"
+      categoryRaw: "2"
+      sourceUrl: "https://www.opentix.life/program/2093186512661815296"
   - id: "ncfta-activities"
     recordId: "261326"
     sourceName: "國立傳統藝術中心 展演活動資料"
@@ -28,6 +134,17 @@ sources:
       - "title"
       - "description"
       - "categoryRaw"
-      - "sessions"
       - "sourceUrl"
+    rejected: 
+      sessions: 
+        - startAt: "2026-10-29"
+          granularity: "date"
+          endAt: "2026-11-01"
+          venueNameRaw: "臺灣戲曲中心臺灣音樂館B1視聽室"
+          lat: 25.102276
+          lng: 121.519778
+          city: "臺北市"
+          district: "士林區"
+          address: "臺北市士林區文林路751號"
+          addressPrecision: "street"
 ---

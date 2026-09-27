@@ -5,7 +5,7 @@ title: "temavelak 接手－承傳排灣族雙管口、鼻笛藝術行動展"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 27
+popularity: 28
 priceText: "殘障國民、65歲以上老人、110公分以下免購票入園。"
 performers: 
   - nameRaw: "伊誕創藝視界"

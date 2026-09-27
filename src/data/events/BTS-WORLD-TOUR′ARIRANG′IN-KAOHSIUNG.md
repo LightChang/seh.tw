@@ -5,7 +5,7 @@ title: "BTS WORLD TOUR′ARIRANG′IN KAOHSIUNG"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 8
+popularity: 9
 ticketUrl: "https://tixcraft.com/"
 performers: 
   - nameRaw: "BTS"

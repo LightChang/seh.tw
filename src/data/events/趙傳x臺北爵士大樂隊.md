@@ -5,7 +5,7 @@ title: "「節目異動」《趙傳x臺北爵士大樂隊》"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 1
+popularity: 2
 priceText: "NT$ 800、1000、1600、2400、3500"
 ticketUrl: "https://www.opentix.life/program/2066713604762415104"
 description: |-

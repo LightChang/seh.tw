@@ -5,7 +5,7 @@ title: "《好好回來》Season 01｜臺北閱讀空間系列"
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 6
+popularity: 10
 priceText: "本活動統一透過 ACCUPASS 活動通報名及付款，實際付款方式依 ACCUPASS 系統提供之選項為準。"
 ticketUrl: "https://www.accupass.com/event/2606160752141956501595"
 images: 

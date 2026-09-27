@@ -5,7 +5,7 @@ title: "大溪藝能事務所 Woodcraft Wonders 展覽"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 2
+popularity: 3
 performers: 
   - nameRaw: "桃園市立大溪木藝生態博物館"
     country: "中華民國"

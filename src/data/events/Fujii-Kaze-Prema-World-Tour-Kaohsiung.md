@@ -5,7 +5,7 @@ title: "Fujii Kaze Prema World Tour - Kaohsiung"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
-popularity: 5
+popularity: 7
 images: 
   - url: "https://khh.travel/image/64396/640x480"
     caption: "Fujii Kaze Prema World Tour - Kaohsiung"

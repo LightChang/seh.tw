@@ -5,7 +5,7 @@ title: "Let’s Play with MUTEK! 復古未來：AI電音派對"
 category: "獨立音樂"
 categoryRaw: "5"
 status: "scheduled"
-popularity: 0
+popularity: 2
 ticketUrl: "https://www.opentix.life/program/2097677187682439169"
 sessions: 
   - startAt: "2026-10-17T19:00:00+08:00"

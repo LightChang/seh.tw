@@ -17,13 +17,27 @@ sessions:
     addressPrecision: "street"
     venueId: "ven_derived_高雄市鼓山區哨船街32號"
     venueSlug: "高雄市鼓山區哨船街32號"
+  - startAt: "2027-01-25T10:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2027-01-25T16:00:00+08:00"
+    venueNameRaw: "高雄市鼓山區哨船街32號"
+    city: "高雄市"
+    district: "鼓山區"
+    address: "高雄市鼓山區哨船街32號"
+    addressPrecision: "street"
+    venueId: "ven_derived_高雄市鼓山區哨船街32號"
+    venueSlug: "高雄市鼓山區哨船街32號"
 sources: 
   - id: "nstm-activities"
-    recordId: "f7575aff045bf23a"
+    recordId: "4ddfa95c7b4c8ee5"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: 
       - "title"
       - "categoryRaw"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "f7575aff045bf23a"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
 ---

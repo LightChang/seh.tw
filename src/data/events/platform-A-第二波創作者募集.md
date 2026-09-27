@@ -4,7 +4,7 @@ slug: "platform-A-第二波創作者募集"
 title: "platform A 第二波創作者募集"
 categoryRaw: "城市生活圈"
 status: "scheduled"
-popularity: 770
+popularity: 773
 isFree: true
 images: 
   - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01%2fqdc%2fcZjMjG%2fsc1qhoZlHAUO4vUmil2u5OMm3QUTGdvTTeEPLif7KTpcTMacDeph%2fdECtSBQEp4CH0my%2bejU0k%3d"

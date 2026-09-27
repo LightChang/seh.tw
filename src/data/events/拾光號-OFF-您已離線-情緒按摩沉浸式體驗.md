@@ -101,7 +101,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-22T14:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-22T14:50:00+08:00"
+    endAt: "2026-10-22T14:30:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -231,7 +231,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-22T20:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-22T21:20:00+08:00"
+    endAt: "2026-10-22T21:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -283,7 +283,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-22T22:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-22T23:20:00+08:00"
+    endAt: "2026-10-22T23:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -296,7 +296,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-23T14:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-23T14:50:00+08:00"
+    endAt: "2026-10-23T14:30:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -452,7 +452,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-23T21:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-23T22:20:00+08:00"
+    endAt: "2026-10-23T22:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -478,7 +478,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-23T22:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-23T23:20:00+08:00"
+    endAt: "2026-10-23T23:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -543,7 +543,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-24T16:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-24T16:30:00+08:00"
+    endAt: "2026-10-24T16:50:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -621,7 +621,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-24T20:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-24T21:00:00+08:00"
+    endAt: "2026-10-24T21:20:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -673,7 +673,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-24T22:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-24T23:20:00+08:00"
+    endAt: "2026-10-24T23:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -764,7 +764,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-25T17:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-25T17:50:00+08:00"
+    endAt: "2026-10-25T17:30:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"
@@ -868,7 +868,7 @@ sessions:
     venueSlug: "可能存在的遊樂園-CollaPlay"
   - startAt: "2026-10-25T22:30:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-25T23:20:00+08:00"
+    endAt: "2026-10-25T23:00:00+08:00"
     onSales: true
     venueNameRaw: "可能存在的遊樂園 CollaPlay"
     city: "臺北市"

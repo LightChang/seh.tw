@@ -5,7 +5,7 @@ title: "nutjaivililj 以後的以後"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 90
+popularity: 91
 priceText: "殘障國民、65歲以上老人、110公分以下免購票入園。"
 performers: 
   - nameRaw: "原住民族委員會原住民族文化發展中心"

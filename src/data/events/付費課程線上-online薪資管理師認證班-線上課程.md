@@ -5,7 +5,7 @@ title: "付費課程【線上 online】薪資管理師認證班 -線上課程"
 category: "其他"
 categoryRaw: "15"
 status: "scheduled"
-popularity: 47
+popularity: 48
 ticketUrl: "https://kktix.com/events/229fc41e/registrations/quickly"
 organizers: 
   - nameRaw: "中華人事主管協會"

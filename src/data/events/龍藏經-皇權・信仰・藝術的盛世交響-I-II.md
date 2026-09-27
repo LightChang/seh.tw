@@ -4,7 +4,7 @@ slug: "龍藏經-皇權・信仰・藝術的盛世交響-I-II"
 title: "《龍藏經》：皇權・信仰・藝術的盛世交響 (I) (II)"
 categoryRaw: "#繪畫 #圖書文獻 #器物"
 status: "scheduled"
-popularity: 7
+popularity: 9
 priceText: "--"
 performers: 
   - nameRaw: "國立故宮博物院"

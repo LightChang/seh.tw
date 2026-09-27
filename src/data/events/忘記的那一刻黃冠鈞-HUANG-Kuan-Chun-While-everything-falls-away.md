@@ -5,7 +5,7 @@ title: "「忘記的那一刻」黃冠鈞  HUANG Kuan Chun:While everything fall
 category: "展覽"
 categoryRaw: "展覽"
 status: "scheduled"
-popularity: 7
+popularity: 13
 isFree: true
 images: 
   - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01zqytBWNNfIdCbTWHU9v2Q7qaykHvL7qaHb9Y9p4J%2bUI3bhTHV4db1QnUhiFWyoco%2fTxSnIEtea8cYBNVNUEE9M%3d"

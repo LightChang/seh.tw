@@ -5,7 +5,7 @@ title: "傅琬婷 創作個展【BLING BLING】"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 1
+popularity: 5
 images: 
   - url: "https://cloud.culture.twhttps://cloud.culture.tw/e_new_upload/signinImage/2026-08-20/ef337fa3-d096-46e3-8450-095cbf017f1c/傅琬婷-文宣0806_正方形 (1).jpg"
 performers: 

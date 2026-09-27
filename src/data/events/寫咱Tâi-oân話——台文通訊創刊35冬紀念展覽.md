@@ -5,7 +5,7 @@ title: "「寫咱Tâi-oân話」——《台文通訊》創刊35冬紀念展覽"
 category: "展覽"
 categoryRaw: "6"
 status: "scheduled"
-popularity: 37
+popularity: 38
 performers: 
   - nameRaw: "高雄市立圖書館高雄文學館"
     country: "中華民國"
