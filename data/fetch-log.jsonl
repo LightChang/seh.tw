@@ -355,3 +355,29 @@
 {"at":"2026-09-27T16:36:01+08:00","id":"tainan-indigenous-performing-groups","outcome":"unchanged","via":"fetch","count":3,"ms":38}
 {"at":"2026-09-27T16:36:01+08:00","id":"tainan-public-libraries","outcome":"unchanged","via":"fetch","count":45,"ms":75}
 {"at":"2026-09-27T16:36:01+08:00","id":"moc-community","outcome":"failed","error":"moc-community: page=32 重試 2 次仍失敗（This operation was aborted），已取得 620 / 8309 筆。分頁不完整，這輪不覆蓋 raw。","ms":140320}
+{"at":"2026-09-28T04:10:02+08:00","id":"hsinchu-county-culture-events","outcome":"unchanged","via":"fetch","count":11,"ms":1156}
+{"at":"2026-09-28T04:10:02+08:00","id":"arte-events","outcome":"changed","via":"fetch","count":22,"ms":2258}
+{"at":"2026-09-28T04:10:02+08:00","id":"moca-taipei-events","outcome":"unchanged","via":"fetch","count":27,"ms":1819}
+{"at":"2026-09-28T04:10:02+08:00","id":"ncfta-activities","outcome":"changed","via":"fetch","count":44,"ms":2586}
+{"at":"2026-09-28T04:10:02+08:00","id":"ncl-events","outcome":"changed","via":"fetch","count":20,"ms":545}
+{"at":"2026-09-28T04:10:02+08:00","id":"boch-heritage-arts-crafts","outcome":"changed","via":"fetch","count":355,"ms":8083}
+{"at":"2026-09-28T04:10:02+08:00","id":"nmns-exhibitions","outcome":"unchanged","via":"fetch","count":8,"ms":2361}
+{"at":"2026-09-28T04:10:02+08:00","id":"npm-events","outcome":"changed","via":"fetch","count":19,"ms":1776}
+{"at":"2026-09-28T04:10:02+08:00","id":"ntch-programs","outcome":"unchanged","via":"fetch","count":15,"ms":483}
+{"at":"2026-09-28T04:10:02+08:00","id":"boch-heritage-folklore","outcome":"changed","via":"fetch","count":288,"ms":5995}
+{"at":"2026-09-28T04:10:02+08:00","id":"moc-emap-poi","outcome":"changed","via":"fetch","count":14381,"ms":15251}
+{"at":"2026-09-28T04:10:02+08:00","id":"kmfa-events","outcome":"changed","via":"fetch","count":33,"ms":19201}
+{"at":"2026-09-28T04:10:02+08:00","id":"moc-events","outcome":"shrank","prev":1727,"count":109,"error":"筆數異常縮水 1727 → 109，未覆蓋 raw","ms":1495}
+{"at":"2026-09-28T04:10:02+08:00","id":"ntpc-culture-events","outcome":"changed","via":"fetch","count":66,"ms":828}
+{"at":"2026-09-28T04:10:02+08:00","id":"ntt-programs","outcome":"changed","via":"fetch","count":97,"ms":790}
+{"at":"2026-09-28T04:10:02+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":289}
+{"at":"2026-09-28T04:10:02+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":67,"ms":1681}
+{"at":"2026-09-28T04:10:02+08:00","id":"tfam-exhibitions","outcome":"changed","via":"fetch","count":582,"ms":1716}
+{"at":"2026-09-28T04:10:02+08:00","id":"tnam-events","outcome":"changed","via":"fetch","count":17,"ms":2082}
+{"at":"2026-09-28T04:10:02+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":30,"ms":1991}
+{"at":"2026-09-28T04:10:02+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1095,"ms":1692}
+{"at":"2026-09-28T04:10:02+08:00","id":"ntmofa-events","outcome":"changed","via":"fetch","count":39,"ms":15076}
+{"at":"2026-09-28T04:10:02+08:00","id":"weiwuying-programs","outcome":"changed","via":"fetch","count":190,"ms":3500}
+{"at":"2026-09-28T04:10:02+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":26,"ms":28021}
+{"at":"2026-09-28T04:10:02+08:00","id":"boch-heritage-preservers","outcome":"unchanged","via":"fetch","count":1046,"ms":65857}
+{"at":"2026-09-28T04:10:02+08:00","id":"boch-heritage","outcome":"unchanged","via":"fetch","count":6411,"ms":150238}
