@@ -52,7 +52,17 @@ const desc = e.description ? decodeEntities(e.description) : '';
 const srcUrl = e.sources.find((x) => x.url)?.url;
 // 來源給的購票／報名連結（JSON-LD 的 offers.url 用同一個），沒有就不顯示，不自己找
 const ticket = ticketLink(e.ticketUrl, e.isFree);
-const metaTitle = eventTitle(e);
+// 官方名稱常整個包一層書名號（「《卡普松與傑洛米二重奏》」），但使用者搜尋時不會打這兩個符號，
+// SERP 標題留著它就跟搜尋字不一樣。只拆「整包」的，中間帶書名號的副標不動
+// （「《和光同塵：李安成》光塵之間」不拆，因為書名號後面還有字）。H1、JSON-LD 仍用原始 e.title。
+const TITLE_WRAPPERS = [['《', '》'], ['「', '」'], ['『', '』'], ['〈', '〉']];
+const unwrapTitle = (t) => {
+  for (const [open, close] of TITLE_WRAPPERS) {
+    if (t.startsWith(open) && t.endsWith(close) && t.length > open.length + close.length) return t.slice(open.length, -close.length);
+  }
+  return t;
+};
+const metaTitle = eventTitle({ ...e, title: unwrapTitle(e.title) });
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
