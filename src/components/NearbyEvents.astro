@@ -1,0 +1,30 @@
+---
+// 活動頁的「同場地／同縣市近期活動」（資料由 src/lib/nearby-events.mjs 挑好）。
+import { catVar } from '../lib/format.mjs';
+import { leadText } from '../lib/day-lists.mjs';
+const { items, city, venueName, now } = Astro.props;
+const onlyVenue = items.every((d) => d.near === 'venue');
+const heading = onlyVenue && venueName ? `${venueName}近期活動` : city ? `${city}近期活動` : '近期活動';
+---
+{items.length > 0 && (
+  <section class="nearby">
+    <h2 class="h-near">{heading}</h2>
+    <ol class="ev-list">
+      {items.map((d) => (
+        <li><a href={`/event/${d.slug}`}>
+          <time class="ev-lead tabular" datetime={d.at}>{leadText(d, now)}</time>
+          <span class="ev-body"><span class="ev-t">{d.title}</span>
+            {d.venue && <span class="ev-m">{d.near === 'venue' ? d.venue : [d.district, d.venue].filter(Boolean).join('　')}</span>}</span>
+          <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+        </a></li>
+      ))}
+    </ol>
+    {city && <p class="more-near"><a href={`/city/${city}`}>{city}所有近期活動</a></p>}
+  </section>
+)}
+<style>
+  .nearby { margin-top: var(--space-7); }
+  .h-near { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; }
+  .nearby .ev-list { margin: var(--space-4) 0 0; }
+  .more-near { margin-top: var(--space-4); font-size: var(--text-sm); }
+</style>

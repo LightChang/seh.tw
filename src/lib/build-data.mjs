@@ -3,6 +3,7 @@
 import { readFile } from 'node:fs/promises';
 import { seriesIndex } from './event-series.mjs';
 import { newlyListed } from './new-listings.mjs';
+import { nearbyIndex } from './nearby-events.mjs';
 import { getCollection } from 'astro:content';
 import { hasClockTime } from './session-time.mjs';
 import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
@@ -81,6 +82,18 @@ export async function newListings({ city, limit = 10, days = 30, now = Date.now(
   const [rows, listed, st] = await Promise.all([flatSessions(), listedAt(), pageState()]);
   const keep = (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
   return newlyListed(city ? rows.filter((d) => d.city === city) : rows, listed, now, { limit, days, keep });
+}
+
+// 活動頁的同場地／同縣市近期活動（src/lib/nearby-events.mjs）。每個活動頁都會查，索引只建一次。
+let NEARBY = null;
+export async function nearbyEvents() {
+  if (NEARBY) return NEARBY;
+  const [rows, st, vn] = await Promise.all([flatSessions(), pageState(), venueNames()]);
+  const keep = (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
+  NEARBY = nearbyIndex(rows, Date.now(), { keep, venueKey: (s) => vn.parent.get(s) ?? s });
+  // 廳併到館區時，標題用館區名（「衛武營國家藝術文化中心」而不是其中一個廳）
+  NEARBY.groupName = (s) => vn.groups.get(vn.parent.get(s))?.name;
+  return NEARBY;
 }
 
 // 同一年度活動的歷年版本（src/lib/event-series.mjs）。每個活動頁都會查，快取一次。

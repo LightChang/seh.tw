@@ -3,11 +3,12 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import NearbyEvents from '../../components/NearbyEvents.astro';
 import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
 import { hasClockTime } from '../../lib/session-time.mjs';
-import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries } from '../../lib/build-data.mjs';
+import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
@@ -60,6 +61,12 @@ const indexable = await isIndexable(`/event/${e.slug}`);
 const hasCatPage = e.category && (await builtCategories()).has(e.category);
 // 同一個年度活動的其他屆：搜「活動名＋去年」的人一步走到今年
 const editions = (await eventSeries()).get(e.slug) ?? [];
+// 同場地、同縣市接下來的活動。已結束的頁放在說明文字之前（讀者要找的是下一場），
+// 進行中的放在頁尾之前。
+const nearby = await nearbyEvents();
+const ended = !nearby.live.has(e.slug);
+const near = nearby.pick({ venueSlug: primary.venueSlug, city: loc.city, exclude: [e.slug, ...editions.map((x) => x.slug)] });
+const nearProps = { items: near, city: loc.city, venueName: nearby.groupName(primary.venueSlug) ?? primary.venueNameRaw, now: Date.now() };
 // 麵包屑：畫面與 BreadcrumbList 同一份
 const trail = crumbTrail([
   { name: '今天', href: '/today' },
@@ -130,6 +137,8 @@ const trail = crumbTrail([
         </p>
       )}
 
+      {ended && <NearbyEvents {...nearProps} />}
+
       {desc && <div class="desc">{desc}</div>}
 
       {sessions.length > 1 && (
@@ -158,6 +167,8 @@ const trail = crumbTrail([
           ))}</ul>
         </section>
       )}
+
+      {!ended && <NearbyEvents {...nearProps} />}
 
       <footer class="prov">
         <h2>資料來源</h2>
