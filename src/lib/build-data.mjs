@@ -6,6 +6,7 @@ import { newlyListed } from './new-listings.mjs';
 import { nearbyIndex } from './nearby-events.mjs';
 import { getCollection } from 'astro:content';
 import { hasClockTime } from './session-time.mjs';
+import { YEAR_GROUPS, YEAR_MIN, YEAR_FIRST, FREE_MIN, yearCount } from './hubs.mjs';
 import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
 
 /**
@@ -213,4 +214,37 @@ export async function builtCatCities() {
   }
   CATCITY = new Set([...n].filter(([, c]) => c >= CAT_CITY_MIN).map(([k]) => k));
   return CATCITY;
+}
+
+/** 活動頁可不可以收錄（page-state 沒算過就全部算可以）。清單頁只連可收錄的活動時用。 */
+export async function indexableEvent() {
+  const st = await pageState();
+  return (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
+}
+
+/**
+ * 搜尋需求頁（src/lib/hubs.mjs）哪些網址會建。縣市頁、首頁要連過去，跟頁面的 getStaticPaths
+ * 用同一份判斷，連結才不會指到沒建的頁。
+ *   weekend：有縣市頁的縣市全部建（穩定的入口，週末場次少時頁面自己帶下週末與 noindex）
+ *   free：來源標免費的活動（含已結束）≥ FREE_MIN 的縣市
+ *   year：YEAR_FIRST 起到今年，每個類型組全國與各縣市該年活動數 ≥ YEAR_MIN
+ */
+let HUBS = null;
+export async function builtHubs(now = Date.now()) {
+  if (HUBS) return HUBS;
+  const all = await flatSessions();
+  const cities = countBy(all, 'city').map(([c]) => c);
+  const byCity = new Map(cities.map((c) => [c, all.filter((d) => d.city === c)]));
+  const free = cities.filter((c) => new Set(byCity.get(c).filter((d) => d.isFree === true).map((d) => d.slug)).size >= FREE_MIN);
+  const thisYear = new Date(now + 8 * 3600e3).getUTCFullYear();
+  const year = [];   // { year, group, city? }
+  for (let y = YEAR_FIRST; y <= thisYear + 1; y++) {
+    for (const g of YEAR_GROUPS) {
+      if (yearCount(all, g, y) < YEAR_MIN) continue;
+      year.push({ year: y, group: g });
+      for (const c of cities) if (yearCount(byCity.get(c), g, y) >= YEAR_MIN) year.push({ year: y, group: g, city: c });
+    }
+  }
+  HUBS = { weekend: cities, free: new Set(free), year, thisYear };
+  return HUBS;
 }

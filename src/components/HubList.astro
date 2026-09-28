@@ -1,0 +1,25 @@
+---
+// 搜尋需求頁（/weekend、/free）的活動列。欄位與全站 .ev-list 一致：第一欄時間、中間標題與場地、右邊類型；
+// 來源標了免費的另外標出來。行數上限由頁面決定，這裡照給的列全部印。
+import { catVar } from '../lib/format.mjs';
+interface Row { slug: string; title: string; cat?: string; venue?: string; district?: string; city?: string; isFree?: boolean; at: string }
+interface Props { rows: Row[]; lead: (r: Row) => string; showCity?: boolean; showCat?: boolean }
+const { rows, lead, showCity = false, showCat = true } = Astro.props;
+---
+<ol class="ev-list">
+  {rows.map((d) => (
+    <li><a href={`/event/${encodeURIComponent(d.slug)}`}>
+      <time class="ev-lead tabular" datetime={d.at}>{lead(d)}</time>
+      <span class="ev-body"><span class="ev-t">{d.title}</span>
+        <span class="ev-m">{[d.venue, showCity ? d.city : d.district].filter(Boolean).join('　')}</span></span>
+      <span class="ev-side">
+        {d.isFree === true && <span class="free">免費</span>}
+        {showCat && d.cat && <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>}
+      </span>
+    </a></li>
+  ))}
+</ol>
+<style>
+  .ev-side { display: inline-flex; gap: 0.8rem; align-items: baseline; }
+  .free { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--color-pass); white-space: nowrap; }
+</style>

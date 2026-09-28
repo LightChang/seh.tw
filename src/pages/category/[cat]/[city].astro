@@ -4,7 +4,7 @@ import Nav from '../../../components/Nav.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../../lib/jsonld/index.mjs';
 import { catVar } from '../../../lib/format.mjs';
-import { flatSessions, builtCatCities } from '../../../lib/build-data.mjs';
+import { flatSessions, builtCatCities, builtHubs } from '../../../lib/build-data.mjs';
 import { upcomingSessions, pastSessions, leadText } from '../../../lib/day-lists.mjs';
 
 // 類型 × 縣市：「臺北市戲劇」「高雄市音樂會」這類搜尋要的是一個縣市裡同一種活動的清單。
@@ -37,6 +37,9 @@ const description = `${city}近期的${cat}${isPerform ? '演出' : '活動'}共
   + '依日期排列，附場地與時間。';
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
 const trail = crumbTrail([{ name: cat, href: `/category/${cat}` }, { name: city, href: `/city/${city}` }], `${city}${cat}${isPerform ? '節目表' : '活動'}`);
+// 同縣市同類型有年度時間表的話連過去（src/lib/hubs.mjs）
+const hubs = await builtHubs();
+const yearPage = hubs.year.find((p) => p.city === city && p.year === hubs.thisYear && p.group.cats.includes(cat));
 ---
 <Base title={title} description={description} breadcrumbs={trail}>
   <div class="shell">
@@ -44,7 +47,7 @@ const trail = crumbTrail([{ name: cat, href: `/category/${cat}` }, { name: city,
     <header class="page-hd">
       <Breadcrumb trail={trail} />
       <h1><span style={`color:var(${catVar(cat)})`}>{city}{cat}</span>{isPerform ? '節目表' : '活動'}</h1>
-      <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期{isPerform ? '演出' : '活動'}</p>
+      <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期{isPerform ? '演出' : '活動'}{yearPage && <>　<a href={`/year/${yearPage.year}/${yearPage.group.key}/${city}`}>{yearPage.year} 全年時間表</a></>}</p>
     </header>
 
     {venues.length > 0 && (

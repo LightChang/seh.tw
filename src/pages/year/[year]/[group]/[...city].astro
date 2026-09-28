@@ -1,0 +1,137 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import Nav from '../../../../components/Nav.astro';
+import Breadcrumb from '../../../../components/Breadcrumb.astro';
+import { crumbTrail, eventItemList } from '../../../../lib/jsonld/index.mjs';
+import { fmtNum } from '../../../../lib/format.mjs';
+import { flatSessions, builtHubs } from '../../../../lib/build-data.mjs';
+import { yearTable, spanText, priceText, cityShort } from '../../../../lib/hubs.mjs';
+
+// 「2026 演唱會」「展覽 台北 2026」：一年份的時間表，一個活動一列。
+// /year/<年>/<類型組> 是全國，/year/<年>/<類型組>/<縣市> 是單一縣市；哪些建由 builtHubs 決定
+// （該年活動數 ≥ YEAR_MIN，含已結束的，網址才不會隨日子一下有一下沒有）。
+// 還沒結束的在上面依日期排，已結束的依月份收在下面。
+export async function getStaticPaths() {
+  const { year } = await builtHubs();
+  return year.map((p) => ({ params: { year: String(p.year), group: p.group.key, city: p.city }, props: p }));
+}
+const { year, group, city } = Astro.props;
+const buildNow = Date.now();
+const all = await flatSessions();
+const hubs = await builtHubs();
+const { upcoming, past, total } = yearTable(city ? all.filter((d) => d.city === city) : all, group, year, buildNow);
+const place = city ? cityShort(city) : '';
+// 全國頁標題帶活動最多的三個縣市（還沒結束的場次數），搜「2026 演唱會 台北」的人看得到有沒有
+const topCities = [...upcoming.reduce((m, e) => { for (const c of e.cities) m.set(c, (m.get(c) ?? 0) + 1); return m; }, new Map())]
+  .sort((a, b) => b[1] - a[1]).slice(0, 3).map(([c]) => cityShort(c));
+const title = city
+  ? `${year} ${place}${group.label}時間表（每日更新）`
+  : `${year} ${group.label}時間表${topCities.length ? `：${topCities.join('、')}…` : ''}（每日更新）`;
+const first = upcoming[0];
+const description = `${year} 年${city || '全台'}的${group.label}共 ${total} 個，還沒結束的 ${upcoming.length} 個`
+  + (first ? `，最近一場是 ${spanText(first, year)}《${first.title}》` : '') + '。表格列日期、場地、城市與是否免費。';
+const trail = crumbTrail(city ? [{ name: `${year} ${group.label}`, href: `/year/${year}/${group.key}` }] : [], `${year} ${place}${group.label}時間表`);
+const ld = eventItemList(upcoming.slice(0, 100), `${year} ${city || '台灣'}${group.label}`);
+// 已過的年份整頁只剩歷史，不請搜尋引擎收錄（網址照留）
+const noindex = year < hubs.thisYear;
+const cityPages = city ? [] : hubs.year.filter((p) => p.year === year && p.group.key === group.key && p.city);
+const siblings = hubs.year.filter((p) => p.year === year && p.group.key !== group.key && p.city === city);
+const monthName = (ym) => `${+ym.slice(5)} 月`;
+---
+<Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={noindex}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <Breadcrumb trail={trail} />
+      <h1>{year} {place}{group.label}時間表</h1>
+      <p class="sub"><strong class="tabular">{fmtNum(upcoming.length)}</strong> 個還沒結束・全年共 {fmtNum(total)} 個</p>
+      <p class="lead">{year} 年{city || '全台'}收錄的{group.label}，
+        {first ? <>接下來最近的是 {spanText(first, year)} 在{first.venue || first.city}的《{first.title}》。</> : '今年的場次都已結束。'}
+        {group.key === '演唱會' && '流行演唱會之外也列了音樂會與樂團演出。'}
+        清單每天依各機關公開資料重算，改期或新增會在隔天反映。</p>
+    </header>
+
+    {cityPages.length > 0 && (
+      <p class="rowlinks">{cityPages.map((p) => <a href={`/year/${year}/${group.key}/${p.city}`}>{cityShort(p.city)}</a>)}</p>
+    )}
+
+    {upcoming.length > 0 && (
+      <section class="grp">
+        <h2 class="h-sm">還沒結束</h2>
+        <div class="tw">
+          <table>
+            <thead><tr><th scope="col">日期</th><th scope="col">名稱</th><th scope="col">場地</th><th scope="col">城市</th><th scope="col">票價</th></tr></thead>
+            <tbody>
+              {upcoming.map((e) => (
+                <tr>
+                  <td class="tabular nw">{spanText(e, year)}</td>
+                  <td><a href={`/event/${encodeURIComponent(e.slug)}`}>{e.title}</a>{e.n > 1 && <span class="n"> 共 {e.n} 場</span>}</td>
+                  <td>{e.venue}</td>
+                  <td class="nw">{e.cities.map(cityShort).join('、')}</td>
+                  <td class={`nw ${e.isFree === true ? 'free' : ''}`}>{priceText(e)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    )}
+
+    {past.length > 0 && (
+      <section class="grp">
+        <h2 class="h-sm">已結束</h2>
+        {past.map(([ym, rows]) => (
+          <details>
+            <summary>{monthName(ym)}<span class="tabular n">{rows.length} 個</span></summary>
+            <div class="tw">
+              <table>
+                <thead><tr><th scope="col">日期</th><th scope="col">名稱</th><th scope="col">場地</th><th scope="col">城市</th><th scope="col">票價</th></tr></thead>
+                <tbody>
+                  {rows.map((e) => (
+                    <tr>
+                      <td class="tabular nw">{spanText(e, year)}</td>
+                      <td><a href={`/event/${encodeURIComponent(e.slug)}`}>{e.title}</a></td>
+                      <td>{e.venue}</td>
+                      <td class="nw">{e.cities.map(cityShort).join('、')}</td>
+                      <td class="nw">{priceText(e)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </details>
+        ))}
+      </section>
+    )}
+
+    <nav class="also" aria-label="相關頁面">
+      {siblings.map((p) => <a href={`/year/${year}/${p.group.key}${city ? `/${city}` : ''}`}>{year} {place}{p.group.label}</a>)}
+      {city && <a href={`/year/${year}/${group.key}`}>{year} 全台{group.label}</a>}
+      {city && <a href={`/weekend/${city}`}>{place}這週末</a>}
+      {city && <a href={`/city/${city}`}>{city}近期活動</a>}
+      {!city && <a href="/weekend">這週末</a>}
+    </nav>
+  </div>
+</Base>
+<style>
+  .lead { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-secondary); max-width: var(--measure); }
+  .rowlinks { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; font-size: var(--text-sm); }
+  .grp { margin-top: var(--space-7); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .n { color: var(--text-muted); font-weight: 400; font-size: var(--text-xs); margin-left: 0.6rem; }
+  /* 表格比手機寬時只讓表格本身橫向捲動，整頁不跟著捲 */
+  .tw { overflow-x: auto; margin-top: var(--space-4); }
+  table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+  th { text-align: left; font-weight: 700; color: var(--text-secondary); padding: 0.6rem 1rem 0.6rem 0;
+       border-bottom: var(--hairline) solid var(--border-subtle); white-space: nowrap; }
+  td { padding: 0.7rem 1rem 0.7rem 0; border-bottom: var(--hairline) solid var(--border-subtle); vertical-align: baseline; }
+  td a { text-decoration: none; }
+  td a:hover { color: var(--color-link); }
+  .nw { white-space: nowrap; }
+  .free { color: var(--color-pass); }
+  details { border-top: var(--hairline) solid var(--border-subtle); }
+  details:last-of-type { border-bottom: var(--hairline) solid var(--border-subtle); }
+  summary { cursor: pointer; padding: 0.8rem 0; font-size: var(--text-sm); }
+  .also { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: var(--space-8) 0 var(--space-9);
+          padding-top: var(--space-5); border-top: var(--hairline) solid var(--border-subtle); font-size: var(--text-sm); }
+</style>

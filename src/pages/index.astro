@@ -1,12 +1,15 @@
 ---
 import Base from '../layouts/Base.astro';
-import { newListings } from '../lib/build-data.mjs';
+import { newListings, builtHubs } from '../lib/build-data.mjs';
 import { homeGraph } from '../lib/jsonld/index.mjs';
 
 // 首頁的 Organization＋WebSite 在 src/lib/jsonld/pages.mjs（homeGraph）。
 // 本週新上架的活動數，放在最上方「seh.tw」那一行的右邊，連到 /today#new。
 // 首頁是單一畫面的版面，不另開一列（src/lib/new-listings.mjs）。
 const newThisWeek = (await newListings({ days: 7, limit: 1e6 })).length;
+// 這週末、免費、年度時間表（src/lib/hubs.mjs）。build 時寫進 HTML，搜尋引擎不執行 JS 也連得到。
+const hubs = await builtHubs();
+const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
 ---
 <Base
   title="seh — 開始探索台灣文化"
@@ -70,6 +73,14 @@ const newThisWeek = (await newListings({ days: 7, limit: 1e6 })).length;
       <div class="ft-row">
         <h2 class="h-sm">探索</h2>
         <ul class="cats" id="cats"></ul>
+      </div>
+      <div class="ft-row">
+        <h2 class="h-sm">排行程</h2>
+        <ul class="cats">
+          <li><a href="/weekend">這週末</a></li>
+          <li><a href="/free">免費活動</a></li>
+          {yearPages.map((p) => <li><a href={`/year/${p.year}/${p.group.key}`}>{p.year} {p.group.label}</a></li>)}
+        </ul>
       </div>
       <p class="about">
         <span>seh.tw 整理台灣各地正在發生的文化活動，以及活動所在的場館、城市、人物與文化資產。</span>

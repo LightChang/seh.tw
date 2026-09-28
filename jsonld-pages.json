@@ -28,6 +28,12 @@
     { "match": "/city/*/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
     { "match": "/category/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
     { "match": "/category/*/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/weekend.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/weekend/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/free.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/free/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/year/*/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
+    { "match": "/year/*/*/*.html", "require": ["BreadcrumbList"], "basis": ["rules.json#types.BreadcrumbList"] },
     {
       "match": "/**",
       "forbid": ["FAQPage", "HowTo", "SpecialAnnouncement"],

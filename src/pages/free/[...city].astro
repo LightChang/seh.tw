@@ -1,0 +1,93 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import HubList from '../../components/HubList.astro';
+import { crumbTrail, eventItemList } from '../../lib/jsonld/index.mjs';
+import { fmtNum } from '../../lib/format.mjs';
+import { flatSessions, builtHubs, indexableEvent } from '../../lib/build-data.mjs';
+import { freeEvents, titleWords, cityShort } from '../../lib/hubs.mjs';
+import { leadText } from '../../lib/day-lists.mjs';
+
+// 「免費活動 台北」：只列來源明確標了免費（isFree=true）的活動。多數來源不標免費與否，
+// 所以只替標了夠多的縣市建頁（builtHubs 的 free，門檻 FREE_MIN），頁面上也寫明不是全部。
+export async function getStaticPaths() {
+  const { free } = await builtHubs();
+  return [{ params: { city: undefined }, props: { city: '' } },
+    ...[...free].map((city) => ({ params: { city }, props: { city } }))];
+}
+const { city } = Astro.props;
+const buildNow = Date.now();
+const all = await flatSessions();
+const keep = await indexableEvent();
+const { soon, later } = freeEvents(city ? all.filter((d) => d.city === city) : all, buildNow, keep);
+const hubs = await builtHubs();
+const place = city ? cityShort(city) : '全台';
+const words = titleWords([...soon, ...later], 2);
+const what = (words.length ? words : ['展覽', '演出']).join('與');
+const thin = soon.length + later.length < 5;
+const CAP = 80;
+const year = hubs.thisYear;
+const title = city ? `${place}免費活動：這個月不用錢的${what}` : `${year} 免費活動：這個月全台不用錢的${what}`;
+const cats = [...soon.reduce((m, e) => (e.cat ? m.set(e.cat, (m.get(e.cat) ?? 0) + 1) : m), new Map())].sort((a, b) => b[1] - a[1]);
+const description = `${city || '全台'}接下來 30 天有 ${soon.length} 個來源標示免費的活動`
+  + (cats.length ? `：${cats.slice(0, 4).map(([c, n]) => `${c} ${n}`).join('、')}` : '')
+  + '。依日期排列，附場地，每天更新。';
+const trail = city ? crumbTrail([{ name: '免費活動', href: '/free' }], `${place}免費活動`) : crumbTrail([], '免費活動');
+const ld = eventItemList(soon.slice(0, 100), `${city || '台灣'}接下來 30 天的免費文化活動`);
+const lead = (e) => leadText(e, buildNow);
+const cityCounts = city ? [] : [...soon.reduce((m, e) => (e.city ? m.set(e.city, (m.get(e.city) ?? 0) + 1) : m), new Map())]
+  .sort((a, b) => b[1] - a[1]);
+---
+<Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <Breadcrumb trail={trail} />
+      <h1>{place}免費活動</h1>
+      <p class="sub"><strong class="tabular">{fmtNum(soon.length)}</strong> 個活動接下來 30 天看得到{later.length > 0 && `，之後還有 ${later.length} 個`}</p>
+      <p class="lead">只列資料來源明確寫「免費」的活動。很多主辦單位不標免費與否，實際不用錢的活動比這裡多，
+        進活動頁可以看到票價原文與來源連結。</p>
+    </header>
+
+    {cityCounts.length > 0 && (
+      <p class="rowlinks">{cityCounts.map(([c, n]) => hubs.free.has(c)
+        ? <a href={`/free/${c}`}>{cityShort(c)}<b class="tabular">{n}</b></a>
+        : <span>{cityShort(c)}<b class="tabular">{n}</b></span>)}</p>
+    )}
+
+    <section class="grp">
+      <h2 class="h-sm">接下來 30 天</h2>
+      {soon.length ? <HubList rows={soon.slice(0, CAP)} lead={lead} showCity={!city} />
+        : <p class="empty-note">接下來 30 天沒有收錄到標示免費的活動。</p>}
+      {soon.length > CAP && <p class="more">另有 {soon.length - CAP} 個，<a href={city ? `/city/${city}` : '/today'}>看其他近期活動</a></p>}
+    </section>
+
+    {later.length > 0 && (
+      <section class="grp">
+        <h2 class="h-sm">30 天之後</h2>
+        <HubList rows={later.slice(0, 40)} lead={lead} showCity={!city} />
+      </section>
+    )}
+
+    <nav class="also" aria-label="相關頁面">
+      {city && <a href={`/city/${city}`}>{city}所有近期活動</a>}
+      <a href={city ? `/weekend/${city}` : '/weekend'}>{place}這週末</a>
+      {city && <a href="/free">全台免費活動</a>}
+      <a href="/today">今天</a>
+    </nav>
+  </div>
+</Base>
+<style>
+  .lead { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-secondary); max-width: var(--measure); }
+  .rowlinks { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; }
+  .rowlinks a, .rowlinks span { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
+  .rowlinks span { color: var(--text-secondary); }
+  .rowlinks b { color: var(--text-muted); font-weight: 400; }
+  .grp { margin-top: var(--space-7); }
+  .grp .ev-list { margin-bottom: var(--space-4); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .more { font-size: var(--text-sm); color: var(--text-muted); }
+  .also { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: var(--space-8) 0 var(--space-9);
+          padding-top: var(--space-5); border-top: var(--hairline) solid var(--border-subtle); font-size: var(--text-sm); }
+</style>

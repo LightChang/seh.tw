@@ -1,0 +1,111 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import HubList from '../../components/HubList.astro';
+import { crumbTrail, eventItemList } from '../../lib/jsonld/index.mjs';
+import { catVar, fmtNum, WD } from '../../lib/format.mjs';
+import { flatSessions, builtHubs, builtCatCities, indexableEvent } from '../../lib/build-data.mjs';
+import { weekendOf, nextWeekendOf, eventsIn, weekendLead, groupByCat, titleWords, cityShort } from '../../lib/hubs.mjs';
+
+// 「週末活動 台北」這類搜尋：/weekend 是全台，/weekend/<縣市> 是單一縣市。網址固定，
+// 內容是 build 當下的「這週末」（週六、週日當天就是本週末），每次建置重算日期與清單。
+// 建頁的縣市與縣市頁相同（builtHubs），週末場次少時照樣建，改帶下週末預覽並 noindex。
+export async function getStaticPaths() {
+  const { weekend } = await builtHubs();
+  return [{ params: { city: undefined }, props: { city: '' } },
+    ...weekend.map((city) => ({ params: { city }, props: { city } }))];
+}
+const { city } = Astro.props;
+const buildNow = Date.now();
+const all = await flatSessions();
+const rows = city ? all.filter((d) => d.city === city) : all;
+const keep = await indexableEvent();
+const wk = weekendOf(buildNow), nx = nextWeekendOf(buildNow);
+const list = eventsIn(rows, wk.from, wk.to, keep);
+const next = eventsIn(rows, nx.from, nx.to, keep);
+const groups = groupByCat(list);
+const hubs = await builtHubs();
+const catCities = await builtCatCities();
+const place = city ? cityShort(city) : '全台';
+const words = titleWords(list);
+const freeN = list.filter((e) => e.isFree === true).length;
+const fresh = list.filter((e) => !e.running).length;
+// 兩個週末加起來不到 5 個活動就不請搜尋引擎收錄：頁面照樣在（縣市頁會連），但內容太薄
+const thin = list.length + next.length < 5;
+const CAP = city ? 30 : 15;
+
+const title = city
+  ? `${place}這週末有什麼活動（${wk.label}）｜${(words.length ? words : ['展覽', '演出']).join('、')}`
+  : `這週末有什麼活動（${wk.label}）｜全台${(words.length ? words : ['展覽', '演出']).join('、')}`;
+const description = `${wk.label} 週末${city ? city : '全台'}有 ${list.length} 個活動`
+  + (groups.length ? `：${groups.slice(0, 4).map(([c, l]) => `${c} ${l.length}`).join('、')}` : '')
+  + (freeN ? `，其中 ${freeN} 個免費` : '') + '。依類型分組，附時間與場地，每天更新。';
+const trail = city
+  ? crumbTrail([{ name: '這週末', href: '/weekend' }], `${place}這週末`)
+  : crumbTrail([], '這週末');
+// ItemList：畫面上列出來的活動（每組前 CAP 個），依組別順序
+const shown = groups.flatMap(([, l]) => l.slice(0, CAP));
+const ld = eventItemList(shown.slice(0, 100), `${wk.sat} 至 ${wk.sun} ${city || '台灣'}的文化活動`);
+const catHref = (c) => (city ? (catCities.has(`${c}|${city}`) ? `/category/${c}/${city}` : `/city/${city}`) : `/category/${c}`);
+const cityCounts = city ? [] : [...list.reduce((m, e) => (e.city ? m.set(e.city, (m.get(e.city) ?? 0) + 1) : m), new Map())]
+  .filter(([c]) => hubs.weekend.includes(c)).sort((a, b) => b[1] - a[1]);
+const yearLinks = hubs.year.filter((p) => p.year === hubs.thisYear && (city ? p.city === city : !p.city));
+const day = (t) => `${+t.slice(5, 7)}/${+t.slice(8)}（${WD[new Date(`${t}T12:00:00+08:00`).getUTCDay()]}）`;
+---
+<Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <Breadcrumb trail={trail} />
+      <h1>{place}這週末</h1>
+      <p class="sub">{day(wk.sat)}–{day(wk.sun)}　<strong class="tabular">{fmtNum(list.length)}</strong> 個活動</p>
+      <p class="lead">
+        {list.length
+          ? <>{fresh ? `週末當天開始的有 ${fresh} 個` : '週末當天開始的場次還沒有收錄'}{list.length - fresh ? `，展期跨週末、這兩天去都看得到的有 ${list.length - fresh} 個` : ''}{freeN ? `；來源標示免費的 ${freeN} 個` : ''}。</>
+          : <>這個週末{city || '全台'}還沒有收錄到活動，下面先列下週末的。</>}
+      </p>
+    </header>
+
+    {cityCounts.length > 0 && (
+      <p class="rowlinks">{cityCounts.map(([c, n]) => <a href={`/weekend/${c}`}>{cityShort(c)}<b class="tabular">{n}</b></a>)}</p>
+    )}
+
+    {groups.map(([c, l]) => (
+      <section class="grp">
+        <h2 class="h-sm"><span style={`color:var(${catVar(c)})`}>{c}</span> <span class="tabular n">{l.length}</span></h2>
+        <HubList rows={l.slice(0, CAP)} lead={weekendLead} showCity={!city} showCat={false} />
+        {l.length > CAP && <p class="more">另有 {l.length - CAP} 個，<a href={catHref(c)}>看全部{c}</a></p>}
+      </section>
+    ))}
+
+    {next.length > 0 && (
+      <section class="grp">
+        <h2 class="h-sm">下週末 {day(nx.sat)}–{day(nx.sun)} <span class="tabular n">{next.length}</span></h2>
+        <HubList rows={next.filter((e) => !e.running).slice(0, 12)} lead={weekendLead} showCity={!city} />
+        {next.filter((e) => e.running).length > 0 && <p class="more">另有 {next.filter((e) => e.running).length} 個展期中的活動下週末也看得到。</p>}
+      </section>
+    )}
+
+    <nav class="also" aria-label="相關頁面">
+      {city && <a href={`/city/${city}`}>{city}所有近期活動</a>}
+      {(city ? hubs.free.has(city) : true) && <a href={city ? `/free/${city}` : '/free'}>{place}免費活動</a>}
+      {yearLinks.map((p) => <a href={`/year/${p.year}/${p.group.key}${city ? `/${city}` : ''}`}>{p.year} {place === '全台' ? '' : place}{p.group.label}時間表</a>)}
+      {city && <a href="/weekend">全台這週末</a>}
+      <a href="/today">今天</a>
+    </nav>
+  </div>
+</Base>
+<style>
+  .lead { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-secondary); max-width: var(--measure); }
+  .rowlinks { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; }
+  .rowlinks a { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
+  .rowlinks b { color: var(--text-muted); font-weight: 400; }
+  .grp { margin-top: var(--space-7); }
+  .grp .ev-list { margin-bottom: var(--space-4); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .n { color: var(--text-muted); font-weight: 400; }
+  .more { font-size: var(--text-sm); color: var(--text-muted); }
+  .also { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: var(--space-8) 0 var(--space-9);
+          padding-top: var(--space-5); border-top: var(--hairline) solid var(--border-subtle); font-size: var(--text-sm); }
+</style>

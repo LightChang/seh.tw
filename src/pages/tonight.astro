@@ -30,6 +30,7 @@ const rows = tonightSessions(await flatSessions(), buildNow);
       ))}
     </ol>
     <p class="empty-note" id="empty" hidden={rows.length > 0}>今晚沒有收錄到活動，<a href="/today">看看今天其他時段</a>。</p>
+    <p class="also">也可以看<a href="/weekend">這週末</a>或<a href="/free">免費活動</a>。</p>
   </div>
 </Base>
 <script>
@@ -53,5 +54,6 @@ const rows = tonightSessions(await flatSessions(), buildNow);
     </a></li>`).join('');
 </script>
 <style>
+  .also { margin-bottom: var(--space-9); font-size: var(--text-sm); color: var(--text-muted); }
   .note { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); max-width: var(--measure); }
 </style>

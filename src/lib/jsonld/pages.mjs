@@ -77,7 +77,13 @@ export function breadcrumbList(trail) {
  * citation 跟 event.mjs 用同一套規則（沒有 url 的來源整筆丟棄），資料是 flatSessions()
  * 帶的 d.sources，跟活動明細頁同一份。
  */
-export function todayItemList(rows) {
+export const todayItemList = (rows) => eventItemList(rows, '今天台灣的文化活動');
+
+/**
+ * 活動清單的 ItemList，規則同上。/today 與搜尋需求頁（/weekend、/free、/year）共用，
+ * rows 一律是該頁畫面上列出來的那些（可以只取前段，不可以多於畫面）。
+ */
+export function eventItemList(rows, name) {
   const itemListElement = rows
     .filter((d) => d.title && d.slug)
     .map((d, i) => {
@@ -101,7 +107,7 @@ export function todayItemList(rows) {
   return {
     '@context': SCHEMA,
     '@type': 'ItemList',
-    name: '今天台灣的文化活動',
+    name,
     itemListOrder: `${SCHEMA}/ItemListOrderAscending`,
     numberOfItems: itemListElement.length,
     itemListElement,

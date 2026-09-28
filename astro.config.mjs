@@ -2,6 +2,7 @@ import { defineConfig } from 'astro/config';
 import { readFileSync, existsSync } from 'node:fs';
 import sitemap from '@astrojs/sitemap';
 import { jsonldCheck } from './scripts/check-jsonld.mjs';
+import { sitemapNoindex } from './scripts/sitemap-noindex.mjs';
 
 // 收錄與否由 transform/score-pages.mjs 每天重算（ARCHITECTURE.md §6）。
 // 只有 indexable = 1 的頁面進 sitemap，其餘照常存在、照常可連，只是帶 noindex。
@@ -73,6 +74,8 @@ export default defineConfig({
         return { ...item, lastmod: `${lastmodOf.get(p) ?? BUILD_DAY}T00:00:00+08:00` };
       },
     }),
+    // 頁面在 build 當下自己決定 noindex 的（/weekend、/free、/year 內容太薄時），從 sitemap 拿掉。要排在 sitemap() 後面。
+    sitemapNoindex(),
     // build 完掃 dist 的 JSON-LD（scripts/check-jsonld.mjs），有錯誤 build 就失敗、不會部署。
     jsonldCheck(),
   ],

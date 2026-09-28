@@ -42,6 +42,7 @@ const todayLd = todayItemList(merged);
       ))}
     </ol>
     <p class="empty-note" id="empty" hidden={merged.length > 0}>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
+    <p class="also">還沒決定哪天出門：<a href="/weekend">這週末</a>、<a href="/free">免費活動</a></p>
 
     {fresh.length > 0 && (
       <section class="fresh" id="new">
@@ -114,6 +115,7 @@ const todayLd = todayItemList(merged);
 </script>
 
 <style>
+  .also { font-size: var(--text-sm); color: var(--text-muted); }
   .fresh { margin-top: var(--space-8); }
   .fresh .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
 </style>

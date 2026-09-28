@@ -4,7 +4,7 @@ import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar } from '../../lib/format.mjs';
-import { flatSessions, countBy, builtCategories, builtCatCities, newListings } from '../../lib/build-data.mjs';
+import { flatSessions, countBy, builtCategories, builtCatCities, newListings, builtHubs } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
@@ -37,6 +37,14 @@ const description = `${city}正在發生的文化活動、展覽與演出，共 
   + (venues.length ? `場地：${venues.slice(0, 3).map(([v]) => v).join('、')}。` : '');
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
 const trail = crumbTrail([{ name: '全部縣市', href: '/city' }], city);
+// 這週末、免費活動、年度時間表（src/lib/hubs.mjs），只連有建的
+const hubs = await builtHubs();
+const hubLinks = [
+  { href: `/weekend/${city}`, label: '這週末' },
+  ...(hubs.free.has(city) ? [{ href: `/free/${city}`, label: '免費活動' }] : []),
+  ...hubs.year.filter((p) => p.city === city && p.year === hubs.thisYear)
+    .map((p) => ({ href: `/year/${p.year}/${p.group.key}/${city}`, label: `${p.year} ${p.group.label}時間表` })),
+];
 ---
 <Base title={`${city}有什麼文化活動｜seh`} description={description} breadcrumbs={trail}>
   <div class="shell">
@@ -45,6 +53,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }], city);
       <Breadcrumb trail={trail} />
       <h1>{city}</h1>
       <p class="sub"><strong class="tabular">{n}</strong> 個活動正在或即將發生</p>
+      <p class="hub-links">{hubLinks.map((l) => <a href={l.href}>{l.label}</a>)}</p>
     </header>
 
     <div class="cols">
@@ -103,6 +112,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }], city);
   }
   .tags .tabular { color: var(--text-muted); }
   .tags .vn { color: var(--text-secondary); }
+  .hub-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); font-size: var(--text-sm); }
   @media (max-width: 900px) { .cols { grid-template-columns: 1fr; gap: var(--space-7); } }
 </style>
 

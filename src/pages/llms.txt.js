@@ -3,7 +3,8 @@
 // 內容全部由建置當下的站台資料算出（flatSessions／allVenues／allHeritage 等），
 // 不是手寫的靜態檔——活動與數字每天都在變，寫死隔天就過期。
 // 完整可引用全文另見 /llms-full.txt（本檔只做索引，不塞全文）。
-import { flatSessions, allVenues, allHeritage, countBy, CATEGORY_MIN } from '../lib/build-data.mjs';
+import { flatSessions, allVenues, allHeritage, countBy, CATEGORY_MIN, builtHubs } from '../lib/build-data.mjs';
+import { weekendOf } from '../lib/hubs.mjs';
 import cityStats from '../../public/city-stats.json';
 
 const SITE = 'https://seh.tw';
@@ -13,6 +14,9 @@ export async function GET() {
   const venues = await allVenues();
   const heritage = await allHeritage();
   const cats = countBy(sessions, 'cat').filter(([, n]) => n >= CATEGORY_MIN);
+  const hubs = await builtHubs();
+  const wk = weekendOf(Date.now());
+  const u = (p) => `${SITE}${p.split('/').map(encodeURIComponent).join('/')}`;
 
   const lines = [
     '# seh.tw — 台灣文化活動',
@@ -28,6 +32,12 @@ export async function GET() {
     `- [場館](${SITE}/venues)：${venues.length} 個目前有活動的場館，網址規則 /venue/<場館 slug>`,
     `- [文化資產](${SITE}/heritage)：${heritage.length} 項有完整沿革頁的文化資產總覽`,
     `- [資料從哪來](${SITE}/about)：公開資料來源清單與處理流程說明`,
+    '',
+    '## 排行程（網址固定，內容每次建置依當天重算）',
+    `- [這週末](${SITE}/weekend)：這個週末（目前是 ${wk.sat} 至 ${wk.sun}）全台的活動，依類型分組；各縣市是 /weekend/<縣市>，例如 ${u('/weekend/臺北市')}`,
+    `- [免費活動](${SITE}/free)：來源明確標示免費、還沒結束的活動；有縣市頁的是 ${[...hubs.free].map((c) => u(`/free/${c}`)).join('、')}`,
+    ...hubs.year.filter((p) => !p.city).map((p) => `- [${p.year} ${p.group.label}時間表](${u(`/year/${p.year}/${p.group.key}`)})：一年份的表格（日期、名稱、場地、城市、是否免費），`
+      + `縣市版：${hubs.year.filter((q) => q.city && q.year === p.year && q.group.key === p.group.key).map((q) => q.city).join('、') || '無'}（/year/${p.year}/${p.group.key}/<縣市>）`),
     '',
     '## 依分類找（網址規則 /category/<分類>）',
     ...cats.map(([c, n]) => `- [${c}](${SITE}/category/${encodeURIComponent(c)})：近期 ${n} 場`),

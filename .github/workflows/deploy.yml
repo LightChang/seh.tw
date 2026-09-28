@@ -9,6 +9,10 @@ name: deploy
 on:
   push:
     branches: [main]
+  # 每天台北 00:20 重建一次（不抓資料，只拿 main 現有內容重跑建置）。/weekend、/free、/year、/today
+  # 的日期與「還沒結束」都是 build 當下算的，資料那天沒變、沒有 push 的話頁面會停在前一天。
+  schedule:
+    - cron: '20 16 * * *'
   workflow_dispatch:
 
 permissions:

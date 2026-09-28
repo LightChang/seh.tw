@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  serializeJsonLd, ldDate, isHttpUrl, crumbTrail, breadcrumbList, homeGraph, todayItemList,
+  serializeJsonLd, ldDate, isHttpUrl, crumbTrail, breadcrumbList, homeGraph, todayItemList, eventItemList,
   venueNode, heritageNode, eventLd,
 } from '../src/lib/jsonld/index.mjs';
 import { validateHtml, filterIssues, extractJsonLd, loadRules } from '../vendor/seo-ops-jsonld/validate.mjs';
@@ -95,6 +95,8 @@ test('各頁型產出通過 seo-ops 驗證器（0 錯誤、0 警告）', () => {
     ['/venue/v.html', [venueNode({ type: 'Library', v: { slug: 'v', name: 'V', city: '臺北市' } })]],
     ['/heritage/h.html', [heritageNode({ slug: 'h', name: 'H', city: '臺南市', lat: 23, lng: 120 })]],
     ['/today.html', [todayItemList([{ slug: 'a', title: 'A', at: '2026-10-09T00:00', dateOnly: true, city: '臺北市' }])]],
+    ['/weekend/臺北市.html', [eventItemList([{ slug: 'a', title: 'A', at: '2026-10-03T19:30', dateOnly: false, venue: '館', city: '臺北市' }], '週末'),
+      breadcrumbList(crumbTrail([{ name: '這週末', href: '/weekend' }], '臺北這週末'))]],
   ];
   for (const [page, nodes] of pages) {
     const issues = filterIssues(validateHtml(html(...nodes), { page, rules }), 'warning');
