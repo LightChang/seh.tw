@@ -2,46 +2,74 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import raw from '../../public/heritage-index.json';
-// [name, city, level, slug]。slug 是空字串代表沒有建頁（沿革不足 200 字）
-const heritage = raw.map(([name, city, type, slug]) => ({ name, city, type, slug, rich: !!slug }));
-const rich = heritage.filter((h) => h.rich);
-const byCity = [...heritage.reduce((m, h) => (h.city ? m.set(h.city, (m.get(h.city) ?? 0) + 1) : m), new Map())]
-  .sort((a, b) => b[1] - a[1]);
-const byType = [...heritage.reduce((m, h) => (h.type ? m.set(h.type, (m.get(h.type) ?? 0) + 1) : m), new Map())]
+import { allHeritage, isIndexable } from '../lib/build-data.mjs';
+// 全部文化資產（含沒有建頁的）只用來算總數：[name, city, type, slug]
+const total = raw.length;
+// 有建頁的全部列出，依縣市分組。沒收錄的（noindex）不列，這頁是給搜尋引擎與讀者找頁用的。
+// 每一列只放名稱、行政區、類別——共約兩千列，多一個欄位整頁就多幾十 KB。
+const CITY_ORDER = ['臺北市', '新北市', '基隆市', '桃園市', '新竹市', '新竹縣', '苗栗縣', '臺中市', '彰化縣',
+  '南投縣', '雲林縣', '嘉義市', '嘉義縣', '臺南市', '高雄市', '屏東縣', '宜蘭縣', '花蓮縣', '臺東縣',
+  '澎湖縣', '金門縣', '連江縣'];
+const pages = [];
+for (const h of await allHeritage()) {
+  if (await isIndexable(`/heritage/${h.slug}`)) pages.push(h);
+}
+const groups = new Map();
+for (const h of pages) {
+  const c = h.city || '其他';
+  if (!groups.has(c)) groups.set(c, []);
+  groups.get(c).push(h);
+}
+const rank = (c) => (CITY_ORDER.includes(c) ? CITY_ORDER.indexOf(c) : CITY_ORDER.length);
+const cities = [...groups].sort((a, b) => rank(a[0]) - rank(b[0]) || a[0].localeCompare(b[0], 'zh-Hant'));
+for (const [, list] of cities) {
+  list.sort((a, b) => (a.district ?? '').localeCompare(b.district ?? '', 'zh-Hant') || a.name.localeCompare(b.name, 'zh-Hant'));
+}
+const typeOf = (h) => h.level ?? h.categoryRaw ?? '';
+const byType = [...pages.reduce((m, h) => (typeOf(h) ? m.set(typeOf(h), (m.get(typeOf(h)) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 10);
+const cid = (c) => `c-${c}`;
 ---
-<Base title="文化資產｜seh" description={`台灣 ${heritage.length} 項文化資產：古蹟、歷史建築、民俗與傳統工藝。`}>
+<Base title="文化資產｜seh" description={`台灣 ${total} 項文化資產：古蹟、歷史建築、民俗與傳統工藝。`}>
   <div class="shell">
     <Nav />
     <header class="page-hd">
       <h1>文化資產</h1>
-      <p class="sub"><strong class="tabular">{heritage.length.toLocaleString('en-US')}</strong> 項，其中 {rich.length.toLocaleString('en-US')} 項有詳細沿革</p>
+      <p class="sub"><strong class="tabular">{total.toLocaleString('en-US')}</strong> 項，下面依縣市列出有詳細沿革的 {pages.length.toLocaleString('en-US')} 項</p>
     </header>
 
-    <h2 class="h-sm">類別</h2>
-    <ul class="tagrow">{byType.map(([t, n]) => <li><span>{t}<b class="tabular">{n}</b></span></li>)}</ul>
+    <h2 class="hx-h">類別</h2>
+    <p class="hx-row">{byType.map(([t, n]) => <span>{t}<b class="tabular">{n}</b></span>)}</p>
 
-    <h2 class="h-sm">縣市</h2>
-    <ul class="tagrow">{byCity.map(([c, n]) => <li><a href={`/city/${c}`}>{c}<b class="tabular">{n}</b></a></li>)}</ul>
+    <h2 class="hx-h">縣市</h2>
+    <nav class="hx-row" aria-label="依縣市跳到">{cities.map(([c, list]) => <a href={`#${cid(c)}`}>{c}<b class="tabular">{list.length}</b></a>)}</nav>
 
-    <h2 class="h-sm">有詳細沿革的</h2>
-    <ol class="ev-list">
-      {rich.slice(0, 40).map((h) => (
-        <li><a href={`/heritage/${h.slug}`}>
-          <span class="ev-lead tabular">{h.reg ? h.reg.slice(0, 4) : ''}</span>
-          <span class="ev-body"><span class="ev-t">{h.name}</span>
-            <span class="ev-m">{[h.city, h.dist].filter(Boolean).join('')}</span></span>
-          <span class="ev-cat">{h.level ?? h.type ?? ''}</span>
-        </a></li>
-      ))}
-    </ol>
+    {cities.map(([c, list]) => (
+      <section class="hx-city" id={cid(c)}>
+        <h2 class="hx-ch">{c}<span class="tabular">{list.length} 項</span>{c !== '其他' && <a href={`/city/${c}`}>{c}活動</a>}</h2>
+        <ul class="hx-list">{list.map((h) => (
+          <li><a href={`/heritage/${h.slug}`}>{h.name}</a><span>{[h.district, typeOf(h)].filter(Boolean).join('　')}</span></li>
+        ))}</ul>
+      </section>
+    ))}
   </div>
 </Base>
-<style>
-  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+<style is:global>
+  /* is:global：兩千列若用 scoped style，每個元素都會多一個 data-astro-cid 屬性，整頁多出一百多 KB */
+  .hx-h { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
-  .tagrow { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
-  .tagrow a, .tagrow span { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
-  .tagrow a:hover { color: var(--color-link); }
-  .tagrow b { color: var(--text-muted); font-weight: 400; }
+  .hx-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); max-width: none; font-size: var(--text-sm); }
+  .hx-row a, .hx-row span { display: inline-flex; gap: 0.5rem; text-decoration: none; }
+  .hx-row a:hover { color: var(--color-link); }
+  .hx-row b { color: var(--text-muted); font-weight: 400; }
+  .hx-city { margin-top: var(--space-8); }
+  .hx-ch { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 1rem;
+           font-family: var(--font-body); font-weight: 700; font-size: var(--text-base); letter-spacing: 0; }
+  .hx-ch span, .hx-ch a { font-weight: 400; font-size: var(--text-sm); color: var(--text-muted); }
+  .hx-ch a { color: var(--color-link); }
+  .hx-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; columns: 20rem; column-gap: 2.5rem; }
+  .hx-list li { break-inside: avoid; padding: 0.35rem 0; border-top: var(--hairline) solid var(--border-subtle); }
+  .hx-list a { display: block; text-decoration: none; }
+  .hx-list a:hover { color: var(--color-link); }
+  .hx-list span { display: block; font-size: var(--text-sm); color: var(--text-muted); }
 </style>
