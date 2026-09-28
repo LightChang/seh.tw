@@ -34,6 +34,9 @@ custom domain `seh.tw`，強制 HTTPS。`.github/workflows/deploy.yml` 在 push 
 | `/city/{縣市}/{yyyy-mm}` | 84 | ✓ | 當月往後一年、≥5 場 |
 | `/category/{分類}` | 16 | ✓ | 對照表依官方文件建立，≥5 場才建 |
 | `/calendar/{yyyy-mm}` | 依月份 | ✓ | 底色深淺＝活動密度 |
+| `/weekend`、`/weekend/{縣市}` | 23 | 兩個週末合計 ≥5 個活動 | 這週末依類型分組＋下週末預覽（2026-09-28 起） |
+| `/free`、`/free/{縣市}` | 4 | ✓ | 只列來源標免費的；來源標免費 ≥20 個的縣市才建 |
+| `/year/{年}/{類型組}[/{縣市}]` | 42 | 今年起 | 年度時間表（表格），該年 ≥10 個活動才建 |
 | `/404`、`robots.txt`、`sitemap` | — | — | |
 
 `/demo/*` 是先前評估過的首頁版本，保留供對照，皆 noindex。
@@ -47,7 +50,6 @@ custom domain `seh.tw`，強制 HTTPS。`.github/workflows/deploy.yml` 在 push 
 | review queue | 14 筆（合併候選 2、場館對不上 11、場館有歧義 1）。工具是 `npm run review`。其中 11 筆是名錄查不到、活動資料也沒有地址座標的場館，要等來源補資料 |
 | `/organization/{slug}` | **做不了**。演藝團體名錄與活動主辦是不同母體，`organizedBy` 只有 2.1% 連得上 |
 | `/artist/{slug}` | **做不了**。`performer` 只有 2.1% 連得上，25,977 筆多為街頭藝人名冊 |
-| `/{縣市}/free-events` | **做不了**。`isFree` 只有少數來源可靠 |
 | — | 測試 251 條（純函式 212 ＋ pipeline 各階段 39），`npm test`；站內連結 `npm run links` |
 
 ---
