@@ -26,10 +26,10 @@
    "ent_cip-museums_1",
    "ent_moc-emap-poi_ee7043b09c01c424",
    "ven_derived_國立臺灣博物館本館3樓自然教室",
-   "ven_derived_國立臺灣博物館本館3樓自然教室-名額剩-10-名",
+   "ven_derived_國立臺灣博物館本館3樓自然教室-名額剩-9-名",
    "ven_derived_國立臺灣博物館臺博館本館",
    "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室",
-   "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-16-名",
+   "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-12-名",
    "ven_derived_國立臺灣博物館臺博館本館3樓環形劇場-備註-播映時段依現場公告",
    "ven_derived_國立臺灣博物館臺博館本館一樓東展間"
   ]
@@ -2381,6 +2381,16 @@
   ]
  },
  {
+  "id": "bld_25.0176_121.5330",
+  "name": "台北書林書店",
+  "lat": 25.01757,
+  "lng": 121.53303,
+  "venueIds": [
+   "ven_derived_New-Acropolis-Taiwan-新衛城台灣",
+   "ven_derived_台北書林書店-Google-Meet"
+  ]
+ },
+ {
   "id": "bld_25.0190_121.5291",
   "name": "耕莘文教基金會教室",
   "lat": 25.01902,
@@ -2542,16 +2552,6 @@
   "venueIds": [
    "ven_derived_行天宮附設玄空圖書館敦化本館",
    "ven_derived_行天宮附設玄空圖書館敦化本館四樓禮堂"
-  ]
- },
- {
-  "id": "bld_25.0176_121.5330",
-  "name": "台北書林書店",
-  "lat": 25.01757,
-  "lng": 121.53303,
-  "venueIds": [
-   "ven_derived_New-Acropolis-Taiwan-新衛城台灣",
-   "ven_derived_台北書林書店-Google-Meet"
   ]
  },
  {
@@ -3758,6 +3758,15 @@
   "lng": 121.51688,
   "venueIds": [
    "ven_derived_永和青年社會住宅"
+  ]
+ },
+ {
+  "id": "bld_23.4768_120.4409",
+  "name": "嘉義市美術館3F多功能教室",
+  "lat": 23.47684,
+  "lng": 120.44089,
+  "venueIds": [
+   "ven_derived_嘉義市美術館3F多功能教室"
   ]
  },
  {
