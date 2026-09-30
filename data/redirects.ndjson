@@ -4,7 +4,9 @@
 {"from":"/event/米特動物樂園Do-Re-Mi-喜咧兜-3","to":"/event/米特動物樂園Do-Re-Mi-喜咧兜","reason":"merged","at":"2026-09-27"}
 {"from":"/venue/國立臺灣博物館本館3樓自然教室-名額剩-10-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-30"}
 {"from":"/venue/國立臺灣博物館本館3樓自然教室-名額剩-2-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-27"}
+{"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-12-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-01"}
 {"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-16-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-30"}
+{"from":"/venue/國立臺灣博物館臺博館本館一樓東展間","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-01"}
 {"from":"/venue/國立臺灣博物館臺博館本館一樓東展間-正取剩-14-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-27"}
 {"from":"/venue/場次-B-五谷好室-A","to":"/venues","reason":"fallback","at":"2026-09-27"}
 {"from":"/venue/我們來造一座山-親子藍曬創作工作坊","to":"/venue/周末主題活動-蟾蜍山煥民新村","reason":"same-building","at":"2026-09-27"}
