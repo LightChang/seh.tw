@@ -3,7 +3,11 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { heritageNode, crumbTrail } from '../../lib/jsonld/index.mjs';
-import { allHeritage, isIndexable } from '../../lib/build-data.mjs';
+import { allHeritage, sessionsByVenue, indexableEvent, isIndexable } from '../../lib/build-data.mjs';
+import { heritageEvents } from '../../lib/nearby-events.mjs';
+import { leadText, upcomingSessions } from '../../lib/day-lists.mjs';
+import { catVar } from '../../lib/format.mjs';
+import { toSchemaSpec } from '../../lib/opening-hours.mjs';
 
 export async function getStaticPaths() {
   // md 只為沿革 ≥200 字的產生（emit-md.mjs），所以這裡整個 collection 都建頁
@@ -21,9 +25,39 @@ const description = descLead
 // 標題帶所在地與類別（「淡水中正段日式宿舍群｜新北市淡水區歷史建築｜seh」），
 // 搜古蹟名的人一眼看得出是哪裡、哪一種；都沒有才退回「文化資產」。
 const title = `${h.name}｜${[h.city, h.district].filter(Boolean).join('')}${h.type || (h.city ? '' : '文化資產')}｜seh`;
-const ld = heritageNode(h);
+const ld = heritageNode(h, {
+  openingHoursSpecification: h.openingHoursSpec?.length ? toSchemaSpec(h.openingHoursSpec) : undefined,
+});
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs 的 crumbTrail）
 const trail = crumbTrail([{ name: '文化資產', href: '/heritage' }, h.city && { name: h.city, href: `/city/${h.city}` }], h.name);
+
+// 參觀資訊：全部是來源原文（transform/emit-md.mjs 的 heritageVisit），沒寫的欄位就不印那一列。
+// 「是否開放參觀」有原文（部分開放參觀…）就印原文，只有是／否時才翻成字。
+const openText = h.openVisitText ?? (h.isOpenVisit === true ? '開放參觀' : h.isOpenVisit === false ? '不開放參觀' : undefined);
+const feeText = h.isCharge === true ? '收費（票價以管理單位公告為準）' : h.isCharge === false ? '免費' : undefined;
+const hasVisit = Boolean(openText || h.openingHours || feeText || h.website);
+// 怎麼去：導航連結的目的地用來源給的座標，沒有座標才用街道地址（只到縣市、行政區的不給，導不到門口）
+const place = [h.city, h.district, h.address].filter(Boolean).join(' ');
+const dest = h.lat != null && h.lng != null ? `${h.lat},${h.lng}`
+  : h.addressPrecision === 'street' && h.address ? encodeURIComponent(h.address) : undefined;
+const mapUrl = dest ? `https://www.google.com/maps/dir/?api=1&destination=${dest}` : undefined;
+
+// 在這裡舉辦的活動（同地場館的活動）與附近場館的近期活動（src/lib/nearby-events.mjs）
+const buildNow = Date.now();
+const byVenue = await sessionsByVenue();
+const rowsOf = (slug) => byVenue.get(slug) ?? [];
+const keep = await indexableEvent();
+const siteVenues = h.siteVenues ?? [];
+const nearbyVenues = h.nearbyVenues ?? [];
+const ev = heritageEvents(rowsOf, buildNow, {
+  siteSlugs: siteVenues.map((v) => v.slug), nearSlugs: nearbyVenues.map((v) => v.slug), keep,
+});
+const upcomingAt = new Map(nearbyVenues.map((v) => [v.slug,
+  new Set(upcomingSessions(rowsOf(v.slug), buildNow).map((d) => d.slug)).size]));
+const hoursFromOther = h.openingHoursSource && h.openingHoursSource.name !== '國家文化資產網';
+// 同地場館依名稱長短排過（emit-md），前幾個就是主館名；其餘多半是「本館3樓自然教室」這種廳室
+const SITE_SHOW = 3;
+const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`);
 ---
 <Base title={title} description={description} noindex={!indexable} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
@@ -35,12 +69,77 @@ const trail = crumbTrail([{ name: '文化資產', href: '/heritage' }, h.city &&
         {h.type && <div><dt>類別</dt><dd>{h.type}</dd></div>}
         {h.level && <div><dt>級別</dt><dd>{h.level}</dd></div>}
         {h.registeredAt && <div><dt>登錄</dt><dd class="tabular">{h.registeredAt}</dd></div>}
-        {(h.city || h.district || h.address) && <div><dt>地點</dt><dd>{[h.city, h.district, h.address].filter(Boolean).join(' ')}</dd></div>}
-        {h.open && <div><dt>開放</dt><dd>{h.open}</dd></div>}
+        {place && <div><dt>地點</dt><dd>{place}</dd></div>}
       </dl>
+
+      <h2 class="h-sm">參觀資訊</h2>
+      <dl class="facts">
+        {openText && <div><dt>開放參觀</dt><dd>{openText}</dd></div>}
+        {h.openingHours && <div><dt>開放時間</dt><dd>
+          <span class="hours">{h.openingHours}</span>
+          {h.openingHoursSource && <span class="n">
+            出處：{h.openingHoursSource.url
+              ? <a href={h.openingHoursSource.url} target="_blank" rel="nofollow noopener">{h.openingHoursSource.name}</a>
+              : h.openingHoursSource.name}，實際以管理單位公告為準
+          </span>}
+        </dd></div>}
+        {feeText && <div><dt>門票</dt><dd>{feeText}</dd></div>}
+        {h.website && <div><dt>網站</dt><dd><a href={h.website} target="_blank" rel="nofollow noopener">管理單位網站</a></dd></div>}
+        {siteVenues.length > 0 && <div><dt>場館</dt><dd>
+          <span>{siteVenues.slice(0, SITE_SHOW).map((v, i) => <>{i > 0 && '、'}<a href={`/venue/${v.slug}`}>{v.name}</a></>)}
+            {siteVenues.length > SITE_SHOW && `等 ${siteVenues.length} 處廳室`}</span>
+        </dd></div>}
+        {mapUrl && <div><dt>怎麼去</dt><dd>
+          <a href={mapUrl} target="_blank" rel="nofollow noopener">在 Google 地圖規劃路線</a>
+        </dd></div>}
+      </dl>
+      {!hasVisit && <p class="note">國家文化資產網沒有提供這處文化資產的開放時間、門票與開放狀態。{h.govInstitution ? `參觀前請先向主管機關（${h.govInstitution}）確認。` : '參觀前請先向主管機關確認。'}</p>}
+
       <h2 class="h-sm">歷史沿革</h2>
       <p class="body">{h.history}</p>
-      <footer class="prov"><p>資料來源：文化部文化資產局。</p><p><a href="/about">資料怎麼來的</a></p></footer>
+
+      {ev.here.length > 0 && (
+        <section class="evs">
+          <h2 class="h-sm">{ev.herePast ? '在這裡舉辦過的活動' : '在這裡舉辦的活動'}{h.eventCount ? <span class="cnt">　收錄 {h.eventCount} 個</span> : ''}</h2>
+          <ol class="ev-list">
+            {ev.here.map((d) => (
+              <li><a href={`/event/${d.slug}`}>
+                <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
+                <span class="ev-body"><span class="ev-t">{d.title}</span>{d.venue && <span class="ev-m">{d.venue}</span>}</span>
+                <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+              </a></li>
+            ))}
+          </ol>
+          {ev.herePast && <p class="note">目前沒有近期活動，以上是已結束的。</p>}
+        </section>
+      )}
+
+      {nearbyVenues.length > 0 && (
+        <section class="near">
+          <h2 class="h-sm">附近的場館</h2>
+          <ul>{nearbyVenues.map((v) => (
+            <li><a href={`/venue/${v.slug}`}>{v.name}</a>
+              <span class="n tabular">{km(v.distanceM)}{upcomingAt.get(v.slug) ? `　近期 ${upcomingAt.get(v.slug)} 個活動` : ''}</span></li>
+          ))}</ul>
+        </section>
+      )}
+
+      {ev.near.length > 0 && (
+        <section class="evs">
+          <h2 class="h-sm">附近的近期活動</h2>
+          <ol class="ev-list">
+            {ev.near.map((d) => (
+              <li><a href={`/event/${d.slug}`}>
+                <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
+                <span class="ev-body"><span class="ev-t">{d.title}</span>{d.venue && <span class="ev-m">{d.venue}</span>}</span>
+                <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+              </a></li>
+            ))}
+          </ol>
+        </section>
+      )}
+
+      <footer class="prov"><p>資料來源：文化部文化資產局{hoursFromOther ? `；開放時間：${h.openingHoursSource.name}` : ''}。{(ev.here.length > 0 || ev.near.length > 0) && '活動來自各機關的開放資料。'}</p><p><a href="/about">資料怎麼來的</a></p></footer>
     </article>
   </div>
 </Base>
@@ -48,13 +147,21 @@ const trail = crumbTrail([{ name: '文化資產', href: '/heritage' }, h.city &&
   .her { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
   h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); letter-spacing: 0; line-height: 1.35; }
   .facts { margin: var(--space-6) 0 0; border-top: var(--hairline) solid var(--border-subtle); }
+  .h-sm + .facts { margin-top: var(--space-4); }
   .facts > div { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.5rem;
                  padding: 0.8rem 0; border-bottom: var(--hairline) solid var(--border-subtle); }
   .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
-  .facts dd { margin: 0; font-size: var(--text-base); }
+  .facts dd { margin: 0; font-size: var(--text-base); display: grid; gap: 0.3rem; }
+  .facts .n, .near .n { color: var(--text-muted); font-size: var(--text-sm); }
+  .hours { white-space: pre-line; }
+  .cnt { color: var(--text-muted); font-weight: 400; }
+  .note { margin-top: var(--space-4); color: var(--text-secondary); font-size: var(--text-sm); }
   .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
   .body { margin-top: var(--space-4); line-height: 1.9; }
+  .evs .ev-list { margin: var(--space-4) 0 0; }
+  .near ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }
+  .near li { display: flex; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
   .prov { margin-top: var(--space-8); padding-top: var(--space-5);
           border-top: var(--hairline) solid var(--border-subtle);
           font-size: var(--text-sm); color: var(--text-muted); display: grid; gap: 0.5rem; }

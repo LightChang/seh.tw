@@ -3,7 +3,7 @@
 // entity=heritage（L1-FORMAT §5）。這支是文資類最大的一支，另外三支
 // boch-heritage-arts-crafts / boch-heritage-folklore / boch-heritage-preservers
 // 是同一個 API 的子集，欄位結構相同。
-import { readRaw, writeStaged, compact, parseAddress, parseDateTime, fetchedAtOf } from './_lib.mjs';
+import { readRaw, writeStaged, compact, parseAddress, parseDateTime, fetchedAtOf, normUrl } from './_lib.mjs';
 
 const SOURCE = 'boch-heritage';
 
@@ -98,6 +98,29 @@ export function imagesOf(r) {
   return out;
 }
 
+// 參觀資訊。探勘（ingest/probe/FIELDS.txt）的覆蓋：isOpenVisit 1764／6412、
+// openVisitTypeText 2009（「部分開放參觀」這類原文）、isCharge 1467、openUpTime 1650、
+// wenSiteaddress 613。布林欄位探勘看到的是 True／False，JSON 裡可能是布林或字串，
+// 兩種都收；認不得的值（空字串、其他文字）一律當沒填——來源沒寫就留空，不推測。
+export function yesNo(v) {
+  if (v === true || v === false) return v;
+  const s = String(v ?? '').trim().toLowerCase();
+  if (['true', 'y', 'yes', '是', '1'].includes(s)) return true;
+  if (['false', 'n', 'no', '否', '0'].includes(s)) return false;
+  return undefined;
+}
+
+export function visitInfoOf(r) {
+  return {
+    isOpenVisit: yesNo(r.isOpenVisit),
+    openVisitText: r.openVisitTypeText,
+    isCharge: yesNo(r.isCharge),
+    openingHoursRaw: r.openUpTime,
+    // wenSiteaddress 是管理單位的網站或粉專；實測也有空白與非網址的值，normUrl 補不回就不收
+    website: normUrl(r.wenSiteaddress),
+  };
+}
+
 export async function normalize(fetchedAt) {
   const raw = await readRaw(SOURCE);
   return raw.map((r) =>
@@ -129,7 +152,7 @@ export async function normalize(fetchedAt) {
       // L1-FORMAT §5：registerReason / buildingFeatures 這類長文原文照收，不在 L1 解析
       registerReason: r.registerReason,
       buildingFeatures: r.buildingFeatures,
-      openingHoursRaw: r.openUpTime,
+      ...visitInfoOf(r),
 
       ...pickAddress(r.addresses),
       ...coords(r.latitude, r.longitude),

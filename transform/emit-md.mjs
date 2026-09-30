@@ -13,6 +13,8 @@ import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseOpeningHours } from '../src/lib/opening-hours.mjs';
+import { HERITAGE_NEARBY_M, HERITAGE_NEARBY_MAX } from '../src/lib/nearby-events.mjs';
+import { resolveGroups, parentOf } from '../src/lib/venue-names.mjs';
 import { retirePages, liveSet } from './redirects.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
@@ -278,6 +280,35 @@ function mapBody(obj, indent) {
   return rows.join('\n');
 }
 
+// ── 文化資產參觀資訊 ────────────────────────────────────────────────
+/**
+ * 是否開放參觀、開放時間、門票、網站，全部照來源原樣帶，來源沒寫的就沒有這個欄位——
+ * 不從「是古蹟」推「可以參觀」，也不從「沒寫門票」推「免費」。
+ * 開放時間是自由文字，一定要帶出處（哪個來源、案件頁網址）：讀者要知道去哪裡核對。
+ */
+export function heritageVisit(out, members, metaBySource = new Map()) {
+  const text = out.openingHoursRaw && String(out.openingHoursRaw).trim();
+  const from = text ? members.find((m) => String(m.openingHoursRaw ?? '').trim() === text) : undefined;
+  const meta = from ? metaBySource.get(from._source) : undefined;
+  return {
+    isOpenVisit: typeof out.isOpenVisit === 'boolean' ? out.isOpenVisit : undefined,
+    openVisitText: out.openVisitText || undefined,
+    isCharge: typeof out.isCharge === 'boolean' ? out.isCharge : undefined,
+    openingHours: text || undefined,
+    openingHoursSpec: text ? parseOpeningHours(text) ?? undefined : undefined,
+    openingHoursSource: from ? { name: from.sourceName ?? meta?.name ?? from._source, url: from.sourceUrl ?? meta?.homepage } : undefined,
+    website: out.website || undefined,
+  };
+}
+
+function haversineM(a, b) {
+  const R = 6371000, rad = Math.PI / 180;
+  const dLat = (b.lat - a.lat) * rad, dLng = (b.lng - a.lng) * rad;
+  const s = Math.sin(dLat / 2) ** 2 +
+    Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dLng / 2) ** 2;
+  return 2 * R * Math.asin(Math.sqrt(s));
+}
+
 function frontmatter(obj) {
   return `---\n${mapBody(obj, 0)}\n---\n`;
 }
@@ -342,7 +373,8 @@ const EVENT_FIELDS = ['title', 'description', 'images', 'categoryRaw', 'status',
 const PLACE_FIELDS = ['name', 'description', 'images', 'categoryRaw', 'popularity',
   'address', 'addressPrecision', 'city', 'district', 'lat', 'lng',
   'phone', 'email', 'website', 'openingHoursRaw', 'sourceUrl', 'sourceUpdatedAt'];
-const HERITAGE_FIELDS = [...PLACE_FIELDS, 'level', 'heritageTypes', 'history', 'registeredAt', 'govInstitution'];
+const HERITAGE_FIELDS = [...PLACE_FIELDS, 'level', 'heritageTypes', 'history', 'registeredAt', 'govInstitution',
+  'isOpenVisit', 'openVisitText', 'isCharge'];
 
 async function main() {
   QUALITY = await readJson(path.join(ROOT, 'overrides', 'source-field-quality.json'), {});
@@ -390,6 +422,16 @@ async function main() {
     if (r.state !== 'resolved' || !r.toId) continue;
     if (!eventsAtVenue.has(r.toId)) eventsAtVenue.set(r.toId, new Set());
     eventsAtVenue.get(r.toId).add(r.fromId);
+  }
+
+  // 文化資產 → 同地場館（resolve-relations 的 sameSiteAs）。活動順著場館接到文資頁。
+  const siteVenuesOf = new Map();
+  const heritageOfVenue = new Map();
+  for (const r of relations) {
+    if (r.predicate !== 'sameSiteAs' || r.state !== 'resolved' || !r.toId) continue;
+    if (!siteVenuesOf.has(r.fromId)) siteVenuesOf.set(r.fromId, []);
+    siteVenuesOf.get(r.fromId).push(r.toId);
+    heritageOfVenue.set(r.toId, r.fromId);
   }
 
   // ── 決定要出哪些頁 ─────────────────────────────────────────────
@@ -521,6 +563,56 @@ async function main() {
     }
   }
 
+  // 場館頁回連文資頁：只連真的有建頁的文資
+  const clusterById = new Map(clusters.map((c) => [c.id, c]));
+  function heritagePageOf(hid) {
+    if (!hid || !emitSet.has(hid)) return undefined;
+    const c = clusterById.get(hid);
+    const name = membersOf(c).map((m) => m.name).find(Boolean);
+    return name ? { slug: c.slug, name } : undefined;
+  }
+
+  // 文資附近有活動、有頁的場館。同一棟建築（buildingId）或同一個館區（overrides/venue-names.json）
+  // 只列一個——中山堂有中正廳、光復廳、廣場、書院，全列出來「附近」就被一棟樓佔滿。
+  // 館區直接連館區頁（src/pages/venue/[slug].astro 會為每個館區建頁）。
+  const activeVenuePages = [...venuesById.values()]
+    .filter((v) => v.lat != null && v.lng != null && venuePageOf.has(v.id) && eventsAtVenue.has(v.id));
+  const vnGroups = resolveGroups(await readJson(path.join(ROOT, 'overrides', 'venue-names.json'), {}),
+    [...venuesById.values()].filter((v) => venuePageOf.has(v.id)).map((v) => ({ slug: venuePageOf.get(v.id), name: v.name, city: v.city })));
+  const vnParent = parentOf(vnGroups);
+  const placeKey = (v) => {
+    const g = vnParent.get(venuePageOf.get(v.id)) ?? (vnGroups.has(venuePageOf.get(v.id)) ? venuePageOf.get(v.id) : undefined);
+    return g ? `g:${g}` : v.buildingId ?? v.id;
+  };
+  // city：場館的縣市與文資不同就不算附近——活動長出來的場館座標偶爾是錯的
+  // （實測「苗栗陶瓷農創園區」的座標落在臺北車站旁），縣市是另一個獨立欄位，擋得住這種。
+  function nearbyVenues(center, excludeIds, city) {
+    if (center?.lat == null || center?.lng == null) return [];
+    const skip = new Set([...excludeIds].map((id) => venuesById.get(id)).filter(Boolean).map(placeKey));
+    const byKey = new Map();
+    for (const v of activeVenuePages) {
+      if (excludeIds.has(v.id) || (city && v.city && v.city !== city)) continue;
+      const k = placeKey(v);
+      if (skip.has(k)) continue;
+      const d = haversineM(center, v);
+      if (d > HERITAGE_NEARBY_M) continue;
+      const n = eventsAtVenue.get(v.id).size;
+      const g = k.startsWith('g:') ? vnGroups.get(k.slice(2)) : undefined;
+      const prev = byKey.get(k);
+      // 同一棟取活動最多的那個廳當代表，同分取 slug 小的，結果才穩定；距離取最近的
+      const dist = Math.min(Math.round(d / 10) * 10, prev?.distanceM ?? Infinity);
+      if (!prev || n > prev.n || (n === prev.n && venuePageOf.get(v.id) < prev.hall)) {
+        byKey.set(k, { slug: g?.slug ?? venuePageOf.get(v.id), name: g?.name ?? v.name, distanceM: dist, n, hall: venuePageOf.get(v.id) });
+      } else {
+        prev.distanceM = dist;
+      }
+    }
+    return [...byKey.values()]
+      .sort((a, b) => a.distanceM - b.distanceM || a.slug.localeCompare(b.slug))
+      .slice(0, HERITAGE_NEARBY_MAX)
+      .map(({ slug, name, distanceM }) => ({ slug, name, distanceM }));
+  }
+
   // ── 場館（只出有活動的）─────────────────────────────────────────
   const venueDir = OUT('venues');
   await mkdir(venueDir, { recursive: true });
@@ -538,6 +630,7 @@ async function main() {
     const evs = [...(eventsAtVenue.get(vid) ?? [])];
     venueDirKeep.add(`${slug}.md`);
     const hours = venueHours(v, hoursRules, metaBySource);
+    const her = heritagePageOf(heritageOfVenue.get(vid));
     await writeIfChanged(path.join(venueDir, `${slug}.md`), frontmatter({
       venueId: vid, slug, name: v.name, origin: v.origin,
       city: v.city, district: v.district, address: v.address,
@@ -546,6 +639,7 @@ async function main() {
       openingHours: hours?.text, openingHoursSpec: hours?.spec, openingHoursSource: hours?.source,
       buildingId: v.buildingId, eventCount: evs.length,
       eventClusterIds: evs.slice(0, 200),
+      heritage: her,
     }), 'utf-8');
     counts.venue += 1;
   }
@@ -559,6 +653,19 @@ async function main() {
     if (!out.name) continue;
     const history = htmlToText(out.history);
     herDirKeep.add(`${c.slug}.md`);
+    const visit = heritageVisit(out, membersOf(c), metaBySource);
+    // 同地場館（有頁的才列）與在那裡辦過的活動數。活動本身由頁面依場館 slug 從活動集合撈，
+    // 才分得出近期與已結束——那是建置當下才知道的事，不寫進 md。
+    const siteIds = new Set(siteVenuesOf.get(c.id) ?? []);
+    const siteVenues = [...siteIds].filter((id) => venuePageOf.has(id))
+      .map((id) => ({ slug: venuePageOf.get(id), name: venuesById.get(id).name }))
+      // 名稱短的在前：「國立臺灣博物館」排在「國立臺灣博物館本館3樓自然教室」前面，頁面只印前幾個
+      .sort((a, b) => a.name.length - b.name.length || a.slug.localeCompare(b.slug));
+    const siteEvents = new Set([...siteIds].flatMap((id) => [...(eventsAtVenue.get(id) ?? [])]));
+    // 附近的中心點：文資自己的座標，沒有就借同地場館的
+    const siteGeo = [...siteIds].map((id) => venuesById.get(id)).find((v) => v?.lat != null && v?.lng != null);
+    const center = out.lat != null && out.lng != null ? { lat: fixCoord(out.lat), lng: fixCoord(out.lng) } : siteGeo;
+    const near = nearbyVenues(center, siteIds, out.city);
     await writeIfChanged(path.join(herDir, `${c.slug}.md`), frontmatter({
       clusterId: c.id, slug: c.slug, name: out.name,
       level: out.level, heritageTypes: out.heritageTypes,
@@ -568,6 +675,10 @@ async function main() {
       addressPrecision: out.addressPrecision,
       lat: out.lat == null ? undefined : fixCoord(out.lat),
       lng: out.lng == null ? undefined : fixCoord(out.lng),
+      ...visit,
+      siteVenues: siteVenues.length ? siteVenues : undefined,
+      eventCount: siteEvents.size || undefined,
+      nearbyVenues: near.length ? near : undefined,
       images: out.images, history: history || undefined, sources,
     }), 'utf-8');
     counts.heritage += 1;

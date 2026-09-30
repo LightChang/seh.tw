@@ -5,8 +5,13 @@
 //
 // 建置期每個活動頁都會查，所以索引只建一次：近期場次掃一遍，按場館與縣市分桶，
 // 每桶每個活動只留一列。查詢時只走到湊滿 limit 為止。
-import { upcomingSessions } from './day-lists.mjs';
+import { upcomingSessions, pastSessions } from './day-lists.mjs';
 import { midnight } from './format.mjs';
+
+// 文化資產頁的「附近」：步行可到的距離。transform/emit-md.mjs 據此挑附近場館寫進 md，
+// 頁面再從那些場館撈近期活動——範圍只定義在這裡一次。
+export const HERITAGE_NEARBY_M = 1000;
+export const HERITAGE_NEARBY_MAX = 10;
 
 /**
  * @param {Array} rows flatSessions() 的列
@@ -61,4 +66,37 @@ export function nearbyIndex(rows, now, { keep = () => true, venueKey = (s) => s 
     return out;
   }
   return { live, pick };
+}
+
+/**
+ * 文化資產頁的活動清單（src/pages/heritage/[slug].astro）。
+ *   here：在同地場館辦的活動（近期優先，沒有近期就列最近結束的，並標出來）
+ *   near：附近場館的近期活動，每個場館最多 perVenue 筆，已經在 here 的不重複
+ * rowsOf(venueSlug) 回該場館的 flatSessions() 列；siteSlugs／nearSlugs 是 md 裡的場館 slug。
+ */
+export function heritageEvents(rowsOf, now, { siteSlugs = [], nearSlugs = [], keep = () => true } = {}, { hereMax = 20, nearMax = 8, perVenue = 2 } = {}) {
+  const atSite = [...new Set(siteSlugs)].flatMap((s) => rowsOf(s));
+  const onePer = (list) => {
+    const seen = new Set();
+    return list.filter((d) => (seen.has(d.slug) ? false : seen.add(d.slug)));
+  };
+  const upHere = onePer(upcomingSessions(atSite, now));
+  const pastHere = upHere.length ? [] : onePer(pastSessions(atSite, now));
+  const here = (upHere.length ? upHere : pastHere).slice(0, hereMax);
+  const taken = new Set(here.map((d) => d.slug));
+  const perV = new Map();
+  const nearList = [];
+  // 還沒開始的排前面，進行中的長期展覽排後面（同 nearbyIndex）
+  const t0 = midnight(now);
+  const upAll = upcomingSessions([...new Set(nearSlugs)].flatMap((s) => rowsOf(s)), now);
+  const upNear = [...upAll.filter((d) => d.ts >= t0), ...upAll.filter((d) => d.ts < t0)];
+  for (const d of onePer(upNear)) {
+    if (nearList.length >= nearMax) break;
+    if (taken.has(d.slug) || !keep(d.slug)) continue;
+    if ((perV.get(d.venueSlug) ?? 0) >= perVenue) continue;
+    perV.set(d.venueSlug, (perV.get(d.venueSlug) ?? 0) + 1);
+    taken.add(d.slug);
+    nearList.push(d);
+  }
+  return { here, herePast: !upHere.length && here.length > 0, near: nearList };
 }

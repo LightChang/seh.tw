@@ -16,4 +16,7 @@ eventClusterIds:
   - "evt_moc-events_6a6a32e026b32427d06042f9"
   - "evt_moc-events_6a6a32e026b32427d06042fa"
   - "evt_moc-events_6a6a32e026b32427d06042fb"
+heritage: 
+  slug: "台北放送局板橋放送所"
+  name: "台北放送局板橋放送所"
 ---

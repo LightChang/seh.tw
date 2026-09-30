@@ -14,6 +14,10 @@ address: "臺北市北投區中央北路二段400號"
 addressPrecision: "street"
 lat: 25.1385067
 lng: 121.4875016
+nearbyVenues: 
+  - slug: "行天宮北投分館"
+    name: "行天宮北投分館"
+    distanceM: 950
 images: 
   - url: "https://data.boch.gov.tw/upload/sync/108251eb-d2a1-4027-a4e0-57af2bb9d406/中國電影製片廠照片.png"
     caption: "中國電影製片廠照片"

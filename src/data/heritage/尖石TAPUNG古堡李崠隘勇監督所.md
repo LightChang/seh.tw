@@ -15,6 +15,10 @@ address: "新竹縣玉峰村7鄰馬美部落"
 addressPrecision: "district"
 lat: 24.6926119
 lng: 121.3036677
+openingHours: "戶外空間自由參觀"
+openingHoursSource: 
+  name: "國家文化資產網"
+  url: "http://nchdb.boch.gov.tw/assets/advanceSearch/monument/20060724000012"
 images: 
   - url: "https://data.boch.gov.tw/upload/representImageFile/2021-07-28/7f7bec1a-04aa-4ac2-80de-b5c1c7be24c8/李崠隘勇監督所_代表圖像.jpg"
     caption: "李崠隘勇監督所_代表圖像"

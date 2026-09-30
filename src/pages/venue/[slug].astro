@@ -156,7 +156,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
         <span class="orig">{v.origin === 'group' ? `　${halls.length} 個廳與場地` : v.origin === 'derived' ? '　場地資料由活動資料建立' : '　來自場館名錄'}</span></p>
     </header>
 
-    {(v.address || v.openingHours || v.phone || parent) && (
+    {(v.address || v.openingHours || v.phone || parent || v.heritage) && (
       <dl class="facts">
         {v.address && <div><dt>地址</dt><dd>{v.address}</dd></div>}
         {v.openingHours && <div><dt>開放時間</dt><dd>
@@ -172,6 +172,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
         {v.phone && <div><dt>電話</dt><dd class="tabular">{v.phone}</dd></div>}
         {v.website && <div><dt>網站</dt><dd><a href={v.website} target="_blank" rel="nofollow noopener">館方網站</a></dd></div>}
         {parent && <div><dt>所屬</dt><dd><a href={`/venue/${parent.slug}`}>{parent.name}</a></dd></div>}
+        {v.heritage && <div><dt>文化資產</dt><dd><a href={`/heritage/${v.heritage.slug}`}>{v.heritage.name}</a></dd></div>}
       </dl>
     )}
 

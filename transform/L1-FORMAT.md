@@ -196,7 +196,7 @@ venue-name-only → 不輸出 PostalAddress，只有 Place.name
 | 場館 | `venue` | `openingHoursRaw`（原文照收，不解析——實測有「週二~六09:00~21:00\n週日09:00~17:00」「配合演出活動時間開放(春節及保養日不開放)」這種，解析只會解錯）、`priceText`、`isFree`（`/free-events` 類頁面要用；場館類的票價比活動類可靠，nantou 14/14、hsinchu-city 9/9） |
 | 人 | `person` | `actType`（表演藝術／視覺藝術）、`theme`（吉他彈唱）、`licenseNo`、`licenseExpiresAt`、`licenseCity`、`personType`（個人／團體——`boch-heritage-preservers` 實測 598／448，L1 不改變來源宣告的 entity，由 L3 決定要不要拆） |
 | 團體 | `organization` | `orgType`（申請類別，如「傳統戲曲」）、`registrationNo`（立案字號）、`competentAuthority`（主管機關）、`foundedAt` |
-| 文資 | `heritage` | `level`（縣(市)定古蹟）、`heritageTypes`（`[{code,name}]`）、`history`（`pastHistory`，建頁門檻看它的長度）、`registeredAt`、`govInstitution` |
+| 文資 | `heritage` | `level`（縣(市)定古蹟）、`heritageTypes`（`[{code,name}]`）、`history`（`pastHistory`，建頁門檻看它的長度）、`registeredAt`、`govInstitution`；參觀資訊 `isOpenVisit`、`openVisitText`（「部分開放參觀」原文）、`isCharge`、`openingHoursRaw`（`openUpTime`）、`website`（`wenSiteaddress`）——布林欄位認不得的值當沒填，不推測 |
 
 ### 規則與活動相同
 

@@ -15,6 +15,13 @@ address: "臺北市南港區市民大道7段88號"
 addressPrecision: "street"
 lat: 25.04903
 lng: 121.582818
+nearbyVenues: 
+  - slug: "Corner-House"
+    name: "Corner House"
+    distanceM: 230
+  - slug: "佛光緣美術館台北館"
+    name: "佛光緣美術館台北館"
+    distanceM: 430
 images: 
   - url: "https://data.boch.gov.tw/upload/representImageFile/2026-08-12/8fff83fa-27b8-4b69-a2f3-eefd85f1e2f2/臺電中心倉庫-P庫廠房.jpg"
     caption: "臺電中心倉庫-P庫廠房"

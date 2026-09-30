@@ -1,0 +1,40 @@
+{
+  "_comment": [
+    "文化資產 ↔ 場館的人工判定（transform/resolve-relations.mjs 的 matchHeritageSites）。",
+    "自動比對只認名稱（完全相同，或場館名包含文資名且座標夠近）。文資再利用後改了名的——",
+    "臺南州廳現在是臺灣文學館、臺北公會堂現在叫中山堂——名稱對不上，要人來接。",
+    "link：確定「這個場館就在這處文資裡」，每筆 { heritage: 文資 clusterId, venue: 場館 venueId, note }。",
+    "reject：自動比對接錯的，同樣格式。判完重跑 pipeline（--from relations）才生效。",
+    "2026-09-30 的 link 是從「有活動的場館在文資座標 60 公尺內」的清單逐筆挑出、再利用關係是公開周知的；",
+    "同一園區但不是那棟建築的（紀州庵文學森林新館、臺南市美術館 2 館）不接。"
+  ],
+  "link": [
+    { "heritage": "ent_boch-heritage_20031110000002", "venue": "ent_cip-museums_73", "note": "原臺南州廳 → 國立臺灣文學館" },
+    { "heritage": "ent_boch-heritage_20031110000002", "venue": "ven_derived_國立臺灣文學館第一會議室", "note": "原臺南州廳 → 國立臺灣文學館" },
+    { "heritage": "ent_boch-heritage_20190320000001", "venue": "ven_derived_臺北市中山堂中正廳", "note": "臺北公會堂 → 臺北市中山堂" },
+    { "heritage": "ent_boch-heritage_20190320000001", "venue": "ven_derived_臺北市中山堂光復廳", "note": "臺北公會堂 → 臺北市中山堂" },
+    { "heritage": "ent_boch-heritage_20190320000001", "venue": "ven_derived_臺北市中山堂廣場", "note": "臺北公會堂 → 臺北市中山堂" },
+    { "heritage": "ent_boch-heritage_20190320000001", "venue": "ven_derived_臺北市中山堂臺北書院", "note": "臺北公會堂 → 臺北市中山堂" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ent_cip-museums_1", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館臺博館本館", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館臺博館本館一樓東展間", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館臺博館本館3樓環形劇場-備註-播映時段依現場公告", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館本館3樓自然教室", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館本館3樓自然教室-名額剩-9-名", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19980610000001", "venue": "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-12-名", "note": "臺灣總督府博物館 → 國立臺灣博物館本館" },
+    { "heritage": "ent_boch-heritage_19910524000001", "venue": "ent_moc-emap-poi_ee7043b09c01c424", "note": "勸業銀行舊廈 → 國立臺灣博物館古生物館" },
+    { "heritage": "ent_boch-heritage_19910524000001", "venue": "ven_derived_臺博館古生物館", "note": "勸業銀行舊廈 → 國立臺灣博物館古生物館" },
+    { "heritage": "ent_boch-heritage_19970220000001", "venue": "ven_derived_光點台北電影院", "note": "前美國大使官邸 → 光點台北" },
+    { "heritage": "ent_boch-heritage_19980504000010", "venue": "ent_moc-emap-poi_7b86edb159f6353c", "note": "臺北市政府舊廈（原建成小學校）→ 台北當代藝術館" },
+    { "heritage": "ent_boch-heritage_20110406000001", "venue": "ven_derived_國立新竹生活美學館", "note": "新竹公會堂 → 國立新竹生活美學館" },
+    { "heritage": "ent_boch-heritage_19920110000002", "venue": "ven_derived_臺北市孔廟4D劇院", "note": "臺北孔子廟 → 園區內的 4D 劇院" },
+    { "heritage": "ent_boch-heritage_20020923000004", "venue": "ven_derived_花蓮文化創意產業園區18棟", "note": "花蓮舊酒廠 → 花蓮文化創意產業園區" },
+    { "heritage": "ent_boch-heritage_20150805000001", "venue": "ven_derived_板橋放送所-CLT-戲劇館", "note": "台北放送局板橋放送所" },
+    { "heritage": "ent_boch-heritage_20150805000001", "venue": "ven_derived_板橋放送所-CLT-戲劇館-傳奇戲樓", "note": "台北放送局板橋放送所" },
+    { "heritage": "ent_boch-heritage_20150805000001", "venue": "ven_derived_板橋放送所-CLT-戲劇館-傳奇梨園", "note": "台北放送局板橋放送所" },
+    { "heritage": "ent_boch-heritage_20150805000001", "venue": "ven_derived_板橋放送所-戶外廣場", "note": "台北放送局板橋放送所" },
+    { "heritage": "ent_boch-heritage_20040212000001", "venue": "ent_moc-emap-poi_98d9af12298375f6", "note": "紀州庵 → 紀州庵文學森林（新館的場地不接）" }
+  ],
+  "reject": []
+}

@@ -298,3 +298,45 @@ test('來源重新確認（_fetchedAt 變了）不改 md，確認日寫進 verif
   assert.deepEqual(await readNd(root, 'data/verified-state.ndjson'), [{ key: 'ev:1', verifiedAt: '2026-09-15' }]);
   await cleanup(root);
 });
+
+// ── 文化資產頁：參觀資訊、在這裡舉辦的活動、附近場館 ───────────────────
+test('文資頁：來源給的參觀欄位照帶、沒給的不出；同名場館的活動接過來；附近有活動的場館列出來', async () => {
+  const history = '這是一段夠長的沿革。'.repeat(25);   // ≥200 字才建頁
+  const heritage = (id, name, extra) => obs({
+    _source: 'boch-heritage', _sourceRecordId: id, sourceName: '國家文化資產網',
+    sourceUrl: `http://nchdb.boch.gov.tw/assets/advanceSearch/historicalBuilding/${id}`,
+    name, categoryRaw: '歷史建築', history, city: '臺北市', district: '中正區', ...extra,
+  }, { entityKind: 'heritage' });
+  const at = (name, lat, lng) => [venueSession(name, { address: `臺北市中正區${name}路1號`, addressPrecision: 'street', lat, lng })];
+  const root = await pipeline({
+    'boch-heritage': [
+      heritage('1', '測試公會堂', { lat: 25.0430, lng: 121.5100, openingHoursRaw: '週二至週日 09:00-17:00', isCharge: false }),
+      heritage('2', '沒寫參觀資訊的宿舍', { lat: 25.2, lng: 121.6 }),
+    ],
+    'ev': [
+      obs(event('ev', '1', { title: '公會堂音樂會', sessions: at('測試公會堂', 25.0431, 121.5101) })),
+      obs(event('ev', '2', { title: '隔壁的展覽', sessions: at('隔壁美術館', 25.0460, 121.5100) })),
+      obs(event('ev', '3', { title: '很遠的講座', sessions: at('很遠的圖書館', 25.0800, 121.5100) })),
+    ],
+  });
+  const md = await readMd(root, 'heritage', '測試公會堂');
+  assert.ok(md, '文資頁要建出來');
+  assert.match(md, /openingHours: "週二至週日 09:00-17:00"/);
+  assert.match(md, /openingHoursSource: \n\s+name: "國家文化資產網"/);
+  assert.match(md, /isCharge: false/);
+  assert.doesNotMatch(md, /isOpenVisit/, '來源沒寫是否開放參觀，就沒有這個欄位');
+  assert.match(md, /siteVenues: \n\s+- slug: "測試公會堂"/);
+  assert.match(md, /nearbyVenues: \n\s+- slug: "隔壁美術館"\n\s+name: "隔壁美術館"\n\s+distanceM: 330/);
+  assert.doesNotMatch(md, /很遠的圖書館/, '超過 1 公里不算附近');
+
+  const bare = await readMd(root, 'heritage', '沒寫參觀資訊的宿舍');
+  for (const k of ['openingHours', 'isCharge', 'isOpenVisit', 'siteVenues', 'nearbyVenues']) {
+    assert.doesNotMatch(bare, new RegExp(`^${k}:`, 'm'), `${k} 不能憑空出現`);
+  }
+  // 場館頁回連文資頁
+  assert.match(await readMd(root, 'venues', '測試公會堂'), /heritage: \n\s+slug: "測試公會堂"/);
+
+  const again = await runStage(root, 'emit-md.mjs');
+  assert.match(again.stdout, /寫入 0、/, '連跑第二次不能有寫入');
+  await cleanup(root);
+});

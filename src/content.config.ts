@@ -84,6 +84,8 @@ const venues = defineCollection({
     }).optional(),
     eventCount: z.number().default(0),
     eventClusterIds: z.array(z.string()).default([]),
+    // 這個場館就在某處文化資產裡（transform/resolve-relations.mjs 的 sameSiteAs），回連文資頁
+    heritage: z.object({ slug: z.string(), name: z.string() }).optional(),
   }),
 });
 
@@ -105,6 +107,22 @@ const heritage = defineCollection({
     addressPrecision: z.string().optional(),
     lat: z.number().optional(),
     lng: z.number().optional(),
+    // 參觀資訊：全部照來源原樣，來源沒寫就沒有這個欄位（transform/emit-md.mjs 的 heritageVisit）。
+    // openingHoursSpec 只有確定解析得出來才有，同場館頁。
+    isOpenVisit: z.boolean().optional(),
+    openVisitText: z.string().optional(),
+    isCharge: z.boolean().optional(),
+    openingHours: z.string().optional(),
+    openingHoursSpec: z.array(z.object({
+      days: z.array(z.enum(['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'])),
+      opens: z.string(), closes: z.string(),
+    })).optional(),
+    openingHoursSource: z.object({ name: z.string(), url: z.string().optional() }).optional(),
+    website: z.string().optional(),
+    // 同地場館（活動掛在這些場館上）、在那裡辦過的活動數、附近有活動的場館
+    siteVenues: z.array(z.object({ slug: z.string(), name: z.string() })).optional(),
+    eventCount: z.number().optional(),
+    nearbyVenues: z.array(z.object({ slug: z.string(), name: z.string(), distanceM: z.number() })).optional(),
     images: z.array(z.object({ url: z.string(), caption: z.string().optional() })).optional(),
     sources: z.array(source),
   }),

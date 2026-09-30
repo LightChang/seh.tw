@@ -1,7 +1,7 @@
 // 活動頁的同場地／同縣市近期活動（src/lib/nearby-events.mjs）。
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { nearbyIndex } from '../src/lib/nearby-events.mjs';
+import { nearbyIndex, heritageEvents } from '../src/lib/nearby-events.mjs';
 
 const now = Date.parse('2026-09-28T12:00:00+08:00');
 const row = (slug, at, venueSlug, city, end = null) => ({ slug, title: slug, at, end, venueSlug, city, dateOnly: false });
@@ -47,4 +47,38 @@ test('補縣市時同一系列（標題｜前綴）跨廳也最多兩筆', () =>
   const films = [1, 2, 3].map((i) => ({ ...row(`f${i}`, `2026-10-0${i}T11:30`, `hall${i}`, '高雄市'), title: `9月電影館｜片${i}` }));
   const got = nearbyIndex([...films, { ...row('z', '2026-10-09T19:30', 'y', '高雄市'), title: '音樂會' }], now).pick({ city: '高雄市' });
   assert.deepEqual(got.map((d) => d.slug), ['f1', 'f2', 'z']);
+});
+
+// ── 文化資產頁（heritageEvents）──────────────────────────────────────
+
+const byV = (list) => { const m = new Map(); for (const d of list) { if (!m.has(d.venueSlug)) m.set(d.venueSlug, []); m.get(d.venueSlug).push(d); } return (s) => m.get(s) ?? []; };
+
+test('文資頁：同地場館的近期活動；附近場館的每館最多 2 筆、未開始的在前、不重複、只列可收錄的', () => {
+  const list = [
+    row('here1', '2026-10-03T19:30', 'site', '臺北市'),
+    row('here1', '2026-10-04T19:30', 'site-hall', '臺北市'),
+    row('old', '2026-08-01T19:30', 'site', '臺北市'),
+    row('n1', '2026-10-01T19:30', 'near-a', '臺北市'),
+    row('n2', '2026-10-02T19:30', 'near-a', '臺北市'),
+    row('n3', '2026-10-03T19:30', 'near-a', '臺北市'),
+    row('nrun', '2026-09-01T10:00', 'near-b', '臺北市', '2026-12-31'),
+    row('nb', '2026-10-09T19:30', 'near-b', '臺北市'),
+    row('hidden', '2026-10-01T19:30', 'near-b', '臺北市'),
+    row('here1', '2026-10-05T19:30', 'near-b', '臺北市'),
+  ];
+  const got = heritageEvents(byV(list), now,
+    { siteSlugs: ['site', 'site-hall'], nearSlugs: ['near-a', 'near-b'], keep: (s) => s !== 'hidden' });
+  assert.deepEqual(got.here.map((d) => d.slug), ['here1']);
+  assert.equal(got.herePast, false);
+  assert.deepEqual(got.near.map((d) => d.slug), ['n1', 'n2', 'nb', 'nrun']);
+});
+
+test('文資頁：同地場館沒有近期活動時，改列已結束的（最近的在前）並標出來', () => {
+  const list = [row('a', '2026-05-01T19:30', 'site', '臺北市'), row('b', '2026-08-01T19:30', 'site', '臺北市')];
+  const got = heritageEvents(byV(list), now, { siteSlugs: ['site'] });
+  assert.deepEqual(got.here.map((d) => d.slug), ['b', 'a']);
+  assert.equal(got.herePast, true);
+  const none = heritageEvents(byV([]), now, { siteSlugs: ['site'] });
+  assert.equal(none.here.length, 0);
+  assert.equal(none.herePast, false);
 });

@@ -151,6 +151,19 @@ export async function flatSessions() {
   return FLAT;
 }
 
+/** 場館 slug → 該場館的場次列（flatSessions 的子集，順序相同）。文化資產頁每頁都查，建一次。 */
+let BY_VENUE = null;
+export async function sessionsByVenue() {
+  if (BY_VENUE) return BY_VENUE;
+  BY_VENUE = new Map();
+  for (const d of await flatSessions()) {
+    if (!d.venueSlug) continue;
+    if (!BY_VENUE.has(d.venueSlug)) BY_VENUE.set(d.venueSlug, []);
+    BY_VENUE.get(d.venueSlug).push(d);
+  }
+  return BY_VENUE;
+}
+
 /**
  * 真的會建頁的分類。`/category/[cat]` 有 ≥5 場的門檻，側欄不照同一個門檻過濾
  * 就會連到不存在的頁。門檻寫在這裡，兩邊共用同一個定義。

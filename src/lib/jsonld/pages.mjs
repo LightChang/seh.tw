@@ -149,8 +149,14 @@ export function venueNode({ type, v, aliases = [], parent, halls = [], openingHo
 
 // ---------- 文化資產 ----------
 
-/** 古蹟、歷史建築（LandmarksOrHistoricalBuildings，Google 無對應功能，rules.json#noGoogleFeature）。 */
-export function heritageNode(h) {
+/**
+ * 古蹟、歷史建築（LandmarksOrHistoricalBuildings，Google 無對應功能，rules.json#noGoogleFeature）。
+ * 參觀資訊只輸出來源明確給了的：isAccessibleForFree 來自「是否收費」（收費＝false），
+ * openingHoursSpecification 只在頁面開放時間解析得出來時由頁面傳入。屬性限 rules.json 查核過的那一份
+ * （「是否開放參觀」沒有對應的查核屬性，只印在頁面上）。
+ * containsPlace：同地場館（活動掛在那些場館上），跟頁面「在這裡舉辦的活動」同一份。
+ */
+export function heritageNode(h, { openingHoursSpecification } = {}) {
   const address = postalAddress({
     city: h.city,
     district: h.district,
@@ -164,5 +170,9 @@ export function heritageNode(h) {
     url: absUrl(`/heritage/${encodeURIComponent(h.slug)}`),
     ...(address ? { address } : {}),
     ...(geo ? { geo } : {}),
+    ...(typeof h.isCharge === 'boolean' ? { isAccessibleForFree: !h.isCharge } : {}),
+    ...(openingHoursSpecification?.length ? { openingHoursSpecification } : {}),
+    ...(h.siteVenues?.length ? { containsPlace: h.siteVenues.map((v) => ({ '@type': 'Place', name: v.name,
+      url: absUrl(`/venue/${encodeURIComponent(v.slug)}`) })) } : {}),
   };
 }

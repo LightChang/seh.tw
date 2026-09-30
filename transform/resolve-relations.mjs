@@ -164,6 +164,85 @@ function splitByNameAffinity(members) {
   return [...out.values()];
 }
 
+// ── 文化資產 ↔ 場館 ──────────────────────────────────────────────────
+// 文資頁要答「那裡有什麼活動」。活動只會掛在場館上（heldAt），所以先找出
+// 「這個場館就是這處文資」，活動再順著場館接過來。
+//
+// 只比有形文資——傳統表演藝術、民俗、古物沒有「地點就是它」這回事：
+// 實測「北管音樂」會用包含關係對到「南北管音樂戲曲館」。
+// 只比有活動的場館：公共藝術、書店這類名錄點位常把古蹟名寫進名稱（「XX 古蹟意象」），
+// 而這個關聯的用途就是接活動，沒有活動的場館接了也沒有東西可列。
+export const TANGIBLE_HERITAGE = new Set(['古蹟', '歷史建築', '聚落建築群', '紀念建築', '考古遺址', '文化景觀', '史蹟']);
+const SITE_EXACT_M = 1000;      // 名稱完全相同：同縣市、座標（兩邊都有時）1 公里內
+const SITE_CONTAINS_M = 300;    // 場館名包含文資名：要更近，「國定古蹟林本源園邸」「林本源園邸三落大厝」
+
+/**
+ * 文資名稱的比對鍵。括號裡常是舊名或俗名（「二鯤鯓礮臺(億載金城)」「旗山車站(原旗山驛)」），
+ * 拆出來各當一個鍵；括號裡的鍵至少 4 個字，「(一級)」這種不算名稱。
+ */
+export function heritageNameKeys(name) {
+  const s = String(name ?? '');
+  const keys = new Set();
+  const add = (x, min) => { const k = normVenue(x); if (k.length >= min) keys.add(k); };
+  add(s, 3);
+  add(s.replace(/[（(][^）)]*[）)]/g, ''), 3);
+  for (const m of s.matchAll(/[（(]([^）)]+)[）)]/g)) add(m[1], 4);
+  return [...keys];
+}
+
+// 場館名前面常冠上身分（「國定古蹟林本源園邸」「歷史建築臺中放送局」），剝掉才比得出完全相同
+const stripStatus = (k) => k.replace(/^(?:國定|直轄市定|市定|縣市定|縣定)?古蹟|^(?:歷史|紀念)建築/, '');
+
+/**
+ * @param heritages [{ id, keys, city, district, lat, lng }]
+ * @param venues    [{ id, name, city, district, lat, lng }]（只給有活動的）
+ * @param opt.reject Set of `${heritageId}|${venueId}`（overrides/heritage-venues.json）
+ * @returns [{ heritageId, venueId, method, confidence, distanceM }]
+ *
+ * 一個文資可以對到好幾個場館（各廳、各棟）；一個場館只能屬於一個文資——
+ * 候選不只一個時，完全相同優先於包含，再來比鍵長（越長越具體），還分不出來就不接。
+ */
+export function matchHeritageSites(heritages, venues, { reject = new Set() } = {}) {
+  const out = [];
+  for (const v of venues) {
+    const vn = normVenue(v.name);
+    if (!vn) continue;
+    const vs = stripStatus(vn);
+    const cands = [];
+    for (const h of heritages) {
+      if (h.city && v.city && h.city !== v.city) continue;
+      if (reject.has(`${h.id}|${v.id}`)) continue;
+      const d = h.lat != null && v.lat != null ? Math.round(haversineM(h, v)) : null;
+      let best = null;
+      for (const k of h.keys) {
+        let hit = null;
+        if (vn === k || vs === k) {
+          if (d == null || d <= SITE_EXACT_M) hit = { method: 'exact-name', rank: 2 };
+        } else if (k.length >= 4 && vn.includes(k)) {
+          // 沒座標時只剩行政區能擋：兩邊都要有、要相同，而且鍵要夠長
+          const ok = d != null ? d <= SITE_CONTAINS_M
+            : Boolean(h.district && v.district && h.district === v.district && k.length >= 5);
+          if (ok) hit = { method: 'name-contains', rank: 1 };
+        }
+        if (hit && (!best || hit.rank > best.rank || (hit.rank === best.rank && k.length > best.len))) {
+          best = { ...hit, len: k.length };
+        }
+      }
+      if (best) cands.push({ h, d, ...best });
+    }
+    if (!cands.length) continue;
+    cands.sort((a, b) => b.rank - a.rank || b.len - a.len);
+    const [top, second] = cands;
+    if (second && second.rank === top.rank && second.len === top.len && second.h.id !== top.h.id) continue;
+    out.push({
+      heritageId: top.h.id, venueId: v.id, method: top.method,
+      confidence: top.method === 'exact-name' ? 0.9 : 0.7,
+      distanceM: top.d ?? undefined,
+    });
+  }
+  return out.sort((a, b) => a.heritageId.localeCompare(b.heritageId) || a.venueId.localeCompare(b.venueId));
+}
+
 // ── 主流程 ──────────────────────────────────────────────────────────
 async function main() {
   await loadKinds();
@@ -484,6 +563,41 @@ async function main() {
         state: res.state, method: res.method, confidence: res.confidence, fromObservation: id,
       });
     }
+  }
+
+  // 文化資產 ↔ 場館（見 matchHeritageSites）。人工排除記在 overrides/heritage-venues.json。
+  const siteOverrides = await readJson(path.join(OVERRIDES_DIR, 'heritage-venues.json'), {});
+  const siteReject = new Set((siteOverrides.reject ?? []).map((x) => `${x.heritage}|${x.venue}`));
+  const heritages = [];
+  for (const c of clusters) {
+    if (c.entityKind !== 'heritage') continue;
+    const members = c.members.map((m) => obs.get(m.observationId)).filter(Boolean);
+    if (!members.some((m) => TANGIBLE_HERITAGE.has(m.categoryRaw))) continue;
+    const pick = (k) => members.map((m) => m[k]).find((v) => v != null);
+    heritages.push({
+      id: c.id, name: pick('name'),
+      keys: [...new Set(members.flatMap((m) => heritageNameKeys(m.name)))],
+      city: pick('city'), district: pick('district'), lat: pick('lat'), lng: pick('lng'),
+    });
+  }
+  const heritageName = new Map(heritages.map((h) => [h.id, h.name]));
+  // 人工 link 優先：被 link 的場館不再自動比對。文資或場館已經不存在的 link 略過（資料重建後 id 會留著）
+  const linked = (siteOverrides.link ?? [])
+    .filter((x) => heritageName.has(x.heritage) && venues.has(x.venue))
+    .map((x) => ({ heritageId: x.heritage, venueId: x.venue, method: 'manual', confidence: 1.0 }));
+  const linkedVenues = new Set(linked.map((x) => x.venueId));
+  const sites = [
+    ...linked,
+    ...matchHeritageSites(heritages,
+      [...venues.values()].filter((v) => active.has(v.id) && !linkedVenues.has(v.id)), { reject: siteReject }),
+  ].sort((a, b) => a.heritageId.localeCompare(b.heritageId) || a.venueId.localeCompare(b.venueId));
+  for (const s of sites) {
+    relations.push({
+      fromKind: 'heritage', fromId: s.heritageId, predicate: 'sameSiteAs',
+      toKind: 'venue', toId: s.venueId, toNameRaw: venues.get(s.venueId)?.name,
+      fromNameRaw: heritageName.get(s.heritageId),
+      state: 'resolved', method: s.method, confidence: s.confidence, distanceM: s.distanceM,
+    });
   }
 
   // ── 6. 統計與待辦 ────────────────────────────────────────────────
