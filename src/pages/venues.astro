@@ -7,11 +7,11 @@ const venues = (await allVenues()).sort((a, b) => b.eventCount - a.eventCount ||
 const withGeo = venues.filter((v) => v.lat).length;
 const derived = venues.filter((v) => v.origin === 'derived').length;
 ---
-<Base title="藝文場館｜seh" description={`台灣正在舉辦活動的 ${venues.length} 個藝文場館。`}>
+<Base title="台灣藝文場館列表｜seh" description={`台灣正在舉辦活動的 ${venues.length} 個藝文場館，依活動數排序。`}>
   <div class="shell">
     <Nav />
     <header class="page-hd">
-      <h1>場館</h1>
+      <h1>台灣藝文場館</h1>
       <p class="sub"><strong class="tabular">{venues.length}</strong> 個場館有活動，{withGeo} 個有座標，
         {derived} 個是從活動資料長出來的（名錄裡查不到）</p>
     </header>
