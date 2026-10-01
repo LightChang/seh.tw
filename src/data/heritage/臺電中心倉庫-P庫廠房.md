@@ -15,6 +15,7 @@ address: "臺北市南港區市民大道7段88號"
 addressPrecision: "street"
 lat: 25.04903
 lng: 121.582818
+isOpenVisit: true
 nearbyVenues: 
   - slug: "Corner-House"
     name: "Corner House"
@@ -46,4 +47,5 @@ sources:
       - "history"
       - "registeredAt"
       - "govInstitution"
+      - "isOpenVisit"
 ---

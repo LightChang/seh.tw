@@ -14,6 +14,7 @@ address: "桃園市復興區成福段28地號"
 addressPrecision: "district"
 lat: 24.82236
 lng: 121.38158
+isOpenVisit: true
 images: 
   - url: "https://data.boch.gov.tw/upload/representImageFile/2026-01-21/ab650fe2-b067-4f14-99cd-e366b23e3f83/自力更生之碑 (2).jpg"
     caption: "自力更生之碑 (2)"
@@ -40,4 +41,5 @@ sources:
       - "history"
       - "registeredAt"
       - "govInstitution"
+      - "isOpenVisit"
 ---

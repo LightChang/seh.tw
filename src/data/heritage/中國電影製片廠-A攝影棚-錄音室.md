@@ -14,6 +14,9 @@ address: "臺北市北投區中央北路二段400號"
 addressPrecision: "street"
 lat: 25.1385067
 lng: 121.4875016
+isOpenVisit: false
+openVisitText: "不開放參觀"
+isCharge: false
 nearbyVenues: 
   - slug: "行天宮北投分館"
     name: "行天宮北投分館"
@@ -53,4 +56,7 @@ sources:
       - "history"
       - "registeredAt"
       - "govInstitution"
+      - "isOpenVisit"
+      - "openVisitText"
+      - "isCharge"
 ---
