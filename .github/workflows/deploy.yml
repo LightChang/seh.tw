@@ -34,13 +34,15 @@ jobs:
       name: github-pages
       url: ${{ steps.deploy.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v4
+      # action 一律用最新大版本（2026-10-01 以 git ls-remote 查過，全部跑在 node24）。
+      # 舊版跑在 node20，GitHub 會在每次部署印出 deprecated 警告。
+      - uses: actions/checkout@v7
       # pnpm/action-setup 必須在 setup-node 之前：setup-node 的 cache: pnpm
       # 要先找到 pnpm 執行檔才算得出 store 路徑。
-      - uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v6
         with:
           version: 10
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: '26'
           cache: pnpm
@@ -59,9 +61,9 @@ jobs:
           pnpm run build
           pnpm run links
 
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/configure-pages@v6
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
-      - uses: actions/deploy-pages@v4
+      - uses: actions/deploy-pages@v5
         id: deploy
