@@ -2,7 +2,7 @@
 // 搜尋結果裡看得出「何時、何地、要不要錢」，活動名查詢才點得進來。
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { eventTitle, eventFacts, whenText, titleDate, placeLabel, eventSpan } from '../src/lib/event-meta.mjs';
+import { eventTitle, eventFacts, whenText, titleDate, placeLabel, eventSpan, eventLead } from '../src/lib/event-meta.mjs';
 import { ticketLink } from '../src/lib/ticket.mjs';
 
 const hall = { venueNameRaw: '國家音樂廳', city: '臺北市', district: '中正區' };
@@ -82,4 +82,14 @@ test('來源用 00:00 表示沒給時間：首屏時間、標題、事實句都�
   assert.equal(eventSpan(e.sessions).hasTime, false);
   // 真的有時刻的照印
   assert.equal(whenText([{ startAt: '2026-10-31T19:30:00+08:00', granularity: 'datetime' }]), '2026/10/31（六） 19:30');
+});
+
+test('首屏答案句：逐場次日期與地點，沒有的資訊不編', () => {
+  const e = { slug: '2026桃園萬聖城', title: '2026桃園萬聖城', sessions: [
+    { startAt: '2026-10-15', endAt: '2026-10-31', granularity: 'date', city: '桃園市', district: '桃園區', address: '桃園市桃園區桃園藝文廣場' },
+    { startAt: '2026-10-24', endAt: '2026-11-01', granularity: 'date', city: '桃園市', district: '桃園區', address: '桃園市桃園區桃園藝文廣場、綠2公園' },
+  ] };
+  const t = eventLead(e);
+  assert.match(t, /10\/15–10\/31 在桃園藝文廣場；10\/24–11\/1 在桃園藝文廣場、綠2公園（桃園市桃園區）。/);
+  assert.match(t, /沒有提供/);
 });

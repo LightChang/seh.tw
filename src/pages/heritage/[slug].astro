@@ -8,6 +8,7 @@ import { heritageEvents } from '../../lib/nearby-events.mjs';
 import { leadText, upcomingSessions } from '../../lib/day-lists.mjs';
 import { catVar } from '../../lib/format.mjs';
 import { toSchemaSpec } from '../../lib/opening-hours.mjs';
+import { HERITAGE_STATUS } from '../../lib/heritage-status.mjs';
 
 export async function getStaticPaths() {
   // md 只為沿革 ≥200 字的產生（emit-md.mjs），所以這裡整個 collection 都建頁
@@ -19,12 +20,14 @@ export async function getStaticPaths() {
 const { h } = Astro.props;
 const indexable = await isIndexable(`/heritage/${h.slug}`);
 const descLead = [h.city, h.type].filter(Boolean).join('');
-const description = descLead
+const status = HERITAGE_STATUS[h.slug];
+const baseDesc = descLead
   ? `${descLead}，${h.history.slice(0, Math.max(0, 80 - descLead.length - 1))}`
   : h.history.slice(0, 80);
+const description = status ? `${status.description}${baseDesc}` : baseDesc;
 // 標題帶所在地與類別（「淡水中正段日式宿舍群｜新北市淡水區歷史建築｜seh」），
 // 搜古蹟名的人一眼看得出是哪裡、哪一種；都沒有才退回「文化資產」。
-const title = `${h.name}｜${[h.city, h.district].filter(Boolean).join('')}${h.type || (h.city ? '' : '文化資產')}｜seh`;
+const title = `${h.name}${status ? status.title : ''}｜${[h.city, h.district].filter(Boolean).join('')}${h.type || (h.city ? '' : '文化資產')}｜seh`;
 const ld = heritageNode(h, {
   openingHoursSpecification: h.openingHoursSpec?.length ? toSchemaSpec(h.openingHoursSpec) : undefined,
 });
@@ -65,6 +68,13 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
     <article class="her">
       <Breadcrumb trail={trail} />
       <h1>{h.name}</h1>
+      {status && (
+        <section class="status">
+          <h2 class="h-sm">最新現況</h2>
+          <p class="body">{status.lead}</p>
+          <p class="note">依 {status.sources.map((x, i) => <>{i > 0 && '、'}<a href={x.url} target="_blank" rel="nofollow noopener">{x.name}</a></>)} 報導，事件日 <span class="tabular">{status.date}</span>。開放時間與租賃狀況以主管機關（{h.govInstitution ?? '新北市政府'}）公告為準。</p>
+        </section>
+      )}
       <dl class="facts">
         {h.type && <div><dt>類別</dt><dd>{h.type}</dd></div>}
         {h.level && <div><dt>級別</dt><dd>{h.level}</dd></div>}

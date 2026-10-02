@@ -146,3 +146,22 @@ export function eventFacts(e, ticket) {
     perfs.length ? `演出：${perfs.slice(0, 3).join('、')}${perfs.length > 3 ? '等' : ''}` : '',
   ].filter(Boolean).map((s) => `${s}。`).join('');
 }
+
+// 首屏白話答案句：只給「搜尋這個活動名的人要先知道的事」且還沒有專屬說明的活動頁用，
+// 逐場次講日期與地點，全部取自場次資料，沒有的（開放時段、交通）不編，改指向官方活動頁。
+// 2026-10-02 起只用在清單內的活動（GSC 查詢以日期、地點為意圖、排名 10–11），不全站套用。
+export const LEAD_SLUGS = new Set(['2026桃園萬聖城']);
+
+export function eventLead(e) {
+  const sessions = e.sessions ?? [];
+  if (!sessions.length) return '';
+  const strip = (s) => String(s.address ?? '').replace(s.city ?? '', '').replace(s.district ?? '', '').trim();
+  const parts = sessions.map((s) => {
+    const a = mdShort(s.startAt), b = s.endAt ? mdShort(s.endAt) : a;
+    const where = s.venueNameRaw || strip(s);
+    return `${a === b ? a : `${a}–${b}`}${where ? ` 在${where}` : ''}`;
+  });
+  const p = primarySession(sessions);
+  const area = [p.city, p.district].filter(Boolean).join('');
+  return `${e.title}：${parts.join('；')}${area ? `（${area}）` : ''}。每日開放時段與交通方式，來源資料沒有提供，請以官方活動頁為準。`;
+}

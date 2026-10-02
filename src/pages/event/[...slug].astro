@@ -5,7 +5,7 @@ import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import NearbyEvents from '../../components/NearbyEvents.astro';
 import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
-import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
+import { eventTitle, whenText, primarySession, placeLabel, eventLead, LEAD_SLUGS } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
 import titleAliases from '../../../overrides/event-title-aliases.json';
 import { hasClockTime } from '../../lib/session-time.mjs';
@@ -107,6 +107,7 @@ const trail = crumbTrail([
       <Breadcrumb trail={trail} />
 
       <h1>{e.title}</h1>
+      {LEAD_SLUGS.has(e.slug) && <p class="lead">{eventLead(e)}</p>}
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
@@ -251,6 +252,7 @@ const trail = crumbTrail([
   }
   .prov strong { color: var(--text-secondary); }
 
+  .lead { margin-top: var(--space-4); line-height: 1.75; }
   .desc { margin-top: var(--space-6); white-space: pre-wrap; line-height: 1.75; color: var(--text-secondary); }
   .sessions li { display: flex; gap: 1rem; flex-wrap: wrap; }
   .sv { color: var(--text-muted); }
