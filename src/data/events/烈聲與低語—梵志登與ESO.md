@@ -3,6 +3,8 @@ clusterId: "evt_weiwuying-programs_6a793128b1b5840007664bdd"
 slug: "烈聲與低語—梵志登與ESO"
 title: "《烈聲與低語—梵志登與ESO》"
 status: "scheduled"
+priceText: "NT$ 800、1200、1600、2200、3000、3600"
+ticketUrl: "https://www.opentix.life/event/2102976712891215872"
 description: |-
   從貝多芬《科里奧蘭》序曲出發，梵志登攜手ESO與男中音葛納，詮釋舒伯特、理查．史特勞斯藝術歌曲，並以蕭士塔科維契第九號交響曲作結。
   
@@ -61,6 +63,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

@@ -21,10 +21,13 @@ sessions:
     venueSlug: "國立臺灣工藝研究發展中心"
 sources: 
   - id: "nantou-arts-events"
-    recordId: "47"
+    recordId: "44~2"
     provides: 
       - "title"
       - "categoryRaw"
       - "organizers"
       - "sessions"
+  - id: "nantou-arts-events"
+    recordId: "47"
+    provides: []
 ---

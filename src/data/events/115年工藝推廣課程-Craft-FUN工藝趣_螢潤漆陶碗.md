@@ -31,4 +31,7 @@ sources:
       - "organizers"
       - "priceText"
       - "sessions"
+  - id: "nantou-arts-events"
+    recordId: "69~2"
+    provides: []
 ---

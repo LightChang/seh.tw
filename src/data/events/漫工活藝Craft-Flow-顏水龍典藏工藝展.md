@@ -49,9 +49,25 @@ sources:
     rejected: 
       categoryRaw: "6"
   - id: "nantou-arts-events"
-    recordId: "46"
+    recordId: "43~2"
     provides: 
       - "categoryRaw"
+    rejected: 
+      organizers: 
+        - nameRaw: "國立臺灣工藝研究發展中心"
+          role: "master"
+        - nameRaw: "文化部"
+          role: "other"
+      sessions: 
+        - startAt: "2026-05-29T09:00:00+08:00"
+          granularity: "datetime"
+          endAt: "2026-12-20T17:00:00+08:00"
+          venueNameRaw: "國立臺灣工藝研究發展中心"
+          city: "南投縣"
+          addressPrecision: "city"
+  - id: "nantou-arts-events"
+    recordId: "46"
+    provides: []
     rejected: 
       organizers: 
         - nameRaw: "國立臺灣工藝研究發展中心"

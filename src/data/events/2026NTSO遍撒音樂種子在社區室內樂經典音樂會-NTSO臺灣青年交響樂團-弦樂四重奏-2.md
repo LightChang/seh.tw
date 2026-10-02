@@ -1,0 +1,36 @@
+---
+clusterId: "evt_nantou-arts-events_19978f82c4bedda8"
+slug: "2026NTSO遍撒音樂種子在社區室內樂經典音樂會-NTSO臺灣青年交響樂團-弦樂四重奏-2"
+title: "2026NTSO遍撒音樂種子在社區室內樂經典音樂會：NTSO臺灣青年交響樂團-弦樂四重奏"
+category: "節慶活動"
+categoryRaw: "表演與節慶"
+status: "scheduled"
+organizers: 
+  - nameRaw: "NTSO國立臺灣交響樂團"
+    role: "master"
+  - nameRaw: "南投縣政府文化局"
+    role: "support"
+  - nameRaw: "內政部"
+    role: "other"
+  - nameRaw: "文化部"
+    role: "other"
+sessions: 
+  - startAt: "2026-10-13T08:30:00+08:00"
+    granularity: "datetime"
+    endAt: "2026-10-13T09:30:00+08:00"
+    venueNameRaw: "埔里鎮育英國小"
+    city: "南投縣"
+    district: "埔里鎮"
+    address: "埔里鎮清新里育英街20號"
+    addressPrecision: "street"
+    venueId: "ven_derived_埔里鎮育英國小"
+    venueSlug: "埔里鎮育英國小"
+sources: 
+  - id: "nantou-arts-events"
+    recordId: "157~2"
+    provides: 
+      - "title"
+      - "categoryRaw"
+      - "organizers"
+      - "sessions"
+---

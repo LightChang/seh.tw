@@ -22,15 +22,15 @@ sessions:
   - startAt: "2026-10-24T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T16:00:00+08:00"
-    venueNameRaw: "國立臺灣博物館臺博館本館1樓及古物館3樓簡報室 正取剩 13 名"
+    venueNameRaw: "國立臺灣博物館臺博館本館1樓及古物館3樓簡報室 正取剩 3 名"
     lat: 25.043407
     lng: 121.515004
     city: "臺北市"
     district: "中正區"
     address: "臺北市中正區襄陽路2號"
     addressPrecision: "street"
-    venueId: "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-13-名"
-    venueSlug: "國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-13-名"
+    venueId: "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-3-名"
+    venueSlug: "國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-3-名"
 sources: 
   - id: "ntm-activities"
     recordId: "60191"

@@ -3,6 +3,8 @@ clusterId: "evt_weiwuying-programs_6a7938f8d9f99a000814f8b6"
 slug: "交響樂的天空-XII-琴的魔手"
 title: "《交響樂的天空 XII 【琴的魔手】》"
 status: "scheduled"
+priceText: "NT$ 300、500、800、1000"
+ticketUrl: "https://www.opentix.life/event/2092559448512712705"
 description: |-
   魔幻與華彩交織，走進浪漫樂派最迷人的音樂世界。從德國浪漫歌劇的神祕森林，到法國歌劇的華麗舞臺；從小提琴令人屏息的炫技，到維也納舞曲輕盈愉悅的節奏，本場音樂會精選十九世紀最具代表性的經典作品，帶領聽眾展開一場跨越國度與劇場的音樂旅程。
   
@@ -39,6 +41,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

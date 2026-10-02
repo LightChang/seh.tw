@@ -2,11 +2,19 @@
 clusterId: "evt_moc-events_6a9ef12d26b324165c32e37a"
 slug: "古典室內樂集雙音漫舞-雙鋼琴VS經典室內樂音樂會"
 title: "古典室內樂集『雙音漫舞 雙鋼琴VS經典室內樂』音樂會"
-category: "音樂"
-categoryRaw: "1"
+category: "節慶活動"
+categoryRaw: "表演與節慶"
 status: "scheduled"
 popularity: 0
+priceText: "︰200"
 ticketUrl: "https://www.opentix.life/program/2093174981168631809"
+organizers: 
+  - nameRaw: "南投縣政府"
+    role: "other"
+  - nameRaw: "南投縣政府文化局"
+    role: "other"
+  - nameRaw: "吹笛手家族"
+    role: "master"
 sessions: 
   - startAt: "2026-10-24T14:30:00+08:00"
     granularity: "datetime"
@@ -28,9 +36,24 @@ sources:
     url: "https://www.opentix.life/program/2093174981168631809"
     provides: 
       - "title"
-      - "categoryRaw"
       - "popularity"
       - "ticketUrl"
       - "sessions"
       - "sourceUrl"
+    rejected: 
+      categoryRaw: "1"
+  - id: "nantou-arts-events"
+    recordId: "187"
+    provides: 
+      - "categoryRaw"
+      - "organizers"
+      - "priceText"
+    rejected: 
+      sessions: 
+        - startAt: "2026-10-24T14:30:00+08:00"
+          granularity: "datetime"
+          endAt: "2026-10-24T16:00:00+08:00"
+          venueNameRaw: "南投縣政府文化局"
+          city: "南投縣"
+          addressPrecision: "city"
 ---
