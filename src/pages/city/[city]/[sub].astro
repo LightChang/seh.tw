@@ -25,6 +25,17 @@ export async function getStaticPaths() {
     if (!byDistrict.has(k)) byDistrict.set(k, []);
     byDistrict.get(k).push(d);
   }
+  // 網址一旦發出就不能變（CLAUDE.md）。行政區頁原本在還沒結束的場次掉到 5 場以下時就不建、變 404。
+  // 站 2026-09-15 上線起有過場次的行政區一律建頁；不到 5 場（含 0 場）的 noindex，
+  // 沒有還沒結束的場次就列最近結束的場次。
+  const LAUNCH = '2026-09-15';
+  const recent = new Map();
+  for (const d of all) {
+    if (!d.city || !d.district || (d.end ?? d.at).slice(0, 10) < LAUNCH) continue;
+    const k = `${d.city} ${d.district}`;
+    if (!recent.has(k)) recent.set(k, []);
+    recent.get(k).push(d);
+  }
   // 月份頁（含過去月份）的建頁規則在 build-data.mjs 的 cityMonthPages，活動頁連過來也用它
   const months = await cityMonthPages();
 
@@ -36,10 +47,12 @@ export async function getStaticPaths() {
   for (const [k, v] of months) if (!v.past) built.add(`month ${k}`);
 
   const paths = [];
-  for (const [k, rows] of byDistrict) {
-    if (rows.length < MIN) continue;
+  for (const k of new Set([...byDistrict.keys(), ...recent.keys()])) {
+    const liveRows = byDistrict.get(k) ?? [];
+    const thin = liveRows.length < MIN;
+    const rows = liveRows.length ? liveRows : recent.get(k).slice(-40);
     const [city, sub] = k.split(' ');
-    paths.push({ params: { city, sub }, props: { city, sub, rows, mode: 'district', built: [...built], past: false } });
+    paths.push({ params: { city, sub }, props: { city, sub, rows, mode: 'district', built: [...built], past: false, thin, ended: !liveRows.length } });
   }
   for (const [k, { rows, past }] of months) {
     const [city, sub] = k.split(' ');
@@ -48,7 +61,7 @@ export async function getStaticPaths() {
   return paths;
 }
 
-const { city, sub, rows, mode, built, past } = Astro.props;
+const { city, sub, rows, mode, built, past, thin = false, ended = false } = Astro.props;
 const catPages = await builtCategories();
 const has = (m, k) => built.includes(`${m} ${city} ${k}`);
 const isMonth = mode === 'month';
@@ -78,8 +91,10 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
   title={`${title}有什麼文化活動｜seh`}
   description={past
     ? `${title}的文化活動、展覽與演出，共 ${events} 個活動。這個月份已經過去。`
-    : `${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
-  noindex={past}
+    : ended
+      ? `${title}最近的文化活動、展覽與演出，共 ${events} 個活動，目前都已結束。`
+      : `${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
+  noindex={past || thin}
   breadcrumbs={trail}
 >
   <div class="shell">
@@ -89,8 +104,9 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
       <h1>{title}活動</h1>
       <p class="sub">
         <strong class="tabular">{events}</strong> 個活動、
-        <span class="tabular">{rows.length}</span> 場次{isMonth ? '' : '正在或即將發生'}
+        <span class="tabular">{rows.length}</span> 場次{isMonth ? '' : ended ? '，都已結束' : '正在或即將發生'}
       </p>
+      {ended && <p class="sub">這一區目前沒有還沒結束的活動。<a href={`/city/${city}`}>看{city}接下來的活動</a></p>}
       {past && <p class="sub">這個月份已經過去。<a href={`/city/${city}`}>看{city}接下來的活動</a></p>}
     </header>
 
