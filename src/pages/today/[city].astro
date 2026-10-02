@@ -1,0 +1,83 @@
+---
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import HubList from '../../components/HubList.astro';
+import { crumbTrail, eventItemList } from '../../lib/jsonld/index.mjs';
+import { catVar, fmtNum, WD, hhmm, midnight } from '../../lib/format.mjs';
+import { flatSessions, builtHubs, indexableEvent } from '../../lib/build-data.mjs';
+import { eventsIn, groupByCat, titleWords, cityShort } from '../../lib/hubs.mjs';
+
+// 「板橋今天有什麼活動」「台北今天活動」：/today 是全台，/today/<縣市> 是單一縣市。
+// 網址固定，內容是 build 當下的「今天」（每天 00:20 台灣時間重建一次），縣市與 /weekend/<縣市> 同一份。
+// 今天這個縣市不到 3 個活動就 noindex：頁面照樣在（縣市頁會連），但內容太薄。
+export async function getStaticPaths() {
+  const { weekend } = await builtHubs();
+  return weekend.map((city) => ({ params: { city }, props: { city } }));
+}
+const { city } = Astro.props;
+const buildNow = Date.now();
+const t0 = midnight(buildNow);
+const rows = (await flatSessions()).filter((d) => d.city === city);
+const keep = await indexableEvent();
+const list = eventsIn(rows, t0, t0 + 86400000, keep);
+const groups = groupByCat(list);
+const hubs = await builtHubs();
+const place = cityShort(city);
+const words = titleWords(list);
+const freeN = list.filter((e) => e.isFree === true).length;
+const fresh = list.filter((e) => !e.running).length;
+const thin = list.length < 3;
+const CAP = 30;
+const tw = new Date(t0 + 12 * 3600e3);
+const dayLabel = `${tw.getUTCMonth() + 1}/${tw.getUTCDate()} 週${WD[tw.getUTCDay()]}`;
+const lead = (e) => (e.running ? '展期中' : e.times.length ? hhmm(e.times[0]) : '整天');
+
+const title = `${place}今天有什麼活動（${dayLabel}）｜${(words.length ? words : ['展覽', '演出']).join('、')}`;
+const description = `${dayLabel} ${city}今天有 ${list.length} 個活動`
+  + (groups.length ? `：${groups.slice(0, 4).map(([c, l]) => `${c} ${l.length}`).join('、')}` : '')
+  + (freeN ? `，其中 ${freeN} 個免費` : '') + '。依類型分組，附時間與場地，每天更新。';
+const trail = crumbTrail([{ name: '今天', href: '/today' }], `${place}今天`);
+const shown = groups.flatMap(([, l]) => l.slice(0, CAP));
+const ld = eventItemList(shown.slice(0, 100), `${dayLabel} ${city}的文化活動`);
+---
+<Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
+  <div class="shell">
+    <Nav />
+    <header class="page-hd">
+      <Breadcrumb trail={trail} />
+      <h1>{place}今天</h1>
+      <p class="sub">{dayLabel}　<strong class="tabular">{fmtNum(list.length)}</strong> 個活動</p>
+      <p class="lead">
+        {list.length
+          ? <>今天開始的有 {fresh} 個{list.length - fresh ? `，展期跨過今天、現在去都看得到的有 ${list.length - fresh} 個` : ''}{freeN ? `；來源標示免費的 ${freeN} 個` : ''}。清單每天凌晨重建，晚間的場次請以主辦單位公告為準。</>
+          : <>{city}今天還沒有收錄到活動，可以看<a href={`/weekend/${city}`}>這週末</a>或<a href={`/city/${city}`}>接下來的活動</a>。</>}
+      </p>
+    </header>
+
+    {groups.map(([c, l]) => (
+      <section class="grp">
+        <h2 class="h-sm"><span style={`color:var(${catVar(c)})`}>{c}</span> <span class="tabular n">{l.length}</span></h2>
+        <HubList rows={l.slice(0, CAP)} lead={lead} showCity={false} showCat={false} />
+        {l.length > CAP && <p class="more">另有 {l.length - CAP} 個，<a href={`/city/${city}`}>看{city}全部活動</a></p>}
+      </section>
+    ))}
+
+    <nav class="also" aria-label="相關頁面">
+      <a href={`/city/${city}`}>{city}所有近期活動</a>
+      <a href={`/weekend/${city}`}>{place}這週末</a>
+      {hubs.free.has(city) && <a href={`/free/${city}`}>{place}免費活動</a>}
+      <a href="/today">全台今天</a>
+    </nav>
+  </div>
+</Base>
+<style>
+  .lead { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-secondary); max-width: var(--measure); }
+  .grp { margin-top: var(--space-7); }
+  .grp .ev-list { margin-bottom: var(--space-4); }
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .n { color: var(--text-muted); font-weight: 400; }
+  .more { font-size: var(--text-sm); color: var(--text-muted); }
+  .also { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: var(--space-8) 0 var(--space-9);
+          padding-top: var(--space-5); border-top: var(--hairline) solid var(--border-subtle); font-size: var(--text-sm); }
+</style>

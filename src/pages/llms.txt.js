@@ -34,6 +34,7 @@ export async function GET() {
     `- [資料從哪來](${SITE}/about)：公開資料來源清單與處理流程說明`,
     '',
     '## 排行程（網址固定，內容每次建置依當天重算）',
+    `- [各縣市今天](${SITE}/today/臺北市)：單一縣市今天的活動，網址規則 /today/<縣市>（內容每天重算）`,
     `- [這週末](${SITE}/weekend)：這個週末（目前是 ${wk.sat} 至 ${wk.sun}）全台的活動，依類型分組；各縣市是 /weekend/<縣市>，例如 ${u('/weekend/臺北市')}`,
     `- [免費活動](${SITE}/free)：來源明確標示免費、還沒結束的活動；有縣市頁的是 ${[...hubs.free].map((c) => u(`/free/${c}`)).join('、')}`,
     ...hubs.year.filter((p) => !p.city).map((p) => `- [${p.year} ${p.group.label}時間表](${u(`/year/${p.year}/${p.group.key}`)})：一年份的表格（日期、名稱、場地、城市、是否免費），`

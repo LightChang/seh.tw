@@ -92,6 +92,7 @@ const day = (t) => `${+t.slice(5, 7)}/${+t.slice(8)}（${WD[new Date(`${t}T12:00
       {(city ? hubs.free.has(city) : true) && <a href={city ? `/free/${city}` : '/free'}>{place}免費活動</a>}
       {yearLinks.map((p) => <a href={`/year/${p.year}/${p.group.key}${city ? `/${city}` : ''}`}>{p.year} {place === '全台' ? '' : place}{p.group.label}時間表</a>)}
       {city && <a href="/weekend">全台這週末</a>}
+      {city && <a href={`/today/${city}`}>{place}今天</a>}
       <a href="/today">今天</a>
     </nav>
   </div>

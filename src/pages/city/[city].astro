@@ -40,6 +40,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }], city);
 // 這週末、免費活動、年度時間表（src/lib/hubs.mjs），只連有建的
 const hubs = await builtHubs();
 const hubLinks = [
+  { href: `/today/${city}`, label: '今天' },
   { href: `/weekend/${city}`, label: '這週末' },
   ...(hubs.free.has(city) ? [{ href: `/free/${city}`, label: '免費活動' }] : []),
   ...hubs.year.filter((p) => p.city === city && p.year === hubs.thisYear)

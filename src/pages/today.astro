@@ -4,6 +4,8 @@ import Nav from '../components/Nav.astro';
 import { flatSessions, newListings } from '../lib/build-data.mjs';
 import { todaySessions, mergeRuns, leadText } from '../lib/day-lists.mjs';
 import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+import { builtHubs } from '../lib/build-data.mjs';
+import { cityShort } from '../lib/hubs.mjs';
 import { todayItemList } from '../lib/jsonld/index.mjs';
 
 // 清單在 build 時就寫進 HTML：搜尋引擎與答案引擎不保證會執行 JS，
@@ -15,6 +17,7 @@ const rows = todaySessions(await flatSessions(), buildNow);
 // 新上架、還沒結束的活動（src/lib/new-listings.mjs）。不受上方類型篩選影響，build 時寫死。
 const fresh = await newListings({ limit: 8, now: buildNow });
 const merged = mergeRuns(rows);
+const todayCities = (await builtHubs()).weekend;
 
 // ItemList 結構化資料（src/lib/jsonld/pages.mjs 的 todayItemList）。只用畫面上真的會列出來的
 // merged，資料來源與可見內容同一份。
@@ -43,6 +46,7 @@ const todayLd = todayItemList(merged);
     </ol>
     <p class="empty-note" id="empty" hidden={merged.length > 0}>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
     <p class="also">還沒決定哪天出門：<a href="/weekend">這週末</a>、<a href="/free">免費活動</a></p>
+    <p class="also">各縣市今天：{todayCities.map((c) => <a href={`/today/${c}`}>{cityShort(c)}　</a>)}</p>
 
     {fresh.length > 0 && (
       <section class="fresh" id="new">
