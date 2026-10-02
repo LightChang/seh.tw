@@ -7,8 +7,9 @@ import NearbyEvents from '../../components/NearbyEvents.astro';
 import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { eventTitle, whenText, primarySession, placeLabel } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
+import titleAliases from '../../../overrides/event-title-aliases.json';
 import { hasClockTime } from '../../lib/session-time.mjs';
-import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents } from '../../lib/build-data.mjs';
+import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents, cityMonthPages } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
@@ -62,13 +63,22 @@ const unwrapTitle = (t) => {
   }
   return t;
 };
-const metaTitle = eventTitle({ ...e, title: unwrapTitle(e.title) });
+// 搜尋用的別名（overrides/event-title-aliases.json）：放進 <title> 與 JSON-LD alternateName，H1 不動
+const alias = titleAliases.aliases?.[e.slug]?.alias;
+if (ld && alias) ld.alternateName = alias;
+const metaTitle = eventTitle({ ...e, title: unwrapTitle(e.title) }, { alias });
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
 const indexable = await isIndexable(`/event/${e.slug}`);
 // 分類頁有 ≥5 場的門檻，不檢查就會連到不存在的頁（實測「綜藝」只有 4 場）
 const hasCatPage = e.category && (await builtCategories()).has(e.category);
+// 縣市 × 月份頁（/city/<縣市>/<YYYY-MM>）：場次月份裡有建頁的，優先還沒過去的月份
+const cityMonths = await cityMonthPages();
+const monthKeys = loc.city
+  ? [...new Set(sessions.map((s) => (s.startAt ?? '').slice(0, 7)))].sort().filter((ym) => cityMonths.has(`${loc.city} ${ym}`))
+  : [];
+const cityMonth = monthKeys.find((ym) => !cityMonths.get(`${loc.city} ${ym}`).past) ?? monthKeys.at(-1);
 // 同一個年度活動的其他屆：搜「活動名＋去年」的人一步走到今年
 const editions = (await eventSeries()).get(e.slug) ?? [];
 // 同場地、同縣市接下來的活動。已結束的頁放在說明文字之前（讀者要找的是下一場），
@@ -118,6 +128,7 @@ const trail = crumbTrail([
         </dd></div>}
         {loc.city ? <div><dt>縣市</dt><dd>
           <a href={`/city/${loc.city}`}>{loc.city}</a>{loc.district && <span class="n">　{loc.district}</span>}
+          {cityMonth && <span class="n">　<a href={`/city/${loc.city}/${cityMonth}`}>{+cityMonth.slice(5)} 月{loc.city}活動</a></span>}
         </dd></div> : loc.district && <div><dt>地區</dt><dd>{loc.district}</dd></div>}
         {(e.category || e.categoryRaw) && <div><dt>類型</dt><dd>
           {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，

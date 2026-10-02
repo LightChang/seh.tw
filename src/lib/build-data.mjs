@@ -177,6 +177,38 @@ export async function builtCategories() {
   return CATS;
 }
 
+/**
+ * 縣市 × 月份頁（/city/<縣市>/<YYYY-MM>）：「縣市 月份」→ { rows, past }。
+ * 當月往後一年：只算還沒結束的場次，≥5 場才建（長期展覽的起始月可能落在 2024，
+ * 那種月份頁沒人要看）。過去的月份：網址一旦發出就不能變（CLAUDE.md），
+ * 站 2026-09-15 上線、當時起建的是 2026-09，所以 2026-09 起過去的月份全部留著（≥1 場、noindex）。
+ * 頁面路由與活動頁的連結共用這一份，才不會連出 404。
+ */
+export const CITY_MONTH_MIN = 5;
+export const CITY_MONTH_FIRST = '2026-09';
+let CITY_MONTHS = null;
+export async function cityMonthPages() {
+  if (CITY_MONTHS) return CITY_MONTHS;
+  const all = await flatSessions();
+  const nowD = new Date(Date.now() + 8 * 3600e3);
+  const today = nowD.toISOString().slice(0, 10);
+  const thisMonth = today.slice(0, 7);
+  const hiMonth = new Date(Date.UTC(nowD.getUTCFullYear() + 1, nowD.getUTCMonth(), 1)).toISOString().slice(0, 7);
+  const m = new Map();
+  for (const d of all) {
+    if (!d.city) continue;
+    const ym = d.at.slice(0, 7);
+    const past = ym < thisMonth;
+    if (past ? ym < CITY_MONTH_FIRST : ym > hiMonth) continue;
+    if (!past && (d.end ?? d.at).slice(0, 10) < today) continue;
+    const k = `${d.city} ${ym}`;
+    if (!m.has(k)) m.set(k, { rows: [], past });
+    m.get(k).rows.push(d);
+  }
+  CITY_MONTHS = new Map([...m].filter(([, v]) => v.past || v.rows.length >= CITY_MONTH_MIN));
+  return CITY_MONTHS;
+}
+
 /** 縣市 → 場次數。空字串的縣市不算。 */
 export function countBy(rows, key) {
   const m = new Map();

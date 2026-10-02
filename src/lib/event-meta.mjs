@@ -86,16 +86,21 @@ const TITLE_MAX = 30;
 // 到期日 2026-10-08：賭注判讀完就把這份清單清空（連同測試裡對應的那條）。
 export const LEGACY_TITLE_SLUGS = new Set(['2026桃園萬聖城']);
 
-/** 福爾摩沙醇釀史冊｜9/21 國家音樂廳｜seh；太長就退成縣市、再退成只有日期，最後才拿掉站名。 */
-export function eventTitle(e) {
+/**
+ * 福爾摩沙醇釀史冊｜9/21 國家音樂廳｜seh；太長就退成縣市、再退成只有日期，最後才拿掉站名。
+ * alias：大家實際搜的叫法（overrides/event-title-aliases.json），接在名稱後面括號裡：
+ * 「海宴美食嘉年華（成功海宴）｜…」。名稱已經包含它就不加。
+ */
+export function eventTitle(e, { alias } = {}) {
   if (LEGACY_TITLE_SLUGS.has(e.slug)) return `${e.title}｜seh`;
+  const name = alias && !e.title.includes(alias) ? `${e.title}（${alias}）` : e.title;
   const sessions = e.sessions ?? [];
   // 搜尋主力是「活動名＋年份」，名稱沒有年份的就讓日期帶年份（「海宴美食嘉年華｜2026/9/26 …」）
-  const date = titleDate(sessions, !HAS_YEAR.test(e.title));
+  const date = titleDate(sessions, !HAS_YEAR.test(name));
   const tails = [...titlePlaces(sessions).map((p) => [date, p].filter(Boolean).join(' ')), date].filter(Boolean);
-  let t = e.title;
+  let t = name;
   for (const tail of tails) {
-    t = `${e.title}｜${tail}`;
+    t = `${name}｜${tail}`;
     if (width(t) <= TITLE_MAX) break;
   }
   return width(`${t}｜seh`) <= TITLE_MAX + 3 ? `${t}｜seh` : t;

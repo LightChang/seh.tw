@@ -11,13 +11,16 @@ export async function getStaticPaths() {
   const now = new Date();
   const lo = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString().slice(0, 7);
   const hi = new Date(now.getFullYear() + 1, now.getMonth(), 1).toISOString().slice(0, 7);
+  // 網址一旦發出就不能變（CLAUDE.md）：站 2026-09-15 上線時已出了 2026-08 起的月份，
+  // 比「上個月」更早的那些月份照樣建，只是 noindex。
+  const FIRST = '2026-08';
   const months = [...new Set(all.map((d) => d.at.slice(0, 7)))]
-    .filter((ym) => ym >= lo && ym <= hi).sort();
+    .filter((ym) => ym >= FIRST && ym <= hi).sort();
   return months.map((ym) => ({
-    params: { ym }, props: { ym, rows: all.filter((d) => d.at.slice(0, 7) === ym) },
+    params: { ym }, props: { ym, rows: all.filter((d) => d.at.slice(0, 7) === ym), old: ym < lo },
   }));
 }
-const { ym, rows } = Astro.props;
+const { ym, rows, old } = Astro.props;
 const [y, m] = ym.split('-').map(Number);
 
 const byDay = new Map();
@@ -33,7 +36,7 @@ const cells = [...Array(lead).fill(null), ...Array.from({ length: days }, (_, i)
 const maxN = Math.max(1, ...[...byDay.values()].map((v) => v.length));
 const WD = ['一', '二', '三', '四', '五', '六', '日'];
 ---
-<Base title={`${y} 年 ${m} 月活動行事曆｜seh`} description={`${y} 年 ${m} 月台灣的文化活動行事曆，共 ${rows.length} 場次。`}>
+<Base title={`${y} 年 ${m} 月活動行事曆｜seh`} description={`${y} 年 ${m} 月台灣的文化活動行事曆，共 ${rows.length} 場次。`} noindex={old}>
   <div class="shell">
     <Nav />
     <header class="page-hd">

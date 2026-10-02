@@ -32,8 +32,34 @@ const ENTER = 5.0;      // 進 index 的門檻
 const EXIT = 3.0;       // 退出 index 的門檻，明顯低於進入門檻才不會抖動
 const ENTER_DAYS = 2;   // 連續達標幾天才進
 
+// 已結束活動的寬限期（站主 2026-10-02 同意）。原本結束隔天就扣 4 分，基礎分 5–6.5 的活動
+// 立刻退出收錄與 sitemap；但活動名的搜尋在結束後幾週仍有曝光（海宴美食嘉年華結束後一週仍有
+// 「成功海宴」83 次曝光）。寬限期內不扣分；期滿後若最近一期 GSC 仍有曝光，延長到 GRACE_GSC_MAX_DAYS。
+const GRACE_DAYS = 60;
+const GRACE_GSC_MAX_DAYS = 180;
+const GRACE_GSC_MIN_IMP = 10;
+
 const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
 const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 86400e3);
+
+// 最近一期 seo-daily（seo-ops 寫的，不進版控；沒有就只用天數寬限）裡各頁的曝光。
+// topPages 是頁層級總數，pageQueryCross 是頁×查詢，兩者取大。
+async function recentImpressions() {
+  const dir = path.join(ROOT, 'data', 'seo-daily');
+  let files = [];
+  try { files = (await readdir(dir)).filter((f) => /^\d{4}-\d{2}-\d{2}\.json$/.test(f)).sort(); } catch { return new Map(); }
+  const imp = new Map();
+  try {
+    const gsc = JSON.parse(await readFile(path.join(dir, files.at(-1)), 'utf-8')).gsc ?? {};
+    const key = (u) => decodeURIComponent(new URL(u).pathname).replace(/\/$/, '');
+    const cross = new Map();
+    for (const r of gsc.pageQueryCross ?? []) cross.set(key(r.page), (cross.get(key(r.page)) ?? 0) + r.impressions);
+    for (const r of gsc.topPages ?? []) imp.set(key(r.page), r.impressions);
+    for (const [k, v] of cross) imp.set(k, Math.max(imp.get(k) ?? 0, v));
+  } catch { /* 格式不對就當沒有 */ }
+  return imp;
+}
+const gscImp = await recentImpressions();
 
 // ── 讀 md ───────────────────────────────────────────────────────────
 // 直接讀 frontmatter，不引 YAML 套件——只需要幾個欄位，用行為判斷就夠。
@@ -72,6 +98,9 @@ async function readCollection(kind) {
       hasImages: /^images: /m.test(fm),
       venueName: (fm.match(/^\s*venueNameRaw: "([^"]*)"/m) ?? [])[1],
       lastSession: [...fm.matchAll(/startAt: "([^"]+)"/g)].map((m) => m[1]).sort().pop(),
+      // 活動真正結束的日子：場次有 endAt 的取 endAt（長期展覽 startAt 早就過了，但還在展）
+      lastEnd: [...fm.matchAll(/(?:startAt|endAt): "([^"]+)"/g)].map((m) => m[1].slice(0, 10)).sort().pop(),
+      path: `/${kind === 'events' ? 'event' : kind === 'venues' ? 'venue' : 'heritage'}/${f.slice(0, -3)}`,
     });
   }
   return out;
@@ -99,7 +128,15 @@ function scoreEvent(p) {
   if (p.hasImages) add(0.5, '有圖');
 
   // 過期的活動退出收錄，網址保留。這是這一層最主要的「每天重算」來源。
-  if (p.lastSession && p.lastSession.slice(0, 10) < today) add(-4, '已結束');
+  // 結束後 GRACE_DAYS 天內（或仍有搜尋曝光）不扣分，見 GRACE_DAYS 的說明。
+  const end = p.lastEnd ?? p.lastSession?.slice(0, 10);
+  if (end && end < today) {
+    const ago = daysBetween(end, today);
+    const imp = gscImp.get(p.path) ?? 0;
+    if (ago <= GRACE_DAYS) add(0, `已結束 ${ago} 天（寬限期內）`);
+    else if (ago <= GRACE_GSC_MAX_DAYS && imp >= GRACE_GSC_MIN_IMP) add(0, `已結束 ${ago} 天，仍有曝光 ${imp}`);
+    else add(-4, '已結束');
+  }
   // 「什麼都沒有」才扣分。地點齊全（有座標或街道地址）的活動即使沒有介紹文，
   // 也已經答得出「幾點、在哪」——那是這個網站的核心問題，不該罰。
   // 實測：高美館那批有街道地址、座標、行政區，卻因為沒有介紹文卡在 4.5 分。

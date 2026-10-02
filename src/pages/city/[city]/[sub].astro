@@ -4,7 +4,7 @@ import Nav from '../../../components/Nav.astro';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../../lib/jsonld/index.mjs';
 import { catVar } from '../../../lib/format.mjs';
-import { flatSessions, builtCategories } from '../../../lib/build-data.mjs';
+import { flatSessions, builtCategories, cityMonthPages } from '../../../lib/build-data.mjs';
 
 // 一個路由涵蓋兩種子頁：/city/臺北市/中正區 與 /city/臺北市/2026-10。
 // 兩者都是縣市底下的單一路徑段，分成兩個 [param] 路由會撞在一起，
@@ -12,54 +12,43 @@ import { flatSessions, builtCategories } from '../../../lib/build-data.mjs';
 export async function getStaticPaths() {
   // 常數要放在函式裡。Astro 會把 getStaticPaths 抽成獨立的 chunk，
   // 只帶著 import，不帶模組層的其他宣告——放外面會 ReferenceError。
-  const MIN = 5;   // 少於 5 場的子頁沒有內容價值，不建
+  const MIN = 5;   // 少於 5 場的行政區頁沒有內容價值，不建
   const all = await flatSessions();
   const today = new Date(Date.now() + 8 * 3600e3).toISOString().slice(0, 10);
   // 只看還沒結束的。已結束的活動撐不起「這一區現在有什麼」。
   const live = all.filter((d) => (d.end ?? d.at).slice(0, 10) >= today);
-  // 月份頁只做當月往後一年。長期展覽的起始月可能落在 2024，那個月份頁沒有人要看，
-  // 而且會生出一堆「過去的月份」網址。
-  const nowD = new Date(Date.now() + 8 * 3600e3);
-  const hiMonth = new Date(Date.UTC(nowD.getUTCFullYear() + 1, nowD.getUTCMonth(), 1))
-    .toISOString().slice(0, 7);
 
   const byDistrict = new Map();
-  const byMonth = new Map();
   for (const d of live) {
-    if (!d.city) continue;
-    if (d.district) {
-      const k = `${d.city} ${d.district}`;
-      if (!byDistrict.has(k)) byDistrict.set(k, []);
-      byDistrict.get(k).push(d);
-    }
-    const ym = d.at.slice(0, 7);
-    if (ym >= today.slice(0, 7) && ym <= hiMonth) {
-      const m = `${d.city} ${ym}`;
-      if (!byMonth.has(m)) byMonth.set(m, []);
-      byMonth.get(m).push(d);
-    }
+    if (!d.city || !d.district) continue;
+    const k = `${d.city} ${d.district}`;
+    if (!byDistrict.has(k)) byDistrict.set(k, []);
+    byDistrict.get(k).push(d);
   }
+  // 月份頁（含過去月份）的建頁規則在 build-data.mjs 的 cityMonthPages，活動頁連過來也用它
+  const months = await cityMonthPages();
 
   // 側欄要互相連結，但只能連到**真的有建**的頁——月份頁只做當月往後一年、
-  // 而且兩種都有 MIN 門檻。不先算出實際建了哪些，側欄會連出 404
-  // （實測抽驗 400 頁就有 223 條這種連結）。
+  // 而且兩種都有門檻。不先算出實際建了哪些，側欄會連出 404
+  // （實測抽驗 400 頁就有 223 條這種連結）。側欄只連還沒過去的月份。
   const built = new Set();
-  for (const [mode, map] of [['district', byDistrict], ['month', byMonth]]) {
-    for (const [k, rows] of map) if (rows.length >= MIN) built.add(`${mode} ${k}`);
-  }
+  for (const [k, rows] of byDistrict) if (rows.length >= MIN) built.add(`district ${k}`);
+  for (const [k, v] of months) if (!v.past) built.add(`month ${k}`);
 
   const paths = [];
-  for (const [mode, map] of [['district', byDistrict], ['month', byMonth]]) {
-    for (const [k, rows] of map) {
-      if (rows.length < MIN) continue;
-      const [city, sub] = k.split(' ');
-      paths.push({ params: { city, sub }, props: { city, sub, rows, mode, built: [...built] } });
-    }
+  for (const [k, rows] of byDistrict) {
+    if (rows.length < MIN) continue;
+    const [city, sub] = k.split(' ');
+    paths.push({ params: { city, sub }, props: { city, sub, rows, mode: 'district', built: [...built], past: false } });
+  }
+  for (const [k, { rows, past }] of months) {
+    const [city, sub] = k.split(' ');
+    paths.push({ params: { city, sub }, props: { city, sub, rows, mode: 'month', built: [...built], past } });
   }
   return paths;
 }
 
-const { city, sub, rows, mode, built } = Astro.props;
+const { city, sub, rows, mode, built, past } = Astro.props;
 const catPages = await builtCategories();
 const has = (m, k) => built.includes(`${m} ${city} ${k}`);
 const isMonth = mode === 'month';
@@ -87,7 +76,10 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
 ---
 <Base
   title={`${title}有什麼文化活動｜seh`}
-  description={`${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
+  description={past
+    ? `${title}的文化活動、展覽與演出，共 ${events} 個活動。這個月份已經過去。`
+    : `${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
+  noindex={past}
   breadcrumbs={trail}
 >
   <div class="shell">
@@ -99,6 +91,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
         <strong class="tabular">{events}</strong> 個活動、
         <span class="tabular">{rows.length}</span> 場次{isMonth ? '' : '正在或即將發生'}
       </p>
+      {past && <p class="sub">這個月份已經過去。<a href={`/city/${city}`}>看{city}接下來的活動</a></p>}
     </header>
 
     <div class="cols">

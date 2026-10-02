@@ -37,6 +37,12 @@ test('標題：多場次寫日期區間，跨縣市列縣市，跨年才帶年�
   assert.equal(titleDate([{ startAt: '2026-12-20', granularity: 'date', endAt: '2027-01-05' }]), '2026/12/20–2027/1/5');
 });
 
+test('搜尋別名接在名稱後面；名稱已包含就不重複', () => {
+  const s = { startAt: '2026-09-26', endAt: '2026-09-26', granularity: 'date', city: '臺東縣', district: '成功鎮' };
+  assert.equal(eventTitle({ title: '海宴美食嘉年華', sessions: [s] }, { alias: '成功海宴' }), '海宴美食嘉年華（成功海宴）｜2026/9/26 臺東縣成功鎮｜seh');
+  assert.equal(eventTitle({ title: '成功海宴美食節', sessions: [s] }, { alias: '成功海宴' }), '成功海宴美食節｜2026/9/26 臺東縣成功鎮｜seh');
+});
+
 test('沒有場館名：標題用縣市＋行政區，比縣市更具體的地址算地點', () => {
   const s = { startAt: '2026-09-26', endAt: '2026-09-26', granularity: 'date', city: '臺東縣', district: '成功鎮', address: '臺東縣成功鎮海濱公園', addressPrecision: 'district' };
   assert.equal(eventTitle({ title: '海宴美食嘉年華', sessions: [s] }), '海宴美食嘉年華｜2026/9/26 臺東縣成功鎮｜seh');

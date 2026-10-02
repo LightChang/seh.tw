@@ -1,0 +1,15 @@
+{
+  "_comment": [
+    "活動頁 <title> 的搜尋別名：官方名稱跟大家實際搜的叫法不一樣時，標題接上別名（「海宴美食嘉年華（成功海宴）｜…」），",
+    "JSON-LD 帶 alternateName。H1 與網址不動。key 是活動 slug。",
+    "只收 GSC 實際有曝光的查詢字，evidence 寫出處與量測區間。候選清單：node scripts/title-alias-candidates.mjs",
+    "站主 2026-10-02 同意。"
+  ],
+  "aliases": {
+    "海宴美食嘉年華": {
+      "alias": "成功海宴",
+      "evidence": "GSC 2026-09-21..09-28：查詢「成功海宴」83 曝光、0 點擊、平均名次 10.8",
+      "addedAt": "2026-10-02"
+    }
+  }
+}
