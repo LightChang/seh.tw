@@ -63,10 +63,17 @@ const unwrapTitle = (t) => {
   }
   return t;
 };
+// 另一類是前綴標籤而非整包：「【2026臺中國際動畫影展】致遙不可及彼方的你」，
+// 使用者搜的是後半段片名，前面的系列/場館名留著只會讓 SERP 標題跟搜尋字對不起來。
+// 只拆開頭這一組，且拆完還剩字才拆（「【金．聲相遇】」本身就是活動名，拆了就空了）。
+const stripSeriesPrefix = (t) => {
+  const m = /^【[^【】]*】\s*(.+)$/.exec(t);
+  return m ? m[1] : t;
+};
 // 搜尋用的別名（overrides/event-title-aliases.json）：放進 <title> 與 JSON-LD alternateName，H1 不動
 const alias = titleAliases.aliases?.[e.slug]?.alias;
 if (ld && alias) ld.alternateName = alias;
-const metaTitle = eventTitle({ ...e, title: unwrapTitle(e.title) }, { alias });
+const metaTitle = eventTitle({ ...e, title: unwrapTitle(stripSeriesPrefix(e.title)) }, { alias });
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
