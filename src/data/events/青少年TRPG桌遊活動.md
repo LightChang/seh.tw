@@ -20,17 +20,6 @@ description: |-
   🧭 當個冷靜的獨行俠，在策略與團隊合作中破關升級
   帶上你的腦洞，週末跟我們一起出發冒險吧！
 sessions: 
-  - startAt: "2026-10-03T14:30:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-10-03T17:30:00+08:00"
-    venueNameRaw: "三重青少年基地"
-    city: "新北市"
-    district: "三重區"
-    addressPrecision: "district"
-    lat: 25.06288
-    lng: 121.48439
-    venueId: "ven_derived_三重青少年基地"
-    venueSlug: "三重青少年基地"
   - startAt: "2026-11-07T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-11-07T17:30:00+08:00"

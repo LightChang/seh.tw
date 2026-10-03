@@ -5984,6 +5984,7 @@
 {"clusterId":"evt_ntmofa-events_60156","kind":"event","slug":"未竟之境-A-World-Still-Becoming","assignedAt":"2026-09-27"}
 {"clusterId":"evt_ntmofa-events_60158","kind":"event","slug":"逐浪之翼-Wings-and-Waves","assignedAt":"2026-09-27"}
 {"clusterId":"evt_ntmofa-events_60159","kind":"event","slug":"中華民國第42屆版印年畫徵選活動-得獎名單公布","assignedAt":"2026-10-02"}
+{"clusterId":"evt_ntmofa-events_60160","kind":"event","slug":"繪聲繪色kóng台語—桌遊","assignedAt":"2026-10-04"}
 {"clusterId":"evt_ntpc-culture-events_0M207401390331869130","kind":"event","slug":"115年中秋活動懶人包","assignedAt":"2026-09-27"}
 {"clusterId":"evt_ntpc-culture-events_0P275447904236767793","kind":"event","slug":"新莊微型藝術街區計畫-電子版藝術地圖提供下載","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntpc-culture-events_0P289296004402770688","kind":"event","slug":"新北市全民國防手冊及緊急應變QRcode","assignedAt":"2026-09-13"}
@@ -7069,6 +7070,10 @@
 {"clusterId":"evt_tainan-culture-events_25408","kind":"event","slug":"假日廣場-2026南瀛國際民俗藝術節-2","assignedAt":"2026-10-02"}
 {"clusterId":"evt_tainan-culture-events_25409","kind":"event","slug":"假日廣場-2026南瀛國際民俗藝術節-3","assignedAt":"2026-10-02"}
 {"clusterId":"evt_tainan-culture-events_25410","kind":"event","slug":"假日廣場日-佛光山南台別院雲水書坊行動圖書館閱書活動-2","assignedAt":"2026-10-02"}
+{"clusterId":"evt_tainan-culture-events_25419","kind":"event","slug":"開江紀.未來世","assignedAt":"2026-10-04"}
+{"clusterId":"evt_tainan-culture-events_25420","kind":"event","slug":"好好玩聚會所2026臺南藝術節X芳宅話劇場紅樓夢怎麼唱成臺灣歌","assignedAt":"2026-10-04"}
+{"clusterId":"evt_tainan-culture-events_25421","kind":"event","slug":"好好玩聚會所2026臺南藝術節X芳宅話劇場一曲南管如何走進當代劇場","assignedAt":"2026-10-04"}
+{"clusterId":"evt_tainan-culture-events_25422","kind":"event","slug":"歸仁文化中心-11月兒童故事屋","assignedAt":"2026-10-04"}
 {"clusterId":"evt_taipei-culture-events_01248886be12bbd4","kind":"event","slug":"未安之地-Unsettled-Territories","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_016e9da9fa684659","kind":"event","slug":"包容的形狀-魯雅琴粉彩創作個展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_02fa522d204957c8","kind":"event","slug":"乘化遊-——-余承堯","assignedAt":"2026-09-13"}
@@ -7171,6 +7176,7 @@
 {"clusterId":"evt_taipei-culture-events_4fefdb2c129d3689","kind":"event","slug":"山海脈動跨域實驗計劃","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_51721b3e0909bb66","kind":"event","slug":"胡克敏水墨百花圖集原作展-2","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_55e17d185221f83c","kind":"event","slug":"國史館專題演講島嶼辯證法-台灣在必然性與自主性之間","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_565e453cd4469fd5","kind":"event","slug":"閃爍的片刻黃品玲個展","assignedAt":"2026-10-04"}
 {"clusterId":"evt_taipei-culture-events_5b52b14d75bed8c1","kind":"event","slug":"廟語心聲松山霞海文化小旅行-河港記憶-×-庶民生活-×-多元信仰","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_5c183145735d90ad","kind":"event","slug":"國史館專題演講台灣人群的基因組成及其起源與互動","assignedAt":"2026-09-27"}
 {"clusterId":"evt_taipei-culture-events_5c1bd65de23f05bd","kind":"event","slug":"昭和唐唐2023菊月文化祭","assignedAt":"2026-09-13"}
@@ -7194,6 +7200,7 @@
 {"clusterId":"evt_taipei-culture-events_7042c946a703b566","kind":"event","slug":"小誌講座2026.7-—-10月-週六下午-Anything-about-Zines","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_726aa6e2f8827a88","kind":"event","slug":"古典與爵士的對話-李承育薩克斯風樂集","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_726fa7914416f05a","kind":"event","slug":"鳴石樂集樂壇新秀-陳宇森鋼琴獨奏會","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_7289c940180bcd1a","kind":"event","slug":"埋藏與浮現-張凱鈞","assignedAt":"2026-10-04"}
 {"clusterId":"evt_taipei-culture-events_73f4dd41f7b4630b","kind":"event","slug":"兩把吉他環遊世界","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_74994f7b225c197e","kind":"event","slug":"Paul-Gilbert-WROC-World-Tour-2026","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_7586292a0b4e093e","kind":"event","slug":"飛行訊號窗景共創工作坊-2","assignedAt":"2026-09-13"}
@@ -7450,6 +7457,7 @@
 {"clusterId":"evt_taipei-gov-hot-events_9714799","kind":"event","slug":"北市圖行動書車10月雙城漫讀-前進士林科教館-中原文創園區共度秋日書香時光","assignedAt":"2026-10-02"}
 {"clusterId":"evt_taipei-gov-hot-events_9714862","kind":"event","slug":"東湖分館-點亮新學期‧閱借閱好運","assignedAt":"2026-10-02"}
 {"clusterId":"evt_taipei-gov-hot-events_9714865","kind":"event","slug":"總館辦理走進自然‧安森相見主題書展暨借閱推廣活動-從大安森林公園出發-一同領略自然美好","assignedAt":"2026-10-02"}
+{"clusterId":"evt_taipei-gov-hot-events_9715153","kind":"event","slug":"三興分館週日電影日10月","assignedAt":"2026-10-04"}
 {"clusterId":"evt_taipei-gov-hot-events_9715472","kind":"event","slug":"清江分館腦洞漂流計畫吉竹伸介主題書展閱讀推廣活動-邀你一起來玩轉創意-分享閱讀","assignedAt":"2026-10-03"}
 {"clusterId":"evt_taoyuan-tourism-events_5230","kind":"event","slug":"2026桃園-ON-AIR-跨年晚會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6633","kind":"event","slug":"2026國際自由車環台賽-桃園市站","assignedAt":"2026-09-13"}
