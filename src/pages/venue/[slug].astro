@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import VenueFacts from '../../components/VenueFacts.astro';
 import { venueNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar } from '../../lib/format.mjs';
 import { allVenues, flatSessions, isIndexable, venueNames } from '../../lib/build-data.mjs';
@@ -43,7 +44,8 @@ export async function getStaticPaths() {
     const p = vn.parent.get(slug);
     if (!p) return undefined;
     const g = vn.groups.get(p);
-    return { slug: p, name: g.name };
+    // 廳頁要連回館區與同館其他廳，所以把館區的全部場次與各廳一起帶過去
+    return { slug: p, name: g.name, rows: withHalls(p, g), halls: hallsOf(g).filter((h) => h.slug !== slug) };
   };
 
   const paths = venues.map((v) => {
@@ -94,6 +96,14 @@ const hoursStale = hoursCheckedAt
   ? (buildNow - Date.parse(`${hoursCheckedAt}T00:00:00+08:00`)) / 86400000 > 30
   : false;
 const totalEvents = halls.length ? new Set(allRows.map((d) => d.slug)).size : v.eventCount;
+// 館區與廳的主從：館區頁列各廳、廳頁連回館區與同館其他廳，都放在標題下方（第一屏）。
+// 兩邊各自是獨立的節目表（廳頁是館區的子集，不是重複頁），所以不用 canonical 指來指去，靠標題與互連分工。
+const upcomingIn = (h) => upcomingSessions(h.rows, buildNow).length;
+const short = (name, base) => (name.startsWith(base) && name.length > base.length ? name.slice(base.length).replace(/^[-－・\s]+/, '') : name);
+const hallList = halls.map((h) => ({ slug: h.slug, name: h.name, upcoming: upcomingIn(h) }));
+const hallNav = (parent ? parent.halls : halls).map((h) => ({ slug: h.slug, name: short(h.name, parent ? parent.name : v.name), upcoming: upcomingIn(h) }))
+  .filter((h) => h.upcoming > 0).sort((a, b) => b.upcoming - a.upcoming);
+const parentUpcoming = parent ? upcomingSessions(parent.rows, buildNow).length : 0;
 
 // 館區頁（沒有自己 md 的）不在 page-state 裡，isIndexable 會當成可收錄；
 // 有 md 的館區由 score-pages 把底下各廳的活動數一起算進去。
@@ -114,19 +124,27 @@ for (const d of rows) {
   byCat.get(k).push(d);
 }
 const catGroups = [...byCat].sort((a, b) => b[1].length - a[1].length);
-const grouped = catGroups.length >= 2 && rows.length >= 6;
+// 表演場地照日期排一條就是節目表（搜的人要的是「哪天演什麼」），不依類型拆開
+const grouped = !isPerform && catGroups.length >= 2 && rows.length >= 6;
+// 節目表先列有日期的場次，「展期中」的長期活動排到最後
+const todayTW = new Date(buildNow + 8 * 3600e3).toISOString().slice(0, 10);
+const listRows = isPerform ? [...rows.filter((d) => d.at.slice(0, 10) >= todayTW), ...rows.filter((d) => d.at.slice(0, 10) < todayTW)] : rows;
 
 const place = [v.city, v.district].filter(Boolean).join('');
 const aliasText = aliases.length ? `（又稱${aliases.slice(0, 3).join('、')}）` : '';
 const catSummary = catGroups.slice(0, 4).map(([c, list]) => `${c} ${list.length} 場`).join('、');
-const title = isPerform ? `${v.name}節目表｜近期演出與活動｜seh` : `${v.name}｜近期活動${isLibrary ? '、開放時間' : ''}｜seh`;
+const title = isPerform
+  ? `${v.name}節目表｜${halls.length ? '各廳近期演出總覽' : parent ? '近期演出' : '近期演出與活動'}｜seh`
+  : `${v.name}｜近期活動${isLibrary ? '、開放時間' : ''}｜seh`;
 const h1 = isPerform ? `${v.name}節目表` : v.name;
 const description = [
   `${v.name}${aliasText}`,
+  parent ? `，位於${parent.name}。` : '',
   rows.length ? `近期${isPerform ? '節目' : '活動'} ${rows.length} 場${catSummary ? `：${catSummary}` : ''}。` : '。',
+  halls.length && hallNav.length ? `各廳：${hallNav.slice(0, 3).map((h) => `${h.name} ${h.upcoming} 場`).join('、')}。` : '',
   v.address ? `地址：${v.address}。` : place ? `${place}。` : '',
   v.openingHours ? `開放時間：${v.openingHours.split('\n')[0]}。` : '',
-].join('').replace('。。', '。').slice(0, 160);
+].join('').replace('。。', '。').replace('。，', '，').slice(0, 160);
 
 // 結構化資料在 src/lib/jsonld/pages.mjs（venueNode）：只有 street 精度才輸出 streetAddress，
 // Library 沒有任何地址欄位時退回 Place。
@@ -142,7 +160,7 @@ const trail = crumbTrail([
   v.city && { name: v.city, href: `/city/${v.city}` },
   parent && { name: parent.name, href: `/venue/${parent.slug}` },
 ], h1);
-const upcomingIn = (h) => upcomingSessions(h.rows, buildNow).length;
+const schedFirst = isPerform && rows.length > 0;
 const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
 ---
 <Base title={title} noindex={!indexable} description={description} jsonld={ld} breadcrumbs={trail}>
@@ -154,36 +172,12 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
       {aliases.length > 0 && <p class="aka">又稱　{aliases.join('、')}</p>}
       <p class="sub"><strong class="tabular">{rows.length}</strong> 個近期{isPerform ? '節目' : '活動'}<span class="orig">　收錄 {totalEvents} 個</span>
         <span class="orig">{v.origin === 'group' ? `　${halls.length} 個廳與場地` : v.origin === 'derived' ? '　場地資料由活動資料建立' : '　來自場館名錄'}</span></p>
+      {parent && <p class="hall-nav">位於 <a href={`/venue/${parent.slug}`}>{parent.name}</a><span class="orig">（全館近期 {parentUpcoming} 場）</span>
+        {hallNav.length > 0 && <>　同館：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</>}</p>}
+      {!parent && halls.length > 0 && hallNav.length > 0 && <p class="hall-nav">各廳：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</p>}
     </header>
 
-    {(v.address || v.openingHours || v.phone || parent || v.heritage) && (
-      <dl class="facts">
-        {v.address && <div><dt>地址</dt><dd>{v.address}</dd></div>}
-        {v.openingHours && <div><dt>開放時間</dt><dd>
-          <span class="hours">{v.openingHours}</span>
-          {v.openingHoursSource && <span class="n">
-            出處：{v.openingHoursSource.url
-              ? <a href={v.openingHoursSource.url} target="_blank" rel="nofollow noopener">{v.openingHoursSource.name}</a>
-              : v.openingHoursSource.name}，實際以館方公告為準
-          </span>}
-          {hoursCheckedAt && <span class="n">最後查核日期　<time datetime={hoursCheckedAt}>{hoursCheckedAt}</time></span>}
-          {hoursStale && <span class="n stale">已超過 30 天未重新查核，時間可能已變動，請先向館方確認</span>}
-        </dd></div>}
-        {v.phone && <div><dt>電話</dt><dd class="tabular">{v.phone}</dd></div>}
-        {v.website && <div><dt>網站</dt><dd><a href={v.website} target="_blank" rel="nofollow noopener">館方網站</a></dd></div>}
-        {parent && <div><dt>所屬</dt><dd><a href={`/venue/${parent.slug}`}>{parent.name}</a></dd></div>}
-        {v.heritage && <div><dt>文化資產</dt><dd><a href={`/heritage/${v.heritage.slug}`}>{v.heritage.name}</a></dd></div>}
-      </dl>
-    )}
-
-    {halls.length > 0 && (
-      <section class="halls">
-        <h2 class="h-sm">館內的廳與場地</h2>
-        <ul>{halls.map((h) => (
-          <li><a href={`/venue/${h.slug}`}>{h.name}</a><span class="n tabular">{upcomingIn(h) ? `近期 ${upcomingIn(h)} 場` : ''}</span></li>
-        ))}</ul>
-      </section>
-    )}
+    {!schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}
 
     {grouped ? (
       <>
@@ -212,7 +206,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
           <h2 class="h-sm">{rows.length ? (isPerform ? '近期節目' : '近期活動') : '已結束的活動'}</h2>
         )}
         <ol class="ev-list">
-          {(rows.length ? rows : past).map((d) => (
+          {(rows.length ? listRows : past).map((d) => (
             <li><a href={`/event/${d.slug}`}>
               <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
               <span class="ev-body"><span class="ev-t">{d.title}</span>
@@ -224,6 +218,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
       </>
     )}
     {rows.length === 0 && past.length === 0 && <p class="empty-note">目前沒有收錄到這個場館的活動。</p>}
+    {schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}
   </div>
 </Base>
 <style>
@@ -232,18 +227,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
   .orig { color: var(--text-muted); font-size: var(--text-sm); }
   .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
-  .facts { margin: var(--space-4) 0 0; display: grid; border-top: var(--hairline) solid var(--border-subtle); max-width: 46rem; }
-  .facts > div {
-    display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1.5rem;
-    padding: 0.8rem 0; border-bottom: var(--hairline) solid var(--border-subtle);
-  }
-  .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
-  .facts dd { margin: 0; font-size: var(--text-base); display: grid; gap: 0.3rem; }
-  .facts .n, .halls .n { color: var(--text-muted); font-size: var(--text-sm); }
-  .hours { white-space: pre-line; }
-  .facts .stale { color: var(--color-warn); }
-  .halls ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }
-  .halls li { display: flex; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+  .hall-nav { margin-top: 0.8rem; font-size: var(--text-sm); color: var(--text-secondary); }
   .catrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); max-width: none; }
   .catrow a { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
   .catrow b { color: var(--text-muted); font-weight: 400; }

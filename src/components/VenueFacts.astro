@@ -1,0 +1,56 @@
+---
+// 場館頁的基本資料（地址、開放時間、電話、所屬館區、文化資產）與「館內的廳與場地」。
+// 抽成元件是為了讓表演場地把節目表排在它前面、其他場館照舊排在後面，不必寫兩份。
+interface Props {
+  v: any;
+  parent?: { slug: string; name: string };
+  halls: { slug: string; name: string; upcoming: number }[];
+  hoursCheckedAt?: string;
+  hoursStale: boolean;
+}
+const { v, parent, halls, hoursCheckedAt, hoursStale } = Astro.props;
+---
+{(v.address || v.openingHours || v.phone || parent || v.heritage) && (
+  <dl class="facts">
+    {v.address && <div><dt>地址</dt><dd>{v.address}</dd></div>}
+    {v.openingHours && <div><dt>開放時間</dt><dd>
+      <span class="hours">{v.openingHours}</span>
+      {v.openingHoursSource && <span class="n">
+        出處：{v.openingHoursSource.url
+          ? <a href={v.openingHoursSource.url} target="_blank" rel="nofollow noopener">{v.openingHoursSource.name}</a>
+          : v.openingHoursSource.name}，實際以館方公告為準
+      </span>}
+      {hoursCheckedAt && <span class="n">最後查核日期　<time datetime={hoursCheckedAt}>{hoursCheckedAt}</time></span>}
+      {hoursStale && <span class="n stale">已超過 30 天未重新查核，時間可能已變動，請先向館方確認</span>}
+    </dd></div>}
+    {v.phone && <div><dt>電話</dt><dd class="tabular">{v.phone}</dd></div>}
+    {v.website && <div><dt>網站</dt><dd><a href={v.website} target="_blank" rel="nofollow noopener">館方網站</a></dd></div>}
+    {parent && <div><dt>所屬</dt><dd><a href={`/venue/${parent.slug}`}>{parent.name}</a></dd></div>}
+    {v.heritage && <div><dt>文化資產</dt><dd><a href={`/heritage/${v.heritage.slug}`}>{v.heritage.name}</a></dd></div>}
+  </dl>
+)}
+
+{halls.length > 0 && (
+  <section class="halls">
+    <h2 class="h-sm">館內的廳與場地</h2>
+    <ul>{halls.map((h) => (
+      <li><a href={`/venue/${h.slug}`}>{h.name}</a><span class="n tabular">{h.upcoming ? `近期 ${h.upcoming} 場` : ''}</span></li>
+    ))}</ul>
+  </section>
+)}
+<style>
+  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
+          color: var(--text-secondary); margin-top: var(--space-7); }
+  .facts { margin: var(--space-4) 0 0; display: grid; border-top: var(--hairline) solid var(--border-subtle); max-width: 46rem; }
+  .facts > div {
+    display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1.5rem;
+    padding: 0.8rem 0; border-bottom: var(--hairline) solid var(--border-subtle);
+  }
+  .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
+  .facts dd { margin: 0; font-size: var(--text-base); display: grid; gap: 0.3rem; }
+  .facts .n, .halls .n { color: var(--text-muted); font-size: var(--text-sm); }
+  .hours { white-space: pre-line; }
+  .facts .stale { color: var(--color-warn); }
+  .halls ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }
+  .halls li { display: flex; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+</style>
