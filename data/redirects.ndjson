@@ -11,12 +11,15 @@
 {"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-12-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-01"}
 {"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-13-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-03"}
 {"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-16-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-30"}
+{"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-2-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-05"}
 {"from":"/venue/國立臺灣博物館臺博館本館1樓及古物館3樓簡報室-正取剩-3-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-04"}
 {"from":"/venue/國立臺灣博物館臺博館本館一樓東展間","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-01"}
 {"from":"/venue/國立臺灣博物館臺博館本館一樓東展間-正取剩-14-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-27"}
+{"from":"/venue/國立臺灣博物館臺博館本館一樓東展間-正取剩-17-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-05"}
 {"from":"/venue/國立臺灣博物館臺博館本館一樓東展間-正取剩-21-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-04"}
 {"from":"/venue/國立臺灣博物館臺博館本館一樓東展間-正取剩-27-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-03"}
 {"from":"/venue/國立臺灣博物館臺博館本館一樓東展間-正取剩-28-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-02"}
+{"from":"/venue/城市走讀-從四四南村到吳興街-看見信義區的都市發展和眷村故事","to":"/city/臺北市","reason":"city","at":"2026-10-05"}
 {"from":"/venue/場次-B-五谷好室-A","to":"/venues","reason":"fallback","at":"2026-09-27"}
 {"from":"/venue/我們來造一座山-親子藍曬創作工作坊","to":"/venue/周末主題活動-蟾蜍山煥民新村","reason":"same-building","at":"2026-09-27"}
 {"from":"/venue/新北市三重區綜合體育館二樓演藝廳","to":"/city/新北市","reason":"city","at":"2026-09-27"}
@@ -24,3 +27,4 @@
 {"from":"/venue/臺中市政府文化局中山堂","to":"/city/臺中市","reason":"city","at":"2026-09-27"}
 {"from":"/venue/誠品電影院A廳","to":"/venue/松山文創園區-2-3-4-號倉庫","reason":"same-building","at":"2026-09-27"}
 {"from":"/venue/週末主題活動-北投中心新村","to":"/city/臺北市","reason":"city","at":"2026-09-27"}
+{"from":"/venue/陶藝手作的聲音茶席-用陶做聲音-✕-茶席體驗","to":"/venue/周末主題活動-蟾蜍山煥民新村","reason":"same-building","at":"2026-10-05"}
