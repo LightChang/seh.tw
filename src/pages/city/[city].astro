@@ -4,7 +4,7 @@ import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar } from '../../lib/format.mjs';
-import { flatSessions, countBy, builtCategories, builtCatCities, newListings, builtHubs } from '../../lib/build-data.mjs';
+import { flatSessions, countBy, builtCategories, builtCatCities, newListings, builtHubs, cityMonthPages } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
 export async function getStaticPaths() {
@@ -39,7 +39,12 @@ const description = `${city}正在發生的文化活動、展覽與演出，共 
 const trail = crumbTrail([{ name: '全部縣市', href: '/city' }], city);
 // 這週末、免費活動、年度時間表（src/lib/hubs.mjs），只連有建的
 const hubs = await builtHubs();
+// 縣市 × 月份頁：這個月起有建的前三個月（build-data.mjs cityMonthPages），月份往前走自動換
+const monthLinks = [...(await cityMonthPages())]
+  .filter(([k, v]) => !v.past && k.startsWith(`${city} `)).map(([k]) => k.slice(city.length + 1)).sort().slice(0, 3)
+  .map((ym) => ({ href: `/city/${city}/${ym}`, label: `${+ym.slice(5)} 月活動` }));
 const hubLinks = [
+  ...monthLinks,
   { href: `/today/${city}`, label: '今天' },
   { href: `/weekend/${city}`, label: '這週末' },
   ...(hubs.free.has(city) ? [{ href: `/free/${city}`, label: '免費活動' }] : []),

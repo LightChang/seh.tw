@@ -183,6 +183,10 @@ export async function builtCategories() {
  * 那種月份頁沒人要看）。過去的月份：網址一旦發出就不能變（CLAUDE.md），
  * 站 2026-09-15 上線、當時起建的是 2026-09，所以 2026-09 起過去的月份全部留著（≥1 場、noindex）。
  * 頁面路由與活動頁的連結共用這一份，才不會連出 404。
+ *
+ * ongoing：當月與下個月另外收「更早開始、這個月還在展」的場次（長期展覽），也算進 ≥5 的門檻。
+ * 金門、澎湖這類縣市 11 月才開始的活動只有兩三場，但整個 11 月都看得到的展覽有十來檔，
+ * 「金門11月活動」真正的答案是後者。只收這兩個月：再往後每個月都會列同一批常設展，月份頁會變成彼此的複本。
  */
 export const CITY_MONTH_MIN = 5;
 export const CITY_MONTH_FIRST = '2026-09';
@@ -205,7 +209,19 @@ export async function cityMonthPages() {
     if (!m.has(k)) m.set(k, { rows: [], past });
     m.get(k).rows.push(d);
   }
-  CITY_MONTHS = new Map([...m].filter(([, v]) => v.past || v.rows.length >= CITY_MONTH_MIN));
+  const nextMonth = new Date(Date.UTC(nowD.getUTCFullYear(), nowD.getUTCMonth() + 1, 1)).toISOString().slice(0, 7);
+  for (const ym of [thisMonth, nextMonth]) {
+    for (const d of all) {
+      if (!d.city || !d.end || d.at.slice(0, 7) >= ym) continue;
+      const end = d.end.slice(0, 10);
+      if (end < `${ym}-01` || end < today) continue;
+      const k = `${d.city} ${ym}`;
+      if (!m.has(k)) m.set(k, { rows: [], past: false });
+      (m.get(k).ongoing ??= []).push(d);
+    }
+  }
+  for (const v of m.values()) v.ongoing ??= [];
+  CITY_MONTHS = new Map([...m].filter(([, v]) => v.past || v.rows.length + v.ongoing.length >= CITY_MONTH_MIN));
   return CITY_MONTHS;
 }
 

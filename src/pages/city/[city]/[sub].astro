@@ -54,14 +54,14 @@ export async function getStaticPaths() {
     const [city, sub] = k.split(' ');
     paths.push({ params: { city, sub }, props: { city, sub, rows, mode: 'district', built: [...built], past: false, thin, ended: !liveRows.length } });
   }
-  for (const [k, { rows, past }] of months) {
+  for (const [k, { rows, past, ongoing }] of months) {
     const [city, sub] = k.split(' ');
-    paths.push({ params: { city, sub }, props: { city, sub, rows, mode: 'month', built: [...built], past } });
+    paths.push({ params: { city, sub }, props: { city, sub, rows, ongoing, mode: 'month', built: [...built], past } });
   }
   return paths;
 }
 
-const { city, sub, rows, mode, built, past, thin = false, ended = false } = Astro.props;
+const { city, sub, rows, ongoing = [], mode, built, past, thin = false, ended = false } = Astro.props;
 const catPages = await builtCategories();
 const has = (m, k) => built.includes(`${m} ${city} ${k}`);
 const isMonth = mode === 'month';
@@ -84,6 +84,13 @@ const others = (isMonth
                      n: rows.filter((d) => d.at.slice(0, 7) === m).length })));
 
 const sorted = rows.slice().sort((a, b) => a.at.localeCompare(b.at));
+// 更早開始、這個月還在展的（build-data.mjs cityMonthPages 的 ongoing），一個活動列一次，先結束的排前面
+const longRun = [...new Map(ongoing.map((d) => [d.slug, d])).values()].sort((a, b) => a.end.localeCompare(b.end));
+// 上個月／下個月：只連有建、還沒過去的月份頁，月份往前走就自動換成下一組
+const shift = (n) => new Date(Date.UTC(+sub.slice(0, 4), +sub.slice(5) - 1 + n, 1)).toISOString().slice(0, 7);
+const monthNav = isMonth ? [[-1, '上個月'], [1, '下個月']].map(([n, label]) => ({ label, ym: shift(n) }))
+  .filter((o) => has('month', o.ym)) : [];
+const md = (iso) => `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}`;
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
 const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city, href: `/city/${city}` }], title);
 ---
@@ -93,7 +100,8 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
     ? `${title}的文化活動、展覽與演出，共 ${events} 個活動。這個月份已經過去。`
     : ended
       ? `${title}最近的文化活動、展覽與演出，共 ${events} 個活動，目前都已結束。`
-      : `${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動。`}
+      : `${title}正在發生的文化活動、展覽與演出，共 ${events} 個活動${longRun.length ? `，另有 ${longRun.length} 個更早開始、這個月仍在進行的活動` : ''}。`
+        + (venues.length ? `場地：${venues.slice(0, 3).map(([v]) => v).join('、')}。` : '')}
   noindex={past || thin}
   breadcrumbs={trail}
 >
@@ -104,10 +112,13 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
       <h1>{title}活動</h1>
       <p class="sub">
         <strong class="tabular">{events}</strong> 個活動、
-        <span class="tabular">{rows.length}</span> 場次{isMonth ? '' : ended ? '，都已結束' : '正在或即將發生'}
+        <span class="tabular">{rows.length}</span> 場次{isMonth ? '' : ended ? '，都已結束' : '正在或即將發生'}{longRun.length > 0 && `，另有 ${longRun.length} 個更早開始、這個月仍在進行的活動`}
       </p>
       {ended && <p class="sub">這一區目前沒有還沒結束的活動。<a href={`/city/${city}`}>看{city}接下來的活動</a></p>}
       {past && <p class="sub">這個月份已經過去。<a href={`/city/${city}`}>看{city}接下來的活動</a></p>}
+      {monthNav.length > 0 && <p class="month-nav">{monthNav.map((o) => (
+        <a href={`/city/${city}/${o.ym}`}>{o.label}：{+o.ym.slice(5)} 月</a>
+      ))}</p>}
     </header>
 
     <div class="cols">
@@ -128,6 +139,24 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
           ))}
         </ol>
         {sorted.length > 40 && <p class="more">另有 {sorted.length - 40} 場次</p>}
+        {sorted.length === 0 && longRun.length > 0 && <p class="more">這個月開始的活動還沒有收錄，下面是更早開始、這個月仍在進行的。</p>}
+
+        {longRun.length > 0 && <>
+          <h2 class="h-sm" style="margin-top:2rem">更早開始、這個月仍在進行</h2>
+          <ol class="ev-list">
+            {longRun.slice(0, 30).map((d) => (
+              <li><a href={`/event/${d.slug}`}>
+                <time class="ev-lead tabular" datetime={d.end}>到 {md(d.end)}</time>
+                <span class="ev-body">
+                  <span class="ev-t">{d.title}</span>
+                  <span class="ev-m">{[d.district, d.venue].filter(Boolean).join('　')}</span>
+                </span>
+                <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
+              </a></li>
+            ))}
+          </ol>
+          {longRun.length > 30 && <p class="more">另有 {longRun.length - 30} 個</p>}
+        </>}
       </section>
 
       <aside class="side">
@@ -159,6 +188,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
   .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
   .ev-list { margin-top: var(--space-4); }
   .more { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); }
+  .month-nav { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); font-size: var(--text-sm); }
   .tags { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
   .tags li { border-top: var(--hairline) solid var(--border-subtle); }
   .tags a, .tags .vn {
