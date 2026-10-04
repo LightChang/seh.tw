@@ -21,23 +21,29 @@ const { h } = Astro.props;
 const indexable = await isIndexable(`/heritage/${h.slug}`);
 const descLead = [h.city, h.type].filter(Boolean).join('');
 const status = HERITAGE_STATUS[h.slug];
+// 參觀資訊：全部是來源原文（transform/emit-md.mjs 的 heritageVisit），沒寫的欄位就不印那一列。
+// 「是否開放參觀」有原文（部分開放參觀…）就印原文，只有是／否時才翻成字。
+const openText = h.openVisitText ?? (h.isOpenVisit === true ? '開放參觀' : h.isOpenVisit === false ? '不開放參觀' : undefined);
+const feeText = h.isCharge === true ? '收費（票價以管理單位公告為準）' : h.isCharge === false ? '免費' : undefined;
+// 搜古蹟的人想知道「現在能不能進去」：標題與摘要帶國家文化資產網的開放參觀別（短語只縮字、不改意思）。
+// 有人工整理現況（HERITAGE_STATUS）的頁維持原樣。
+const OPEN_SHORT = { 完全開放參觀: '開放參觀', 部分開放參觀: '部分開放參觀', 預約開放參觀: '預約參觀', 不開放參觀: '不開放參觀', 開放參觀: '開放參觀' };
+const openShort = status ? undefined : OPEN_SHORT[openText];
 const baseDesc = descLead
   ? `${descLead}，${h.history.slice(0, Math.max(0, 80 - descLead.length - 1))}`
   : h.history.slice(0, 80);
-const description = status ? `${status.description}${baseDesc}` : baseDesc;
+const feeShort = openShort === '不開放參觀' ? '' : h.isCharge === false ? '、免費' : h.isCharge === true ? '、收費' : '';
+const visitDesc = openShort ? `${openText}${feeShort}。` : '';
+const description = status ? `${status.description}${baseDesc}` : `${visitDesc}${baseDesc}`;
 // 標題帶所在地與類別（「淡水中正段日式宿舍群｜新北市淡水區歷史建築｜seh」），
 // 搜古蹟名的人一眼看得出是哪裡、哪一種；都沒有才退回「文化資產」。
-const title = `${h.name}${status ? status.title : ''}｜${[h.city, h.district].filter(Boolean).join('')}${h.type || (h.city ? '' : '文化資產')}｜seh`;
+const title = `${h.name}${status ? status.title : ''}｜${[h.city, h.district].filter(Boolean).join('')}${h.type || (h.city ? '' : '文化資產')}${openShort ? `・${openShort}` : ''}｜seh`;
 const ld = heritageNode(h, {
   openingHoursSpecification: h.openingHoursSpec?.length ? toSchemaSpec(h.openingHoursSpec) : undefined,
 });
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs 的 crumbTrail）
 const trail = crumbTrail([{ name: '文化資產', href: '/heritage' }, h.city && { name: h.city, href: `/city/${h.city}` }], h.name);
 
-// 參觀資訊：全部是來源原文（transform/emit-md.mjs 的 heritageVisit），沒寫的欄位就不印那一列。
-// 「是否開放參觀」有原文（部分開放參觀…）就印原文，只有是／否時才翻成字。
-const openText = h.openVisitText ?? (h.isOpenVisit === true ? '開放參觀' : h.isOpenVisit === false ? '不開放參觀' : undefined);
-const feeText = h.isCharge === true ? '收費（票價以管理單位公告為準）' : h.isCharge === false ? '免費' : undefined;
 const hasVisit = Boolean(openText || h.openingHours || feeText || h.website);
 // 怎麼去：導航連結的目的地用來源給的座標，沒有座標才用街道地址（只到縣市、行政區的不給，導不到門口）
 const place = [h.city, h.district, h.address].filter(Boolean).join(' ');
