@@ -133,9 +133,15 @@ const listRows = isPerform ? [...rows.filter((d) => d.at.slice(0, 10) >= todayTW
 const place = [v.city, v.district].filter(Boolean).join('');
 const aliasText = aliases.length ? `（又稱${aliases.slice(0, 3).join('、')}）` : '';
 const catSummary = catGroups.slice(0, 4).map(([c, list]) => `${c} ${list.length} 場`).join('、');
+// 場館全名帶園區前綴時，實際搜尋常只打子場地名（如「蓬萊B4倉庫」不含「高雄駁二藝術特區」），
+// title 用短名把它帶到前面，H1／描述仍用全名不縮短。
+const SHORT_TITLE_NAMES = new Map([
+  ['高雄駁二藝術特區-蓬萊區B4倉庫', '蓬萊區B4倉庫（高雄駁二）'],
+]);
+const titleName = SHORT_TITLE_NAMES.get(v.slug) ?? v.name;
 const title = isPerform
-  ? `${v.name}節目表｜${halls.length ? '各廳近期演出總覽' : parent ? '近期演出' : '近期演出與活動'}｜seh`
-  : `${v.name}｜近期活動${isLibrary ? '、開放時間' : ''}｜seh`;
+  ? `${titleName}節目表｜${halls.length ? '各廳近期演出總覽' : parent ? '近期演出' : '近期演出與活動'}｜seh`
+  : `${titleName}｜近期活動${isLibrary ? '、開放時間' : ''}｜seh`;
 const h1 = isPerform ? `${v.name}節目表` : v.name;
 const description = [
   `${v.name}${aliasText}`,
