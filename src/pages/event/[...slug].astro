@@ -20,6 +20,13 @@ const verified = await verifiedState();
 const sessions = e.sessions;
 const primary = primarySession(sessions);
 
+// 懸崖帶卡點頁（曝光307、點擊0、第8.15名）：首屏加白話答案句，日期/地點/票價都是
+// facts 表本來就有的事實，只是搬到答案句裡講清楚，不是新增資訊。
+const EXTRA_LEAD_SLUGS = new Set(['星際效應電影音樂會']);
+const extraLead = EXTRA_LEAD_SLUGS.has(e.slug)
+  ? `${e.title}：${whenText(sessions)}在${primary.venueNameRaw}（${[primary.city, primary.district].filter(Boolean).join('')}）。${e.isFree === true ? '免費' : e.priceText ? `票價 ${e.priceText} 元` : ''}。`
+  : '';
+
 // 來源說明文字帶著沒解開的 HTML 實體（「Ga&iuml;a」「&hellip;」），
 // 不解開就會原樣印在頁面、meta description 與搜尋結果摘要上。
 const ENTITY = {
@@ -115,6 +122,7 @@ const trail = crumbTrail([
 
       <h1>{e.title}</h1>
       {LEAD_SLUGS.has(e.slug) && <p class="lead">{eventLead(e)}</p>}
+      {extraLead && <p class="lead">{extraLead}</p>}
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
