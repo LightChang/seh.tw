@@ -19,6 +19,18 @@ sessions:
     addressPrecision: "street"
     venueId: "ven_derived_國立科學工藝博物館南館程式設計教室-南館2F"
     venueSlug: "國立科學工藝博物館南館程式設計教室-南館2F"
+  - startAt: "2027-01-21T09:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2027-01-23T16:00:00+08:00"
+    venueNameRaw: "國立科學工藝博物館"
+    lat: 22.641489
+    lng: 120.322551
+    city: "高雄市"
+    district: "三民區"
+    address: "高雄市三民區九如一路720號"
+    addressPrecision: "street"
+    venueId: "ent_cip-museums_84"
+    venueSlug: "國立科學工藝博物館"
 sources: 
   - id: "nstm-activities"
     recordId: "78f5cd0afd84feeb"
@@ -28,4 +40,8 @@ sources:
       - "categoryRaw"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "c04b7d30a8b76e48"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
 ---

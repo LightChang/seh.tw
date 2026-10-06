@@ -65,15 +65,6 @@ sources:
         - nameRaw: "新月社"
           role: "master"
       sessions: 
-        - startAt: "2026-10-06T19:00:00+08:00"
-          granularity: "datetime"
-          endAt: "2026-10-06T21:00:00+08:00"
-          venueNameRaw: "新月藝文沙龍；現場上課/線上上課/雲端回放"
-          city: "臺北市"
-          district: "中山區"
-          addressPrecision: "district"
-          lat: 25.04852
-          lng: 121.52268
         - startAt: "2026-11-03T19:00:00+08:00"
           granularity: "datetime"
           endAt: "2026-11-03T21:00:00+08:00"

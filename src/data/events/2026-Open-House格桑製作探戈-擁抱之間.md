@@ -9,6 +9,8 @@ popularity: 0
 isFree: true
 ticketUrl: "https://www.opentix.life/program/2080137080298598400"
 description: |-
+  ►【電子節目單】格桑製作《探戈：擁抱之間》
+  
   「探戈，是兩個世界的相遇。」-策展人耿一偉
   
   AI與人，探戈與當代舞的虛實擁抱。
