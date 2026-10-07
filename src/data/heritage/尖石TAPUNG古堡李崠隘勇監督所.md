@@ -105,5 +105,4 @@ sources:
       - "address"
     rejected: 
       addressPrecision: "city"
-      openingHoursRaw: "戶外空間自由參觀"
 ---

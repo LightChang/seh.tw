@@ -9,6 +9,8 @@ popularity: 0
 isFree: true
 ticketUrl: "https://www.opentix.life/program/2095106310969434112"
 description: |-
+  ※ 原訂於10月10日（六）15:00／17:00於衛武營歌劇院演出之【2026 Open House】興傳奇青年劇場 《馬上封侯》，主要演員林益緣因傷無法參與演出， 原角色改由李軒綸演出。
+  
   ►【電子節目單】興傳奇青年劇場《馬上封侯》
   
   美猴王現身衛武營

@@ -6,10 +6,11 @@ origin: "derived"
 city: "新竹市"
 district: "香山區"
 addressPrecision: "district"
-lat: 24.76322
-lng: 120.91349
-buildingId: "bld_24.7632_120.9135"
-eventCount: 1
+lat: 24.76305
+lng: 120.91373
+buildingId: "bld_24.7630_120.9137"
+eventCount: 2
 eventClusterIds: 
+  - "evt_taipei-culture-events_b07ff24b4c5b6ae0"
   - "evt_moc-events_6aa1497f647a795d9251e5c9"
 ---
