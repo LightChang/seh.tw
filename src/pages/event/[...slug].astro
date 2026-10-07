@@ -22,7 +22,8 @@ const primary = primarySession(sessions);
 
 // 懸崖帶卡點頁（曝光307、點擊0、第8.15名）：首屏加白話答案句，日期/地點/票價都是
 // facts 表本來就有的事實，只是搬到答案句裡講清楚，不是新增資訊。
-const EXTRA_LEAD_SLUGS = new Set(['星際效應電影音樂會']);
+// 星際效應電影音樂會-2 是同一齣巡演的高雄衛武營場（曝光574、點擊0、第7.3名），同模式延伸。
+const EXTRA_LEAD_SLUGS = new Set(['星際效應電影音樂會', '星際效應電影音樂會-2']);
 const extraLead = EXTRA_LEAD_SLUGS.has(e.slug)
   ? `${e.title}：${whenText(sessions)}在${primary.venueNameRaw}（${[primary.city, primary.district].filter(Boolean).join('')}）。${e.isFree === true ? '免費' : e.priceText ? `票價 ${e.priceText} 元` : ''}。`
   : '';
