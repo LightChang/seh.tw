@@ -28,6 +28,25 @@ const extraLead = EXTRA_LEAD_SLUGS.has(e.slug)
   ? `${e.title}：${whenText(sessions)}在${primary.venueNameRaw}（${[primary.city, primary.district].filter(Boolean).join('')}）。${e.isFree === true ? '免費' : e.priceText ? `票價 ${e.priceText} 元` : ''}。`
   : '';
 
+// 反思交接＋懸崖帶（曝光269、點擊5、第7.3名，CTR 1.9%）：場次跨臺北、桃園兩個不同場館，
+// 不能用 EXTRA_LEAD_SLUGS 那套只講 primary 場館的樣板——會漏講桃園場。逐場館列，
+// 資料沒有票價欄位，不編票價。
+const MULTI_VENUE_LEAD_SLUGS = new Set(['生氣王子親子繪本音樂會']);
+const multiVenueLead = MULTI_VENUE_LEAD_SLUGS.has(e.slug)
+  ? (() => {
+      const seen = new Set();
+      const parts = sessions
+        .filter((s) => {
+          const key = `${dateLabel(s.startAt)}|${s.venueNameRaw}`;
+          if (seen.has(key)) return false;
+          seen.add(key);
+          return true;
+        })
+        .map((s) => `${dateLabel(s.startAt)}在${s.venueNameRaw}（${[s.city, s.district].filter(Boolean).join('')}）`);
+      return `${e.title}：${parts.join('，')}。`;
+    })()
+  : '';
+
 // 來源說明文字帶著沒解開的 HTML 實體（「Ga&iuml;a」「&hellip;」），
 // 不解開就會原樣印在頁面、meta description 與搜尋結果摘要上。
 const ENTITY = {
@@ -124,6 +143,7 @@ const trail = crumbTrail([
       <h1>{e.title}</h1>
       {LEAD_SLUGS.has(e.slug) && <p class="lead">{eventLead(e)}</p>}
       {extraLead && <p class="lead">{extraLead}</p>}
+      {multiVenueLead && <p class="lead">{multiVenueLead}</p>}
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
