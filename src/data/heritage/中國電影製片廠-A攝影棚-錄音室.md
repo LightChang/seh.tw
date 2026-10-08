@@ -24,14 +24,6 @@ nearbyVenues:
 images: 
   - url: "https://data.boch.gov.tw/upload/sync/108251eb-d2a1-4027-a4e0-57af2bb9d406/中國電影製片廠照片.png"
     caption: "中國電影製片廠照片"
-  - url: "https://data.boch.gov.tw/old_upload/_upload/Assets_new/building/134904/photo/照片-02.jpg"
-    caption: "照片-02"
-  - url: "https://data.boch.gov.tw/old_upload/_upload/Assets_new/building/134905/photo/照片-03.jpg"
-    caption: "照片-03"
-  - url: "https://data.boch.gov.tw/old_upload/_upload/Assets_new/building/134906/photo/照片-04.jpg"
-    caption: "照片-04"
-  - url: "https://data.boch.gov.tw/old_upload/_upload/Assets_new/building/134907/photo/照片-05.jpg"
-    caption: "照片-05"
 history: |-
   1、中國電影製片廠為國內最具廠齡之電影製片機構，1933年創立於江西南昌，1951年遷移至北投現址（該址日治時期為競馬場），初期以拍攝新聞、紀錄片、軍教片為主，1965年開始拍攝商業片，並有多部膾炙人口的作品，如「揚子江風雲」、「緹縈」等，為臺灣電影發展史之見證。
   2、A攝影棚之建築設計，以兩跨圓弧力霸鋼架屋頂創造出大跨距空間，牆面以RC加強磚造為主，棚內仍保有貓道，具備當時代的電影產業文化之空間特性與風格特色。

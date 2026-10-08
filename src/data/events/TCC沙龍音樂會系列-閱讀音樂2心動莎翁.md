@@ -4,6 +4,8 @@ slug: "TCC沙龍音樂會系列-閱讀音樂2心動莎翁"
 title: "TCC沙龍音樂會系列 閱讀音樂2《心動莎翁》"
 category: "音樂"
 status: "scheduled"
+priceText: "NT$ 800"
+ticketUrl: "https://www.opentix.life/event/2105121072633548800"
 description: |-
   《閱讀音樂2：心動莎翁》以文學與音樂對話為發想，聚焦莎士比亞作品對合唱創作的深遠影響。莎士比亞筆下豐富的人性、情感與想像，數百年來持續啟發世界各地作曲家譜寫動人樂章。本次演出再次邀請導聆呂岱衛，並攜手打擊演奏家蕭淯辰與鋼琴合作家劉于菁，以人聲為核心，融合無伴奏合唱、鋼琴與馬林巴琴等多元聲響，呈現不同作曲家心中的莎翁世界。觀眾將循著文字、旋律與聲響交織而成的脈絡，在閱讀與聆聽之間，展開一場跨越文學、音樂與想像的深情旅程。
   
@@ -52,6 +54,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"
