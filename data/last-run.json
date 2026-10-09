@@ -1,19 +1,19 @@
 {
-  "at": "2026-10-09T04:10:02+08:00",
-  "attempted": 24,
+  "at": "2026-10-10T04:10:03+08:00",
+  "attempted": 30,
   "changed": [
+    "moca-taipei-events",
     "kmfa-events",
-    "ncfta-activities",
+    "nstm-activities",
     "moc-emap-poi",
     "ntmofa-events",
     "ntt-programs",
     "taipei-gov-hot-events",
     "taoyuan-tourism-events",
-    "ntm-activities",
+    "taipei-culture-events",
     "twtourism-events",
     "weiwuying-programs",
-    "tcmb-culture",
-    "boch-heritage"
+    "ntm-activities"
   ],
   "failed": [
     "npm-events",

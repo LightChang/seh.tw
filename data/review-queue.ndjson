@@ -40,25 +40,26 @@
 {"id":"rq_bld_bld_25.0433_121.5293","kind":"building-unnamed","payload":{"buildingId":"bld_25.0433_121.5293","halls":["光點華山電影館 1廳","光點華山電影館 2廳","華山1914文創園區 中4B館","華山1914文創園區東3B館 烏梅劇院"],"lat":25.0432788,"lng":121.5293005},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_22.6202_120.2786","kind":"building-unnamed","payload":{"buildingId":"bld_22.6202_120.2786","halls":["駁二正港小劇場","高雄駁二藝術特區 蓬萊區B4倉庫"],"lat":22.6201549,"lng":120.2786076},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0127_121.5353","kind":"building-unnamed","payload":{"buildingId":"bld_25.0127_121.5353","halls":["CLASSROOM 1廳","金石堂汀州店 龍顏講堂","金石堂汀洲店地下1樓龍顏講堂"],"lat":25.012683512154307,"lng":121.53531478036733},"suggested":"name","status":"open","decidedAt":null}
-{"id":"rq_bld_bld_25.0445_121.5168","kind":"building-unnamed","payload":{"buildingId":"bld_25.0445_121.5168","halls":["崇友文教基金會","齊文藝室- 共享工作吧"],"lat":25.04445,"lng":121.51684},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0417_121.5525","kind":"building-unnamed","payload":{"buildingId":"bld_25.0417_121.5525","halls":["聯邦藝術中心","阿波羅畫廊"],"lat":25.04168,"lng":121.55249},"suggested":"name","status":"open","decidedAt":null}
+{"id":"rq_bld_bld_25.0445_121.5168","kind":"building-unnamed","payload":{"buildingId":"bld_25.0445_121.5168","halls":["崇友文教基金會","齊文藝室- 共享工作吧"],"lat":25.04445,"lng":121.51684},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0441_121.5609","kind":"building-unnamed","payload":{"buildingId":"bld_25.0441_121.5609","halls":["松山文創園區 2、3、4 號倉庫","松山文創園區 5號倉庫","誠品電影院C廳"],"lat":25.04409,"lng":121.5609},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0427_121.5073","kind":"building-unnamed","payload":{"buildingId":"bld_25.0427_121.5073","halls":["全台首輪上映戲院/台北真善美等","全台首輪上映戲院/真善美劇院、台北信義威秀影城、南港LaLaport威秀影城、新店裕隆城威秀影城、台南大遠百威秀影城、高雄大遠百威秀影城（陸續增加中）等","西門紅樓2樓"],"lat":25.04269,"lng":121.50734},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0095_121.5394","kind":"building-unnamed","payload":{"buildingId":"bld_25.0095_121.5394","halls":["周末主題活動｜蟾蜍山煥民新村","蟾蜍山大客廳（週一固定休館）"],"lat":25.00946,"lng":121.53936},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_cat_1","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"臺灣科學節","events":150},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_2","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"技職永續破風者－職業試探與適性發展共育計畫","events":20},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_3","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"臺灣科學節活動","events":16},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_4","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、兒童活動","events":12},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_5","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、圖書館利用教育","events":8},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_6","kind":"category-unmapped","payload":{"source":"tainan-culture-events","raw":"講座","events":4},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_7","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#書法","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_8","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#樂齡","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_9","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"展覽徵件","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_10","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、研習班","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_11","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、留學活動","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_12","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、教育、文化、主題活動、講座、展覽、影片欣賞、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_13","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、成長學習、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_14","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"藝術文化、教育、文化、講座、研習班、終身學習","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_15","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、講座、展覽、影片欣賞、兒童活動、終身學習、成長學習、文化展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_16","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、電影、文化、影片欣賞","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_17","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"2,206","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_2","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"科工任你遊","events":60},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_3","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"技職永續破風者－職業試探與適性發展共育計畫","events":20},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_4","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"臺灣科學節活動","events":16},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_5","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、兒童活動","events":12},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_6","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、圖書館利用教育","events":8},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_7","kind":"category-unmapped","payload":{"source":"tainan-culture-events","raw":"講座","events":4},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_8","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#書法","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_9","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#樂齡","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_10","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"展覽徵件","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_11","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、研習班","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_12","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、留學活動","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_13","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、教育、文化、主題活動、講座、展覽、影片欣賞、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_14","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、成長學習、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_15","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"藝術文化、教育、文化、講座、研習班、終身學習","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_16","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、講座、展覽、影片欣賞、兒童活動、終身學習、成長學習、文化展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_17","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、電影、文化、影片欣賞","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_18","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"2,206","events":2},"suggested":"map","status":"open","decidedAt":null}
