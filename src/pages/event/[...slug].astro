@@ -28,6 +28,13 @@ const extraLead = EXTRA_LEAD_SLUGS.has(e.slug)
   ? `${e.title}：${whenText(sessions)}在${primary.venueNameRaw}（${[primary.city, primary.district].filter(Boolean).join('')}）。${e.isFree === true ? '免費' : e.priceText ? `票價 ${e.priceText} 元` : ''}。`
   : '';
 
+// 懸崖帶卡點頁（曝光433、點擊25、第7.16名）：這場沒有場館名、只有地址，地址本身
+// 已含縣市區，答案句不再像上面那組加一層（縣市／行政區）括號，否則重複。
+const ADDR_LEAD_SLUGS = new Set(['2026新社花海暨臺中國際花毯節']);
+const addrLead = ADDR_LEAD_SLUGS.has(e.slug)
+  ? `${e.title}：${whenText(sessions)}在${placeLabel(primary)}。`
+  : '';
+
 // 反思交接＋懸崖帶（曝光269、點擊5、第7.3名，CTR 1.9%）：場次跨臺北、桃園兩個不同場館，
 // 不能用 EXTRA_LEAD_SLUGS 那套只講 primary 場館的樣板——會漏講桃園場。逐場館列，
 // 資料沒有票價欄位，不編票價。
@@ -144,6 +151,7 @@ const trail = crumbTrail([
       {LEAD_SLUGS.has(e.slug) && <p class="lead">{eventLead(e)}</p>}
       {extraLead && <p class="lead">{extraLead}</p>}
       {multiVenueLead && <p class="lead">{multiVenueLead}</p>}
+      {addrLead && <p class="lead">{addrLead}</p>}
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
