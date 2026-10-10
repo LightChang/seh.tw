@@ -4,7 +4,7 @@ import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import HubList from '../../components/HubList.astro';
 import { crumbTrail, eventItemList } from '../../lib/jsonld/index.mjs';
-import { fmtNum } from '../../lib/format.mjs';
+import { fmtNum, mdShort } from '../../lib/format.mjs';
 import { flatSessions, builtHubs, indexableEvent } from '../../lib/build-data.mjs';
 import { freeEvents, titleWords, cityShort } from '../../lib/hubs.mjs';
 import { leadText } from '../../lib/day-lists.mjs';
@@ -28,9 +28,13 @@ const what = (words.length ? words : ['展覽', '演出']).join('與');
 const thin = soon.length + later.length < 5;
 const CAP = 80;
 const year = hubs.thisYear;
-const title = city ? `${place}免費活動：這個月不用錢的${what}` : `${year} 免費活動：這個月全台不用錢的${what}`;
+// 懸崖帶卡點（反思交接 serp-kaohsiung-free）：前排是過期的整理文，標題帶實際月份數字、
+// 說明開頭帶最近一場日期，比「這個月」更看得出是每日更新的當下清單。
+const month = new Date(buildNow + 8 * 3600e3).getUTCMonth() + 1;
+const title = city ? `${place}免費活動：${month} 月不用錢的${what}` : `${year} 免費活動：${month} 月全台不用錢的${what}`;
 const cats = [...soon.reduce((m, e) => (e.cat ? m.set(e.cat, (m.get(e.cat) ?? 0) + 1) : m), new Map())].sort((a, b) => b[1] - a[1]);
 const description = `${city || '全台'}接下來 30 天有 ${soon.length} 個來源標示免費的活動`
+  + (soon[0] ? `，最近一場 ${mdShort(soon[0].next)}` : '')
   + (cats.length ? `：${cats.slice(0, 4).map(([c, n]) => `${c} ${n}`).join('、')}` : '')
   + '。依日期排列，附場地，每天更新。';
 const trail = city ? crumbTrail([{ name: '免費活動', href: '/free' }], `${place}免費活動`) : crumbTrail([], '免費活動');

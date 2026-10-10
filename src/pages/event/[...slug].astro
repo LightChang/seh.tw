@@ -30,7 +30,9 @@ const extraLead = EXTRA_LEAD_SLUGS.has(e.slug)
 
 // 懸崖帶卡點頁（曝光433、點擊25、第7.16名）：這場沒有場館名、只有地址，地址本身
 // 已含縣市區，答案句不再像上面那組加一層（縣市／行政區）括號，否則重複。
-const ADDR_LEAD_SLUGS = new Set(['2026新社花海暨臺中國際花毯節']);
+// 2026夢想嘉年華（曝光308、點擊10、第6.85名）同一種缺口：來源說明只有一句宣傳語，
+// 沒有日期與地點，同模式延伸。
+const ADDR_LEAD_SLUGS = new Set(['2026新社花海暨臺中國際花毯節', '2026夢想嘉年華']);
 const addrLead = ADDR_LEAD_SLUGS.has(e.slug)
   ? `${e.title}：${whenText(sessions)}在${placeLabel(primary)}。`
   : '';
