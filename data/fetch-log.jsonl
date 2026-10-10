@@ -796,3 +796,24 @@
 {"at":"2026-10-10T04:10:03+08:00","id":"boch-heritage-preservers","outcome":"unchanged","via":"fetch","count":1051,"ms":27844}
 {"at":"2026-10-10T04:10:03+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":24,"ms":30364}
 {"at":"2026-10-10T04:10:03+08:00","id":"boch-heritage","outcome":"unchanged","via":"fetch","count":6412,"ms":145155}
+{"at":"2026-10-11T04:10:02+08:00","id":"moca-taipei-events","outcome":"unchanged","via":"fetch","count":23,"ms":2450}
+{"at":"2026-10-11T04:10:02+08:00","id":"ncfta-activities","outcome":"unchanged","via":"fetch","count":42,"ms":866}
+{"at":"2026-10-11T04:10:02+08:00","id":"kmfa-events","outcome":"unchanged","via":"fetch","count":41,"ms":4613}
+{"at":"2026-10-11T04:10:02+08:00","id":"ncl-events","outcome":"unchanged","via":"fetch","count":20,"ms":1304}
+{"at":"2026-10-11T04:10:02+08:00","id":"npm-events","outcome":"failed","error":"unable to get local issuer certificate","ms":1759}
+{"at":"2026-10-11T04:10:02+08:00","id":"nstm-exhibitions","outcome":"unchanged","via":"fetch","count":358,"ms":3905}
+{"at":"2026-10-11T04:10:02+08:00","id":"moc-emap-poi","outcome":"changed","via":"fetch","count":14377,"ms":13246}
+{"at":"2026-10-11T04:10:02+08:00","id":"moc-events","outcome":"shrank","prev":1727,"count":93,"error":"筆數異常縮水 1727 → 93，未覆蓋 raw","ms":1631}
+{"at":"2026-10-11T04:10:02+08:00","id":"ntpc-culture-events","outcome":"unchanged","via":"fetch","count":59,"ms":799}
+{"at":"2026-10-11T04:10:02+08:00","id":"ntt-programs","outcome":"changed","via":"fetch","count":93,"ms":934}
+{"at":"2026-10-11T04:10:02+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":271}
+{"at":"2026-10-11T04:10:02+08:00","id":"boch-heritage-folklore","outcome":"unchanged","via":"fetch","count":288,"ms":20725}
+{"at":"2026-10-11T04:10:02+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":69,"ms":1918}
+{"at":"2026-10-11T04:10:02+08:00","id":"ntm-activities","outcome":"unchanged","via":"fetch","count":24,"ms":15197}
+{"at":"2026-10-11T04:10:02+08:00","id":"ntmofa-events","outcome":"unchanged","via":"fetch","count":40,"ms":14269}
+{"at":"2026-10-11T04:10:02+08:00","id":"tfam-exhibitions","outcome":"unchanged","via":"fetch","count":586,"ms":2507}
+{"at":"2026-10-11T04:10:02+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":26,"ms":1892}
+{"at":"2026-10-11T04:10:02+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1137,"ms":1907}
+{"at":"2026-10-11T04:10:02+08:00","id":"weiwuying-programs","outcome":"changed","via":"fetch","count":185,"ms":3662}
+{"at":"2026-10-11T04:10:02+08:00","id":"tcmb-culture","outcome":"unchanged","via":"fetch","count":11524,"ms":102774}
+{"at":"2026-10-11T04:10:02+08:00","id":"boch-heritage","outcome":"unchanged","via":"fetch","count":6412,"ms":190516}
