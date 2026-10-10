@@ -9,7 +9,7 @@ address: "高雄市鼓山區馬卡道路329號"
 addressPrecision: "street"
 lat: 22.6572033
 lng: 120.282306
-buildingId: "bld_22.6572_120.2823"
+buildingId: "bld_22.6579_120.2828"
 eventCount: 53
 eventClusterIds: 
   - "evt_moc-events_6a83722826b32427d0604408"

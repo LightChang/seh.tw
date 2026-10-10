@@ -13,6 +13,7 @@
 //   node transform/resolve-relations.mjs --stats  只印統計
 
 import { readdir, readFile, writeFile, mkdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { normVenue, makeSlug } from './cluster.mjs';
@@ -140,6 +141,9 @@ function buildingName(members) {
   const names = members.map((m) => String(m.name ?? '')).filter(Boolean);
   const p = commonPrefix(names);
   if (p.length >= PREFIX_MIN) return p;
+  // 原名沒有共同前綴，可能只是有的冠了縣市名（「臺北國家音樂廳」與「國家音樂廳排練室一」）
+  const kp = commonPrefix(names.map(venueIdentityKey));
+  if (kp.length >= PREFIX_MIN) return kp;
   return names.reduce((a, n) => (n.length < (a?.length ?? 1e9) ? n : a), null);
 }
 
@@ -149,9 +153,11 @@ function splitByNameAffinity(members) {
   const find = (x) => { while (parent[x] !== x) { parent[x] = parent[parent[x]]; x = parent[x]; } return x; };
   for (let i = 0; i < members.length; i++) {
     for (let j = i + 1; j < members.length; j++) {
-      const a = String(members[i].name ?? ''), b = String(members[j].name ?? '');
-      let k = 0;
-      while (k < a.length && k < b.length && a[k] === b[k]) k++;
+      // 原名或名稱鍵（剝掉縣市名）任一有共同前綴就算同一棟：
+      // 「臺北市中山堂廣場」與名錄的「中山堂光復廳」原名沒有共同前綴，名稱鍵有
+      const shared = (a, b) => { let k = 0; while (k < a.length && k < b.length && a[k] === b[k]) k++; return k; };
+      const ni = String(members[i].name ?? ''), nj = String(members[j].name ?? '');
+      const k = Math.max(shared(ni, nj), shared(venueIdentityKey(ni), venueIdentityKey(nj)));
       if (k >= PREFIX_MIN) { const ra = find(i), rb = find(j); if (ra !== rb) parent[ra] = rb; }
     }
   }
@@ -162,6 +168,75 @@ function splitByNameAffinity(members) {
     out.get(r).push(m);
   });
   return [...out.values()];
+}
+
+// ── 同一個場館的不同寫法 ─────────────────────────────────────────────
+// 不同來源給同一個場館不同的名字：「台中中興大學惠蓀堂」與「國立中興大學惠蓀堂」、
+// 「臺南市奇美博物館」與名錄的「奇美博物館」。normVenue 只剝「國立」不剝縣市名，
+// 兩個寫法各長一頁，搜尋流量被拆開。
+//
+// 判準要兩條同時成立，缺一條就不併：
+//   一、名稱鍵相同：剝掉縣市名與「國立／市立…」、台→臺、去標點，鍵至少 4 個字。
+//       剝縣市名會讓「基隆文化中心」與「臺南文化中心」同鍵——所以第二條不能省。
+//   二、同一個地點：同縣市，而且兩邊都有座標時相距 100 公尺內；
+//       有一邊沒座標就要正規化後的門牌完全相同（要有「號」，只寫到路名不算）。
+// 只認「相同」不認「包含」：「國家戲劇院」包含在「國家戲劇院實驗劇場」裡，那是廳與建築，
+// 歸建築分群管（§5），不是同一頁。
+const SAME_PLACE_M = 100;
+const VENUE_KEY_MIN = 4;
+const CITY_HEAD = /^(臺北|新北|桃園|臺中|臺南|高雄|基隆|新竹|苗栗|彰化|南投|雲林|嘉義|屏東|宜蘭|花蓮|臺東|澎湖|金門|連江)(?:市|縣)?(?![市縣]?立)/;
+const OWNER_HEAD = /^(國立|市立|縣立|私立)/;
+const tw = (s) => String(s ?? '').normalize('NFKC').replace(/台/g, '臺');
+
+export function venueIdentityKey(name) {
+  let s = tw(name).replace(/[\s\p{P}\p{S}]/gu, '').toLowerCase();
+  for (let i = 0; i < 3; i++) {
+    const t = s.replace(CITY_HEAD, '').replace(OWNER_HEAD, '');
+    if (t === s) break;
+    s = t;
+  }
+  return s;
+}
+
+const CN_DIGIT = { 〇: 0, 零: 0, 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
+function cnNumber(s) {
+  if (!s.includes('十')) return Number([...s].map((c) => CN_DIGIT[c]).join(''));
+  const [hi, lo] = s.split('十');
+  return (hi ? CN_DIGIT[hi] : 1) * 10 + (lo ? CN_DIGIT[lo] : 0);
+}
+
+/** 門牌比對鍵；沒有「號」就回 null（精度不夠，不拿來判同一地點）。 */
+export function normAddress(addr) {
+  let s = tw(addr).replace(/[\s\p{P}\p{S}]/gu, '');
+  s = s.replace(/([〇零一二三四五六七八九十]+)(?=[段巷弄號樓])/g, (m) => String(cnNumber(m)));
+  s = s.replace(/\d+鄰/g, '');
+  s = s.replace(/([區鄉鎮市])[^\d區鄉鎮市路街道段巷弄號]{1,3}里(?![路街道])/, '$1');
+  const m = s.match(/^.*?\d+(?:之\d+)?號/);
+  return m ? m[0] : null;
+}
+
+/** 兩筆場館資料是不是同一個地點（名稱另外比）。 */
+export function sameVenuePlace(a, b) {
+  if (!a || !b) return false;
+  if (a.city && b.city && tw(a.city) !== tw(b.city)) return false;
+  if (a.lat != null && a.lng != null && b.lat != null && b.lng != null) {
+    return haversineM(a, b) <= SAME_PLACE_M;
+  }
+  const x = normAddress(a.address);
+  return x != null && x === normAddress(b.address);
+}
+
+/**
+ * 同一場館有幾個寫法時，頁面用哪一個。已經有頁的優先（網址不要來回換），
+ * 再來是正式全名（國立／市立開頭）、用「臺」的、場次多的。
+ */
+export function preferredVenueName(members, hasPage = () => false) {
+  return members.slice().sort((a, b) =>
+    hasPage(b.nameRaw) - hasPage(a.nameRaw)
+    || OWNER_HEAD.test(tw(b.nameRaw)) - OWNER_HEAD.test(tw(a.nameRaw))
+    || String(a.nameRaw).includes('台') - String(b.nameRaw).includes('台')
+    || b.sessions - a.sessions
+    || String(a.nameRaw).localeCompare(String(b.nameRaw)))[0];
 }
 
 // ── 文化資產 ↔ 場館 ──────────────────────────────────────────────────
@@ -344,9 +419,51 @@ async function main() {
       || (b.sourceCount ?? 0) - (a.sourceCount ?? 0))[0].id;
   }
 
-  // ── 3. 解析：對名錄 → 別名 → 建 derived ──────────────────────────
+  // ── 3. 解析：對名錄 → 別名 → 同一地點的另一種寫法 → 建 derived ──────
   const resolution = new Map(); // 正規化名稱 -> { venueId, state, method }
-  let derivedCount = 0, ambiguousCount = 0, rejectedCount = 0;
+  let derivedCount = 0, ambiguousCount = 0, rejectedCount = 0, samePlaceCount = 0;
+
+  // 同一場館的不同寫法（見 venueIdentityKey）。名錄場館一次建好索引；
+  // derived 場館邊建邊加，members 記它收了哪些寫法，頁面名稱由 preferredVenueName 決定。
+  const registryByIdentity = new Map();
+  const derivedByIdentity = new Map();
+  const derivedMembers = new Map();   // venueId -> [{ k, nameRaw, sessions }]
+  // 併掉的寫法本來會長出的 derived id → 接手的場館 id。overrides 裡寫死的舊 id 靠它接到新的
+  const venueAlias = new Map();
+  const setAlias = (from, to) => {
+    if (from === to) return;
+    for (const [a, b] of venueAlias) if (b === from) venueAlias.set(a, to);
+    venueAlias.set(from, to);
+  };
+  const pushTo = (m, key, id) => { if (!m.has(key)) m.set(key, []); m.get(key).push(id); };
+  for (const v of venues.values()) {
+    const idk = venueIdentityKey(v.name);
+    if (idk.length >= VENUE_KEY_MIN) pushTo(registryByIdentity, idk, v.id);
+  }
+  const hasPage = (nameRaw) => existsSync(path.join(ROOT, 'src', 'data', 'venues', `${makeSlug(nameRaw)}.md`));
+  const derivedIdOf = (nameRaw) => `ven_derived_${makeSlug(nameRaw).slice(0, 40)}`;
+  // derived 場館改用另一個寫法當名稱：id／slug 跟著換，已解析到舊 id 的全部改指新 id
+  const rekeyDerived = (v, best) => {
+    const newId = derivedIdOf(best.nameRaw);
+    if (newId === v.id || venues.has(newId)) return;
+    const oldId = v.id;
+    venues.delete(oldId);
+    Object.assign(v, { id: newId, slug: makeSlug(best.nameRaw), name: best.nameRaw });
+    venues.set(newId, v);
+    for (const r of resolution.values()) if (r.venueId === oldId) r.venueId = newId;
+    for (const ids of byNormName.values()) { const i = ids.indexOf(oldId); if (i >= 0) ids[i] = newId; }
+    for (const ids of derivedByIdentity.values()) { const i = ids.indexOf(oldId); if (i >= 0) ids[i] = newId; }
+    derivedMembers.set(newId, derivedMembers.get(oldId));
+    derivedMembers.delete(oldId);
+    venueAlias.delete(newId);
+    setAlias(oldId, newId);
+    for (const m of derivedMembers.get(newId)) {
+      const r = resolution.get(m.k);
+      Object.assign(r, m === best
+        ? { method: 'derived', confidence: 0.9 }
+        : { method: 'same-place', confidence: 0.85 });
+    }
+  };
 
   for (const [k, e] of [...seen].sort((a, b) => b[1].sessions - a[1].sessions)) {
     if (rejected.has(e.nameRaw)) {
@@ -428,7 +545,42 @@ async function main() {
       continue;
     }
     const c0 = e.coords[0];
-    const id = `ven_derived_${makeSlug(e.nameRaw).slice(0, 40)}`;
+    const place = { city: e.city, address: e.address, lat: c0?.lat, lng: c0?.lng };
+    const idk = venueIdentityKey(e.nameRaw);
+    if (idk.length >= VENUE_KEY_MIN) {
+      // 名錄裡已經有這個地方，只是寫法不同 → 併進名錄場館，不另長一頁
+      const reg = (registryByIdentity.get(idk) ?? []).filter((id) => sameVenuePlace(place, venues.get(id)));
+      const pickReg = reg.length === 1 ? reg[0] : reg.length > 1 ? disambiguate(reg) : null;
+      if (pickReg) {
+        const v = venues.get(pickReg);
+        // 名錄沒給座標的，用活動資料的補上，建築分群才不會漏掉它
+        if (v.lat == null && c0) { v.lat = c0.lat; v.lng = c0.lng; }
+        (v.mergedFrom ??= new Set()).add(makeSlug(e.nameRaw));
+        setAlias(derivedIdOf(e.nameRaw), pickReg);
+        resolution.set(k, { venueId: pickReg, state: 'resolved', method: 'same-place', confidence: 0.85 });
+        samePlaceCount += 1;
+        continue;
+      }
+      // 別的來源已經用另一個寫法長出這個場館 → 併進去
+      const der = (derivedByIdentity.get(idk) ?? []).filter((id) => sameVenuePlace(place, venues.get(id)));
+      if (der.length === 1) {
+        const v = venues.get(der[0]);
+        v.sessionCount += e.sessions;
+        v.address ??= e.address;
+        v.addressPrecision ??= e.addressPrecision;
+        v.district ??= e.district;
+        if (v.lat == null && c0) { v.lat = c0.lat; v.lng = c0.lng; }
+        const member = { k, nameRaw: e.nameRaw, sessions: e.sessions };
+        derivedMembers.get(v.id).push(member);
+        resolution.set(k, { venueId: v.id, state: 'resolved', method: 'same-place', confidence: 0.85 });
+        indexName(e.nameRaw, v.id);
+        setAlias(derivedIdOf(e.nameRaw), v.id);
+        rekeyDerived(v, preferredVenueName(derivedMembers.get(v.id), hasPage));
+        samePlaceCount += 1;
+        continue;
+      }
+    }
+    const id = derivedIdOf(e.nameRaw);
     const v = {
       id, slug: makeSlug(e.nameRaw), origin: 'derived',
       name: e.nameRaw, city: e.city, district: e.district,
@@ -438,6 +590,8 @@ async function main() {
     venues.set(id, v);
     indexName(e.nameRaw, id);
     resolution.set(k, { venueId: id, state: 'resolved', method: 'derived', confidence: 0.9 });
+    derivedMembers.set(id, [{ k, nameRaw: e.nameRaw, sessions: e.sessions }]);
+    if (idk.length >= VENUE_KEY_MIN) pushTo(derivedByIdentity, idk, id);
     derivedCount += 1;
   }
 
@@ -567,7 +721,8 @@ async function main() {
 
   // 文化資產 ↔ 場館（見 matchHeritageSites）。人工排除記在 overrides/heritage-venues.json。
   const siteOverrides = await readJson(path.join(OVERRIDES_DIR, 'heritage-venues.json'), {});
-  const siteReject = new Set((siteOverrides.reject ?? []).map((x) => `${x.heritage}|${x.venue}`));
+  const canonVenue = (id) => venueAlias.get(id) ?? id;
+  const siteReject = new Set((siteOverrides.reject ?? []).map((x) => `${x.heritage}|${canonVenue(x.venue)}`));
   const heritages = [];
   for (const c of clusters) {
     if (c.entityKind !== 'heritage') continue;
@@ -582,9 +737,10 @@ async function main() {
   }
   const heritageName = new Map(heritages.map((h) => [h.id, h.name]));
   // 人工 link 優先：被 link 的場館不再自動比對。文資或場館已經不存在的 link 略過（資料重建後 id 會留著）
-  const linked = (siteOverrides.link ?? [])
-    .filter((x) => heritageName.has(x.heritage) && venues.has(x.venue))
-    .map((x) => ({ heritageId: x.heritage, venueId: x.venue, method: 'manual', confidence: 1.0 }));
+  const linked = [...new Map((siteOverrides.link ?? [])
+    .map((x) => ({ heritageId: x.heritage, venueId: canonVenue(x.venue), method: 'manual', confidence: 1.0 }))
+    .filter((x) => heritageName.has(x.heritageId) && venues.has(x.venueId))
+    .map((x) => [`${x.heritageId}|${x.venueId}`, x])).values()];
   const linkedVenues = new Set(linked.map((x) => x.venueId));
   const sites = [
     ...linked,
@@ -608,7 +764,7 @@ async function main() {
     s.total += 1;
     if (e.state === 'resolved') s.resolved += 1;
   }
-  console.log(`場館 ${venues.size}（名錄 ${registryCount} ＋ 活動長出 ${derivedCount}）`);
+  console.log(`場館 ${venues.size}（名錄 ${registryCount} ＋ 活動長出 ${derivedCount}）；同一地點的另一種寫法併入 ${samePlaceCount}`);
   console.log(`建築 ${finalBuildings.length}，其中 ${multiHall.length} 棟是多廳共用，涵蓋 ${multiHall.reduce((a, b) => a + b.venueIds.length, 0)} 個廳`);
   console.log(`邊 ${relations.length}`);
   for (const [p, s] of [...byPred].sort((a, b) => b[1].total - a[1].total)) {
@@ -654,6 +810,14 @@ async function main() {
       payload: { buildingId: b.id, halls: b.venueIds.map((v) => venues.get(v).name), lat: b.lat, lng: b.lng },
       suggested: 'name', status: 'open', decidedAt: null,
     });
+  }
+
+  // mergedFrom：併進這個場館的其他寫法（它們原本各自的頁 slug）。
+  // 那些頁被刪時，redirects.mjs 靠這個欄位把舊網址轉到這裡，不必猜同棟哪個廳。
+  for (const v of venues.values()) {
+    const others = (derivedMembers.get(v.id) ?? []).filter((m) => m.nameRaw !== v.name).map((m) => makeSlug(m.nameRaw));
+    const all = [...(v.mergedFrom ?? []), ...others];
+    if (all.length) v.mergedFrom = [...new Set(all)].sort();
   }
 
   await mkdir(path.join(ROOT, 'data'), { recursive: true });

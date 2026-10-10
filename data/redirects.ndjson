@@ -3,6 +3,9 @@
 {"from":"/event/曙光與夜鳴林育丞姞馨鋼琴獨奏會","to":"/event/2026林育丞姞馨鋼琴獨奏會–曙光與夜鳴","reason":"merged","at":"2026-09-27"}
 {"from":"/event/米特動物樂園Do-Re-Mi-喜咧兜-2","to":"/event/米特動物樂園Do-Re-Mi-喜咧兜","reason":"merged","at":"2026-09-27"}
 {"from":"/event/米特動物樂園Do-Re-Mi-喜咧兜-3","to":"/event/米特動物樂園Do-Re-Mi-喜咧兜","reason":"merged","at":"2026-09-27"}
+{"from":"/venue/台中中興大學惠蓀堂","to":"/venue/國立中興大學惠蓀堂","reason":"merged","at":"2026-10-10"}
+{"from":"/venue/台北國際會議中心大會堂","to":"/venue/臺北國際會議中心-大會堂","reason":"same-name","at":"2026-10-10"}
+{"from":"/venue/國立台灣交響樂團演奏廳","to":"/venue/國立臺灣交響樂團演奏廳","reason":"same-name","at":"2026-10-10"}
 {"from":"/venue/國立臺灣博物館本館3樓自然教室-名額剩-10-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-30"}
 {"from":"/venue/國立臺灣博物館本館3樓自然教室-名額剩-2-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-09-27"}
 {"from":"/venue/國立臺灣博物館本館3樓自然教室-名額剩-3-名","to":"/venue/國立臺灣博物館","reason":"same-building","at":"2026-10-10"}
@@ -33,6 +36,12 @@
 {"from":"/venue/新北市三重區綜合體育館二樓演藝廳","to":"/city/新北市","reason":"city","at":"2026-09-27"}
 {"from":"/venue/聽見蟾蜍山-夜行山城-×-生態走讀-×-聲音採集","to":"/venue/周末主題活動-蟾蜍山煥民新村","reason":"same-building","at":"2026-10-04"}
 {"from":"/venue/臺中市政府文化局中山堂","to":"/city/臺中市","reason":"city","at":"2026-09-27"}
+{"from":"/venue/臺北市中山堂中正廳","to":"/venue/中山堂-中正廳","reason":"merged","at":"2026-10-10"}
+{"from":"/venue/臺北市中山堂光復廳","to":"/venue/中山堂光復廳","reason":"merged","at":"2026-10-10"}
+{"from":"/venue/臺南市奇美博物館","to":"/venue/奇美博物館","reason":"merged","at":"2026-10-10"}
+{"from":"/venue/臺南市總爺藝文中心","to":"/venue/總爺藝文中心","reason":"merged","at":"2026-10-10"}
 {"from":"/venue/誠品電影院A廳","to":"/venue/松山文創園區-2-3-4-號倉庫","reason":"same-building","at":"2026-09-27"}
 {"from":"/venue/週末主題活動-北投中心新村","to":"/city/臺北市","reason":"city","at":"2026-09-27"}
 {"from":"/venue/陶藝手作的聲音茶席-用陶做聲音-✕-茶席體驗","to":"/venue/周末主題活動-蟾蜍山煥民新村","reason":"same-building","at":"2026-10-05"}
+{"from":"/venue/高雄兒童美術館","to":"/venue/兒童美術館","reason":"merged","at":"2026-10-10"}
+{"from":"/venue/高雄市駁二藝術特區","to":"/venue/駁二藝術特區","reason":"merged","at":"2026-10-10"}

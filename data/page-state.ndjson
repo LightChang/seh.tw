@@ -9756,8 +9756,8 @@
 {"path":"/venue/中屯日落餘輝","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/中屯風車","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/中山分館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/中山堂-中正廳","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/中山堂光復廳","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
+{"path":"/venue/中山堂-中正廳","qualityScore":8,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
+{"path":"/venue/中山堂光復廳","qualityScore":7,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
 {"path":"/venue/中山堂廣場","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/中山大學-教育推廣01","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/中山大學-教育推廣02","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -10145,7 +10145,7 @@
 {"path":"/venue/兌換券","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/兒時的回憶─大象溜滑梯","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/兒童科學館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/兒童美術館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
+{"path":"/venue/兒童美術館","qualityScore":5,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
 {"path":"/venue/兔吉──粉紅狂想曲","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/兔同鴨講","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/兔子流域","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -10678,7 +10678,6 @@
 {"path":"/venue/可能存在的遊樂園-CollaPlay","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台中iFG遠雄廣場威秀影城第三廳","qualityScore":7.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/台中iFG遠雄廣場威秀影城第二廳","qualityScore":6.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
-{"path":"/venue/台中中興大學惠蓀堂","qualityScore":4.5,"indexable":1,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台中市立圖書館深波分館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台北101廣場","qualityScore":0.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台北之家光點台北","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -10686,7 +10685,6 @@
 {"path":"/venue/台北偶戲館","qualityScore":7,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/台北南港展覽館一館四樓","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台北善導寺教育大樓","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/台北國際會議中心大會堂","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台北好日麗2.0—2022中山好融異藝術計畫","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台北市市定古蹟撫臺街洋樓","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/台北市羅斯福路五段214號2樓-捷運萬隆站四號出口右轉上二樓","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -11071,7 +11069,6 @@
 {"path":"/venue/國立公共資訊圖書館黎明分館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/國立台北大學圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/國立台東大學圖書資訊館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/國立台灣交響樂團演奏廳","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/國立台灣大學社會科學院辜振甫先生紀念圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/國立台灣工藝研究所陳列館","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/國立嘉義大學新民校區國際會議廳","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -11189,7 +11186,7 @@
 {"path":"/venue/國立臺北藝術大學關渡美術館","qualityScore":5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/國立臺北藝術大學音樂廳","qualityScore":6.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/國立臺南大學雅音樓音樂廳","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/國立臺灣交響樂團演奏廳","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
+{"path":"/venue/國立臺灣交響樂團演奏廳","qualityScore":6.5,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
 {"path":"/venue/國立臺灣博物館","qualityScore":5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/國立臺灣博物館-南門館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/國立臺灣博物館-古生物館","qualityScore":5,"indexable":1,"qualifiedSince":"2026-09-29","computedAt":"2026-10-10"}
@@ -16473,7 +16470,7 @@
 {"path":"/venue/縱橫山海","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/縱觀寰宇","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/縱谷之晨-Morning-in-the-Valley","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/總爺藝文中心","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
+{"path":"/venue/總爺藝文中心","qualityScore":5,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
 {"path":"/venue/總爺藝文中心https-tyart.tnc.gov.tw-index.php-inter-program-period-real-id-261","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/總館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/總館-2","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -16927,14 +16924,12 @@
 {"path":"/venue/臺北偶戲館2樓展場舞台","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北傳奇","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北國家音樂廳","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/臺北國際會議中心-大會堂","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
+{"path":"/venue/臺北國際會議中心-大會堂","qualityScore":5,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
 {"path":"/venue/臺北天文館","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北尋寶隊","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北小巨蛋","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北巴赫廳","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北市","qualityScore":2.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/臺北市中山堂中正廳","qualityScore":7.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
-{"path":"/venue/臺北市中山堂光復廳","qualityScore":6.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/臺北市中山堂廣場","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北市中山堂臺北書院","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺北市兒童新樂園","qualityScore":0.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -17123,7 +17118,6 @@
 {"path":"/venue/臺南市善化區圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市大內區圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市大新國小公共藝術教育推廣案","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/臺南市奇美博物館","qualityScore":5.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/臺南市學甲區圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市安南區土城圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市安南區安南圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -17164,7 +17158,6 @@
 {"path":"/venue/臺南市立圖書館新總館6F哇劇場","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市立新營文化中心圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市立許石音樂圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/臺南市總爺藝文中心","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市美術館","qualityScore":8,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/臺南市臺江文化中心圖書館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/臺南市蕭壟兒童圖書館","qualityScore":4,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -19461,7 +19454,7 @@
 {"path":"/venue/馳風巨輪","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/馴服野獸","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/駁二正港小劇場","qualityScore":6.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
-{"path":"/venue/駁二藝術特區","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
+{"path":"/venue/駁二藝術特區","qualityScore":5,"indexable":0,"qualifiedSince":"2026-10-10","computedAt":"2026-10-10"}
 {"path":"/venue/駐竹‧喜蟲天降A","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/駐足","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/駕駛艙","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -19490,7 +19483,6 @@
 {"path":"/venue/高雄中山堂劇場","qualityScore":6.5,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/高雄佛光山佛陀紀念館-2F佛光藝廊","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄兒童玩具圖書館","qualityScore":3,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/高雄兒童美術館","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄原住民故事館-原住民聚會所","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄同學農場","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄國家體育場〔2009世運會主場館〕","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
@@ -19612,7 +19604,6 @@
 {"path":"/venue/高雄市電影館","qualityScore":8,"indexable":1,"qualifiedSince":"2026-09-13","computedAt":"2026-10-10"}
 {"path":"/venue/高雄市音樂館","qualityScore":4.5,"indexable":1,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄市音樂館演奏廳","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
-{"path":"/venue/高雄市駁二藝術特區","qualityScore":4.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄市鼓山區哨船街32號","qualityScore":3.5,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄市鼓山輪渡站","qualityScore":2,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}
 {"path":"/venue/高雄心境","qualityScore":1,"indexable":0,"qualifiedSince":null,"computedAt":"2026-10-10"}

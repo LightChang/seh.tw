@@ -19,8 +19,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0431329
     lng: 121.5101046
-    venueId: "ven_derived_臺北市中山堂光復廳"
-    venueSlug: "臺北市中山堂光復廳"
+    venueId: "ent_taipei-culture-venues_2"
+    venueSlug: "中山堂光復廳"
   - startAt: "2026-10-14T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-14T20:45:00+08:00"
@@ -32,8 +32,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0431329
     lng: 121.5101046
-    venueId: "ven_derived_臺北市中山堂光復廳"
-    venueSlug: "臺北市中山堂光復廳"
+    venueId: "ent_taipei-culture-venues_2"
+    venueSlug: "中山堂光復廳"
   - startAt: "2026-10-15T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-15T20:45:00+08:00"
@@ -45,8 +45,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0431329
     lng: 121.5101046
-    venueId: "ven_derived_臺北市中山堂光復廳"
-    venueSlug: "臺北市中山堂光復廳"
+    venueId: "ent_taipei-culture-venues_2"
+    venueSlug: "中山堂光復廳"
 sources: 
   - id: "moc-events"
     recordId: "6a45486026b32427d060406b"

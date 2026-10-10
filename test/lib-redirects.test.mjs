@@ -41,3 +41,13 @@ test('場館：同 id → 同名 → 同一棟建築 → 縣市頁，接手的�
   assert.equal(successorOf('venue', { ...f, buildingId: undefined }, { clusters: [], venues, live }).to, '/city/臺北市');
   assert.equal(successorOf('venue', { ...f, buildingId: undefined, city: undefined }, { clusters: [], venues, live }).to, '/venues');
 });
+
+test('場館：同一場館的另一種寫法被併掉，轉到記著它的那頁（不轉同棟別的廳）', () => {
+  const f = { venueId: 'ven_derived_臺北市中山堂中正廳', slug: '臺北市中山堂中正廳', name: '臺北市中山堂中正廳', buildingId: 'bld_1', city: '臺北市', eventClusterIds: [] };
+  const venues = [
+    { id: 'ent_2', slug: '中山堂光復廳', name: '中山堂光復廳', buildingId: 'bld_1', eventCount: 99 },
+    { id: 'ent_1', slug: '中山堂-中正廳', name: '中山堂-中正廳', buildingId: 'bld_1', eventCount: 3, mergedFrom: ['臺北市中山堂中正廳'] },
+  ];
+  const live = new Set(['/venue/中山堂光復廳', '/venue/中山堂-中正廳']);
+  assert.deepEqual(successorOf('venue', f, { clusters: [], venues, live }), { to: '/venue/中山堂-中正廳', reason: 'merged' });
+});

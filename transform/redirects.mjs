@@ -61,6 +61,9 @@ export function successorOf(kind, f, { clusters, venues, live }) {
     if (same) return { to: `/venue/${same.slug}`, reason: 'renamed' };
     const byName = venues.find((v) => norm(v.name) === norm(f.name) && ok(`/venue/${v.slug}`));
     if (byName) return { to: `/venue/${byName.slug}`, reason: 'same-name' };
+    // 同一場館的另一種寫法被併掉了（resolve-relations 的 same-place，記在 mergedFrom）
+    const absorbed = venues.find((v) => (v.mergedFrom ?? []).includes(f.slug) && ok(`/venue/${v.slug}`));
+    if (absorbed) return { to: `/venue/${absorbed.slug}`, reason: 'merged' };
     // 衍生場館（活動資料裡的地點字串）沒有活動掛著就不出頁；同一棟建築的場館接手
     const inBuilding = f.buildingId && venues
       .filter((v) => v.buildingId === f.buildingId && ok(`/venue/${v.slug}`))

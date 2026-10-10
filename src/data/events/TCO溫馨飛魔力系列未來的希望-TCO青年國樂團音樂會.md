@@ -23,8 +23,8 @@ sessions:
     addressPrecision: "district"
     lat: 25.043
     lng: 121.5102
-    venueId: "ven_derived_臺北市中山堂中正廳"
-    venueSlug: "臺北市中山堂中正廳"
+    venueId: "ent_taipei-culture-venues_1"
+    venueSlug: "中山堂-中正廳"
 sources: 
   - id: "taipei-culture-events"
     recordId: "7387f1ed-786c-4eb3-8515-6e257a17c25b"
