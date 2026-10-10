@@ -28,8 +28,17 @@ const title = city
   ? `${year} ${place}${group.label}時間表（每日更新）`
   : `${year} ${group.label}時間表${topCities.length ? `：${topCities.join('、')}…` : ''}（每日更新）`;
 const first = upcoming[0];
-const description = `${year} 年${city || '全台'}的${group.label}共 ${total} 個，還沒結束的 ${upcoming.length} 個`
-  + (first ? `，最近一場是 ${spanText(first, year)}《${first.title}》` : '') + '。表格列日期、場地、城市與是否免費。';
+// 懸崖帶卡點頁（金門演唱會曝光167、點擊3、第7.05名；桃園演唱會曝光53、點擊1、第6.6名）：
+// 摘要只講「最近一場」，那一場剛好是冷門講座或小場，搜尋者看不出這頁有沒有他要的演出。
+// 這兩頁改列接下來三場的名稱與日期（括號裡的地點備註去掉）；其他縣市頁維持原樣。
+const LINEUP_DESC = new Set([`2026/演唱會/金門縣`, `2026/演唱會/桃園市`]);
+const lineup = LINEUP_DESC.has(`${year}/${group.key}/${city}`)
+  ? upcoming.slice(0, 3).map((e) => `${e.title.replace(/[（(]地點[：:][^）)]*[）)]/, '').replace(/^.*協會：/, '')}（${spanText(e, year).replace(/（.）/, '')}）`)
+  : [];
+const description = lineup.length
+  ? `${year} ${place}${group.label}還沒結束的有 ${upcoming.length} 場，接下來是 ${lineup.join('、')}。表格列日期、場地與是否免費。`
+  : `${year} 年${city || '全台'}的${group.label}共 ${total} 個，還沒結束的 ${upcoming.length} 個`
+    + (first ? `，最近一場是 ${spanText(first, year)}《${first.title}》` : '') + '。表格列日期、場地、城市與是否免費。';
 const trail = crumbTrail(city ? [{ name: `${year} ${group.label}`, href: `/year/${year}/${group.key}` }] : [], `${year} ${place}${group.label}時間表`);
 const ld = eventItemList(upcoming.slice(0, 100), `${year} ${city || '台灣'}${group.label}`);
 // 已過的年份整頁只剩歷史，不請搜尋引擎收錄（網址照留）
