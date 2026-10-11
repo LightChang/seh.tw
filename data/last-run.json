@@ -1,16 +1,25 @@
 {
-  "at": "2026-10-11T04:10:02+08:00",
-  "attempted": 21,
+  "at": "2026-10-12T04:10:02+08:00",
+  "attempted": 48,
   "changed": [
-    "moc-emap-poi",
+    "kmfa-events",
+    "moca-taipei-events",
+    "national-public-libraries",
+    "ncfta-activities",
+    "nstm-activities",
+    "ntmofa-events",
     "ntt-programs",
+    "taipei-culture-events",
     "taipei-gov-hot-events",
     "taoyuan-tourism-events",
+    "tnam-events",
     "twtourism-events",
-    "weiwuying-programs"
+    "weiwuying-programs",
+    "moc-emap-poi"
   ],
   "failed": [
     "npm-events",
+    "moc-buskers",
     "moc-events"
   ],
   "alerting": [
