@@ -35,6 +35,10 @@ const LINEUP_DESC = new Set([`2026/演唱會/金門縣`, `2026/演唱會/桃園�
 const lineup = LINEUP_DESC.has(`${year}/${group.key}/${city}`)
   ? upcoming.slice(0, 3).map((e) => `${e.title.replace(/[（(]地點[：:][^）)]*[）)]/, '').replace(/^.*協會：/, '')}（${spanText(e, year).replace(/（.）/, '')}）`)
   : [];
+// 懸崖帶卡點頁（金門、宜蘭演唱會排名原地踏步，CTR遠低於頻道均值）：兩縣的 2027 版頁面還沒建，
+// 先連到已存在的全國 2027 總覽，不編造兩縣明年的資料。
+const NEXT_YEAR_FALLBACK = new Set([`2026/演唱會/金門縣`, `2026/演唱會/宜蘭縣`]);
+const showNextYear = NEXT_YEAR_FALLBACK.has(`${year}/${group.key}/${city}`);
 const description = lineup.length
   ? `${year} ${place}${group.label}還沒結束的有 ${upcoming.length} 場，接下來是 ${lineup.join('、')}。表格列日期、場地與是否免費。`
   : `${year} 年${city || '全台'}的${group.label}共 ${total} 個，還沒結束的 ${upcoming.length} 個`
@@ -58,6 +62,7 @@ const monthName = (ym) => `${+ym.slice(5)} 月`;
         {first ? <>接下來最近的是 {spanText(first, year)} 在{first.venue || first.city}的《{first.title}》。</> : '今年的場次都已結束。'}
         {group.key === '演唱會' && '流行演唱會之外也列了音樂會與樂團演出。'}
         清單每天依各機關公開資料重算，改期或新增會在隔天反映。</p>
+      {showNextYear && <p class="lead"><a href="/year/2027/演唱會">2027 年演唱會時間表</a>已經上線，{place}的 2027 場次還沒有資料，可以先看全國版。</p>}
     </header>
 
 
