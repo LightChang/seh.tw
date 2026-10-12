@@ -9,7 +9,19 @@ description: |-
   
   本講座邀請來自不同藝術節、劇院與創作支持機構的策展人與藝術領袖，共同探討當代策展如何回應不斷變動的身體觀，以及當作品逐漸游移於舞蹈與非舞蹈之間時，藝術機構如何重新定義表演藝術的未來。透過多元觀點的交鋒，我們將重新思考：究竟是身體成就了舞蹈，還是舞蹈正在重新發明身體？
   
-  ※主持人與完整講者陣容、報名方式，敬請期待後續公告。
+   講者
+  
+   Cathy LEVY｜美國「雅各枕舞蹈節」 國際顧問、英國FABRIC Dance 國際顧問
+  
+   CHONG Tze-chien（張子健）｜新加坡國際藝術節（SIFA）藝術總監
+  
+   周寬柔｜臺灣編舞家、身體創作者
+  
+   KWOK Joon-yee｜澳洲澳亞藝術節（OzAsia Festival）藝術總監
+  
+   Marco GERRIS ｜荷蘭 ISH Dance Collective 創辦人暨藝術總監
+  
+   Rob BINET ｜加拿大多倫多「北方舞蹈秋天」 藝術總監
 sessions: 
   - startAt: "2026-11-29T13:00:00+08:00"
     granularity: "datetime"

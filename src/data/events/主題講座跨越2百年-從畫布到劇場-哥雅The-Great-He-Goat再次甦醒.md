@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_ntt-programs_c-2V1kYBDwHdl"
 slug: "主題講座跨越2百年-從畫布到劇場-哥雅The-Great-He-Goat再次甦醒"
-title: "【主題講座】跨越2百年，從畫布到劇場：哥雅《The Great He-Goat》再次甦醒"
+title: "【主題講座】跨越兩百年，從畫布到劇場：哥雅《The Great He-Goat》再次甦醒"
 category: "講座"
 status: "scheduled"
 isFree: true

@@ -65,3 +65,4 @@
 {"id":"rq_cat_16","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、講座、展覽、影片欣賞、兒童活動、終身學習、成長學習、文化展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_17","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、電影、文化、影片欣賞","events":2},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_18","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"2,206","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_19","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"1,2,3,105,108,204,206,210","events":2},"suggested":"map","status":"open","decidedAt":null}
