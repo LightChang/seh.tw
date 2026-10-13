@@ -66,7 +66,7 @@ const catPages = await builtCategories();
 const has = (m, k) => built.includes(`${m} ${city} ${k}`);
 const isMonth = mode === 'month';
 const events = new Set(rows.map((d) => d.slug)).size;
-const title = isMonth ? `${city} ${sub.slice(0, 4)} 年 ${+sub.slice(5)} 月` : `${city}${sub}`;
+const title = isMonth ? `${city}${sub.slice(0, 4)}年${+sub.slice(5)}月` : `${city}${sub}`;
 
 const count = (key) => [...rows.reduce((m, d) => (d[key] ? m.set(d[key], (m.get(d[key]) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
@@ -95,7 +95,7 @@ const md = (iso) => `${+iso.slice(5, 7)}/${+iso.slice(8, 10)}`;
 const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city, href: `/city/${city}` }], title);
 ---
 <Base
-  title={`${title}有什麼文化活動｜seh`}
+  title={`${title}活動｜seh`}
   description={past
     ? `${title}的文化活動、展覽與演出，共 ${events} 個活動。這個月份已經過去。`
     : ended
