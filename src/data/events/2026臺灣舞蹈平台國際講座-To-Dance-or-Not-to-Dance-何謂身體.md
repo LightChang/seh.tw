@@ -22,6 +22,8 @@ description: |-
    Marco GERRIS ｜荷蘭 ISH Dance Collective 創辦人暨藝術總監
   
    Rob BINET ｜加拿大多倫多「北方舞蹈秋天」 藝術總監
+  
+   立即報名
 sessions: 
   - startAt: "2026-11-29T13:00:00+08:00"
     granularity: "datetime"

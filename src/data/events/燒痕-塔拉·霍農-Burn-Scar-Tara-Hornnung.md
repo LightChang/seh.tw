@@ -1,20 +1,20 @@
 ---
 clusterId: "evt_taipei-culture-events_b07ff24b4c5b6ae0"
 slug: "燒痕-塔拉·霍農-Burn-Scar-Tara-Hornnung"
-title: "燒痕-塔拉·霍農 Burn Scar - Tara Hornnung"
+title: "燒痕-塔拉·霍農 Burn Scar - Tara Hornung"
 category: "展覽"
 categoryRaw: "展覽"
 status: "scheduled"
 isFree: true
 images: 
-  - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01ztPT%2fwXanyvBRaKwYzFCeuN3reWbCeKqX7CKVrDh87zVSKrLCYyoqNh8Jyk%2bm1ZeOfIxDdTi3Yxeub2JcvndYk%3d"
+  - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01%2bdDs5h742DJSnPgCgXmt%2b4kZUcuqH%2fqV5ae409Ou7BLz0GQUTAazbtJPjrdayDn5w%3d%3d"
 organizers: 
   - nameRaw: "藝站 One Station"
     role: "master"
 description: |-
   展期：2026/10/20-11/14
   開幕座談會：2026/10/20 (二），16:00-18:00
-  藝術家：塔拉·霍農 Tara Hornnung，策展人：萬一ㄧ YiYi Wan
+  藝術家：塔拉·霍農 Tara Hornung，策展人：萬一ㄧ YiYi Wan
   
   「燒痕」是一個有關個人的創作計畫，記錄美國西南部野火後的土地恢復過程。 經歷新墨西哥州史上規模最大的火災，我們的土地被燒成了一片焦土。我們遵循土地恢復的週期，以及在私人土地上實踐災後再生修復的努力。
 sessions: 
