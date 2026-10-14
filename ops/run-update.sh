@@ -11,6 +11,10 @@
 # 鎖：與 seo-ops 的 collect／reflect／brain 及 venue-hours 共用 /tmp/seo-claude-seh.tw.lock。
 #     一天只跑一次，搶不到就等（最多 65 分，與 venue-hours 相同），不直接跳過一整天。
 # 健康檢查（筆數驟降）照舊擋：沒過就還原工作樹、不 push，等人看過再用 --force 手動跑。
+# build（只有 pnpm run build 那一步）走全機 build 輪流（2026-10-14 起）：
+#     `site-build-run seh.tw -- pnpm run -s build`，與本機其他站共用 /var/lock/site-build.lock，
+#     最久沒建置的先；查表 site-build-turns，協定在 /usr/local/lib/site-build-turn.sh 檔頭。
+#     等超過 SITE_BUILD_WAIT（預設 3600 秒）回 75：今天跳過——還原、不 push，result=build-lock-timeout。
 # log：/mnt/yao-care/seo-ops/logs/seh.tw-update.log；最後一輪結果：data/logs 不進版控，
 #      所以寫在 /mnt/yao-care/seo-ops/logs/seh.tw-update.last.json。
 set -uo pipefail
@@ -96,7 +100,14 @@ STAGE="test"
 "$NODE" --test "test/**/*.test.mjs" > /dev/null 2>&1 || { log "測試沒過，還原、不 push"; revert; exit 1; }
 
 STAGE="build"
-pnpm run -s build > /dev/null 2>&1 || { log "build 失敗，還原、不 push"; revert; exit 1; }
+/usr/local/bin/site-build-run seh.tw -- pnpm run -s build > /dev/null 2>&1
+code=$?
+if [ $code -eq 75 ]; then
+  RESULT="build-lock-timeout"
+  log "等全機 build 鎖逾時（別站在建置，查表 site-build-turns），今天跳過：還原、不 push"
+  revert; exit 1
+fi
+[ $code -eq 0 ] || { log "build 失敗，還原、不 push"; revert; exit 1; }
 STAGE="links"
 pnpm run -s links || { log "站內連結檢查沒過，還原、不 push"; revert; exit 1; }
 

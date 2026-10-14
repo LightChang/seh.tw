@@ -80,6 +80,8 @@ repo `LightChang/seh.tw`，GitHub Pages。**GitHub 不抓資料、沒有排程**
   收台灣端投遞 → 抓**這台抓得到**且到期的來源（`ops/host-skip.json` 列的 17 支整支跳過）→ pipeline →
   test／build／links → 有變更才 commit＋push main。健康檢查沒過就還原、不 push，不自動 `--force`。
   log 在 `/mnt/yao-care/seo-ops/logs/seh.tw-update.log`，最後一輪結果在同目錄 `seh.tw-update.last.json`。
+  build 那一步走全機輪流（`site-build-run seh.tw -- …`，查表 `site-build-turns`）；等超過一小時就今天跳過
+  （還原、不 push，result 記 `build-lock-timeout`）。
 - `/etc/cron.d/seh-tw-venue-hours`（來源檔 `ops/seh-tw-venue-hours.cron`），台北週一 05:30
   跑 `ops/refresh-venue-hours.sh` 重查 `overrides/venue-hours.json` 並 push main。
 
