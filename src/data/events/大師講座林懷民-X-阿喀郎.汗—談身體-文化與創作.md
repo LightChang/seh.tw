@@ -4,7 +4,8 @@ slug: "大師講座林懷民-X-阿喀郎.汗—談身體-文化與創作"
 title: "【大師講座】林懷民 X 阿喀郎．汗—談身體、文化與創作"
 category: "講座"
 status: "scheduled"
-isFree: true
+priceText: "NT$ 950"
+ticketUrl: "https://www.opentix.life/event/2100194148093235200"
 description: |-
   2027年2月，衛武營將推出阿喀郎．汗舞團的收團之作《祭憶：重生之夜》。這是阿喀郎在臺灣發表的第十一齣作品，也是阿喀郎舞團在亞洲巡演的終章。
   
@@ -89,7 +90,8 @@ sources:
     provides: 
       - "title"
       - "description"
-      - "isFree"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

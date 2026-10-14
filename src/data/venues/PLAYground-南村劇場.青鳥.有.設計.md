@@ -15,8 +15,9 @@ openingHoursSource:
   name: "文化部 iCulture 文化地圖 POI（場館/景點/文化資產）"
   url: "https://cloud.culture.tw/"
 buildingId: "bld_25.0355_121.5645"
-eventCount: 2
+eventCount: 3
 eventClusterIds: 
   - "evt_moc-events_6a14816326b3243414cccb52"
   - "evt_moc-events_6ab7fdbd26b324165c32e540"
+  - "evt_taipei-culture-events_1e528051f096b604"
 ---

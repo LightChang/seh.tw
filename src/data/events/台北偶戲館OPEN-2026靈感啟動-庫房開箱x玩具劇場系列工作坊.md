@@ -22,15 +22,15 @@ description: |-
   
   OPEN 2026靈感啟動：庫房開箱x玩具劇場系列工作坊兩個月舉辦一次的帶狀工作坊，每場關注不同創作主題，邀請大家每個月放慢腳步來到庫房、製偶教室逐步累積屬於自己的劇場小世界！
 sessions: 
-  - startAt: "2026-10-03T14:00:00+08:00"
+  - startAt: "2026-11-21T14:00:00+08:00"
     granularity: "datetime"
-    endAt: "2026-10-03T16:00:00+08:00"
+    endAt: "2026-11-21T17:00:00+08:00"
     venueNameRaw: "台北偶戲館"
     city: "臺北市"
     district: "松山區"
     addressPrecision: "district"
     lat: 25.04774
-    lng: 121.56134
+    lng: 121.56136
     venueId: "ent_moc-emap-poi_ab340230d4995e31"
     venueSlug: "台北偶戲館"
 sources: 
