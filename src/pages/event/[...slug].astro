@@ -86,6 +86,13 @@ if (ld) ld.description = metaDesc;
 const place = placeLabel(primary);
 const desc = e.description ? decodeEntities(e.description) : '';
 
+// 懸崖帶卡點頁（曝光232、點擊6、第7.06名，CTR 2.6%）：實測 GSC 查詢裡有「出場順序」
+// 「表演順序」「眾人的搖擺演出順序」，但名單在來源說明第三段，首屏看不到。
+// 名單本身就是來源說明既有的事實，只是搬到首屏，不是新增資訊。
+const ORDER_LEAD_SLUGS = new Set(['2026-Open-House眾人的搖擺']);
+const orderMatch = ORDER_LEAD_SLUGS.has(e.slug) && /出場順序排列）\s*\n+([\s\S]+?)\n+\s*演出者介紹/.exec(desc);
+const orderLead = orderMatch ? `演出順序：${orderMatch[1].replace(/\n+/g, '；').replace(/\s*／\s*/g, '、').trim()}。` : '';
+
 const srcUrl = e.sources.find((x) => x.url)?.url;
 // 來源給的購票／報名連結（JSON-LD 的 offers.url 用同一個），沒有就不顯示，不自己找
 const ticket = ticketLink(e.ticketUrl, e.isFree);
@@ -154,6 +161,7 @@ const trail = crumbTrail([
       {extraLead && <p class="lead">{extraLead}</p>}
       {multiVenueLead && <p class="lead">{multiVenueLead}</p>}
       {addrLead && <p class="lead">{addrLead}</p>}
+      {orderLead && <p class="lead">{orderLead}</p>}
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
