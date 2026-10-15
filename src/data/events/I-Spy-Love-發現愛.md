@@ -6,8 +6,8 @@ category: "展覽"
 categoryRaw: "策劃展"
 status: "scheduled"
 images: 
-  - url: "https://www.tfam.museum/File/Exhibition/Main/816/2026090411091875850658.jpg"
-  - url: "https://www.tfam.museum/File/Exhibition/Main/816/2026090411091853770247.jpg"
+  - url: "https://www.tfam.museum/File/Exhibition/Main/816/2026101509393724760044.jpg"
+  - url: "https://www.tfam.museum/File/Exhibition/Main/816/2026101509374361660109.jpg"
 description: |-
   愛，看不見、摸不到，卻一直存在我們的生活裡。《I Spy Love，發現愛》從心跳、引力、記憶、距離、身體與時間出發，透過四位藝術家的創作，邀請觀眾重新觀看關係如何形成、延續與被感知。
   

@@ -1,0 +1,32 @@
+---
+clusterId: "evt_ncl-events_0Q265531732598730685"
+slug: "線上專題演講-美國前公共圖書館協會會長Dr.-Brandy-McNeil"
+title: "線上專題演講-美國前公共圖書館協會會長Dr. Brandy McNeil"
+category: "講座"
+categoryRaw: "專題講座"
+status: "scheduled"
+description: "線上專題演講-美國前公共圖書館協會會長Dr. Brandy McNeil,線上專題演講：「重塑可能：圖書館作為全球影響力之催化劑」（Reimagining What's Possible: Libraries as Catalysts for Global Impact）演講內容：聚焦於圖書館的轉型..."
+sessions: 
+  - startAt: "2026-10-12"
+    granularity: "date"
+    endAt: "2026-11-09"
+    venueNameRaw: "國家圖書館"
+    city: "臺北市"
+    district: "中正區"
+    address: "臺北市中正區中山南路20號"
+    addressPrecision: "street"
+    venueId: "ven_derived_國家圖書館"
+    venueSlug: "國家圖書館"
+sources: 
+  - id: "ncl-events"
+    recordId: "0Q265531732598730685"
+    sourceName: "國家圖書館 活動報名系統"
+    url: "https://web.ncl.edu.tw/event/FMEvents/Cont?SId=0Q265531732598730685"
+    provides: 
+      - "title"
+      - "description"
+      - "categoryRaw"
+      - "sessions"
+      - "sourceUrl"
+      - "sourceUpdatedAt"
+---

@@ -213,11 +213,18 @@ sources:
     rejected: 
       title: "【衛武營小時光】韓國傳統說唱故事《水底王國，彼岸之歌》"
       description: |-
-        「魅力十足&hellip;&hellip;機智幽默、溫和有趣，聽見傳統故事如此精彩的演繹，真是一大樂事。」——Voice Magazine
+        ►【圖解故事】水宮歌 Sugungga（韓國木聲劇團製作）
         
          
         
-         「一場引人入勝的表演&hellip;&hellip;令人愉悅、充滿創意，精彩絕倫。」——T
+         
+         
+         
+         「魅力十足&hellip;&hellip;機智幽默、溫和有趣，聽見傳統故事如此精彩的演繹，真是一大樂事。」——Voice Magazine
+        
+         
+        
+         「一場引
       priceText: "NT$ 300、600"
       ticketUrl: "https://www.opentix.life/event/2043627257385357312"
       sessions: 
@@ -231,7 +238,7 @@ sources:
           address: "高雄市鳳山區三多一路1號"
           addressPrecision: "street"
       sourceUrl: "https://www.npac-weiwuying.org/programs/69af9180738aff0007321694"
-      sourceUpdatedAt: "2026-06-30T11:34:24+08:00"
+      sourceUpdatedAt: "2026-10-15T11:04:09+08:00"
   - id: "weiwuying-programs"
     recordId: "69af96e2738aff000732176e"
     sourceName: "衛武營國家藝術文化中心 節目資料"
