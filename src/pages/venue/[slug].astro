@@ -135,8 +135,12 @@ const aliasText = aliases.length ? `（又稱${aliases.slice(0, 3).join('、')}�
 const catSummary = catGroups.slice(0, 4).map(([c, list]) => `${c} ${list.length} 場`).join('、');
 // 場館全名帶園區前綴時，實際搜尋常只打子場地名（如「蓬萊B4倉庫」不含「高雄駁二藝術特區」），
 // title 用短名把它帶到前面，H1／描述仍用全名不縮短。
+// 懸崖帶卡點（曝光67、點擊1、第7.4名，CTR 1.5%）：查詢打的是舊稱「基隆文化中心演藝廳」，
+// 現名「基隆表演藝術中心演藝廳」已在 overrides/venue-names.json 列為別名、頁面「又稱」已顯示，
+// 但 <title> 還沒帶到——把舊稱搬到 title 最前面，跟查詢字對起來，H1 仍用現名。
 const SHORT_TITLE_NAMES = new Map([
   ['高雄駁二藝術特區-蓬萊區B4倉庫', '蓬萊區B4倉庫（高雄駁二）'],
+  ['基隆表演藝術中心演藝廳', '基隆文化中心演藝廳（基隆表演藝術中心）'],
 ]);
 const titleName = SHORT_TITLE_NAMES.get(v.slug) ?? v.name;
 const title = isPerform
