@@ -5596,6 +5596,7 @@
 {"clusterId":"evt_nstm-activities_a377f522c4b2ee84","kind":"event","slug":"原民科學大富翁-第8梯","assignedAt":"2026-09-27"}
 {"clusterId":"evt_nstm-activities_a53a2acd28443a4a","kind":"event","slug":"AI美感裁縫設計2027寒假營-第2梯-2","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_a5bfab232e987487","kind":"event","slug":"智農奇技體驗課程-僅1梯-6","assignedAt":"2026-10-05"}
+{"clusterId":"evt_nstm-activities_a81926b710b72191","kind":"event","slug":"群蚊飛舞-閃閃閃閃視網膜剝離-僅1梯-3","assignedAt":"2026-10-17"}
 {"clusterId":"evt_nstm-activities_a81ff482a02d68e6","kind":"event","slug":"動手玩創藝-星球鈕扣壓克力彩繪-僅1梯-2","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_a84ee69b89d35035","kind":"event","slug":"月圓夢甜宏南月燈工作坊-僅1梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_aae7d6b1aaec8e7b","kind":"event","slug":"水杯幻影科學節限定優惠-第2梯","assignedAt":"2026-09-27"}
@@ -6206,6 +6207,7 @@
 {"clusterId":"evt_ntt-programs_c-lh6nVYcD4Zo","kind":"event","slug":"星際效應電影音樂會","assignedAt":"2026-10-02"}
 {"clusterId":"evt_ntt-programs_c-LqfDi3g7Z4o","kind":"event","slug":"2026-NTT遇見巨人—2025-2026歌劇院駐館藝術家賴奇霞-Open-Studio-共振進行中","assignedAt":"2026-09-16"}
 {"clusterId":"evt_ntt-programs_c-MK1iTAudaQD","kind":"event","slug":"2026-NTT劇院展開-✕-大兵市集蓬萊留聲機","assignedAt":"2026-09-13"}
+{"clusterId":"evt_ntt-programs_c-mvZ0iegfxaH","kind":"event","slug":"琴心相映王宥鈞╳王秉諺-鋼琴二重奏音樂會","assignedAt":"2026-10-17"}
 {"clusterId":"evt_ntt-programs_c-NIh2qmoeYT7","kind":"event","slug":"2026-SMIMC萬聖節主題營-臺中場限定","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-nPjai2Bd6YI","kind":"event","slug":"時刻在藝起-NTT10週年回顧展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-NV3hD0Erg92","kind":"event","slug":"水藍-蔣啟真與國臺交","assignedAt":"2026-09-13"}
@@ -6228,6 +6230,7 @@
 {"clusterId":"evt_ntt-programs_c-uLKIim904Tc","kind":"event","slug":"主題講座女人皆如此-莫札特的歌劇人生與人生歌劇","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-VbsZKQgfEao","kind":"event","slug":"2026詩情之聲男中音温穎傑獨唱會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-Vs3hK9axLtl","kind":"event","slug":"揭開摘星山莊稱霸清領豪宅的秘密","assignedAt":"2026-09-13"}
+{"clusterId":"evt_ntt-programs_c-VuWqTPmMp2e","kind":"event","slug":"上下游-風的餐桌","assignedAt":"2026-10-17"}
 {"clusterId":"evt_ntt-programs_c-W5BCVsL98Ka","kind":"event","slug":"南美洲列車-來到臺灣的節奏","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-WlZRMgyXcGS","kind":"event","slug":"台灣獨奏家交響樂團—2027新年音樂會","assignedAt":"2026-10-03"}
 {"clusterId":"evt_ntt-programs_c-X3eBy7TupAs","kind":"event","slug":"時刻在藝起-歌劇院10歲生日快樂-🎂✨","assignedAt":"2026-09-27"}
@@ -7234,6 +7237,7 @@
 {"clusterId":"evt_taipei-culture-events_20fdfe5907f191fa","kind":"event","slug":"ART-TAIPEI-2026-台北國際藝術博覽會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_216f9fe14542764f","kind":"event","slug":"從前從前-有家金淼寫真舘●彭啟原導演✕新版感恩分享會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_2268d8c559496101","kind":"event","slug":"身心修復式-2026故宮樂齡月","assignedAt":"2026-10-03"}
+{"clusterId":"evt_taipei-culture-events_234b6376ee4251ef","kind":"event","slug":"遠-足-E-n-S-o-k-u-_-鍾舜文-鹿向夷-雙個展","assignedAt":"2026-10-17"}
 {"clusterId":"evt_taipei-culture-events_242d595e2ccf6210","kind":"event","slug":"從前從前-繪說童話郵票特展-3","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_24f512142587636b","kind":"event","slug":"哲學講座-工作坊奧德賽你在成就人生-還是成為自己","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_250bc47a1188cd6e","kind":"event","slug":"文學週末探索班-一夜之間寫出來","assignedAt":"2026-09-13"}
@@ -7660,6 +7664,9 @@
 {"clusterId":"evt_taipei-gov-hot-events_9719190","kind":"event","slug":"萬華分館愛閱生活節系列書展—翻開一本書-開啟屬於你的質感日常","assignedAt":"2026-10-16"}
 {"clusterId":"evt_taipei-gov-hot-events_9719265","kind":"event","slug":"臺北市立圖書館萬芳民眾閱覽室廚房裡的日常魔法借閱推廣活動","assignedAt":"2026-10-15"}
 {"clusterId":"evt_taipei-gov-hot-events_9719937","kind":"event","slug":"115學年度第一學期-幼教天文師資培育","assignedAt":"2026-10-16"}
+{"clusterId":"evt_taipei-gov-hot-events_9720198","kind":"event","slug":"景新分館萬物皆有數館藏特色書展","assignedAt":"2026-10-17"}
+{"clusterId":"evt_taipei-gov-hot-events_9720199","kind":"event","slug":"景新分館多元閱讀推廣講座AI時代的真假判讀術","assignedAt":"2026-10-17"}
+{"clusterId":"evt_taipei-gov-hot-events_9720201","kind":"event","slug":"景新分館115年多元閱讀推廣工作坊真假之間-AI時代的訊息與影像查證","assignedAt":"2026-10-17"}
 {"clusterId":"evt_taoyuan-tourism-events_5230","kind":"event","slug":"2026桃園-ON-AIR-跨年晚會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6633","kind":"event","slug":"2026國際自由車環台賽-桃園市站","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6639","kind":"event","slug":"全方位職場療癒班-IP-插畫展","assignedAt":"2026-09-13"}
@@ -7728,6 +7735,8 @@
 {"clusterId":"evt_taoyuan-tourism-events_7044","kind":"event","slug":"2026桃園鐵玫瑰音樂節","assignedAt":"2026-09-27"}
 {"clusterId":"evt_taoyuan-tourism-events_7047","kind":"event","slug":"2026桃園眷村文化節一村一家人","assignedAt":"2026-09-27"}
 {"clusterId":"evt_taoyuan-tourism-events_7059","kind":"event","slug":"2026桃園客家音樂節","assignedAt":"2026-10-06"}
+{"clusterId":"evt_taoyuan-tourism-events_7097","kind":"event","slug":"2026探索北橫-搭乘北橫接駁趣・打卡集點換好禮","assignedAt":"2026-10-17"}
+{"clusterId":"evt_taoyuan-tourism-events_7099","kind":"event","slug":"2026探索北橫-北橫集好玩・兩點換好康","assignedAt":"2026-10-17"}
 {"clusterId":"evt_tfam-exhibitions_1","kind":"event","slug":"第52屆威尼斯雙年展台灣館-非域之境","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tfam-exhibitions_10","kind":"event","slug":"人體風景-陳羅克個展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tfam-exhibitions_100","kind":"event","slug":"典藏專題展-台北意象","assignedAt":"2026-09-13"}
@@ -8314,6 +8323,7 @@
 {"clusterId":"evt_tnam-events_event-743","kind":"event","slug":"隨波逐潮-流動的跨文化海洋敘事藝術家座談會","assignedAt":"2026-09-27"}
 {"clusterId":"evt_tnam-events_event-744","kind":"event","slug":"2026第一屆臺南藝術雙年展-歷史迴圈-噍吧哖歷史現場走讀創作工作坊","assignedAt":"2026-09-27"}
 {"clusterId":"evt_tnam-events_event-746","kind":"event","slug":"未來美術館×城市系列講座-第14場-步行與創造——情境主義者的方法論與透視的解構","assignedAt":"2026-09-27"}
+{"clusterId":"evt_tnam-events_event-748","kind":"event","slug":"2026第一屆臺南藝術雙年展-迴圈.超展開-當代藝術與城市社區的對話開幕論壇","assignedAt":"2026-10-17"}
 {"clusterId":"evt_tnam-events_exhibition-577","kind":"event","slug":"梅澤捨次郎—檔案中的生命軌跡-Umezawa-Sutejirou-Echoes-in-the-Archive","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tnam-events_exhibition-704","kind":"event","slug":"雙城計-臺南-×-熊本臺灣當代藝術接力展-Twin-Cities-Project-Tainan-×-Kumamoto-Taiwan-Contemporary-A","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tnam-events_exhibition-708","kind":"event","slug":"黏膩關係-內餡-縫隙-Sticky-Relationships-Filling-Fissures","assignedAt":"2026-09-13"}
@@ -8537,6 +8547,9 @@
 {"clusterId":"evt_twtourism-events_Event_376420000A_000352","kind":"event","slug":"2026-月亮什麼冬冬","assignedAt":"2026-10-07"}
 {"clusterId":"evt_twtourism-events_Event_376420000A_000353","kind":"event","slug":"2026-亞太傳統藝術節","assignedAt":"2026-10-07"}
 {"clusterId":"evt_twtourism-events_Event_376420000A_000357","kind":"event","slug":"興創村市集-豐收投投樂","assignedAt":"2026-10-07"}
+{"clusterId":"evt_twtourism-events_Event_376420000A_000359","kind":"event","slug":"興創村市集-搗蛋鬼報到","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_376420000A_000360","kind":"event","slug":"宜蘭傳藝園區-10月主題劇場嬉遊梨園","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_376420000A_000362","kind":"event","slug":"蘭陽原創館鬼混日","assignedAt":"2026-10-17"}
 {"clusterId":"evt_twtourism-events_Event_376430000A_006673","kind":"event","slug":"2026平鎮藝術季-PZ同話世界-2","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_376430000A_006675","kind":"event","slug":"2026探索北橫永續遊程活動","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_376430000A_006685","kind":"event","slug":"2027桃園跨年晚會","assignedAt":"2026-09-13"}
@@ -8545,6 +8558,8 @@
 {"clusterId":"evt_twtourism-events_Event_376430000A_006853","kind":"event","slug":"2026桃園花彩節","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_376430000A_006854","kind":"event","slug":"2026仙草嘉年華","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_376430000A_006997","kind":"event","slug":"玩北橫拿好禮遊桃園-App探索北橫打卡趣","assignedAt":"2026-09-13"}
+{"clusterId":"evt_twtourism-events_Event_376430000A_007097","kind":"event","slug":"2026探索北橫-搭乘北橫接駁趣・打卡集點換好禮-2","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_376430000A_007099","kind":"event","slug":"2026探索北橫-北橫集好玩・兩點換好康-2","assignedAt":"2026-10-17"}
 {"clusterId":"evt_twtourism-events_Event_376440000A_000001","kind":"event","slug":"新竹走走全新路線啟動-前100名入住合作旅宿可享千元補助","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_376440000A_000002","kind":"event","slug":"新竹縣觀光100亮點啟動-搭配旅遊護照與主打星月份最優惠","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_376440000A_000003","kind":"event","slug":"竹縣觀光100亮點值星月-9-10月住宿縣府加碼送2張優惠券","assignedAt":"2026-09-13"}
@@ -8938,6 +8953,11 @@
 {"clusterId":"evt_twtourism-events_Event_382000000A_004049","kind":"event","slug":"新北萬花筒-2","assignedAt":"2026-10-09"}
 {"clusterId":"evt_twtourism-events_Event_382000000A_004050","kind":"event","slug":"115年新北市國慶升旗典禮活動","assignedAt":"2026-10-09"}
 {"clusterId":"evt_twtourism-events_Event_382000000A_004051","kind":"event","slug":"2026新生地藝術節","assignedAt":"2026-10-09"}
+{"clusterId":"evt_twtourism-events_Event_382000000A_004058","kind":"event","slug":"碧潭地景裝置展-遇見小王子-漫遊碧潭間","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_382000000A_004060","kind":"event","slug":"2026中和緬甸華新街點燈文化節","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_382000000A_004061","kind":"event","slug":"2026鶯歌嘉年華","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_382000000A_004062","kind":"event","slug":"2026新北市玄天上帝文化祭","assignedAt":"2026-10-17"}
+{"clusterId":"evt_twtourism-events_Event_382000000A_004063","kind":"event","slug":"2026-樂動川端.點亮藝文廊道","assignedAt":"2026-10-17"}
 {"clusterId":"evt_twtourism-events_Event_387000000A_009666","kind":"event","slug":"探索臺中之美-引客獎勵方案","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_387000000A_009737","kind":"event","slug":"澳門航空-大玩台中憑澳門航空登機證享60-在地商家優惠","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_387000000A_009909","kind":"event","slug":"德威航空-大玩台中憑德威航空登機證-即享在地商家優惠","assignedAt":"2026-09-13"}
@@ -9310,6 +9330,7 @@
 {"clusterId":"evt_twtourism-events_Event_A15010000H_503978","kind":"event","slug":"2026南島族群婚禮-情牽大武山系列活動慢城漫戀-花環下的約定—排灣族傳統婚禮文化展演暨體驗行銷活動","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_A15010000H_503997","kind":"event","slug":"2026集集鐵道藝術觀光活動-嘻遊藝站・集集馬上趣","assignedAt":"2026-10-01"}
 {"clusterId":"evt_twtourism-events_Event_A15010000H_504016","kind":"event","slug":"2026斗南國際鐵道節斗南智慧觀光鐵道生活廊帶國際耀升計畫","assignedAt":"2026-10-13"}
+{"clusterId":"evt_twtourism-events_Event_A15010000H_504026","kind":"event","slug":"2026第二屆南投日月潭國際立槳SUP橫渡嘉年華","assignedAt":"2026-10-17"}
 {"clusterId":"evt_twtourism-events_Event_A15010100H_005776","kind":"event","slug":"2026秀姑巒溪泛舟鐵人三項競賽","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_A15010100H_005777","kind":"event","slug":"2026月光.海音樂會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_A15010100H_005788","kind":"event","slug":"2026東海岸大地藝術節及藝文平台","assignedAt":"2026-09-14"}
