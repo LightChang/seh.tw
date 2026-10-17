@@ -68,15 +68,6 @@ sources:
         - nameRaw: "利澤國際偶戲藝術村"
           role: "master"
       sessions: 
-        - startAt: "2026-10-17T13:30:00+08:00"
-          granularity: "datetime"
-          endAt: "2026-10-17T18:00:00+08:00"
-          venueNameRaw: "宜蘭．利澤國際偶戲藝術村"
-          city: "宜蘭縣"
-          district: "五結鄉"
-          addressPrecision: "district"
-          lat: 24.66772
-          lng: 121.82349
         - startAt: "2026-10-18T13:30:00+08:00"
           granularity: "datetime"
           endAt: "2026-10-18T18:00:00+08:00"

@@ -1,23 +1,20 @@
 {
-  "at": "2026-10-17T04:10:02+08:00",
-  "attempted": 29,
+  "at": "2026-10-18T04:10:02+08:00",
+  "attempted": 43,
   "changed": [
     "hsinchu-county-culture-events",
     "kmfa-events",
-    "ncl-events",
     "ncfta-activities",
-    "moc-emap-poi",
     "nstm-activities",
+    "moc-emap-poi",
     "ntt-programs",
     "ntmofa-events",
+    "ntm-activities",
     "taipei-gov-hot-events",
     "taipei-culture-events",
     "taoyuan-tourism-events",
-    "tnam-events",
     "twtourism-events",
-    "ntm-activities",
-    "weiwuying-programs",
-    "boch-heritage"
+    "weiwuying-programs"
   ],
   "failed": [
     "npm-events",
