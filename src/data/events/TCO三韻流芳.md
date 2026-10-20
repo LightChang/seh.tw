@@ -7,7 +7,7 @@ categoryRaw: "音樂現場"
 status: "scheduled"
 popularity: 0
 isFree: false
-priceText: "$300、500"
+priceText: "$500"
 ticketUrl: "https://www.opentix.life/program/2085553373130006529"
 images: 
   - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01%2bVAWFB2potwqekgHcyE836BMHwxPXh%2fSc23dKSJJJT7ANXQHBdjVKEW5BTlINLaAw%3d%3d"
@@ -47,7 +47,7 @@ sources:
       categoryRaw: "2"
   - id: "taipei-culture-events"
     recordId: "d125fadd-12d3-44f0-87a7-efba8724ff3c"
-    url: "https://www.tco.gov.taipei/Default.aspx"
+    url: "https://www.opentix.life/event/2085553373130006529"
     provides: 
       - "title"
       - "description"
@@ -67,5 +67,5 @@ sources:
           addressPrecision: "district"
           lat: 25.043
           lng: 121.5102
-      sourceUrl: "https://www.tco.gov.taipei/Default.aspx"
+      sourceUrl: "https://www.opentix.life/event/2085553373130006529"
 ---

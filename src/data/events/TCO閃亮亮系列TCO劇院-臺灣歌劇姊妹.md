@@ -53,7 +53,7 @@ sessions:
 sources: 
   - id: "taipei-culture-events"
     recordId: "de3d4f28-a42f-4722-bdf4-d084b989a7f9"
-    url: "https://www.tco.gov.taipei/Default.aspx"
+    url: "https://www.opentix.life/event/2085564173089992704"
     provides: 
       - "title"
       - "description"

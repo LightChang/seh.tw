@@ -28,7 +28,7 @@ sessions:
 sources: 
   - id: "taipei-culture-events"
     recordId: "71c21f19-d6d5-4028-a5ff-824cf16a56a8"
-    url: "https://www.tco.gov.taipei/Default.aspx"
+    url: "https://www.tco.gov.taipei/News_Content.aspx?n=0D9B6F778A90E631&sms=778856C209BCE527&s=330D14B519E533C8"
     provides: 
       - "title"
       - "description"

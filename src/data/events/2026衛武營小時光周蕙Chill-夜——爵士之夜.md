@@ -238,7 +238,7 @@ sources:
           address: "高雄市鳳山區三多一路1號"
           addressPrecision: "street"
       sourceUrl: "https://www.npac-weiwuying.org/programs/69af9180738aff0007321694"
-      sourceUpdatedAt: "2026-10-15T11:04:09+08:00"
+      sourceUpdatedAt: "2026-10-20T16:48:41+08:00"
   - id: "weiwuying-programs"
     recordId: "69af96e2738aff000732176e"
     sourceName: "衛武營國家藝術文化中心 節目資料"
