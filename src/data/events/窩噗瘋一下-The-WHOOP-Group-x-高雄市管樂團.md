@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_moc-events_6a205eae26b3243414ccce63"
 slug: "窩噗瘋一下-The-WHOOP-Group-x-高雄市管樂團"
-title: "《窩噗瘋一下 The Whoop Group x 高雄市管樂團》"
+title: "「節目異動」《窩噗瘋一下 The Whoop Group x 高雄市管樂團》"
 category: "音樂"
 categoryRaw: "1"
 status: "scheduled"
@@ -9,6 +9,14 @@ popularity: 1
 priceText: "NT$ 600、800、1000、1200、1500、1800、2000、2500"
 ticketUrl: "https://www.opentix.life/program/2059554701435854848"
 description: |-
+  2026年10月23日（五）19:30於衛武營音樂廳演出之《窩噗瘋一下 The Whoop Group x 高雄市管樂團》，本場演出指揮將改由何春頤擔任，與 The WHOOP Group 薩克斯風四重奏及高雄市管樂團共同演出。
+  
+   造成不便，尚祈見諒。
+  
+   何春頤現任高雄市管樂團打擊樂首席及助理指揮，於國立高雄師範大學取得打擊樂與管樂指揮雙碩士學位，管樂指揮師事王戰教授。長年活躍於打擊樂演奏、管樂指揮及音樂教育領域，具備豐富的演出與樂團指導經驗。
+  
+   ※因指揮異動，即日起至10月23日（五）19:30開演前辦理退票，退票資訊請參考OPENTIX公告。
+  
   來自波蘭的薩克斯風四重奏 The WHOOP Group，以超越流派框架的極致舞台能量席捲歐洲。改編韋瓦第《暴風雨》的影片在網路累積超高流量，曾被奧斯卡得主作曲家讚為「一具具備驚人爆發力的聲音引擎」。四重奏更以專輯榮獲波蘭最高音樂榮譽「Fryderyk Awards」肯定。2026年秋天將首度登上衛武營音樂廳，聯手高雄市管樂團帶來橫跨古典&times;爵士&times;當代的聲響炸裂，讓歐洲能量與臺灣管樂在南臺灣舞台上熾烈共振。
   
    演出曲目
@@ -27,7 +35,7 @@ description: |-
   
    演出暨製作團隊
   
-  指揮｜王戰
+  指揮｜何春頤
   
   演出單位｜高雄市管樂團、The WHOOP Group
 sessions: 

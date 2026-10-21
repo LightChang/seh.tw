@@ -9,7 +9,7 @@ sessions:
   - startAt: "2026-09-19"
     granularity: "date"
     endAt: "2026-10-21"
-    venueNameRaw: "國立臺灣美術館2F 駐館工作室 (2F Residency Studio)"
+    venueNameRaw: "國立臺灣美術館"
     lat: 24.141223
     lng: 120.662619
     city: "臺中市"

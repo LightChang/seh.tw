@@ -6,7 +6,7 @@ category: "音樂"
 categoryRaw: "音樂"
 status: "scheduled"
 images: 
-  - url: "https://culture.tainan.gov.tw/df_ufiles/044/s_烏克麗麗(1).jpg"
+  - url: "https://culture.tainan.gov.tw/df_ufiles/044/s_螢幕擷取畫面 2026-10-07 101811.png"
 description: |-
   【藝感週末】藝文饗宴系列—Hola Aloha
   時間∶11月7日（六）下午14:30-16:00
