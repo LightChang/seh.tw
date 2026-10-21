@@ -113,10 +113,19 @@ const stripSeriesPrefix = (t) => {
   const m = /^【[^【】]*】\s*(.+)$/.exec(t);
   return m ? m[1] : t;
 };
+// 同樣是前綴標籤，但分隔符是「│」而非【】——站上還有「14:00│16:00」這種時間寫法、
+// 「臺灣戲曲中心導覽服務│導覽時間約90分鐘」這種後段才是說明文字的用法，全站套會拆錯，
+// 所以逐篇核過才加進這份清單，不是通用規則。
+const PIPE_PREFIX_SLUGS = new Set(['虛擬製作系列│穿梭日本房間-音樂與互動體驗的跨界新可能']);
+const stripPipePrefix = (t) => {
+  if (!PIPE_PREFIX_SLUGS.has(e.slug)) return t;
+  const m = /^[^│]+│\s*(.+)$/.exec(t);
+  return m ? m[1] : t;
+};
 // 搜尋用的別名（overrides/event-title-aliases.json）：放進 <title> 與 JSON-LD alternateName，H1 不動
 const alias = titleAliases.aliases?.[e.slug]?.alias;
 if (ld && alias) ld.alternateName = alias;
-const metaTitle = eventTitle({ ...e, title: unwrapTitle(stripSeriesPrefix(e.title)) }, { alias });
+const metaTitle = eventTitle({ ...e, title: unwrapTitle(stripSeriesPrefix(stripPipePrefix(e.title))) }, { alias });
 const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
