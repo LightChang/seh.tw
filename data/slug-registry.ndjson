@@ -5346,6 +5346,11 @@
 {"clusterId":"evt_ncl-events_0Q280601043579099870","kind":"event","slug":"3D列印初階11月25日-3D列印小名牌","assignedAt":"2026-10-08"}
 {"clusterId":"evt_ncl-events_0Q285575820298286600","kind":"event","slug":"雷雕初階-12月2日-雷雕小書籤","assignedAt":"2026-10-13"}
 {"clusterId":"evt_ncl-events_0Q285595601294080207","kind":"event","slug":"3D列印進階-12月12日-指尖藝術-我的專屬鍵帽","assignedAt":"2026-10-13"}
+{"clusterId":"evt_ncl-events_0Q295702641969172302","kind":"event","slug":"文大合辦課程✱青少年增能工作坊布上生活美學-蝶谷巴特帆布托特包創意設計","assignedAt":"2026-10-23"}
+{"clusterId":"evt_ncl-events_0Q295708870857390983","kind":"event","slug":"文大合辦課程✱青少年增能工作坊別被思維盲點騙了-在遊戲中修練AI帶不走的邏輯力","assignedAt":"2026-10-23"}
+{"clusterId":"evt_ncl-events_0Q295711789144821694","kind":"event","slug":"文大合辦課程✱創齡手作文化體驗逗陣看光景-植物拓印手繪創作","assignedAt":"2026-10-23"}
+{"clusterId":"evt_ncl-events_0Q295714539111389851","kind":"event","slug":"文大合辦課程✱創齡手作文化體驗指尖山林風-原住民植物民俗與串珠平安吊飾","assignedAt":"2026-10-23"}
+{"clusterId":"evt_ncl-events_0Q295716851395607620","kind":"event","slug":"文大合辦課程✱青少年增能工作坊AI-煉丹術-如何用深度學習為古典文學加上濾鏡與重構靈魂","assignedAt":"2026-10-23"}
 {"clusterId":"evt_nmmba-exhibitions_51B6299691B0F6C1","kind":"event","slug":"重返海洋特展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nmmba-exhibitions_583DE2B2364F19DF","kind":"event","slug":"鯊魚特展-探索Dr.Shark","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nmmba-exhibitions_AA9409D48C1AD221","kind":"event","slug":"海盜傳說特展","assignedAt":"2026-09-13"}
@@ -6063,6 +6068,7 @@
 {"clusterId":"evt_ntm-activities_60197","kind":"event","slug":"骨早味特展我與恐龍博士的週末約會-動畫電影播映╳臺日交流講座","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntm-activities_60199","kind":"event","slug":"骨早味特展拜師學藝╧╤-異特龍模型骨架體驗工作坊","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntm-activities_60209","kind":"event","slug":"特展工作坊骨早味動畫社-我的異特龍狂想","assignedAt":"2026-10-15"}
+{"clusterId":"evt_ntm-activities_60211","kind":"event","slug":"天主教來臺400年系列講座","assignedAt":"2026-10-23"}
 {"clusterId":"evt_ntm-activities_90084","kind":"event","slug":"發現臺灣-重訪臺灣博物學與博物學家的年代","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntm-activities_90086","kind":"event","slug":"本館戶外展覽","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntmofa-events_40009","kind":"event","slug":"國美典藏數位博物館-我腦海中的地方-會真的存在","assignedAt":"2026-09-13"}
@@ -7757,6 +7763,9 @@
 {"clusterId":"evt_taipei-gov-hot-events_9720642","kind":"event","slug":"Dear-Santa-今年我想對你說...聖誕限時專送主題活動","assignedAt":"2026-10-22"}
 {"clusterId":"evt_taipei-gov-hot-events_9724700","kind":"event","slug":"神隊友LINE報到-好禮雙重送","assignedAt":"2026-10-21"}
 {"clusterId":"evt_taipei-gov-hot-events_9726135","kind":"event","slug":"歡迎參加西湖分館安可電影院-邀您一同探索電影宇宙","assignedAt":"2026-10-21"}
+{"clusterId":"evt_taipei-gov-hot-events_9732468","kind":"event","slug":"李科永紀念圖書館龍巖慈善基金會2026公益講座合辦活動","assignedAt":"2026-10-23"}
+{"clusterId":"evt_taipei-gov-hot-events_9732477","kind":"event","slug":"李科永紀念圖書館漫讀・閱心境主題書展","assignedAt":"2026-10-23"}
+{"clusterId":"evt_taipei-gov-hot-events_9732480","kind":"event","slug":"閱讀好時光-月月刷自助-採集生活微光","assignedAt":"2026-10-23"}
 {"clusterId":"evt_taoyuan-tourism-events_5230","kind":"event","slug":"2026桃園-ON-AIR-跨年晚會","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6633","kind":"event","slug":"2026國際自由車環台賽-桃園市站","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6639","kind":"event","slug":"全方位職場療癒班-IP-插畫展","assignedAt":"2026-09-13"}
@@ -7776,6 +7785,7 @@
 {"clusterId":"evt_taoyuan-tourism-events_6676","kind":"event","slug":"2026桃園兒童藝術節","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6678","kind":"event","slug":"2026桃園國際動漫大展","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6679","kind":"event","slug":"2026永安漁港星繽樂狂歡嘉年華","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taoyuan-tourism-events_6686","kind":"event","slug":"2026大溪豆干旅遊節","assignedAt":"2026-10-23"}
 {"clusterId":"evt_taoyuan-tourism-events_6688","kind":"event","slug":"2026龍潭迎古董接財神","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6691","kind":"event","slug":"宇內溪溫泉冬日嘉年華","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taoyuan-tourism-events_6694","kind":"event","slug":"2026桃園地景藝術節","assignedAt":"2026-09-13"}
@@ -8445,6 +8455,7 @@
 {"clusterId":"evt_tpac-programs_2075","kind":"event","slug":"飛賊夜來香","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tpac-programs_2089","kind":"event","slug":"TCO劇院-臺灣歌劇姊妹","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tpac-programs_2090","kind":"event","slug":"超人力霸王舞台劇-與光同行-60週年特別公演-Voyager-Live-In-Taiwan-2026","assignedAt":"2026-09-27"}
+{"clusterId":"evt_tpac-programs_2096","kind":"event","slug":"原創馬戲音樂劇腳不落地的孩子","assignedAt":"2026-10-23"}
 {"clusterId":"evt_twtourism-events_e85e2c45d190cf4c","kind":"event","slug":"115年四季列車—秋之意・鸞山湖","assignedAt":"2026-10-08"}
 {"clusterId":"evt_twtourism-events_Event_371020000A_003959","kind":"event","slug":"金門島嶼生活節","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_371020000A_004139","kind":"event","slug":"2026金門馬拉松","assignedAt":"2026-09-13"}
@@ -9102,6 +9113,7 @@
 {"clusterId":"evt_twtourism-events_Event_387000000A_010372","kind":"event","slug":"2026臺中海洋觀光季","assignedAt":"2026-09-27"}
 {"clusterId":"evt_twtourism-events_Event_387000000A_010374","kind":"event","slug":"一起旅行8-中臺灣集章趣-台中優惠就在這","assignedAt":"2026-09-30"}
 {"clusterId":"evt_twtourism-events_Event_387000000A_010387","kind":"event","slug":"2026臺中國際花毯節","assignedAt":"2026-10-06"}
+{"clusterId":"evt_twtourism-events_Event_387000000A_010434","kind":"event","slug":"2026鈴蘭通散步納涼會","assignedAt":"2026-10-23"}
 {"clusterId":"evt_twtourism-events_Event_395000000A_002067","kind":"event","slug":"2026螢光花泉季","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_395000000A_007562","kind":"event","slug":"臺南旅遊服務中心推廣伴手禮專區","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_395000000A_007569","kind":"event","slug":"台灣好行搭乘優惠特約商店一覽表","assignedAt":"2026-09-13"}
@@ -9301,6 +9313,8 @@
 {"clusterId":"evt_twtourism-events_Event_397000000A_008107","kind":"event","slug":"2026高雄-Wild-Wild-野生活","assignedAt":"2026-10-16"}
 {"clusterId":"evt_twtourism-events_Event_397000000A_008108","kind":"event","slug":"2026漢堡好港節","assignedAt":"2026-10-16"}
 {"clusterId":"evt_twtourism-events_Event_397000000A_008128","kind":"event","slug":"2026追星延續港都同樂","assignedAt":"2026-10-21"}
+{"clusterId":"evt_twtourism-events_Event_397000000A_008130","kind":"event","slug":"2026乘風而騎-鳳山鳥松文化生態單車遊","assignedAt":"2026-10-23"}
+{"clusterId":"evt_twtourism-events_Event_397000000A_008131","kind":"event","slug":"壽山萌鬼派對-親子藝起玩・萬聖手作趣","assignedAt":"2026-10-23"}
 {"clusterId":"evt_twtourism-events_Event_A15010000H_081456","kind":"event","slug":"2026南島族群婚禮","assignedAt":"2026-09-13"}
 {"clusterId":"evt_twtourism-events_Event_A15010000H_081634","kind":"event","slug":"2026東海岸大地藝術節暨月光・海音樂會","assignedAt":"2026-09-14"}
 {"clusterId":"evt_twtourism-events_Event_A15010000H_081638","kind":"event","slug":"2026東海岸運動觀光活動長濱雙浪金剛馬拉松","assignedAt":"2026-09-13"}

@@ -15,7 +15,7 @@ description: |-
 sessions: 
   - startAt: "2025-06-03"
     granularity: "date"
-    endAt: "2026-10-31"
+    endAt: "2027-11-10"
     venueNameRaw: "國立科學工藝博物館1F"
     lat: 22.641489
     lng: 120.322551
