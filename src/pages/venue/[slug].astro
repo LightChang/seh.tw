@@ -138,9 +138,12 @@ const catSummary = catGroups.slice(0, 4).map(([c, list]) => `${c} ${list.length}
 // 懸崖帶卡點（曝光67、點擊1、第7.4名，CTR 1.5%）：查詢打的是舊稱「基隆文化中心演藝廳」，
 // 現名「基隆表演藝術中心演藝廳」已在 overrides/venue-names.json 列為別名、頁面「又稱」已顯示，
 // 但 <title> 還沒帶到——把舊稱搬到 title 最前面，跟查詢字對起來，H1 仍用現名。
+// 懸崖帶卡點（曝光263、點擊9、第8.3名）：查詢多打不帶「國立」的「中興大學惠蓀堂」，
+// 該別名已在 overrides/venue-names.json、頁面「又稱」已顯示，<title> 仍用全名「國立中興大學惠蓀堂」。
 const SHORT_TITLE_NAMES = new Map([
   ['高雄駁二藝術特區-蓬萊區B4倉庫', '蓬萊區B4倉庫（高雄駁二）'],
   ['基隆表演藝術中心演藝廳', '基隆文化中心演藝廳（基隆表演藝術中心）'],
+  ['國立中興大學惠蓀堂', '中興大學惠蓀堂（國立中興大學）'],
 ]);
 const titleName = SHORT_TITLE_NAMES.get(v.slug) ?? v.name;
 const title = isPerform
