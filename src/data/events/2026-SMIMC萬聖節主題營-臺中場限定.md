@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_ntt-programs_c-NIh2qmoeYT7"
 slug: "2026-SMIMC萬聖節主題營-臺中場限定"
-title: "2026 SMIMC萬聖節主題營-臺中場限定"
+title: "【10/24 延期】2026 SMIMC萬聖節主題營-臺中場限定"
 status: "scheduled"
 isFree: false
 priceText: "原價 Original Price：10,800、早鳥優惠：9,800(7/20 21:00前報名）、2人以上團體優惠/單人 8,800"

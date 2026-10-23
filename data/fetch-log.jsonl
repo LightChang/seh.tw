@@ -975,3 +975,34 @@
 {"at":"2026-10-23T04:10:02+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":26,"ms":34065}
 {"at":"2026-10-23T04:10:02+08:00","id":"tcmb-culture","outcome":"changed","via":"fetch","count":11524,"ms":82571}
 {"at":"2026-10-23T04:10:02+08:00","id":"boch-heritage","outcome":"unchanged","via":"fetch","count":6416,"ms":263724}
+{"at":"2026-10-24T02:00:50+08:00","id":"chiayi-county-event-board","outcome":"changed","via":"taiwan-intake","count":3,"bytes":4943}
+{"at":"2026-10-24T04:10:02+08:00","id":"hsinchu-county-culture-events","outcome":"unchanged","via":"fetch","count":13,"ms":994}
+{"at":"2026-10-24T04:10:02+08:00","id":"arte-events","outcome":"unchanged","via":"fetch","count":21,"ms":3651}
+{"at":"2026-10-24T04:10:02+08:00","id":"boch-heritage-arts-crafts","outcome":"unchanged","via":"fetch","count":356,"ms":4431}
+{"at":"2026-10-24T04:10:02+08:00","id":"kmfa-events","outcome":"unchanged","via":"fetch","count":36,"ms":4719}
+{"at":"2026-10-24T04:10:02+08:00","id":"moca-taipei-events","outcome":"unchanged","via":"fetch","count":22,"ms":1790}
+{"at":"2026-10-24T04:10:02+08:00","id":"ncfta-activities","outcome":"changed","via":"fetch","count":36,"ms":3053}
+{"at":"2026-10-24T04:10:02+08:00","id":"ncl-events","outcome":"unchanged","via":"fetch","count":20,"ms":609}
+{"at":"2026-10-24T04:10:02+08:00","id":"nmns-exhibitions","outcome":"unchanged","via":"fetch","count":7,"ms":1569}
+{"at":"2026-10-24T04:10:02+08:00","id":"moc-emap-poi","outcome":"changed","via":"fetch","count":14374,"ms":10604}
+{"at":"2026-10-24T04:10:02+08:00","id":"npm-events","outcome":"failed","error":"unable to get local issuer certificate","ms":1640}
+{"at":"2026-10-24T04:10:02+08:00","id":"nstm-activities","outcome":"changed","via":"fetch","count":311,"ms":1048}
+{"at":"2026-10-24T04:10:02+08:00","id":"moc-events","outcome":"shrank","prev":1727,"count":111,"error":"筆數異常縮水 1727 → 111，未覆蓋 raw","ms":1522}
+{"at":"2026-10-24T04:10:02+08:00","id":"ntch-programs","outcome":"unchanged","via":"fetch","count":13,"ms":7541}
+{"at":"2026-10-24T04:10:02+08:00","id":"ntmofa-events","outcome":"unchanged","via":"fetch","count":35,"ms":15051}
+{"at":"2026-10-24T04:10:02+08:00","id":"ntpc-culture-events","outcome":"changed","via":"fetch","count":64,"ms":890}
+{"at":"2026-10-24T04:10:02+08:00","id":"ntt-programs","outcome":"changed","via":"fetch","count":90,"ms":772}
+{"at":"2026-10-24T04:10:02+08:00","id":"taipei-buskers","outcome":"unchanged","via":"fetch","count":4188,"ms":1010}
+{"at":"2026-10-24T04:10:02+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":26,"ms":27115}
+{"at":"2026-10-24T04:10:02+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":292}
+{"at":"2026-10-24T04:10:02+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":73,"ms":1988}
+{"at":"2026-10-24T04:10:02+08:00","id":"taipei-culture-events","outcome":"changed","via":"fetch","count":312,"ms":6098}
+{"at":"2026-10-24T04:10:02+08:00","id":"tfam-exhibitions","outcome":"changed","via":"fetch","count":586,"ms":2471}
+{"at":"2026-10-24T04:10:02+08:00","id":"tnam-events","outcome":"changed","via":"fetch","count":15,"ms":2456}
+{"at":"2026-10-24T04:10:02+08:00","id":"tpac-programs","outcome":"changed","via":"fetch","count":24,"ms":1127}
+{"at":"2026-10-24T04:10:02+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1166,"ms":2047}
+{"at":"2026-10-24T04:10:02+08:00","id":"weiwuying-programs","outcome":"failed","error":"HTTP 403 for https://www.npac-weiwuying.org/api/programs/list?start=1792786251&end=1855858251&page=1&size=500&chineseOnShelf=true","ms":3477}
+{"at":"2026-10-24T04:10:02+08:00","id":"nantou-arts-events","outcome":"failed","error":"fetch failed","ms":52020}
+{"at":"2026-10-24T04:10:02+08:00","id":"boch-heritage-preservers","outcome":"unchanged","via":"fetch","count":1054,"ms":62335}
+{"at":"2026-10-24T04:10:02+08:00","id":"nantou-culture-venues","outcome":"failed","error":"fetch failed","ms":40786}
+{"at":"2026-10-24T04:10:02+08:00","id":"boch-heritage","outcome":"unchanged","via":"fetch","count":6416,"ms":99811}
