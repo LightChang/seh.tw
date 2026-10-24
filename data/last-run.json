@@ -1,32 +1,31 @@
 {
-  "at": "2026-10-24T04:10:02+08:00",
-  "attempted": 30,
+  "at": "2026-10-25T04:10:02+08:00",
+  "attempted": 25,
   "changed": [
+    "moca-taipei-events",
+    "kmfa-events",
     "ncfta-activities",
-    "moc-emap-poi",
     "nstm-activities",
     "ntpc-culture-events",
     "ntt-programs",
-    "ntm-activities",
+    "moc-emap-poi",
     "taipei-gov-hot-events",
-    "taoyuan-tourism-events",
     "taipei-culture-events",
-    "tfam-exhibitions",
+    "taoyuan-tourism-events",
     "tnam-events",
-    "tpac-programs",
-    "twtourism-events"
+    "twtourism-events",
+    "ntm-activities"
   ],
   "failed": [
     "npm-events",
     "moc-events",
-    "weiwuying-programs",
-    "nantou-arts-events",
-    "nantou-culture-venues"
+    "weiwuying-programs"
   ],
   "alerting": [
     "moc-community",
     "moc-events",
-    "npm-events"
+    "npm-events",
+    "weiwuying-programs"
   ],
   "skipped": []
 }
