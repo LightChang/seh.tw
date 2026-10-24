@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import { flatSessions, newListings } from '../lib/build-data.mjs';
 import { todaySessions, mergeRuns, leadText } from '../lib/day-lists.mjs';
-import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
+import { hhmm, dateLabel, fmtNum, catVar, WD, midnight } from '../lib/format.mjs';
 import { builtHubs } from '../lib/build-data.mjs';
 import { cityShort } from '../lib/hubs.mjs';
 import { todayItemList } from '../lib/jsonld/index.mjs';
@@ -22,12 +22,14 @@ const todayCities = (await builtHubs()).weekend;
 // ItemList 結構化資料（src/lib/jsonld/pages.mjs 的 todayItemList）。只用畫面上真的會列出來的
 // merged，資料來源與可見內容同一份。
 const todayLd = todayItemList(merged);
+const tw0 = new Date(midnight(buildNow) + 12 * 3600e3);
+const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUTCDay()]}`;
 ---
-<Base title="今天有什麼｜seh" description="今天台灣各地正在發生的文化活動，依開始時間排列。" jsonld={todayLd}>
+<Base title={`今天有什麼活動（${dayLabel}）｜seh`} description={`${dayLabel}台灣各地正在發生的文化活動，依開始時間排列。`} jsonld={todayLd}>
   <div class="shell">
     <Nav current="today" />
     <header class="page-hd">
-      <h1>今天</h1>
+      <h1>今天有什麼活動</h1>
       <p class="sub" id="sub">{dateLabel(buildNow)}　{fmtNum(merged.length)} 個活動、{fmtNum(rows.length)} 場次</p>
       <nav class="chips" id="chips" aria-label="類型篩選"></nav>
     </header>
