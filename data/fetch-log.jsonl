@@ -1031,3 +1031,46 @@
 {"at":"2026-10-25T04:10:02+08:00","id":"weiwuying-programs","outcome":"failed","error":"HTTP 403 for https://www.npac-weiwuying.org/api/programs/list?start=1792872620&end=1855944620&page=1&size=500&chineseOnShelf=true","ms":3514}
 {"at":"2026-10-25T04:10:02+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":25,"ms":16234}
 {"at":"2026-10-25T04:10:02+08:00","id":"tcmb-culture","outcome":"unchanged","via":"fetch","count":11524,"ms":76737}
+{"at":"2026-10-26T04:10:02+08:00","id":"cip-culture-halls","outcome":"unchanged","via":"fetch","count":28,"ms":473}
+{"at":"2026-10-26T04:10:02+08:00","id":"hsinchu-county-culture-events","outcome":"unchanged","via":"fetch","count":13,"ms":874}
+{"at":"2026-10-26T04:10:02+08:00","id":"cip-indigenous-festivals","outcome":"unchanged","via":"fetch","count":66,"ms":55}
+{"at":"2026-10-26T04:10:02+08:00","id":"boch-heritage-folklore","outcome":"unchanged","via":"fetch","count":291,"ms":3284}
+{"at":"2026-10-26T04:10:02+08:00","id":"kmfa-events","outcome":"changed","via":"fetch","count":35,"ms":3608}
+{"at":"2026-10-26T04:10:02+08:00","id":"cip-museums","outcome":"unchanged","via":"fetch","count":110,"ms":92}
+{"at":"2026-10-26T04:10:02+08:00","id":"moca-taipei-events","outcome":"unchanged","via":"fetch","count":21,"ms":1838}
+{"at":"2026-10-26T04:10:02+08:00","id":"national-public-libraries","outcome":"unchanged","via":"fetch","count":22,"ms":1400}
+{"at":"2026-10-26T04:10:02+08:00","id":"ncl-events","outcome":"unchanged","via":"fetch","count":20,"ms":937}
+{"at":"2026-10-26T04:10:02+08:00","id":"moc-emap-poi","outcome":"changed","via":"fetch","count":14374,"ms":6920}
+{"at":"2026-10-26T04:10:02+08:00","id":"nmmba-exhibitions","outcome":"changed","via":"fetch","count":31,"ms":2505}
+{"at":"2026-10-26T04:10:02+08:00","id":"nmns-exhibitions","outcome":"unchanged","via":"fetch","count":7,"ms":1782}
+{"at":"2026-10-26T04:10:02+08:00","id":"moc-events","outcome":"shrank","prev":1727,"count":528,"error":"筆數異常縮水 1727 → 528，未覆蓋 raw","ms":1877}
+{"at":"2026-10-26T04:10:02+08:00","id":"nstm-activities","outcome":"changed","via":"fetch","count":308,"ms":968}
+{"at":"2026-10-26T04:10:02+08:00","id":"ntch-programs","outcome":"changed","via":"fetch","count":11,"ms":274}
+{"at":"2026-10-26T04:10:02+08:00","id":"npm-events","outcome":"failed","error":"unable to get local issuer certificate","ms":1798}
+{"at":"2026-10-26T04:10:02+08:00","id":"ncfta-activities","outcome":"changed","via":"fetch","count":33,"ms":10032}
+{"at":"2026-10-26T04:10:02+08:00","id":"ntpc-culture-events","outcome":"unchanged","via":"fetch","count":63,"ms":784}
+{"at":"2026-10-26T04:10:02+08:00","id":"ntpc-museum-venues","outcome":"unchanged","via":"fetch","count":34,"ms":125}
+{"at":"2026-10-26T04:10:02+08:00","id":"ntt-programs","outcome":"changed","via":"fetch","count":87,"ms":715}
+{"at":"2026-10-26T04:10:02+08:00","id":"penghu-cultural-organizations","outcome":"unchanged","via":"304","ms":332}
+{"at":"2026-10-26T04:10:02+08:00","id":"pingtung-public-libraries","outcome":"unchanged","via":"fetch","count":36,"ms":490}
+{"at":"2026-10-26T04:10:02+08:00","id":"taichung-artists","outcome":"unchanged","via":"fetch","count":26,"ms":332}
+{"at":"2026-10-26T04:10:02+08:00","id":"taichung-arts-groups","outcome":"unchanged","via":"fetch","count":118,"ms":86}
+{"at":"2026-10-26T04:10:02+08:00","id":"taichung-culture-venues","outcome":"unchanged","via":"fetch","count":17,"ms":100}
+{"at":"2026-10-26T04:10:02+08:00","id":"taichung-performing-groups","outcome":"unchanged","via":"fetch","count":717,"ms":202}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-artist-village-residents","outcome":"unchanged","via":"fetch","count":717,"ms":804}
+{"at":"2026-10-26T04:10:02+08:00","id":"ntmofa-events","outcome":"changed","via":"fetch","count":33,"ms":15425}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-culture-promotion-halls","outcome":"unchanged","via":"fetch","count":14,"ms":219}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-culture-venues","outcome":"unchanged","via":"fetch","count":130,"ms":255}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-culture-events","outcome":"changed","via":"fetch","count":301,"ms":5240}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-gov-hot-events","outcome":"changed","via":"fetch","count":50,"ms":331}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-disabled-buskers","outcome":"unchanged","via":"fetch","count":86,"ms":196}
+{"at":"2026-10-26T04:10:02+08:00","id":"taoyuan-tourism-events","outcome":"changed","via":"fetch","count":73,"ms":1832}
+{"at":"2026-10-26T04:10:02+08:00","id":"ntm-activities","outcome":"changed","via":"fetch","count":25,"ms":23760}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-performing-groups","outcome":"unchanged","via":"fetch","count":1797,"ms":607}
+{"at":"2026-10-26T04:10:02+08:00","id":"tfam-exhibitions","outcome":"unchanged","via":"fetch","count":586,"ms":2632}
+{"at":"2026-10-26T04:10:02+08:00","id":"taipei-private-museums","outcome":"unchanged","via":"fetch","count":2,"ms":201}
+{"at":"2026-10-26T04:10:02+08:00","id":"tnam-events","outcome":"unchanged","via":"fetch","count":13,"ms":2457}
+{"at":"2026-10-26T04:10:02+08:00","id":"tpac-programs","outcome":"unchanged","via":"fetch","count":24,"ms":1288}
+{"at":"2026-10-26T04:10:02+08:00","id":"boch-heritage","outcome":"unchanged","via":"fetch","count":6416,"ms":36104}
+{"at":"2026-10-26T04:10:02+08:00","id":"twtourism-events","outcome":"changed","via":"fetch","count":1166,"ms":2980}
+{"at":"2026-10-26T04:10:02+08:00","id":"weiwuying-programs","outcome":"failed","error":"HTTP 403 for https://www.npac-weiwuying.org/api/programs/list?start=1792959041&end=1856031041&page=1&size=500&chineseOnShelf=true","ms":3989}

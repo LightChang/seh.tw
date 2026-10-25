@@ -2862,6 +2862,7 @@
 {"clusterId":"evt_hsinchu-county-culture-events_12ff310c3a51981c","kind":"event","slug":"🎉2026新竹美展得獎名單🎉","assignedAt":"2026-09-13"}
 {"clusterId":"evt_hsinchu-county-culture-events_3fc0699d8f4be0f7","kind":"event","slug":"2026新竹縣新響藝術季","assignedAt":"2026-09-13"}
 {"clusterId":"evt_hsinchu-county-culture-events_cf9d1c320f41cb99","kind":"event","slug":"水.土地與我們的故事常設展","assignedAt":"2026-09-13"}
+{"clusterId":"evt_kmfa-events_045d476a94c2fd4a","kind":"event","slug":"視線轉位-Repositioning-the-Gaze","assignedAt":"2026-10-26"}
 {"clusterId":"evt_kmfa-events_0ae2b2422018ce60","kind":"event","slug":"10-17六18-30美術館夜行第25夜-今夜-去向未定","assignedAt":"2026-09-30"}
 {"clusterId":"evt_kmfa-events_0afa0acbfe660c72","kind":"event","slug":"導覽服務","assignedAt":"2026-09-13"}
 {"clusterId":"evt_kmfa-events_1cf6066f61d8c7f3","kind":"event","slug":"11-6五19-00美術館夜行第26夜-和光入夜・聽見墨色","assignedAt":"2026-10-15"}
@@ -2903,10 +2904,12 @@
 {"clusterId":"evt_kmfa-events_8ebf3e14b723e4e7","kind":"event","slug":"9-20日15-00高雄獎30年-藝術的未竟與再啟專家導覽","assignedAt":"2026-09-13"}
 {"clusterId":"evt_kmfa-events_966b15284dc023c9","kind":"event","slug":"11-1日-14-00-高美講堂│硬派旅行的艱辛與歡愉-個人經驗的委婉建議","assignedAt":"2026-09-13"}
 {"clusterId":"evt_kmfa-events_96ae555a9d696176","kind":"event","slug":"10-18日14-00-高美講堂│島嶼-海難-漂流-幾個古典小說中混血家庭的故事","assignedAt":"2026-09-27"}
+{"clusterId":"evt_kmfa-events_978e8959d63fc9cf","kind":"event","slug":"11-29日-10-30-今天來認識麥可.克雷格-馬丁-他是誰","assignedAt":"2026-10-26"}
 {"clusterId":"evt_kmfa-events_9b51ee1d80ac3358","kind":"event","slug":"10-11日14-00│16-00-偶遇•快閃演出─高美館X高雄國際偶戲節","assignedAt":"2026-10-07"}
 {"clusterId":"evt_kmfa-events_9c3a2c3d3e1aa8cf","kind":"event","slug":"10-24-六-映所-2026第二幕第3場沙龍線條的轉化──從南部廟口到藝術的白描實踐","assignedAt":"2026-10-07"}
 {"clusterId":"evt_kmfa-events_9cfcaa2032a168b2","kind":"event","slug":"藝術體驗工坊-10-24-六13-30日常變一變-卡典西德絹印布框畫工作坊","assignedAt":"2026-10-09"}
 {"clusterId":"evt_kmfa-events_a4d6c27d8faf2ce1","kind":"event","slug":"10-24六15-00英倫大廳小聚─Hazel-維多利亞時代-太陽照不到的帝國陰影","assignedAt":"2026-09-27"}
+{"clusterId":"evt_kmfa-events_a4f972ce02fffe9e","kind":"event","slug":"11-15日-10-00-糟糕-美術館的東西活過來了-戲劇","assignedAt":"2026-10-26"}
 {"clusterId":"evt_kmfa-events_a57ead5b820f44e1","kind":"event","slug":"10-17六15-00英倫大廳小聚─盧省言-島嶼和世界-大不列顛大歷史","assignedAt":"2026-09-27"}
 {"clusterId":"evt_kmfa-events_a942e18d01e81eab","kind":"event","slug":"11-14六-15-00-英倫大廳小聚—趙恬儀-奇幻與它們的英倫產地","assignedAt":"2026-10-10"}
 {"clusterId":"evt_kmfa-events_ac676822414a505e","kind":"event","slug":"英倫文化嘉年華│10-3六英式下午茶沙龍-與英國紅茶文化共舞","assignedAt":"2026-09-13"}
@@ -7403,6 +7406,7 @@
 {"clusterId":"evt_taipei-culture-events_69e9fb1e10e94ea9","kind":"event","slug":"定格微光線上攝影展-2","assignedAt":"2026-09-14"}
 {"clusterId":"evt_taipei-culture-events_6a632028637ca62d","kind":"event","slug":"基礎刺繡雙週課共2日┋灰喵的小種子們-13種針法組合靈活運用-構圖通用觀念","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_6aa4e808f97fdcbc","kind":"event","slug":"2026曉韵秋冬號您所不知的古樂史-講題許願池-歐洲音樂與神祕學-評樂論美part2∣二選一","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_6c028781046dbef6","kind":"event","slug":"面孔遊行-Persona-Parade-韓國藝術家聯展","assignedAt":"2026-10-26"}
 {"clusterId":"evt_taipei-culture-events_6df235f0ca610897","kind":"event","slug":"慶祝佛光山傳燈六十-百年仰望紀念特展1967-2026","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_6f22247877bf0d92","kind":"event","slug":"鳴石樂集樂壇新秀-吟風弄弦-Whispering-Winds-Dancing-Strings-陳宣吟大提琴獨奏會","assignedAt":"2026-10-08"}
 {"clusterId":"evt_taipei-culture-events_6f2f7caea138f9cc","kind":"event","slug":"2027-SKM-PHOTO-新光三越國際攝影大賽","assignedAt":"2026-09-27"}
@@ -7775,6 +7779,11 @@
 {"clusterId":"evt_taipei-gov-hot-events_9720642","kind":"event","slug":"Dear-Santa-今年我想對你說...聖誕限時專送主題活動","assignedAt":"2026-10-22"}
 {"clusterId":"evt_taipei-gov-hot-events_9724700","kind":"event","slug":"神隊友LINE報到-好禮雙重送","assignedAt":"2026-10-21"}
 {"clusterId":"evt_taipei-gov-hot-events_9726135","kind":"event","slug":"歡迎參加西湖分館安可電影院-邀您一同探索電影宇宙","assignedAt":"2026-10-21"}
+{"clusterId":"evt_taipei-gov-hot-events_9726402","kind":"event","slug":"建成分館11月雙連電影院精選好片上映","assignedAt":"2026-10-26"}
+{"clusterId":"evt_taipei-gov-hot-events_9726406","kind":"event","slug":"AI賦能親子閱讀全能王-2","assignedAt":"2026-10-26"}
+{"clusterId":"evt_taipei-gov-hot-events_9726410","kind":"event","slug":"清江電影臺-片片都精彩清江分館11-12月好片上映","assignedAt":"2026-10-26"}
+{"clusterId":"evt_taipei-gov-hot-events_9726419","kind":"event","slug":"柳鄉兒童圖書館跟著青山王去旅行閱讀推廣活動","assignedAt":"2026-10-26"}
+{"clusterId":"evt_taipei-gov-hot-events_9726457","kind":"event","slug":"天母分館新住民之悅讀西歐書展","assignedAt":"2026-10-26"}
 {"clusterId":"evt_taipei-gov-hot-events_9732468","kind":"event","slug":"李科永紀念圖書館龍巖慈善基金會2026公益講座合辦活動","assignedAt":"2026-10-23"}
 {"clusterId":"evt_taipei-gov-hot-events_9732477","kind":"event","slug":"李科永紀念圖書館漫讀・閱心境主題書展","assignedAt":"2026-10-23"}
 {"clusterId":"evt_taipei-gov-hot-events_9732480","kind":"event","slug":"閱讀好時光-月月刷自助-採集生活微光","assignedAt":"2026-10-23"}

@@ -30,7 +30,7 @@
    "ven_derived_國立臺灣博物館臺博館本館1樓及古物館3樓簡報室",
    "ven_derived_國立臺灣博物館臺博館本館3樓環形劇場-備註-播映時段依現場公告",
    "ven_derived_國立臺灣博物館臺博館本館3樓自然教室",
-   "ven_derived_國立臺灣博物館臺博館本館3樓自然教室-名額剩-11-名",
+   "ven_derived_國立臺灣博物館臺博館本館3樓自然教室-名額剩-10-名",
    "ven_derived_國立臺灣博物館臺博館本館一樓東展間"
   ]
  },
@@ -3617,6 +3617,15 @@
   "lng": 121.51244,
   "venueIds": [
    "ven_derived_臺北記憶倉庫二樓活動區"
+  ]
+ },
+ {
+  "id": "bld_25.0381_121.5750",
+  "name": "Neverland Gallery",
+  "lat": 25.0381,
+  "lng": 121.57501,
+  "venueIds": [
+   "ven_derived_Neverland-Gallery"
   ]
  },
  {
