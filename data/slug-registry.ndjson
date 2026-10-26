@@ -5390,6 +5390,7 @@
 {"clusterId":"evt_npm-events_activity-e0095722c6c8","kind":"event","slug":"北部院區身心修復式─2026故宮樂齡月10.15-11.15","assignedAt":"2026-10-03"}
 {"clusterId":"evt_npm-events_activity-f6f175a5828b","kind":"event","slug":"北部院區2026-故宮之夜—百駿奔騰・嗨翻故宮活動","assignedAt":"2026-10-02"}
 {"clusterId":"evt_npm-events_activity-ffa2ac67d5ad","kind":"event","slug":"北部院區騁技與運動-書畫中的技藝與體能活動特展專人導覽","assignedAt":"2026-09-14"}
+{"clusterId":"evt_nstm-activities_002b58bc163545d8","kind":"event","slug":"健康探索廳-粽子有營養-聰明吃更健康-僅1梯","assignedAt":"2026-10-27"}
 {"clusterId":"evt_nstm-activities_007cdcc469cf8c16","kind":"event","slug":"月滾月瘋狂-繽紛冰皮月餅揉壓派對-國慶連假","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_018b950f93497b9d","kind":"event","slug":"程式設計與邏輯思維創新體驗活動-第4梯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_nstm-activities_0212244c54e5c46a","kind":"event","slug":"原民科學大富翁-第12梯","assignedAt":"2026-09-27"}
@@ -6285,6 +6286,7 @@
 {"clusterId":"evt_ntt-programs_c-WlZRMgyXcGS","kind":"event","slug":"台灣獨奏家交響樂團—2027新年音樂會","assignedAt":"2026-10-03"}
 {"clusterId":"evt_ntt-programs_c-X3eBy7TupAs","kind":"event","slug":"時刻在藝起-歌劇院10歲生日快樂-🎂✨","assignedAt":"2026-09-27"}
 {"clusterId":"evt_ntt-programs_c-XikW0pLdZeT","kind":"event","slug":"AM創意2026綠野仙蹤中文版音樂劇","assignedAt":"2026-09-13"}
+{"clusterId":"evt_ntt-programs_c-z5PUCALWGBK","kind":"event","slug":"2027聽孩子在唱歌-米可吉他親子音樂會","assignedAt":"2026-10-27"}
 {"clusterId":"evt_ntt-programs_c-zXwE01FBplQ","kind":"event","slug":"2026-後青年工作坊—戲劇篇","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_cd5bb9e221c25572","kind":"event","slug":"2026臺中國際巨星音樂節-鋼琴天后王羽佳與馬勒室內樂團","assignedAt":"2026-10-03"}
 {"clusterId":"evt_taichung-culture-events_1","kind":"event","slug":"114年度第1期樂活美學-漆工藝技法基礎入門教學","assignedAt":"2026-09-13"}
@@ -7403,10 +7405,12 @@
 {"clusterId":"evt_taipei-culture-events_683843a014989d52","kind":"event","slug":"日午音樂會195悠揚樂章-經典長笛四重奏室內樂音樂會","assignedAt":"2026-10-05"}
 {"clusterId":"evt_taipei-culture-events_68daeec80a41d480","kind":"event","slug":"天一學社書道課第十期","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_68f1fd25daddd01d","kind":"event","slug":"2026曉韵秋冬號舞蹈詩歌探奇-舞蹈-文學-社會和音樂意義","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_690757e67b190c75","kind":"event","slug":"建築師藝廊2026年11月ESG交流活動-歡迎參加","assignedAt":"2026-10-27"}
 {"clusterId":"evt_taipei-culture-events_69e9fb1e10e94ea9","kind":"event","slug":"定格微光線上攝影展-2","assignedAt":"2026-09-14"}
 {"clusterId":"evt_taipei-culture-events_6a632028637ca62d","kind":"event","slug":"基礎刺繡雙週課共2日┋灰喵的小種子們-13種針法組合靈活運用-構圖通用觀念","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_6aa4e808f97fdcbc","kind":"event","slug":"2026曉韵秋冬號您所不知的古樂史-講題許願池-歐洲音樂與神祕學-評樂論美part2∣二選一","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_6c028781046dbef6","kind":"event","slug":"面孔遊行-Persona-Parade-韓國藝術家聯展","assignedAt":"2026-10-26"}
+{"clusterId":"evt_taipei-culture-events_6c58875433ccde8e","kind":"event","slug":"現代藝術百年-莫內到馬諦斯─托雷多美術館珍藏展-II","assignedAt":"2026-10-27"}
 {"clusterId":"evt_taipei-culture-events_6df235f0ca610897","kind":"event","slug":"慶祝佛光山傳燈六十-百年仰望紀念特展1967-2026","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_6f22247877bf0d92","kind":"event","slug":"鳴石樂集樂壇新秀-吟風弄弦-Whispering-Winds-Dancing-Strings-陳宣吟大提琴獨奏會","assignedAt":"2026-10-08"}
 {"clusterId":"evt_taipei-culture-events_6f2f7caea138f9cc","kind":"event","slug":"2027-SKM-PHOTO-新光三越國際攝影大賽","assignedAt":"2026-09-27"}
