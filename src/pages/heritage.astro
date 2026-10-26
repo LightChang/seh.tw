@@ -36,6 +36,7 @@ const cid = (c) => `c-${c}`;
     <header class="page-hd">
       <h1>文化資產</h1>
       <p class="sub"><strong class="tabular">{total.toLocaleString('en-US')}</strong> 項，下面依縣市列出有詳細沿革的 {pages.length.toLocaleString('en-US')} 項</p>
+      <p class="intro">這頁依縣市與類別列出全部文化資產頁面的入口，點名稱進去看個別古蹟、歷史建築、民俗與工藝各自的沿革與現況。普查登錄有增減時，這裡的項數會跟著更新。</p>
     </header>
 
     <h2 class="hx-h">類別</h2>
@@ -56,6 +57,7 @@ const cid = (c) => `c-${c}`;
 </Base>
 <style is:global>
   /* is:global：兩千列若用 scoped style，每個元素都會多一個 data-astro-cid 屬性，整頁多出一百多 KB */
+  .intro { margin-top: 0.6rem; color: var(--text-secondary); font-size: var(--text-sm); max-width: 42rem; }
   .hx-h { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
   .hx-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); max-width: none; font-size: var(--text-sm); }
