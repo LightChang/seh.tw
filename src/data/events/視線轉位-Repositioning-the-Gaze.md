@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_kmfa-events_045d476a94c2fd4a"
 slug: "視線轉位-Repositioning-the-Gaze"
-title: "視線轉位 Repositioning the Gaze"
+title: "展覽預告│視線轉位 Repositioning the Gaze"
 category: "展覽"
 categoryRaw: "展覽資訊"
 status: "scheduled"

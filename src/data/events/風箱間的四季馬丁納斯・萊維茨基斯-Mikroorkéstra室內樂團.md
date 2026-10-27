@@ -9,7 +9,9 @@ popularity: 1
 priceText: "NT$ 600、900、1200、1600"
 ticketUrl: "https://www.opentix.life/program/2050494429271105537"
 description: |-
-  「才華洋溢，令人驚嘆，憑一己之力重新定義手風琴。」——《獨立報》
+  ►【電子節目單】《風箱間的四季》馬丁納斯・萊維茨基斯＆Mikroork&eacute;stra室內樂團
+  
+   「才華洋溢，令人驚嘆，憑一己之力重新定義手風琴。」——《獨立報》
   
    「這位傑出的立陶宛青年手風琴家，正讓樂壇屏息注視，重新審視這項充滿表現力與情感深度的樂器。」——Classic FM
   
