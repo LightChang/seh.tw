@@ -8,6 +8,15 @@ import { builtHubs } from '../lib/build-data.mjs';
 import { cityShort } from '../lib/hubs.mjs';
 import { todayItemList } from '../lib/jsonld/index.mjs';
 
+// 同一場地同一檔活動合併後的場次說明，例「14:00、16:00 等 5 場」。
+// 只列前兩場時刻＋總場次數，搜尋摘要常截斷，時刻要排在最前面才看得到。
+const timesLabel = (times) => {
+  if (times.length <= 1) return '';
+  const sorted = [...times].sort((a, b) => a - b);
+  if (sorted.length === 2) return sorted.map(hhmm).join('、');
+  return `${sorted.slice(0, 2).map(hhmm).join('、')} 等 ${sorted.length} 場`;
+};
+
 // 清單在 build 時就寫進 HTML：搜尋引擎與答案引擎不保證會執行 JS，
 // 只留空清單等前端填，它們看到的就是一頁沒有內容的頁面。
 // 下面的 <script> 載入後會用當下時間重畫（build 之後日期就前進了），
@@ -41,7 +50,7 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
             <span class="ev-body"><span class="ev-t">{d.title}</span>
               <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
             <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
-            {d.times.length > 1 && <span class="ev-x">今天還有 {d.times.length - 1} 場</span>}
+            {d.times.length > 1 && <span class="ev-x">{timesLabel(d.times)}</span>}
           </a>
         </li>
       ))}
@@ -69,10 +78,16 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
 </Base>
 
 <script>
-  import { relTime, dateLabel, fmtNum, catVar, midnight } from '../lib/format.mjs';
+  import { relTime, dateLabel, fmtNum, catVar, midnight, hhmm } from '../lib/format.mjs';
   import { todaySessions, mergeRuns } from '../lib/day-lists.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const timesLabel = (times) => {
+    if (times.length <= 1) return '';
+    const sorted = [...times].sort((a, b) => a - b);
+    if (sorted.length === 2) return sorted.map(hhmm).join('、');
+    return `${sorted.slice(0, 2).map(hhmm).join('、')} 等 ${sorted.length} 場`;
+  };
   const all = await loadSessions();
   const now = Date.now();
   // build 時已經畫過一份（日期停在 build 當天），這裡用當下時間重畫
@@ -96,7 +111,7 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
   }
 
   const row = (d) => {
-    const extra = d.times.length > 1 ? `<span class="ev-x">今天還有 ${d.times.length - 1} 場</span>` : '';
+    const extra = d.times.length > 1 ? `<span class="ev-x">${timesLabel(d.times)}</span>` : '';
     return `<li class="${d.ts <= now ? 'past' : ''}">
       <a href="/event/${encodeURIComponent(d.slug)}">
         <time class="ev-lead tabular" datetime="${d.at}">${relTime(d.ts, now)}</time>
