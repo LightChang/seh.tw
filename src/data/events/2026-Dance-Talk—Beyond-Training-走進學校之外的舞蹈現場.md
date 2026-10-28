@@ -19,8 +19,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0847069
     lng: 121.5243993
-    venueId: "ven_derived_臺北表演藝術中心-11樓排練場1"
-    venueSlug: "臺北表演藝術中心-11樓排練場1"
+    venueId: "ent_taipei-culture-venues_107"
+    venueSlug: "11樓排練場1"
   - startAt: "2026-11-22T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-11-22T16:10:00+08:00"
@@ -32,8 +32,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0847069
     lng: 121.5243993
-    venueId: "ven_derived_臺北表演藝術中心-11樓排練場1"
-    venueSlug: "臺北表演藝術中心-11樓排練場1"
+    venueId: "ent_taipei-culture-venues_107"
+    venueSlug: "11樓排練場1"
   - startAt: "2026-11-22T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-11-22T17:20:00+08:00"
@@ -45,8 +45,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0847069
     lng: 121.5243993
-    venueId: "ven_derived_臺北表演藝術中心-11樓排練場1"
-    venueSlug: "臺北表演藝術中心-11樓排練場1"
+    venueId: "ent_taipei-culture-venues_107"
+    venueSlug: "11樓排練場1"
 sources: 
   - id: "moc-events"
     recordId: "6ab1663126b324165c32e503"

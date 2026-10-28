@@ -3,7 +3,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
-  venueIdentityKey, normAddress, sameVenuePlace, preferredVenueName,
+  venueIdentityKey, venueSuffixKeys, normAddress, sameVenuePlace, preferredVenueName,
 } from '../transform/resolve-relations.mjs';
 
 test('名稱鍵：剝縣市名與國立／市立、台→臺、去標點', () => {
@@ -49,4 +49,13 @@ test('頁面名稱：已有頁的優先，再來正式全名、用「臺」、�
   assert.equal(preferredVenueName(m, (n) => n === '台中中興大學惠蓀堂').nameRaw, '台中中興大學惠蓀堂');
   const t = [{ nameRaw: '國立台灣交響樂團演奏廳', sessions: 9 }, { nameRaw: '國立臺灣交響樂團演奏廳', sessions: 1 }];
   assert.equal(preferredVenueName(t).nameRaw, '國立臺灣交響樂團演奏廳');
+});
+
+test('機構名＋場地名：尾段鍵對得到名錄名稱鍵；去掉的機構名至少 2 字、尾段至少 4 字', () => {
+  const keys = venueSuffixKeys(venueIdentityKey('國立臺灣藝術教育館 南海劇場'));
+  assert.ok(keys.includes(venueIdentityKey('南海劇場')));
+  assert.ok(venueSuffixKeys(venueIdentityKey('國家兩廳院國家音樂廳')).includes(venueIdentityKey('國家音樂廳')));
+  assert.ok(!venueSuffixKeys(venueIdentityKey('新南海劇場')).includes(venueIdentityKey('南海劇場')));
+  assert.ok(venueSuffixKeys('某某中心演藝廳').every((k) => k.length >= 4));
+  assert.deepEqual(venueSuffixKeys('南海劇場'), []);
 });

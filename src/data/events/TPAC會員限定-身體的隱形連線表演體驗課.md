@@ -19,8 +19,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0847069
     lng: 121.5243993
-    venueId: "ven_derived_臺北表演藝術中心-11樓排練場4"
-    venueSlug: "臺北表演藝術中心-11樓排練場4"
+    venueId: "ent_taipei-culture-venues_110"
+    venueSlug: "11樓排練場4"
 sources: 
   - id: "moc-events"
     recordId: "6a2301d026b3243414cccf30"

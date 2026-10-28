@@ -198,6 +198,18 @@ export function venueIdentityKey(name) {
   return s;
 }
 
+/**
+ * 「機構名＋場地名」寫法的比對鍵：名稱鍵去掉前面一段，剩下至少 VENUE_KEY_MIN 字的各個尾段，長的先。
+ * 實測活動端寫「國立臺灣藝術教育館 南海劇場」，名錄只寫「南海劇場」——兩個名稱鍵不相等，
+ * 包含比對又只認「名錄名包含活動名」這個方向，於是各長一頁。只在同一地點時才拿尾段去併（見 main）。
+ * 去掉的那段至少 2 字，「新南海劇場」這種一字之差不算機構名。
+ */
+export function venueSuffixKeys(idk) {
+  const out = [];
+  for (let i = 2; idk.length - i >= VENUE_KEY_MIN; i++) out.push(idk.slice(i));
+  return out;
+}
+
 const CN_DIGIT = { 〇: 0, 零: 0, 一: 1, 二: 2, 三: 3, 四: 4, 五: 5, 六: 6, 七: 7, 八: 8, 九: 9 };
 function cnNumber(s) {
   if (!s.includes('十')) return Number([...s].map((c) => CN_DIGIT[c]).join(''));
@@ -422,6 +434,7 @@ async function main() {
   // ── 3. 解析：對名錄 → 別名 → 同一地點的另一種寫法 → 建 derived ──────
   const resolution = new Map(); // 正規化名稱 -> { venueId, state, method }
   let derivedCount = 0, ambiguousCount = 0, rejectedCount = 0, samePlaceCount = 0;
+  const suffixMerges = [];
 
   // 同一場館的不同寫法（見 venueIdentityKey）。名錄場館一次建好索引；
   // derived 場館邊建邊加，members 記它收了哪些寫法，頁面名稱由 preferredVenueName 決定。
@@ -550,7 +563,15 @@ async function main() {
     if (idk.length >= VENUE_KEY_MIN) {
       // 名錄裡已經有這個地方，只是寫法不同 → 併進名錄場館，不另長一頁
       const reg = (registryByIdentity.get(idk) ?? []).filter((id) => sameVenuePlace(place, venues.get(id)));
-      const pickReg = reg.length === 1 ? reg[0] : reg.length > 1 ? disambiguate(reg) : null;
+      let pickReg = reg.length === 1 ? reg[0] : reg.length > 1 ? disambiguate(reg) : null;
+      // 「機構名＋場地名」：名稱尾段等於名錄某場館的名稱鍵、而且同一地點 → 同一個場館
+      for (const suf of pickReg ? [] : venueSuffixKeys(idk)) {
+        const r2 = (registryByIdentity.get(suf) ?? []).filter((id) => sameVenuePlace(place, venues.get(id)));
+        if (!r2.length) continue;
+        pickReg = r2.length === 1 ? r2[0] : disambiguate(r2);
+        if (pickReg) suffixMerges.push(`${e.nameRaw} → ${venues.get(pickReg).name}`);
+        break;
+      }
       if (pickReg) {
         const v = venues.get(pickReg);
         // 名錄沒給座標的，用活動資料的補上，建築分群才不會漏掉它
@@ -764,6 +785,7 @@ async function main() {
     s.total += 1;
     if (e.state === 'resolved') s.resolved += 1;
   }
+  if (suffixMerges.length) console.log(`機構名＋場地名併入名錄 ${suffixMerges.length}：${suffixMerges.join('；')}`);
   console.log(`場館 ${venues.size}（名錄 ${registryCount} ＋ 活動長出 ${derivedCount}）；同一地點的另一種寫法併入 ${samePlaceCount}`);
   console.log(`建築 ${finalBuildings.length}，其中 ${multiHall.length} 棟是多廳共用，涵蓋 ${multiHall.reduce((a, b) => a + b.venueIds.length, 0)} 個廳`);
   console.log(`邊 ${relations.length}`);

@@ -21,8 +21,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0486145
     lng: 121.5514615
-    venueId: "ven_derived_臺北市藝文推廣處城市舞台"
-    venueSlug: "臺北市藝文推廣處城市舞台"
+    venueId: "ent_taipei-culture-venues_91"
+    venueSlug: "城市舞臺"
   - startAt: "2026-10-25T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-25T17:00:00+08:00"
@@ -34,8 +34,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0486145
     lng: 121.5514615
-    venueId: "ven_derived_臺北市藝文推廣處城市舞台"
-    venueSlug: "臺北市藝文推廣處城市舞台"
+    venueId: "ent_taipei-culture-venues_91"
+    venueSlug: "城市舞臺"
   - startAt: "2026-10-30T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-30T22:00:00+08:00"
@@ -47,8 +47,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0486145
     lng: 121.5514615
-    venueId: "ven_derived_臺北市藝文推廣處城市舞台"
-    venueSlug: "臺北市藝文推廣處城市舞台"
+    venueId: "ent_taipei-culture-venues_91"
+    venueSlug: "城市舞臺"
   - startAt: "2026-10-31T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-31T17:00:00+08:00"
@@ -60,8 +60,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0486145
     lng: 121.5514615
-    venueId: "ven_derived_臺北市藝文推廣處城市舞台"
-    venueSlug: "臺北市藝文推廣處城市舞台"
+    venueId: "ent_taipei-culture-venues_91"
+    venueSlug: "城市舞臺"
   - startAt: "2026-10-31T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-31T22:00:00+08:00"
@@ -73,8 +73,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0486145
     lng: 121.5514615
-    venueId: "ven_derived_臺北市藝文推廣處城市舞台"
-    venueSlug: "臺北市藝文推廣處城市舞台"
+    venueId: "ent_taipei-culture-venues_91"
+    venueSlug: "城市舞臺"
   - startAt: "2026-11-01T14:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-11-01T17:00:00+08:00"
@@ -86,8 +86,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0486145
     lng: 121.5514615
-    venueId: "ven_derived_臺北市藝文推廣處城市舞台"
-    venueSlug: "臺北市藝文推廣處城市舞台"
+    venueId: "ent_taipei-culture-venues_91"
+    venueSlug: "城市舞臺"
   - startAt: "2026-12-12T19:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-12-12T22:00:00+08:00"

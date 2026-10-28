@@ -19,8 +19,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0375417
     lng: 121.5644327
-    venueId: "ven_derived_臺北市政大樓親子劇場"
-    venueSlug: "臺北市政大樓親子劇場"
+    venueId: "ent_taipei-culture-venues_102"
+    venueSlug: "親子劇場"
   - startAt: "2027-01-16T15:00:00+08:00"
     granularity: "datetime"
     endAt: "2027-01-16T16:00:00+08:00"
@@ -32,8 +32,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0375417
     lng: 121.5644327
-    venueId: "ven_derived_臺北市政大樓親子劇場"
-    venueSlug: "臺北市政大樓親子劇場"
+    venueId: "ent_taipei-culture-venues_102"
+    venueSlug: "親子劇場"
   - startAt: "2027-01-17T10:30:00+08:00"
     granularity: "datetime"
     endAt: "2027-01-17T11:30:00+08:00"
@@ -45,8 +45,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0375417
     lng: 121.5644327
-    venueId: "ven_derived_臺北市政大樓親子劇場"
-    venueSlug: "臺北市政大樓親子劇場"
+    venueId: "ent_taipei-culture-venues_102"
+    venueSlug: "親子劇場"
   - startAt: "2027-01-17T15:00:00+08:00"
     granularity: "datetime"
     endAt: "2027-01-17T16:00:00+08:00"
@@ -58,8 +58,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0375417
     lng: 121.5644327
-    venueId: "ven_derived_臺北市政大樓親子劇場"
-    venueSlug: "臺北市政大樓親子劇場"
+    venueId: "ent_taipei-culture-venues_102"
+    venueSlug: "親子劇場"
 sources: 
   - id: "moc-events"
     recordId: "6a9afcbf26b324165c32e368"

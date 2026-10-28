@@ -26,8 +26,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-10T13:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-10T14:10:00+08:00"
@@ -39,8 +39,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-10T14:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-10T15:20:00+08:00"
@@ -52,8 +52,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-10T15:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-10T16:30:00+08:00"
@@ -65,8 +65,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-10T18:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-10T19:10:00+08:00"
@@ -78,8 +78,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-10T19:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-10T20:20:00+08:00"
@@ -91,8 +91,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-10T20:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-10T21:30:00+08:00"
@@ -104,8 +104,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T10:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T11:30:00+08:00"
@@ -117,8 +117,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T13:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T14:10:00+08:00"
@@ -130,8 +130,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T14:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T15:20:00+08:00"
@@ -143,8 +143,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T15:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T16:30:00+08:00"
@@ -156,8 +156,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T18:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T19:10:00+08:00"
@@ -169,8 +169,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T19:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T20:20:00+08:00"
@@ -182,8 +182,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-11T20:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-11T21:30:00+08:00"
@@ -195,8 +195,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-12T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-12T15:00:00+08:00"
@@ -208,8 +208,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-12T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-12T16:10:00+08:00"
@@ -221,8 +221,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-12T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-12T17:20:00+08:00"
@@ -234,8 +234,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-12T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-12T20:00:00+08:00"
@@ -247,8 +247,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-12T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-12T21:10:00+08:00"
@@ -260,8 +260,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-13T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-13T15:00:00+08:00"
@@ -273,8 +273,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-13T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-13T16:10:00+08:00"
@@ -286,8 +286,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-13T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-13T17:20:00+08:00"
@@ -299,8 +299,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-13T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-13T20:00:00+08:00"
@@ -312,8 +312,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-13T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-13T21:10:00+08:00"
@@ -325,8 +325,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-14T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-14T15:00:00+08:00"
@@ -338,8 +338,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-14T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-14T16:10:00+08:00"
@@ -351,8 +351,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-14T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-14T17:20:00+08:00"
@@ -364,8 +364,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-14T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-14T20:00:00+08:00"
@@ -377,8 +377,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-14T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-14T21:10:00+08:00"
@@ -390,8 +390,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-15T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-15T15:00:00+08:00"
@@ -403,8 +403,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-15T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-15T16:10:00+08:00"
@@ -416,8 +416,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-15T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-15T17:20:00+08:00"
@@ -429,8 +429,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-15T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-15T20:00:00+08:00"
@@ -442,8 +442,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-15T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-15T21:10:00+08:00"
@@ -455,8 +455,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-16T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-16T15:00:00+08:00"
@@ -468,8 +468,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-16T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-16T16:10:00+08:00"
@@ -481,8 +481,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-16T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-16T17:20:00+08:00"
@@ -494,8 +494,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-16T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-16T20:00:00+08:00"
@@ -507,8 +507,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-16T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-16T21:10:00+08:00"
@@ -520,8 +520,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T10:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T11:30:00+08:00"
@@ -533,8 +533,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T13:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T14:10:00+08:00"
@@ -546,8 +546,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T14:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T15:20:00+08:00"
@@ -559,8 +559,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T15:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T16:30:00+08:00"
@@ -572,8 +572,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T18:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T19:10:00+08:00"
@@ -585,8 +585,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T19:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T20:20:00+08:00"
@@ -598,8 +598,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-17T20:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-17T21:30:00+08:00"
@@ -611,8 +611,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T10:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T11:30:00+08:00"
@@ -624,8 +624,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T13:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T14:10:00+08:00"
@@ -637,8 +637,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T14:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T15:20:00+08:00"
@@ -650,8 +650,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T15:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T16:30:00+08:00"
@@ -663,8 +663,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T18:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T19:10:00+08:00"
@@ -676,8 +676,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T19:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T20:20:00+08:00"
@@ -689,8 +689,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-18T20:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-18T21:30:00+08:00"
@@ -702,8 +702,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-19T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-19T15:00:00+08:00"
@@ -715,8 +715,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-19T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-19T16:10:00+08:00"
@@ -728,8 +728,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-19T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-19T17:20:00+08:00"
@@ -741,8 +741,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-19T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-19T20:00:00+08:00"
@@ -754,8 +754,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-19T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-19T21:10:00+08:00"
@@ -767,8 +767,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-20T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-20T15:00:00+08:00"
@@ -780,8 +780,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-20T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-20T16:10:00+08:00"
@@ -793,8 +793,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-20T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-20T17:20:00+08:00"
@@ -806,8 +806,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-20T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-20T20:00:00+08:00"
@@ -819,8 +819,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-20T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-20T21:10:00+08:00"
@@ -832,8 +832,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-21T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T15:00:00+08:00"
@@ -845,8 +845,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-21T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T16:10:00+08:00"
@@ -858,8 +858,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-21T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T17:20:00+08:00"
@@ -871,8 +871,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-21T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T20:00:00+08:00"
@@ -884,8 +884,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-21T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-21T21:10:00+08:00"
@@ -897,8 +897,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-22T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-22T15:00:00+08:00"
@@ -910,8 +910,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-22T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-22T16:10:00+08:00"
@@ -923,8 +923,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-22T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-22T17:20:00+08:00"
@@ -936,8 +936,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-22T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-22T20:00:00+08:00"
@@ -949,8 +949,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-22T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-22T21:10:00+08:00"
@@ -962,8 +962,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-23T14:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-23T15:00:00+08:00"
@@ -975,8 +975,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-23T15:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-23T16:10:00+08:00"
@@ -988,8 +988,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-23T16:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-23T17:20:00+08:00"
@@ -1001,8 +1001,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-23T19:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-23T20:00:00+08:00"
@@ -1014,8 +1014,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-23T20:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-23T21:10:00+08:00"
@@ -1027,8 +1027,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T10:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T11:30:00+08:00"
@@ -1040,8 +1040,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T13:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T14:10:00+08:00"
@@ -1053,8 +1053,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T14:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T15:20:00+08:00"
@@ -1066,8 +1066,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T15:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T16:30:00+08:00"
@@ -1079,8 +1079,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T18:10:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T19:10:00+08:00"
@@ -1092,8 +1092,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T19:20:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T20:20:00+08:00"
@@ -1105,8 +1105,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
   - startAt: "2026-10-24T20:30:00+08:00"
     granularity: "datetime"
     endAt: "2026-10-24T21:30:00+08:00"
@@ -1118,8 +1118,8 @@ sessions:
     addressPrecision: "street"
     lat: 25.0351096
     lng: 121.5186208
-    venueId: "ven_derived_國家兩廳院實驗劇場"
-    venueSlug: "國家兩廳院實驗劇場"
+    venueId: "ent_taipei-culture-venues_53"
+    venueSlug: "兩廳院實驗劇場"
 sources: 
   - id: "moc-events"
     recordId: "6a435f1026b32427d0603f5b"

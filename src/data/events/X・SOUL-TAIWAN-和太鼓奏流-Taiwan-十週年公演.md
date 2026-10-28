@@ -17,8 +17,8 @@ sessions:
     district: "中正區"
     address: "臺北市中正區南海路47號"
     addressPrecision: "street"
-    venueId: "ven_derived_國立臺灣藝術教育館-南海劇場"
-    venueSlug: "國立臺灣藝術教育館-南海劇場"
+    venueId: "ent_taipei-culture-venues_50"
+    venueSlug: "南海劇場"
 sources: 
   - id: "arte-events"
     recordId: "performance-4599"
