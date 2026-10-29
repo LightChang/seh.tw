@@ -1,22 +1,21 @@
 {
-  "at": "2026-10-29T04:10:02+08:00",
-  "attempted": 29,
+  "at": "2026-10-30T04:10:02+08:00",
+  "attempted": 30,
   "changed": [
-    "npm-events",
-    "moc-emap-poi",
+    "kmfa-events",
+    "moca-taipei-events",
+    "ncfta-activities",
     "nstm-activities",
-    "nstm-exhibitions",
-    "boch-heritage-folklore",
-    "ntt-programs",
-    "ntmofa-events",
+    "moc-emap-poi",
+    "boch-heritage-arts-crafts",
     "taipei-gov-hot-events",
     "taoyuan-tourism-events",
     "taipei-culture-events",
     "tnam-events",
-    "tpac-programs",
     "twtourism-events",
     "weiwuying-programs",
     "ntm-activities",
+    "boch-heritage-preservers",
     "boch-heritage"
   ],
   "failed": [
@@ -24,8 +23,7 @@
   ],
   "alerting": [
     "moc-community",
-    "moc-events",
-    "nantou-culture-venues"
+    "moc-events"
   ],
   "skipped": []
 }
