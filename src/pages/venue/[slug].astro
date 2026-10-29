@@ -4,7 +4,7 @@ import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import VenueFacts from '../../components/VenueFacts.astro';
 import { venueNode, crumbTrail } from '../../lib/jsonld/index.mjs';
-import { catVar } from '../../lib/format.mjs';
+import { catVar, mdShort } from '../../lib/format.mjs';
 import { allVenues, flatSessions, isIndexable, venueNames } from '../../lib/build-data.mjs';
 import { upcomingSessions, pastSessions, leadText } from '../../lib/day-lists.mjs';
 import { toSchemaSpec } from '../../lib/opening-hours.mjs';
@@ -156,7 +156,7 @@ const h1 = isPerform ? `${v.name}節目表` : v.name;
 const description = [
   `${v.name}${aliasText}`,
   parent ? `，位於${parent.name}。` : '',
-  rows.length ? `近期${isPerform ? '節目' : '活動'} ${rows.length} 場${catSummary ? `：${catSummary}` : ''}。` : '。',
+  rows.length ? `近期${isPerform ? '節目' : '活動'} ${rows.length} 場${catSummary ? `：${catSummary}` : ''}，最近一場 ${mdShort(rows[0].at)}。` : '。',
   halls.length && hallNav.length ? `各廳：${hallNav.slice(0, 3).map((h) => `${h.name} ${h.upcoming} 場`).join('、')}。` : '',
   v.address ? `地址：${v.address}。` : place ? `${place}。` : '',
   v.openingHours ? `開放時間：${v.openingHours.split('\n')[0]}。` : '',
