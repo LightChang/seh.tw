@@ -46,6 +46,7 @@
 {"id":"rq_bld_bld_25.0477_121.5613","kind":"building-unnamed","payload":{"buildingId":"bld_25.0477_121.5613","halls":["台北偶戲館","哲攝攝影書共讀空間"],"lat":25.047741,"lng":121.561336},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0425_121.5104","kind":"building-unnamed","payload":{"buildingId":"bld_25.0425_121.5104","halls":["中山堂-中正廳","中山堂光復廳","臺北市中山堂廣場","臺北市中山堂臺北書院"],"lat":25.0425041,"lng":121.5103541},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_22.6200_120.2817","kind":"building-unnamed","payload":{"buildingId":"bld_22.6200_120.2817","halls":["駁二藝術特區","高雄駁二藝術特區 大勇區P3倉庫"],"lat":22.6199666,"lng":120.2816536},"suggested":"name","status":"open","decidedAt":null}
+{"id":"rq_bld_bld_25.1727_121.4369","kind":"building-unnamed","payload":{"buildingId":"bld_25.1727_121.4369","halls":["新北市立淡水古蹟博物館 得忌利士洋行","身聲淡水小劇場"],"lat":25.17265226,"lng":121.4369324},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_22.6181_120.2857","kind":"building-unnamed","payload":{"buildingId":"bld_22.6181_120.2857","halls":["LIVE WAREHOUSE大義C10倉庫","VR體感劇院-360影廳","VR體感劇院-互動展演區"],"lat":22.618070567629847,"lng":120.28566464128784},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0433_121.5293","kind":"building-unnamed","payload":{"buildingId":"bld_25.0433_121.5293","halls":["光點華山電影館 1廳","光點華山電影館 2廳","華山1914文創園區 中4B館","華山1914文創園區東3B館 烏梅劇院"],"lat":25.0432788,"lng":121.5293005},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_22.6202_120.2786","kind":"building-unnamed","payload":{"buildingId":"bld_22.6202_120.2786","halls":["駁二正港小劇場","高雄駁二藝術特區 蓬萊區B4倉庫"],"lat":22.6201549,"lng":120.2786076},"suggested":"name","status":"open","decidedAt":null}
@@ -60,25 +61,26 @@
 {"id":"rq_cat_3","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"技職永續破風者－職業試探與適性發展共育計畫","events":20},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_4","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、兒童活動","events":18},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_5","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"臺灣科學節活動","events":16},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_6","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、圖書館利用教育","events":8},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_7","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#繪畫","events":4},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_8","kind":"category-unmapped","payload":{"source":"tainan-culture-events","raw":"講座","events":4},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_9","kind":"category-unmapped","payload":{"source":"ncl-events","raw":"會議論壇","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_10","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#書法","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_11","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#樂齡","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_12","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#兒童及家庭","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_13","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"116冬令營","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_14","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"116年展廳科教活動","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_15","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"展覽徵件","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_16","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"活動－一般大眾、活動－家庭親子、活動－學生","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_17","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、研習班","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_18","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、留學活動","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_19","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、教育、文化、主題活動、講座、展覽、影片欣賞、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_20","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、成長學習、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_21","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"藝術文化、教育、文化、講座、研習班、終身學習","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_22","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、講座、展覽、影片欣賞、兒童活動、終身學習、成長學習、文化展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_23","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、電影、文化、影片欣賞","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_24","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"藝術文化、教育、講座、研習班、展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_25","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"2,206","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_26","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"1,2,3,105,108,204,206,210","events":2},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_27","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"4,109,210","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_6","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、圖書館利用教育","events":10},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_7","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"活動－一般大眾、活動－家庭親子、活動－學生","events":8},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_8","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#繪畫","events":4},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_9","kind":"category-unmapped","payload":{"source":"tainan-culture-events","raw":"講座","events":4},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_10","kind":"category-unmapped","payload":{"source":"ncl-events","raw":"會議論壇","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_11","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#書法","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_12","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#樂齡","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_13","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#兒童及家庭","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_14","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"116冬令營","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_15","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"116年展廳科教活動","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_16","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"展覽徵件","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_17","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"活動－家庭親子","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_18","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、研習班","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_19","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、留學活動","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_20","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、教育、文化、主題活動、講座、展覽、影片欣賞、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_21","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、成長學習、親子同樂","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_22","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"藝術文化、教育、文化、講座、研習班、終身學習","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_23","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、藝術文化、活動訊息、綜合、教育、主題活動、講座、展覽、影片欣賞、兒童活動、終身學習、成長學習、文化展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_24","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"綜合資訊、電影、文化、影片欣賞","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_25","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"藝術文化、教育、講座、研習班、展覽","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_26","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"2,206","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_27","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"1,2,3,105,108,204,206,210","events":2},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_28","kind":"category-unmapped","payload":{"source":"twtourism-events","raw":"4,109,210","events":2},"suggested":"map","status":"open","decidedAt":null}

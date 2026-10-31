@@ -1,25 +1,31 @@
 {
-  "at": "2026-10-30T04:10:02+08:00",
-  "attempted": 30,
+  "at": "2026-11-01T04:10:03+08:00",
+  "attempted": 31,
   "changed": [
+    "hsinchu-county-culture-events",
     "kmfa-events",
     "moca-taipei-events",
+    "ncl-events",
     "ncfta-activities",
+    "nstm-exhibitions",
     "nstm-activities",
     "moc-emap-poi",
-    "boch-heritage-arts-crafts",
+    "ntpc-culture-events",
+    "ntt-programs",
+    "ntmofa-events",
     "taipei-gov-hot-events",
     "taoyuan-tourism-events",
     "taipei-culture-events",
+    "tfam-exhibitions",
     "tnam-events",
     "twtourism-events",
     "weiwuying-programs",
-    "ntm-activities",
-    "boch-heritage-preservers",
-    "boch-heritage"
+    "ntm-activities"
   ],
   "failed": [
-    "moc-events"
+    "moc-events",
+    "boch-heritage-preservers",
+    "boch-heritage"
   ],
   "alerting": [
     "moc-community",
