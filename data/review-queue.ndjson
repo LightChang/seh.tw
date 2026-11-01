@@ -40,8 +40,7 @@
 {"id":"rq_venue_7","kind":"venue-unmatched","payload":{"nameRaw":"國立暨南國際大學人文學院 113 室","sessions":2,"city":"南投縣"},"suggested":"create","status":"open","decidedAt":null}
 {"id":"rq_venue_8","kind":"venue-unmatched","payload":{"nameRaw":"中台世界博物館  3F特展室","sessions":2,"city":"南投縣"},"suggested":"create","status":"open","decidedAt":null}
 {"id":"rq_venue_9","kind":"venue-unmatched","payload":{"nameRaw":"毓繡美術館","sessions":2,"city":"南投縣"},"suggested":"create","status":"open","decidedAt":null}
-{"id":"rq_venue_10","kind":"venue-unmatched","payload":{"nameRaw":"臺博館古生物館3樓簡報室 備註: 網路","sessions":2,"city":"臺北市"},"suggested":"create","status":"open","decidedAt":null}
-{"id":"rq_venue_11","kind":"venue-unmatched","payload":{"nameRaw":"芳宅","sessions":2,"city":"臺南市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_10","kind":"venue-unmatched","payload":{"nameRaw":"芳宅","sessions":2,"city":"臺南市"},"suggested":"create","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_22.6579_120.2828","kind":"building-unnamed","payload":{"buildingId":"bld_22.6579_120.2828","halls":["兒童美術館","內惟藝術中心 Reel one 1廳","內惟藝術中心 Reel two 2廳"],"lat":22.657859,"lng":120.282814},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0477_121.5613","kind":"building-unnamed","payload":{"buildingId":"bld_25.0477_121.5613","halls":["台北偶戲館","哲攝攝影書共讀空間"],"lat":25.047741,"lng":121.561336},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0425_121.5104","kind":"building-unnamed","payload":{"buildingId":"bld_25.0425_121.5104","halls":["中山堂-中正廳","中山堂光復廳","臺北市中山堂廣場","臺北市中山堂臺北書院"],"lat":25.0425041,"lng":121.5103541},"suggested":"name","status":"open","decidedAt":null}

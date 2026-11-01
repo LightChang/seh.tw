@@ -6303,6 +6303,7 @@
 {"clusterId":"evt_ntt-programs_c-oskJUAxbQTC","kind":"event","slug":"林慈音私房料理——好歌者的養成","assignedAt":"2026-10-21"}
 {"clusterId":"evt_ntt-programs_c-OSsKDT1iQ2E","kind":"event","slug":"主題講座迷失的李爾-莎翁悲劇的當代轉譯","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-p28rHIVhZmP","kind":"event","slug":"故事工廠婚禮上的小抄","assignedAt":"2026-09-13"}
+{"clusterId":"evt_ntt-programs_c-pINL7iMJweX","kind":"event","slug":"後臺導覽","assignedAt":"2026-11-02"}
 {"clusterId":"evt_ntt-programs_c-PJj7sHUqcFh","kind":"event","slug":"2026-NTT充電夜—戲劇工作坊","assignedAt":"2026-09-13"}
 {"clusterId":"evt_ntt-programs_c-ptZQdsCfLUA","kind":"event","slug":"2026-2027-NTT-音樂劇人才培育工程-第一階段入選作品讀劇呈現","assignedAt":"2026-10-01"}
 {"clusterId":"evt_ntt-programs_c-RcTqbhYDtUz","kind":"event","slug":"2026表演藝術-×-SDGs文化論壇-當藝術與創生行動走入地方","assignedAt":"2026-09-13"}
@@ -7283,12 +7284,16 @@
 {"clusterId":"evt_tainan-culture-events_25440","kind":"event","slug":"假日廣場日-佛光山南台別院雲水書坊行動圖書館閱書活動-3","assignedAt":"2026-10-08"}
 {"clusterId":"evt_tainan-culture-events_25443","kind":"event","slug":"2026臺南藝術進區錢要搬家啦","assignedAt":"2026-10-09"}
 {"clusterId":"evt_tainan-culture-events_25455","kind":"event","slug":"藝姿舞集-童顏舞記XI-鹽來有你","assignedAt":"2026-10-18"}
+{"clusterId":"evt_tainan-culture-events_25472","kind":"event","slug":"樂來樂愛管系列二十-2027-大橋國中管樂團年度音樂會","assignedAt":"2026-11-02"}
 {"clusterId":"evt_tainan-culture-events_25478","kind":"event","slug":"星光音樂廣場∶撥動心弦的吉他彈奏一子濬-楊傑","assignedAt":"2026-10-29"}
 {"clusterId":"evt_tainan-culture-events_25479","kind":"event","slug":"星光音樂廣場∶撥動心弦的吉他彈奏二唐米樂團","assignedAt":"2026-10-29"}
 {"clusterId":"evt_tainan-culture-events_25480","kind":"event","slug":"星光音樂廣場∶撥動心弦的吉他彈奏三佳鈺-威凱","assignedAt":"2026-10-29"}
 {"clusterId":"evt_tainan-culture-events_25481","kind":"event","slug":"星光音樂廣場∶撥動心弦的吉他彈奏四徐梅琴","assignedAt":"2026-10-29"}
 {"clusterId":"evt_tainan-culture-events_25482","kind":"event","slug":"星光音樂廣場∶撥動心弦的吉他彈奏五吳勝楊","assignedAt":"2026-10-29"}
 {"clusterId":"evt_tainan-culture-events_25483","kind":"event","slug":"星光音樂廣場∶撥動心弦的吉他彈奏六宇哲-姵嫻","assignedAt":"2026-10-29"}
+{"clusterId":"evt_tainan-culture-events_25490","kind":"event","slug":"藝感週末好塑花生工作坊—寶特瓶變身∶塑光花語","assignedAt":"2026-11-02"}
+{"clusterId":"evt_tainan-culture-events_25491","kind":"event","slug":"藝感週末好塑花生工作坊—塑膠袋變身-牡丹花束","assignedAt":"2026-11-02"}
+{"clusterId":"evt_tainan-culture-events_25493","kind":"event","slug":"南風映象-2026臺南市師美學會聯展-Southern-Breeze-Reflections-2026-Joint-Exhibition-of-Tainan-A","assignedAt":"2026-11-02"}
 {"clusterId":"evt_taipei-culture-events_0087ada576d2beff","kind":"event","slug":"中華民國筆會名家講座詩為人而作——我的寫作與翻譯","assignedAt":"2026-10-22"}
 {"clusterId":"evt_taipei-culture-events_00e58be2db484a2c","kind":"event","slug":"物.我-林宇軒個展-The-Self-in-Things-Lin-Yu-Shuan-Solo-Exhibition","assignedAt":"2026-10-12"}
 {"clusterId":"evt_taipei-culture-events_01248886be12bbd4","kind":"event","slug":"未安之地-Unsettled-Territories","assignedAt":"2026-09-13"}
@@ -7888,6 +7893,7 @@
 {"clusterId":"evt_taipei-gov-hot-events_9733547","kind":"event","slug":"西園分館秋冬-CHOOSE-ONE-閱讀生活趣味票選","assignedAt":"2026-11-01"}
 {"clusterId":"evt_taipei-gov-hot-events_9733549","kind":"event","slug":"總館走出自己的朝聖之路主題書展","assignedAt":"2026-11-01"}
 {"clusterId":"evt_taipei-gov-hot-events_9733550","kind":"event","slug":"內湖分館內湖賓果季-影視閱讀集章轉好禮-看影片解任務好禮拿不完","assignedAt":"2026-11-01"}
+{"clusterId":"evt_taipei-gov-hot-events_9733552","kind":"event","slug":"民生分館週日來FUN電歡迎蒞臨觀賞-2","assignedAt":"2026-11-02"}
 {"clusterId":"evt_taipei-gov-hot-events_9733654","kind":"event","slug":"東湖分館-跟著AI去散步-智慧走讀趣","assignedAt":"2026-10-29"}
 {"clusterId":"evt_taipei-gov-hot-events_9734094","kind":"event","slug":"龍安民眾閱覽室115年萬聖節-扭出你的鬼問題閱讀推廣活動","assignedAt":"2026-10-30"}
 {"clusterId":"evt_taipei-gov-hot-events_9734095","kind":"event","slug":"文山分館—玫瑰與戀曲愛情主題視聽資料展","assignedAt":"2026-11-01"}
@@ -8556,6 +8562,7 @@
 {"clusterId":"evt_tnam-events_event-748","kind":"event","slug":"2026第一屆臺南藝術雙年展-迴圈.超展開-當代藝術與城市社區的對話開幕論壇","assignedAt":"2026-10-17"}
 {"clusterId":"evt_tnam-events_event-749","kind":"event","slug":"2026第一屆臺南藝術雙年展-歷史迴圈-遊街-噍吧哖事件城市劇場遊街演出及播映會","assignedAt":"2026-10-24"}
 {"clusterId":"evt_tnam-events_event-750","kind":"event","slug":"2026第一屆臺南藝術雙年展-異地與在地之間-當代工藝的跨界流動-轉譯與再生論壇","assignedAt":"2026-10-28"}
+{"clusterId":"evt_tnam-events_event-755","kind":"event","slug":"迴圈.超展開-2026第一屆臺南藝術雙年展-雙年展城市人文走讀","assignedAt":"2026-11-02"}
 {"clusterId":"evt_tnam-events_exhibition-577","kind":"event","slug":"梅澤捨次郎—檔案中的生命軌跡-Umezawa-Sutejirou-Echoes-in-the-Archive","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tnam-events_exhibition-704","kind":"event","slug":"雙城計-臺南-×-熊本臺灣當代藝術接力展-Twin-Cities-Project-Tainan-×-Kumamoto-Taiwan-Contemporary-A","assignedAt":"2026-09-13"}
 {"clusterId":"evt_tnam-events_exhibition-708","kind":"event","slug":"黏膩關係-內餡-縫隙-Sticky-Relationships-Filling-Fissures","assignedAt":"2026-09-13"}
