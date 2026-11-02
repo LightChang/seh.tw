@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_kmfa-events_bbaa55bfb003b097"
 slug: "展覽預告│tamas-起源的路徑"
-title: "展覽預告│tamas 起源的路徑"
+title: "tamas 起源的路徑"
 category: "展覽"
 categoryRaw: "展覽資訊"
 status: "scheduled"
