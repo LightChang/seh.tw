@@ -19,6 +19,18 @@ sessions:
     addressPrecision: "street"
     venueId: "ven_derived_國立科學工藝博物館北館4樓生物科技教室-本館與戶外"
     venueSlug: "國立科學工藝博物館北館4樓生物科技教室-本館與戶外"
+  - startAt: "2027-01-31T09:00:00+08:00"
+    granularity: "datetime"
+    endAt: "2027-01-31T16:00:00+08:00"
+    venueNameRaw: "國立科學工藝博物館北館4樓生物科技教室 本館"
+    lat: 22.641489
+    lng: 120.322551
+    city: "高雄市"
+    district: "三民區"
+    address: "高雄市三民區九如一路720號"
+    addressPrecision: "street"
+    venueId: "ven_derived_國立科學工藝博物館北館4樓生物科技教室-本館"
+    venueSlug: "國立科學工藝博物館北館4樓生物科技教室-本館"
 sources: 
   - id: "nstm-activities"
     recordId: "2bf696f835be1f4f"
@@ -30,6 +42,10 @@ sources:
       - "sessions"
   - id: "nstm-activities"
     recordId: "91c257ea4cc925e5"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
+  - id: "nstm-activities"
+    recordId: "cd8e8f0a3625b73e"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: []
 ---

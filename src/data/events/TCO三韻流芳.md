@@ -10,7 +10,7 @@ isFree: false
 priceText: "$500"
 ticketUrl: "https://www.opentix.life/program/2085553373130006529"
 images: 
-  - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01%2bVAWFB2potwqekgHcyE836BMHwxPXh%2fSc23dKSJJJT7ANXQHBdjVKEW5BTlINLaAw%3d%3d"
+  - url: "https://cultureexpress.taipei/UploadPlugin?file=%2fw6lriPeTD4Ry1335WB01zJpomMmtmERSdrL1SqpONoEx0KtQAq%2b91AdvcZLbTnMRnHMeG3CnSCl1ry0Wj71gQ%3d%3d"
 organizers: 
   - nameRaw: "臺北市立國樂團"
     role: "master"
