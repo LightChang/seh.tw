@@ -177,7 +177,7 @@ const trail = crumbTrail([
       {multiVenueLead && <p class="lead">{multiVenueLead}</p>}
       {addrLead && <p class="lead">{addrLead}</p>}
       {orderLead && <p class="lead">{orderLead}</p>}
-      {ticketChannelLead && <p class="lead">{e.title}展出中，購票除奇美博物館官網售票平台，
+      {ticketChannelLead && !ended && <p class="lead">{e.title}展出中，購票除奇美博物館官網售票平台，
         也可經 Klook、KKday、ibon、Trip.com 等通路購買；現場售票機僅售當日票，官網另提供「快速入場預約」服務。
         詳見{srcUrl && <a href={srcUrl} target="_blank" rel="noopener">官網購票說明</a>}。</p>}
 
