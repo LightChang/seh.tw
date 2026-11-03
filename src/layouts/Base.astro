@@ -70,6 +70,11 @@ const url = canonical ?? `${site}${pathname}`;
           s.async = true;
           s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
           document.head.appendChild(s);
+          // 目標事件：帶 data-goal 的連結被點時送出，比 GA 自動的外連 click 準（那個連頁尾連結也算）
+          document.addEventListener('click', function (ev) {
+            var a = ev.target.closest && ev.target.closest('[data-goal]');
+            if (a) window.gtag('event', a.dataset.goal, { method: a.dataset.method, link_url: a.href, transport_type: 'beacon' });
+          });
         }
       </script>
     )}

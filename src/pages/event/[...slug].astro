@@ -188,7 +188,7 @@ const trail = crumbTrail([
           {e.isFree === true ? '免費' : e.priceText || '售票'}
         </dd></div>}
         {ticket && <div><dt>{ticket.label}</dt><dd>
-          <a href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.platform}</a>
+          <a href={ticket.href} target="_blank" rel="nofollow noopener" data-goal="event_detail_click" data-method="ticket">{ticket.platform}</a>
         </dd></div>}
         {loc.city ? <div><dt>縣市</dt><dd>
           <a href={`/city/${loc.city}`}>{loc.city}</a>{loc.district && <span class="n">　{loc.district}</span>}
@@ -216,8 +216,8 @@ const trail = crumbTrail([
       {/* 購票／報名與原始出處放在說明文字之前：說明常常很長，放後面就掉出首屏 */}
       {(ticket || srcUrl) && (
         <p class="cta">
-          {ticket && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener">{ticket.label}（{ticket.platform}）</a>}
-          {srcUrl && srcUrl !== ticket?.href && <a class={ticket ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener">前往原始出處</a>}
+          {ticket && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener" data-goal="event_detail_click" data-method="ticket">{ticket.label}（{ticket.platform}）</a>}
+          {srcUrl && srcUrl !== ticket?.href && <a class={ticket ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener" data-goal="event_detail_click" data-method="source">前往原始出處</a>}
           {srcUrl && <span class="src">{srcNames[0]}</span>}
         </p>
       )}
