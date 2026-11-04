@@ -45,6 +45,10 @@ sources:
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: []
   - id: "nstm-activities"
+    recordId: "afd6f57dd234f417"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
+  - id: "nstm-activities"
     recordId: "b5c60550e3bbe1dc"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: []
