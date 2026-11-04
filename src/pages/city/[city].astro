@@ -51,6 +51,8 @@ const hubLinks = [
   ...hubs.year.filter((p) => p.city === city && p.year === hubs.thisYear)
     .map((p) => ({ href: `/year/${p.year}/${p.group.key}/${city}`, label: `${p.year} ${p.group.label}時間表` })),
 ];
+// 搜「<縣市>跨年」：只在收錄到真的跨年夜活動時才回答，不是每個縣市都有
+const newYearEve = rows.find((d) => /跨年(晚會|夜|演唱會)/.test(d.title));
 ---
 <Base title={`${city}有什麼文化活動｜seh`} description={description} breadcrumbs={trail}>
   <div class="shell">
@@ -60,6 +62,10 @@ const hubLinks = [
       <h1>{city}</h1>
       <p class="sub"><strong class="tabular">{n}</strong> 個活動正在或即將發生</p>
       <p class="hub-links">{hubLinks.map((l) => <a href={l.href}>{l.label}</a>)}</p>
+      {newYearEve && (
+        <p class="nye">{city}跨年夜：<a href={`/event/${newYearEve.slug}`}>{newYearEve.title}</a>
+          {newYearEve.venue && `，${newYearEve.venue}`}，{leadText(newYearEve, buildNow)}。</p>
+      )}
     </header>
 
     <div class="cols">
@@ -119,6 +125,7 @@ const hubLinks = [
   .tags .tabular { color: var(--text-muted); }
   .tags .vn { color: var(--text-secondary); }
   .hub-links { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); font-size: var(--text-sm); }
+  .nye { margin-top: var(--space-3); font-size: var(--text-sm); color: var(--text-secondary); }
   @media (max-width: 900px) { .cols { grid-template-columns: 1fr; gap: var(--space-7); } }
 </style>
 
