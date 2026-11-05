@@ -28,13 +28,19 @@ const fresh = await newListings({ city, limit: 6, now: buildNow });
 const catCities = await builtCatCities();
 const cats = [...rows.reduce((m, d) => m.set(d.cat, (m.get(d.cat) ?? 0) + 1), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
-const venues = [...rows.reduce((m, d) => (d.venue ? m.set(d.venue, (m.get(d.venue) ?? 0) + 1) : m), new Map())]
-  .sort((a, b) => b[1] - a[1]).slice(0, 8);
+const venues = [...rows.reduce((m, d) => {
+  if (!d.venue) return m;
+  const key = d.venueSlug || d.venue;
+  const cur = m.get(key) ?? { name: d.venue, slug: d.venueSlug, n: 0 };
+  cur.n += 1;
+  m.set(key, cur);
+  return m;
+}, new Map())].map(([, v]) => v).sort((a, b) => b.n - a.n).slice(0, 8);
 // 摘要帶上頁面列出的類型與場地，搜「某地＋音樂會」「某館 活動」的人看得出這頁有沒有
 const shownCats = cats.filter(([c]) => c && catPages.has(c)).slice(0, 3);
 const description = `${city}正在發生的文化活動、展覽與演出，共 ${n} 個活動。`
   + (shownCats.length ? `${shownCats.map(([c, k]) => `${c} ${k} 場`).join('、')}。` : '')
-  + (venues.length ? `場地：${venues.slice(0, 3).map(([v]) => v).join('、')}。` : '');
+  + (venues.length ? `場地：${venues.slice(0, 3).map((v) => v.name).join('、')}。` : '');
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
 const trail = crumbTrail([{ name: '全部縣市', href: '/city' }], city);
 // 這週末、免費活動、年度時間表（src/lib/hubs.mjs），只連有建的
@@ -105,7 +111,9 @@ const newYearEve = rows.find((d) => /跨年(晚會|夜|演唱會)/.test(d.title)
         </ul>
         <h2 class="h-sm" style="margin-top:2rem">常見場地</h2>
         <ul class="tags">
-          {venues.map(([v, k]) => (<li><span class="vn">{v}<span class="tabular">{k}</span></span></li>))}
+          {venues.map((v) => (<li>{v.slug
+            ? <a href={`/venue/${v.slug}`} class="vn">{v.name}<span class="tabular">{v.n}</span></a>
+            : <span class="vn">{v.name}<span class="tabular">{v.n}</span></span>}</li>))}
         </ul>
       </aside>
     </div>
