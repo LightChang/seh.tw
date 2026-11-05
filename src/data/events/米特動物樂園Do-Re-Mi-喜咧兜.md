@@ -315,4 +315,13 @@ sources:
           district: "鳳山區"
           address: "高雄市鳳山區三多一路1號"
           addressPrecision: "street"
+        - startAt: "2026-12-06T15:00:00+08:00"
+          granularity: "datetime"
+          venueNameRaw: "衛武營國家藝術文化中心戲劇院"
+          lat: 22.6230179238508
+          lng: 120.342434118507
+          city: "高雄市"
+          district: "鳳山區"
+          address: "高雄市鳳山區三多一路1號"
+          addressPrecision: "street"
 ---
