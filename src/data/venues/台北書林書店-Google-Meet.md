@@ -8,7 +8,7 @@ district: "大安區"
 addressPrecision: "district"
 lat: 25.01814
 lng: 121.53335
-buildingId: "bld_25.0176_121.5330"
+buildingId: "bld_25.0175_121.5332"
 eventCount: 1
 eventClusterIds: 
   - "evt_taipei-culture-events_2d6afe6c585992a9"

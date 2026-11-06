@@ -45,7 +45,7 @@ description: |-
   
   Audimance多軌口述影像服務
   
-  Audimance透過不同音軌內容，提供多種口述影像體驗，包括較為常規的動作描述、詮釋性聲響、舞者錄音、詩意文本及另類描述方式。
+  由Kinetic Light 研發的Audimance多軌口述影像服務，透過不同音軌內容，提供多種口述影像體驗，包括較為常規的動作描述、詮釋性聲響、舞者錄音、詩意文本及另類描述方式。
   
   ＊購票觀眾可透過主辦方提供之連結，於演出前下載 Audimance App，並於驗票入場後連接指定 Wi-Fi 使用。觀眾可依個人選擇於演出中聆聽 Audimance 體驗演出，並敬請自備耳機。
   
@@ -53,7 +53,9 @@ description: |-
   
   Haptics提供「多層次的觸覺音樂」體驗，透過科技將音樂的節奏、強度與動態轉譯為可由身體感知的震動訊號，讓觀眾以另一種方式感受聲音。此一觸覺詮釋結合新的實體裝置與方法，開啟對藝術內容的理解與創作的不同途徑。
   
-  ＊觀眾入場時可於歌劇院二樓大廳服務台領取觸覺回饋裝置。因數量有限，將優先提供給持有證明的障礙觀眾使用。
+  ＊觀眾入場時可於歌劇院二樓大廳服務台領取觸覺回饋裝置。
+  
+  因數量有限，優先提供給持有證明的身心障礙觀眾使用，敬請提早抵達現場登記。週五場次於18:30開放驗票入場，週六場次於13:30開放驗票入場。
   
    文章閱讀
   
@@ -85,7 +87,7 @@ description: |-
   
   可及性設計｜Laurel LAWSON
   
-  作曲、編曲及演奏｜ONIKHO、謝心玲、Holly MEAD、Matthew TORRES
+  作曲、編曲及演奏｜ONIKHO、Angela HSIEH、Holly MEAD、Matthew TORRES
   
   主持人暨製作人｜蕭淑琳
   
@@ -107,11 +109,11 @@ description: |-
   
   可及性科技工程師｜Colin CLARK
   
-  可及性文化與創意顧問｜Haowen WANG
+  可及性文化與創意顧問｜王豪文
   
-  音樂設計及作曲｜ONIKHO、謝心玲、曾華萱、Holly MEAD、Matthew TORRES、Morgan WHITNEY
+  音樂設計及作曲｜ONIKHO、Angela HSIEH、曾華萱、Holly MEAD、Matthew TORRES、Morgan WHITNEY
   
-  現場音樂演奏｜ONIKHO、謝心玲、Holly MEAD、Matthew TORRES
+  現場音樂演奏｜ONIKHO、Angela HSIEH、Holly MEAD、Matthew TORRES
   
   舞者｜Alice SHEPPARD、Laurel LAWSON、方士允、阮怡蓁、黃怡嫣、鄭祐承、陳温亮、賴廷彥、潘宥睿
   
@@ -132,6 +134,20 @@ description: |-
   平面設計暨攝影｜黃煚哲
   
   影像錄製暨剪輯｜John ROSS、楊政憲、陳殿典
+  
+  Kinetic Light 團隊
+  
+  代理行政總監｜Alejandra DUQUE CIFUENTES, ADC Consulting
+  
+  藝術製作總監｜Elijah SCHREINER
+  
+  人事暨團務經理｜Morgan CARLISLE
+  
+  後勤統籌｜Adonis BROWN
+  
+  公關暨行銷聯絡人｜Mariclare HULBERT
+  
+  Kinetic Light 演出經紀代表｜Sandy GARCIA, C&iacute;a Artists Management
   
   共製暨首演單位：國家表演藝術中心衛武營國家藝術文化中心
   

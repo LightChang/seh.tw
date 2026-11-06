@@ -1,7 +1,7 @@
 ---
 clusterId: "evt_kmfa-events_f3edcf499b9bc47f"
 slug: "圖形實驗室UV膠工作坊"
-title: "「圖形實驗室」UV膠工作坊"
+title: "11/8「圖形實驗室」UV膠工作坊"
 categoryRaw: "活動資訊"
 status: "scheduled"
 sessions: 

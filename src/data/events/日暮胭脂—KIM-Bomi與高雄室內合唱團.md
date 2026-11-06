@@ -3,26 +3,30 @@ clusterId: "evt_weiwuying-programs_6a8269906a0b9d00074b14c3"
 slug: "日暮胭脂—KIM-Bomi與高雄室內合唱團"
 title: "《日暮胭脂—KIM Bomi與高雄室內合唱團》"
 status: "scheduled"
+priceText: "NT$ 500、800、1000、1200、1500"
+ticketUrl: "https://www.opentix.life/event/2113570407894147073"
 description: |-
   《日暮胭脂》由高雄室內合唱團邀請韓國指揮KIM Bomi合作，精選韓國及當代合唱作品，呈現東西文化交織的聲音風景。韓國當代合唱創作從語言、詩意與民族文化汲取靈感，並以細膩和聲、節奏與多樣音色，形塑鮮活聲音語彙。本場節目呈現韓國及當代合唱在抒情與敘事間的豐富面貌，並選唱數首韓國女性作曲家作品，透過亞洲女性之聲，展現東亞女性創作者的文化視角與創意，回應性別平權、文化連結及跨國對話。音樂會循日初、暮光至夜色展開，在流轉光影中留下悠長共鳴。
   
    演出曲目
   
-  E. Whitacre：金色之光
+  E. WHITACRE：金色之光
   
-  S. Dobrogosz：垂憐經，選自《彌撒》
+  S. DOBROGOSZ：垂憐經，選自《彌撒》
   
-  O. Gjeilo：橫越無垠的永恆天際
+  O. GJEILO：橫越無垠的永恆天際
   
-  JUNG Nam-Kyu：垂憐經，選自《鋼琴彌撒》
+  JUNG Nam-Kyu：垂憐經與光榮頌，選自《鋼琴彌撒》
   
   CHEON Kyung-Suk：永恆之光
+  
+  WOO Hyo-Won: 光榮頌之三—同享天主聖父的光榮
   
   D. Elder：生命與愛的三種主題
   
   OH Byung-Hee：哎郎
   
-  CHO Hye-Yeong：追憶
+  CHO Hye-Yeong：無法忘懷
   
   LEE Geon-Young: Tukutukutakatiki
   
@@ -35,6 +39,8 @@ description: |-
   合唱指導｜張成璞、蘇屹
   
   鋼琴｜許溎芳、楊郁雯
+  
+  打擊｜林牧民、李亭葦
   
   演出｜高雄室內合唱團一團、二團
 sessions: 
@@ -57,6 +63,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"
