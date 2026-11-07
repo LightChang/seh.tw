@@ -7413,6 +7413,15 @@
 {"clusterId":"evt_tainan-culture-events_25508","kind":"event","slug":"維也納柏林首席獨奏家合奏團","assignedAt":"2026-11-05"}
 {"clusterId":"evt_tainan-culture-events_25511","kind":"event","slug":"臺南文化中心42週年館慶系列活動-潛流.回聲-陳昱榮個展","assignedAt":"2026-11-07"}
 {"clusterId":"evt_tainan-culture-events_25512","kind":"event","slug":"歸仁文化中心-12月兒童故事屋","assignedAt":"2026-11-07"}
+{"clusterId":"evt_tainan-culture-events_25513","kind":"event","slug":"未完-正好-臺南藝術節國際串聯週-×-青年藝術家展","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25514","kind":"event","slug":"臺南文化中心42週年館慶-流動中的藝術風景-仁東藝廊空間現地導覽","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25515","kind":"event","slug":"臺南文化中心42週年館慶-流動中的藝術風景-仁東空間藝術體驗工作坊一","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25516","kind":"event","slug":"臺南文化中心42週年館慶-流動中的藝術風景-樹下音樂會","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25517","kind":"event","slug":"臺南文化中心42週年館慶-流動中的藝術風景-藝術空間篇一","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25518","kind":"event","slug":"臺南文化中心42週年館慶-流動中的藝術風景-藝術空間篇二","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25519","kind":"event","slug":"臺南文化中心42週年館慶-流動中的藝術風景-仁東空間藝術體驗工作坊二","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25520","kind":"event","slug":"2026-臺南藝術節好好聊系列講座-感謝公主窮劇場-×-江之翠劇場","assignedAt":"2026-11-08"}
+{"clusterId":"evt_tainan-culture-events_25521","kind":"event","slug":"2026-臺南藝術節好好聊系列講座-萬象園閱時劇團","assignedAt":"2026-11-08"}
 {"clusterId":"evt_taipei-culture-events_0087ada576d2beff","kind":"event","slug":"中華民國筆會名家講座詩為人而作——我的寫作與翻譯","assignedAt":"2026-10-22"}
 {"clusterId":"evt_taipei-culture-events_00e58be2db484a2c","kind":"event","slug":"物.我-林宇軒個展-The-Self-in-Things-Lin-Yu-Shuan-Solo-Exhibition","assignedAt":"2026-10-12"}
 {"clusterId":"evt_taipei-culture-events_01248886be12bbd4","kind":"event","slug":"未安之地-Unsettled-Territories","assignedAt":"2026-09-13"}
@@ -7690,6 +7699,7 @@
 {"clusterId":"evt_taipei-culture-events_aa609180850c7735","kind":"event","slug":"台積電文學沙龍—星期五的月光曲-2","assignedAt":"2026-09-15"}
 {"clusterId":"evt_taipei-culture-events_abac0a68dd437cc8","kind":"event","slug":"一席花香-一顆糖-窨花茶與茶食味覺體驗","assignedAt":"2026-09-27"}
 {"clusterId":"evt_taipei-culture-events_ac0e98b80066a051","kind":"event","slug":"鷄籠・基隆世紀饗宴劇場盛宴","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_ac7341e8a0f2a1fe","kind":"event","slug":"大稻埕的茶金說悅-用臺語走讀茶行風華","assignedAt":"2026-11-08"}
 {"clusterId":"evt_taipei-culture-events_adf4ee4125aa3545","kind":"event","slug":"鳴石樂集樂壇新秀囍女高音戴羽柔獨唱會","assignedAt":"2026-10-22"}
 {"clusterId":"evt_taipei-culture-events_ae93d09bc5274f48","kind":"event","slug":"在這裡-與大家相遇—國立歷史博物館常設展-2","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_aecef5e4123dc49b","kind":"event","slug":"飛吧-猛禽一起認識台灣猛禽-里仁誠食市集生態策展","assignedAt":"2026-10-24"}
@@ -7756,6 +7766,7 @@
 {"clusterId":"evt_taipei-culture-events_d7d71c218fd1d3f5","kind":"event","slug":"鳴石樂集樂壇新秀風景蔡猛堯鋼琴獨奏會","assignedAt":"2026-10-08"}
 {"clusterId":"evt_taipei-culture-events_d7f7d5390b59e946","kind":"event","slug":"2026舞躍大地舞蹈創作比賽","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_d89a0e702421ae00","kind":"event","slug":"2026天籟詩獎","assignedAt":"2026-09-13"}
+{"clusterId":"evt_taipei-culture-events_d8ba6d2f54a8106e","kind":"event","slug":"孩子為什麼做不到-從腦神經科學理解拒學-焦慮與情緒循環","assignedAt":"2026-11-08"}
 {"clusterId":"evt_taipei-culture-events_d8f50ad30fe538d2","kind":"event","slug":"中國信託新舞臺藝術節戶外公益場演奏吧-好土樂團","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_da8c9acb729d9789","kind":"event","slug":"鳴石樂集樂壇新秀-魏程裕鋼琴獨奏會湛•音","assignedAt":"2026-09-13"}
 {"clusterId":"evt_taipei-culture-events_dc3e95181b5844fa","kind":"event","slug":"燕子之城二部曲—主題講座-滅蜈蚣行動經驗分享-小小印製會","assignedAt":"2026-09-13"}
@@ -8046,6 +8057,8 @@
 {"clusterId":"evt_taipei-gov-hot-events_9736215","kind":"event","slug":"總館兒童室繪本阿公-鄭明進紀念書展","assignedAt":"2026-11-03"}
 {"clusterId":"evt_taipei-gov-hot-events_9737347","kind":"event","slug":"一本書-讓我們重新聽見彼此-北投分館家庭閱讀系列活動","assignedAt":"2026-11-04"}
 {"clusterId":"evt_taipei-gov-hot-events_9737942","kind":"event","slug":"總館視聽室表演藝術同樂會11月節目表","assignedAt":"2026-11-07"}
+{"clusterId":"evt_taipei-gov-hot-events_9737945","kind":"event","slug":"內湖分館11月Fun電影活動","assignedAt":"2026-11-08"}
+{"clusterId":"evt_taipei-gov-hot-events_9737948","kind":"event","slug":"銀髮族3C講座─進階課程-AI創意初體驗","assignedAt":"2026-11-08"}
 {"clusterId":"evt_taipei-gov-hot-events_9744157","kind":"event","slug":"開卷品佳餚‧閱讀好食光總館主題書展暨借閱集點活動","assignedAt":"2026-11-07"}
 {"clusterId":"evt_taipei-gov-hot-events_9744402","kind":"event","slug":"永春分館成為自己-LGBTQ-人物生命故事人物傳記館藏特色暨相關主題書展","assignedAt":"2026-11-07"}
 {"clusterId":"evt_taoyuan-tourism-events_5230","kind":"event","slug":"2026桃園-ON-AIR-跨年晚會","assignedAt":"2026-09-13"}

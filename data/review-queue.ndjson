@@ -49,6 +49,8 @@
 {"id":"rq_venue_13","kind":"venue-unmatched","payload":{"nameRaw":"南投縣國姓鄉民族街42號","sessions":2,"city":"南投縣"},"suggested":"create","status":"open","decidedAt":null}
 {"id":"rq_venue_14","kind":"venue-unmatched","payload":{"nameRaw":"草屯鎮街區","sessions":2,"city":"南投縣"},"suggested":"create","status":"open","decidedAt":null}
 {"id":"rq_venue_15","kind":"venue-unmatched","payload":{"nameRaw":"芳宅","sessions":2,"city":"臺南市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_16","kind":"venue-unmatched","payload":{"nameRaw":"劉蓉鶯工作室","sessions":2,"city":"臺南市"},"suggested":"create","status":"open","decidedAt":null}
+{"id":"rq_venue_17","kind":"venue-unmatched","payload":{"nameRaw":"google meet","sessions":2},"suggested":"create","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_22.6579_120.2828","kind":"building-unnamed","payload":{"buildingId":"bld_22.6579_120.2828","halls":["兒童美術館","內惟藝術中心 Reel one 1廳","內惟藝術中心 Reel two 2廳"],"lat":22.657859,"lng":120.282814},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0477_121.5613","kind":"building-unnamed","payload":{"buildingId":"bld_25.0477_121.5613","halls":["台北偶戲館","哲攝攝影書共讀空間"],"lat":25.047741,"lng":121.561336},"suggested":"name","status":"open","decidedAt":null}
 {"id":"rq_bld_bld_25.0425_121.5104","kind":"building-unnamed","payload":{"buildingId":"bld_25.0425_121.5104","halls":["中山堂-中正廳","中山堂光復廳","臺北市中山堂廣場","臺北市中山堂臺北書院"],"lat":25.0425041,"lng":121.5103541},"suggested":"name","status":"open","decidedAt":null}
@@ -73,8 +75,8 @@
 {"id":"rq_cat_5","kind":"category-unmapped","payload":{"source":"nstm-activities","raw":"臺灣科學節活動","events":16},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_6","kind":"category-unmapped","payload":{"source":"taipei-gov-hot-events","raw":"教育、文化、圖書館利用教育","events":10},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_7","kind":"category-unmapped","payload":{"source":"ntmofa-events","raw":"活動－一般大眾、活動－家庭親子、活動－學生","events":8},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_8","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#繪畫","events":4},"suggested":"map","status":"open","decidedAt":null}
-{"id":"rq_cat_9","kind":"category-unmapped","payload":{"source":"tainan-culture-events","raw":"講座","events":4},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_8","kind":"category-unmapped","payload":{"source":"tainan-culture-events","raw":"講座","events":8},"suggested":"map","status":"open","decidedAt":null}
+{"id":"rq_cat_9","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#繪畫","events":4},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_10","kind":"category-unmapped","payload":{"source":"ncl-events","raw":"會議論壇","events":2},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_11","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#書法","events":2},"suggested":"map","status":"open","decidedAt":null}
 {"id":"rq_cat_12","kind":"category-unmapped","payload":{"source":"npm-events","raw":"#樂齡","events":2},"suggested":"map","status":"open","decidedAt":null}

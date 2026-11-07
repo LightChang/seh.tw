@@ -4,7 +4,7 @@ slug: "淺堤沈默的鉅作空間敘事三部曲-Part-2.-劇作-音樂廳巡迴
 title: "淺堤《沈默的鉅作》空間敘事三部曲 Part 2. 劇作｜音樂廳巡迴 — 臺北場"
 status: "scheduled"
 images: 
-  - url: "https://backstage.tpac-taipei.org/storage/uploads/program/images/92e8dd2419b61e6e9be8c47a8776c646.jpg"
+  - url: "https://backstage.tpac-taipei.org/storage/uploads/program/images/aed72cf1e9965747e41201335adc6f09.jpg"
 sessions: 
   - startAt: "2026-12-25"
     granularity: "date"
