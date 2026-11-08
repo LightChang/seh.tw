@@ -2226,6 +2226,16 @@
   ]
  },
  {
+  "id": "bld_25.0175_121.5332",
+  "name": "台北書林書店＋Google Meet",
+  "lat": 25.0175,
+  "lng": 121.53317,
+  "venueIds": [
+   "ven_derived_New-Acropolis-Taiwan-新衛城台灣",
+   "ven_derived_台北書林書店-Google-Meet"
+  ]
+ },
+ {
   "id": "bld_25.0483_121.5787",
   "name": "佛光緣美術館台北館",
   "lat": 25.04829,
@@ -2268,16 +2278,6 @@
   "lng": 121.53218,
   "venueIds": [
    "ven_derived_孟焦畫坊"
-  ]
- },
- {
-  "id": "bld_25.0175_121.5332",
-  "name": "台北書林書店＋Google Meet",
-  "lat": 25.0175,
-  "lng": 121.53317,
-  "venueIds": [
-   "ven_derived_New-Acropolis-Taiwan-新衛城台灣",
-   "ven_derived_台北書林書店-Google-Meet"
   ]
  },
  {
@@ -2993,6 +2993,16 @@
   "lng": 120.91373,
   "venueIds": [
    "ven_derived_藝站-One-Station"
+  ]
+ },
+ {
+  "id": "bld_25.0477_121.5124",
+  "name": "臺北記憶倉庫",
+  "lat": 25.04769,
+  "lng": 121.51244,
+  "venueIds": [
+   "ven_derived_臺北記憶倉庫",
+   "ven_derived_臺北記憶倉庫二樓活動區"
   ]
  },
  {
@@ -3746,15 +3756,6 @@
   ]
  },
  {
-  "id": "bld_25.0477_121.5124",
-  "name": "臺北記憶倉庫二樓活動區",
-  "lat": 25.04769,
-  "lng": 121.51244,
-  "venueIds": [
-   "ven_derived_臺北記憶倉庫二樓活動區"
-  ]
- },
- {
   "id": "bld_25.0381_121.5750",
   "name": "Neverland Gallery",
   "lat": 25.0381,
@@ -3960,6 +3961,15 @@
   "lng": 121.52492,
   "venueIds": [
    "ven_derived_台北善導寺教育大樓"
+  ]
+ },
+ {
+  "id": "bld_25.0957_121.4951",
+  "name": "社子島",
+  "lat": 25.09573,
+  "lng": 121.4951,
+  "venueIds": [
+   "ven_derived_社子島"
   ]
  },
  {
