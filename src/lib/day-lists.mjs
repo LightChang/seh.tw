@@ -70,17 +70,67 @@ export function leadText(d, now) {
   return `${dateLabel(d.at).slice(5)}${d.dateOnly ? '' : ` ${hhmm(d.at)}`}`;
 }
 
-/** 今天（台灣時間 00:00–24:00）的場次，未開始的在前、已開始的在後。 */
+/**
+ * 只有日期、沒有時刻的場次。flatSessions／loadSessions 都會給 dateOnly；
+ * 沒給的（測試資料、舊呼叫端）退回看 `at` 是不是補成的 T00:00。
+ */
+const isDateOnly = (d) => d.dateOnly ?? /T00:00$/.test(d.at);
+
+/**
+ * 今天（台灣時間 00:00–24:00）開始的場次。順序：還沒開始的（依時刻）→ 整天型 → 已開始的（最近的在前）。
+ * 整天型沒有時刻，不能拿 00:00 當成「已經開始」——頁首「還沒開始，來得及」把它們算進去，
+ * 清單也要放在「稍早已開始」的分隔線之前，兩邊說法才一致。
+ */
 export function todaySessions(all, now) {
   const t0 = midnight(now);
   const t1 = t0 + 86400000;
-  return all.map((d) => ({ ...d, ts: tsOf(d) }))
+  const rank = (d) => (d.dateOnly ? 1 : d.ts <= now ? 2 : 0);
+  return all.map((d) => ({ ...d, ts: tsOf(d), dateOnly: isDateOnly(d) }))
     .filter((d) => d.ts >= t0 && d.ts < t1)
     .sort((a, b) => {
-      const ap = a.ts <= now, bp = b.ts <= now;
-      if (ap !== bp) return ap ? 1 : -1;
-      return ap ? b.ts - a.ts : a.ts - b.ts;
+      const ra = rank(a), rb = rank(b);
+      if (ra !== rb) return ra - rb;
+      return ra === 2 ? b.ts - a.ts : a.ts - b.ts;
     });
+}
+
+/** 今天清單裡「已經開始」的場次（整天型不算）。分隔線與灰色都用這一個判斷。 */
+export const startedBy = (d, now) => !d.dateOnly && d.ts <= now;
+
+/**
+ * 今天清單第一欄的字（前端，用當下時間）：整天型「整天」；還沒開始的「N 分鐘後」；
+ * 已開始的有結束時刻且還沒結束才說「進行中」，否則只說「HH:MM 已開始」——
+ * 晚上十點還說下午兩點那場「進行中」，其實早就散場了。
+ */
+export function todayLead(d, now, relTime) {
+  if (d.dateOnly) return '整天';
+  if (d.ts > now) return relTime(d.ts, now);
+  const end = d.tsEnd ?? tsEndOf(d);
+  if (end && end > now && end - d.ts < 86400000) return '進行中';
+  return `${hhmm(d.ts)} 已開始`;
+}
+
+/**
+ * 今天也看得到、但不是今天才開始的活動（展期跨過今天的展覽）。一個活動一列，
+ * 已經出現在 todaySessions 裡的活動不重複列。依關注度（popularity，前端沒有就照原順序）。
+ * 首頁的「今天有幾個活動」與 /today 頁首都用 todaySessions＋這一份，數字才對得起來。
+ */
+export function runningToday(all, now) {
+  const t0 = midnight(now);
+  const t1 = t0 + 86400000;
+  const startsToday = new Set();
+  const bySlug = new Map();
+  for (const d of all) {
+    const ts = tsOf(d);
+    if (ts >= t0 && ts < t1) { startsToday.add(d.slug); continue; }
+    if (ts >= t0) continue;
+    const end = tsEndOf(d);
+    if (end === null || end < t0) continue;
+    const prev = bySlug.get(d.slug);
+    if (!prev || end < prev.tsEnd) bySlug.set(d.slug, { ...d, ts, tsEnd: end });
+  }
+  return [...bySlug.values()].filter((d) => !startsToday.has(d.slug))
+    .sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0) || a.tsEnd - b.tsEnd);
 }
 
 /**

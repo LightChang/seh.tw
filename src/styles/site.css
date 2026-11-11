@@ -218,6 +218,8 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
   .ph-cap { display: none; }   /* 小圓放不下一行字，手機只留圖示 */
   /* 手機：數字卡一排排滿（三張就三欄），不放小圖示，數字更突出 */
   .ph-stats { grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr)); gap: var(--space-2); margin-top: var(--space-5); }
+  /* 四張卡排成 2×2，不要 3＋1 留一張孤單的 */
+  .ph-stats:has(> :nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .ph-stat, .ph-stat a { display: block; padding: var(--space-3); }
   .ph-stat:has(a) { padding: 0; }
   .ph-sico { display: none; }
@@ -373,3 +375,32 @@ dialog.decide h2 { margin-top: var(--space-2); font-size: var(--text-lg); }
 /* 按鈕裡的線條圖示（取代 emoji） */
 .bi { display: inline-flex; flex: none; }
 .bi svg { width: 1.3em; height: 1.3em; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ── 手機閱讀（2026-11-11 手機檢視）──────────────────────────────
+ * 1. 推薦卡：色塊改成上方細條（圖示＋時間同一行）。原本 16:9 的色塊只有一個圖示，
+ *    一張卡 480px 高，首頁捲八張卡要 4,000px。
+ * 2. 長清單（HubList 的 data-fold）：只先顯示前幾列，按「顯示另外 N 個」展開。 */
+.fold-btn { display: none; }
+@media (max-width: 760px) {
+  .ev-list[data-fold] > li:nth-child(n+7) { display: none; }
+  .fold-btn {
+    display: flex; align-items: center; justify-content: center; width: 100%; min-height: 48px; margin-top: var(--space-2);
+    font: inherit; font-size: var(--text-xs); font-weight: 800; color: var(--seh-forest); cursor: pointer;
+    background: var(--seh-card); border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
+  }
+}
+@media (max-width: 520px) {
+  .spot-visual { flex-direction: row; align-items: center; justify-content: flex-start; aspect-ratio: auto; padding: var(--space-3) var(--space-4); }
+  .spot-visual svg { width: 32px; height: 32px; }
+  .spot-when { font-size: var(--text-sm); }
+  .spot-body { padding: var(--space-3) var(--space-4) var(--space-4); }
+  .spot-tags, .spot-t, .spot-b { min-height: 0; }
+}
+
+/* 手機點擊目標至少 44px 高：相關頁面列、縣市／類型列、活動頁的類型標籤與事實欄連結、
+ * 搜尋的場館列、文資頁的場館列（這些規則各頁都沒設 min-height，不會互相蓋掉） */
+@media (max-width: 760px) {
+  nav.also a, .cityrow a, .catrow a, .ev-kick a.tag, .facts dd a, .vlist a, .near li > a, .rowlinks a {
+    display: inline-flex; align-items: center; min-height: 44px;
+  }
+}

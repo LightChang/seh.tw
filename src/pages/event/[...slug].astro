@@ -1,4 +1,5 @@
 ---
+import { sourceLabel } from '../../lib/source-names.mjs';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
@@ -138,7 +139,7 @@ const stripPipePrefix = (t) => {
 const alias = titleAliases.aliases?.[e.slug]?.alias;
 if (ld && alias) ld.alternateName = alias;
 const metaTitle = eventTitle({ ...e, title: unwrapTitle(stripSeriesPrefix(stripPipePrefix(e.title))) }, { alias });
-const srcNames = [...new Set(e.sources.map((x) => x.sourceName || x.id))];
+const srcNames = [...new Set(e.sources.map((x) => sourceLabel(x)))];
 const shown = sessions.slice(0, 20);
 // 已結束或內容太少的活動退回 noindex，網址仍然存在、站內仍然連得到
 const indexable = await isIndexable(`/event/${e.slug}`);
@@ -204,8 +205,8 @@ const artTone = ART_TONE[e.category] ?? 'plain';
 const fi = (name) => iconSvg(name);
 
 // 麵包屑：畫面與 BreadcrumbList 同一份
+// 不放「今天」：活動多半不是今天的（已結束、下個月才開始），掛在「今天」底下是錯的層級。
 const trail = crumbTrail([
-  { name: '今天', href: '/today' },
   loc.city && { name: loc.city, href: `/city/${loc.city}` },
   hasCatPage && { name: e.category, href: `/category/${e.category}` },
 ], e.title);
@@ -382,7 +383,7 @@ const trail = crumbTrail([
         <p class="pnote">這一頁由 {e.sources.length} 個來源整理而成。每個欄位各自挑品質最高的來源，落選值也留著。</p>
         <ul class="slist">{e.sources.map((s) => (
           <li>
-            <span class="sid">{s.sourceName || s.id}</span>
+            <span class="sid">{sourceLabel(s)}</span>
             <span class="sp">{s.provides.length ? `提供 ${s.provides.join('、')}` : '未被採用'}</span>
             {verified.get(`${s.id}:${s.recordId}`) && (
               <time class="tabular sd">{verified.get(`${s.id}:${s.recordId}`)}</time>
@@ -393,9 +394,9 @@ const trail = crumbTrail([
       </footer>
       </div>
 
-      <aside class="ev-side" aria-label="出發前">
-        <div class="plan">
-          <p class="plan-k">出發前</p>
+      <aside class="ev-side" aria-label={ended ? '活動資訊' : '出發前'}>
+        <div class={ended ? 'plan is-ended' : 'plan'}>
+          <p class="plan-k">{ended ? '活動已結束' : '出發前'}</p>
           <p class="plan-when tabular">{whenText(sessions)}</p>
           {sessions.length > 1 && <p class="plan-n">共 {sessions.length} 場次</p>}
           {place && <p class="plan-place">{place}</p>}
@@ -411,7 +412,7 @@ const trail = crumbTrail([
             </p>
           )}
           <SaveShare kind="event" slug={e.slug} title={e.title} when={whenText(sessions)} place={place} endTs={evEnd}
-            cat={e.category ?? ''} url={pageUrl} />
+            cat={e.category ?? ''} url={pageUrl} ended={ended} />
         </div>
       </aside>
       </div>
@@ -438,6 +439,8 @@ const trail = crumbTrail([
   .ev-side { position: sticky; top: 80px; }
   .plan { border-top: 6px solid var(--seh-coral); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); padding: var(--space-5); display: grid; gap: var(--space-2); }
   .plan-k { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; color: var(--seh-coral-deep); }
+  .plan.is-ended { border-top-color: var(--text-muted); }
+  .plan.is-ended .plan-k { color: var(--text-secondary); }
   .plan-when { font-size: var(--text-base); font-weight: 800; line-height: 1.35; }
   .plan-n, .plan-place, .plan-price { font-size: var(--text-xs); color: var(--text-secondary); }
   .plan .cta { margin-top: var(--space-3); display: grid; gap: var(--space-2); }

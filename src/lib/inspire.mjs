@@ -48,15 +48,15 @@ export const HERITAGE_MOODS = ['escape', 'solo'];
 /** 四種時間。週末的 hint 由頁面依日期補上。 */
 export const TIMES = [
   { key: 'soon', label: '現在就有空', hint: '接下來 3 小時' },
-  { key: 'tonight', label: '今晚', hint: '18:00 以後' },
+  { key: 'tonight', label: '今晚', hint: '19:00 以後' },
   { key: 'halfday', label: '有半天', hint: '接下來 6 小時' },
   { key: 'weekend', label: '這週末', hint: '週六、週日' },
 ];
 
-/** 時間窗 [from, to)，epoch 毫秒 */
+/** 時間窗 [from, to)，epoch 毫秒。今晚＝19:00 起，與 /tonight（day-lists.mjs 的 tonightSessions）同一個定義。 */
 export function windowOf(key, now) {
   const t0 = midnight(now);
-  if (key === 'tonight') return { from: Math.max(now, t0 + 18 * HOUR), to: t0 + DAY, night: true };
+  if (key === 'tonight') return { from: Math.max(now, t0 + 19 * HOUR), to: t0 + DAY, night: true };
   if (key === 'halfday') return { from: now, to: now + 6 * HOUR };
   if (key === 'weekend') { const w = weekendOf(now); return { from: Math.max(now, w.from), to: w.to }; }
   return { from: now, to: now + 3 * HOUR };

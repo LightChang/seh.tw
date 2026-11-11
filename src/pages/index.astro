@@ -15,7 +15,8 @@ import { readFile } from 'node:fs/promises';
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import InspirePicker from '../components/InspirePicker.astro';
-import { inspirePool, liveEventList, builtHubs } from '../lib/build-data.mjs';
+import { inspirePool, liveEventList, builtHubs, flatSessions } from '../lib/build-data.mjs';
+import { todaySessions, mergeRuns, runningToday } from '../lib/day-lists.mjs';
 import { homeGraph } from '../lib/jsonld/index.mjs';
 import { editorPicks, endingSoon, daysLeftText } from '../lib/home-picks.mjs';
 import { match, cardHtml, MOODS, whenLabel } from '../lib/inspire.mjs';
@@ -69,7 +70,10 @@ const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
 const ym = new Date(buildNow + 8 * 3600e3).toISOString().slice(0, 7);
 const tw0 = new Date(t0 + 12 * 3600e3);
 const dayText = `${tw0.getUTCMonth() + 1} 月 ${tw0.getUTCDate()} 日・週${WD[tw0.getUTCDay()]}`;
-const todayCount = new Set(match(pool, { time: 'halfday', mood: 'now', now: t0 + 9 * 3600e3 }).filter((r) => r.it.k === 'event').map((r) => r.it.s)).size;
+// 「今天有幾個活動」與 /today 頁首同一套算法（day-lists.mjs）：今天開始的＋展期跨過今天的。
+// 數字連到 /today，點進去看到的總數就是這兩個加起來。
+const allSessions = await flatSessions();
+const todayCount = mergeRuns(todaySessions(allSessions, buildNow)).length + runningToday(allSessions, buildNow).length;
 
 const cards = (list, entry) => list.map((r) => cardHtml(r, { entry, now: snap })).join('');
 const href = (slug) => `/event/${encodeURIComponent(slug)}`;
@@ -97,7 +101,7 @@ const themes = [
       <div class="hero-main">
         <p class="hero-k"><span class="sticker">給生活一點意外的精彩</span><span class="day" id="day-text">{dayText}</span></p>
         <h1>不知道去哪裡，<br />就打開 <span class="logo-in">seh</span>。</h1>
-        <p class="lede">不必事先規劃，也不必知道自己想去哪裡。今天有 <b class="tabular">{fmtNum(todayCount)}</b> 個活動正在發生，挑一個出門吧。</p>
+        <p class="lede">不必事先規劃，也不必知道自己想去哪裡。今天有 <a class="today-n" href="/today" data-goal="nav" data-method="hero_today"><b class="tabular">{fmtNum(todayCount)}</b> 個活動</a>可以去，挑一個出門吧。</p>
         <p class="hero-acts">
           <button type="button" class="btn-go big" data-decide data-entry="home_hero"><span class="bi" set:html={iconSvg('dice')} />幫我決定！</button>
           <a class="btn-ghost" href="#pick" data-goal="nav" data-method="hero_pick">我自己挑</a>
@@ -130,7 +134,7 @@ const themes = [
         <h2 id="pick-h">告訴 seh 你現在的狀態</h2>
         <p class="sec-sub">兩個問題，馬上給你現在可以去的地方。</p>
       </div>
-      <InspirePicker ssr={cards(match(pool, { time: 'halfday', mood: 'now', now: snap }).slice(0, 8), 'home_picker_halfday_now')} limit={8} time="soon" mood="now" weekendHint={wk.label} />
+      <InspirePicker ssr={cards(match(pool, { time: 'soon', mood: 'now', now: snap }).slice(0, 8), 'home_picker_soon_now')} limit={8} time="soon" mood="now" weekendHint={wk.label} />
     </section>
 
     <!-- 今晚去哪裡？ -->
@@ -296,6 +300,7 @@ const themes = [
   .hero-k { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
   .sticker { display: inline-block; padding: 0.3em 0.9em; border-radius: 999px; background: var(--seh-sun); font-size: var(--text-xs); font-weight: 800; transform: rotate(-2deg); }
   .day { font-size: var(--text-xs); color: var(--text-secondary); }
+  .today-n { color: var(--seh-forest); }
   .hero h1 { margin-top: var(--space-4); font-size: clamp(2.75rem, 5.2vw, 4.5rem); line-height: 1.1; letter-spacing: -0.035em; }
   .logo-in { color: var(--seh-forest); position: relative; white-space: nowrap; z-index: 0; }
   .logo-in::after { content: ''; position: absolute; left: -2%; right: -2%; bottom: 0.06em; height: 0.28em; background: var(--seh-coral); opacity: 0.55; z-index: -1; border-radius: 4px; }

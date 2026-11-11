@@ -54,18 +54,38 @@ const cid = (c) => `c-${c}`;
 
     {cities.map(([c, list]) => (
       <section class="hx-city" id={cid(c)}>
-        <h2 class="sec-h"><span class="sec-ico" set:html={iconSvg('roof')} />{c}<span class="tabular badge">{list.length}</span>{c !== '其他' && <a class="hx-go" href={`/city/${c}`}>{c}活動 →</a>}</h2>
-        <ul class="hx-list">{list.map((h) => (
-          <li><a href={`/heritage/${h.slug}`}>{h.name}</a><span>{[h.district, typeOf(h)].filter(Boolean).join('　')}</span></li>
-        ))}</ul>
+        {/* 依縣市收合：兩千多列全部攤開，手機要捲十幾萬 px。內容仍在 HTML 裡，搜尋引擎看得到 */}
+        <details class="hx-fold">
+          <summary><h2 class="sec-h"><span class="sec-ico" set:html={iconSvg('roof')} />{c}<span class="tabular badge">{list.length}</span></h2></summary>
+          {c !== '其他' && <p class="hx-go-p"><a class="hx-go" href={`/city/${c}`}>看{c}的活動 →</a></p>}
+          <ul class="hx-list">{list.map((h) => (
+            <li><a href={`/heritage/${h.slug}`}>{h.name}</a><span>{[h.district, typeOf(h)].filter(Boolean).join('　')}</span></li>
+          ))}</ul>
+        </details>
       </section>
     ))}
   </div>
 </Base>
+<script>
+  // 從上方縣市跳過來（#c-臺北市）時自動展開該縣市
+  const openHash = () => {
+    const id = decodeURIComponent(location.hash.slice(1));
+    const d = id && document.getElementById(id)?.querySelector('details');
+    if (d) d.open = true;
+  };
+  openHash();
+  addEventListener('hashchange', openHash);
+</script>
 <style is:global>
   /* is:global：兩千列若用 scoped style，每個元素都會多一個 data-astro-cid 屬性，整頁多出一百多 KB */
   .intro { grid-column: 1 / -1; margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-xs); max-width: 42rem; }
-  .hx-go { margin-left: auto; font-size: var(--text-xs); font-weight: 700; color: var(--seh-forest); text-decoration: none; }
+  .hx-go { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--text-xs); font-weight: 700; color: var(--seh-forest); text-decoration: none; }
+  .hx-fold > summary .sec-h { margin-top: var(--space-4); }
+  .hx-fold > summary { list-style: none; cursor: pointer; }
+  .hx-fold > summary::-webkit-details-marker { display: none; }
+  .hx-fold > summary .sec-h::after { content: '展開 ▾'; margin-left: auto; font-family: var(--font-body); font-size: var(--text-xs); font-weight: 700; color: var(--seh-forest); }
+  .hx-fold[open] > summary .sec-h::after { content: '收合 ▴'; }
+  .hx-go-p { margin-top: var(--space-2); }
   .hx-city { scroll-margin-top: 80px; }
   .hx-h { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
@@ -73,14 +93,14 @@ const cid = (c) => `c-${c}`;
   .hx-row a, .hx-row span { display: inline-flex; gap: 0.5rem; text-decoration: none; }
   .hx-row a:hover { color: var(--color-link); }
   .hx-row b { color: var(--text-muted); font-weight: 400; }
-  .hx-city { margin-top: var(--space-4); }
+  .hx-city { margin-top: 0; }
   .hx-ch { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 1rem;
            font-family: var(--font-body); font-weight: 700; font-size: var(--text-base); letter-spacing: 0; }
   .hx-ch span, .hx-ch a { font-weight: 400; font-size: var(--text-sm); color: var(--text-muted); }
   .hx-ch a { color: var(--color-link); }
   .hx-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; columns: 20rem; column-gap: 2.5rem; }
   .hx-list li { break-inside: avoid; padding: 0.5rem 0; border-top: var(--hairline) solid var(--border-subtle); }
-  .hx-list a { display: block; text-decoration: none; font-weight: 700; }
+  .hx-list a { display: flex; align-items: center; min-height: 44px; text-decoration: none; font-weight: 700; }
   .hx-list a:hover { color: var(--color-link); }
   .hx-list span { display: block; font-size: var(--text-sm); color: var(--text-muted); }
 </style>

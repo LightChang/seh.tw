@@ -44,7 +44,7 @@ const ld = eventItemList(shown.slice(0, 100), `${dayLabel} ${city}的文化活�
 ---
 <Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
   <div class="shell">
-    <Nav />
+    <Nav current="today" />
     <PageHero kicker="今天想出門" icon={'sun'} tone="sun">
       <Breadcrumb slot="top" trail={trail} />
       <Fragment slot="title">{place}今天</Fragment>

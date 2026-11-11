@@ -44,6 +44,9 @@ test('週末清單：跨週末的展期標「展期中」，當天開始的依�
   assert.deepEqual(eventsIn(rows, wk.from, wk.to, (s) => s !== '戲').map((e) => e.slug), ['樂', '展']);
   assert.deepEqual(groupByCat(list).map(([c, l]) => [c, l.length]), [['音樂', 1], ['戲劇', 1], ['展覽', 1]]);
   assert.deepEqual(titleWords(list), ['演出', '展覽']);
+  // 週六就結束的展覽週日看不到，要標出來
+  const satOnly = eventsIn([row('末', '2026-09-01T00:00', { end: '2026-10-03', dateOnly: true })], wk.from, wk.to);
+  assert.deepEqual(satOnly.map(weekendLead), ['展至週六']);
 });
 
 test('縣市短名：新竹、嘉義市縣同名保留全名', () => {

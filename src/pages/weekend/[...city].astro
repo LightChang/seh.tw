@@ -59,7 +59,7 @@ const day = (t) => `${+t.slice(5, 7)}/${+t.slice(8)}（${WD[new Date(`${t}T12:00
 ---
 <Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
   <div class="shell">
-    <Nav />
+    <Nav current="weekend" />
     <header class="wk-hd">
       <Breadcrumb trail={trail} />
       <div class="wk-top">
@@ -79,13 +79,13 @@ const day = (t) => `${+t.slice(5, 7)}/${+t.slice(8)}（${WD[new Date(`${t}T12:00
         <ul class="stats">
           <li class="stat main"><span class="stat-ico" set:html={iconSvg('compass')} /><b class="tabular">{fmtNum(list.length)}</b><span>個活動</span></li>
           <li class="stat"><span class="stat-ico" set:html={iconSvg('calendar')} /><b class="tabular">{fmtNum(fresh)}</b><span>週末當天開始</span></li>
-          <li class="stat"><span class="stat-ico" set:html={iconSvg('frame')} /><b class="tabular">{fmtNum(list.length - fresh)}</b><span>展期中，兩天都看得到</span></li>
+          <li class="stat"><span class="stat-ico" set:html={iconSvg('frame')} /><b class="tabular">{fmtNum(list.length - fresh)}</b><span>展期中，週末看得到</span></li>
           <li class="stat free"><a href={city && !hubs.free.has(city) ? '/free' : city ? `/free/${city}` : '/free'}><span class="stat-ico" set:html={iconSvg('gift')} /><b class="tabular">{fmtNum(freeN)}</b><span>免費 →</span></a></li>
         </ul>
       )}
       <p class="lead">
         {list.length
-          ? <>{fresh ? `週末當天開始的有 ${fresh} 個` : '週末當天開始的場次還沒有收錄'}{list.length - fresh ? `，展期跨週末、這兩天去都看得到的有 ${list.length - fresh} 個` : ''}{freeN ? `；來源標示免費的 ${freeN} 個` : ''}。</>
+          ? <>{fresh ? `週末當天開始的有 ${fresh} 個` : '週末當天開始的場次還沒有收錄'}{list.length - fresh ? `，展期跨到週末、週末去看得到的有 ${list.length - fresh} 個（少數週六就結束，清單會標「展至週六」）` : ''}{freeN ? `；來源標示免費的 ${freeN} 個` : ''}。</>
           : <>這個週末{city || '全台'}還沒有收錄到活動，下面先列下週末的。</>}
       </p>
     </header>

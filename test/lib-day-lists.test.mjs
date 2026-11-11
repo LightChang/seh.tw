@@ -24,7 +24,7 @@ for (const tz of ['UTC', 'America/Los_Angeles', 'Asia/Taipei']) {
     ];
     const today = todaySessions(all, NOW);
     assert.deepEqual(today.map((d) => d.title),
-      ['今晚', '今天深夜', '今天早上', '只有日期'], '未開始的在前，已開始的在後');
+      ['今晚', '今天深夜', '只有日期', '今天早上'], '未開始的在前，整天型其次，已開始的在後');
 
     const tonight = tonightSessions(all, NOW);
     assert.deepEqual(tonight.map((d) => d.title), ['今晚', '今天深夜'], '19:00 後且有明確時刻');
@@ -77,4 +77,38 @@ test('upcomingSessions：進行中的依結束日排，快結束的先；leadTex
   const past = pastSessions(all, NOW);
   assert.deepEqual(past.map((d) => d.title), ['去年結束']);
   assert.equal(leadText(past[0], NOW), '2025/05/05');
+});
+
+test('todayLead／startedBy：整天型不算已開始；散場後不說「進行中」', async () => {
+  const { todayLead, startedBy, tsOf } = await import('../src/lib/day-lists.mjs');
+  const NOW = Date.parse('2026-10-09T22:00:00+08:00');
+  const rel = () => 'REL';
+  const allDay = { at: '2026-10-09T00:00', dateOnly: true, end: null };
+  allDay.ts = tsOf(allDay);
+  assert.equal(startedBy(allDay, NOW), false);
+  assert.equal(todayLead(allDay, NOW, rel), '整天');
+  const afternoon = { at: '2026-10-09T14:00:00+08:00', end: '2026-10-09T16:00:00+08:00', dateOnly: false };
+  afternoon.ts = tsOf(afternoon);
+  assert.equal(startedBy(afternoon, NOW), true);
+  assert.equal(todayLead(afternoon, NOW, rel), '14:00 已開始');
+  const show = { at: '2026-10-09T21:00:00+08:00', end: '2026-10-09T23:00:00+08:00', dateOnly: false };
+  show.ts = tsOf(show);
+  assert.equal(todayLead(show, NOW, rel), '進行中');
+  const later = { at: '2026-10-09T23:30:00+08:00', end: null, dateOnly: false };
+  later.ts = tsOf(later);
+  assert.equal(todayLead(later, NOW, rel), 'REL');
+});
+
+test('runningToday：展期跨過今天才算，今天才開始的不重複、已結束的不算', async () => {
+  const { runningToday } = await import('../src/lib/day-lists.mjs');
+  const NOW = Date.parse('2026-10-09T15:00:00+08:00');
+  const all = [
+    { ...row('2026-09-01T00:00', { slug: 'a', title: '展期中' }), end: '2026-12-31', popularity: 1 },
+    { ...row('2026-09-01T00:00', { slug: 'b', title: '熱門展' }), end: '2026-11-30', popularity: 9 },
+    { ...row('2026-08-01T00:00', { slug: 'c', title: '昨天結束' }), end: '2026-10-08' },
+    { ...row('2026-09-01T00:00', { slug: 'd', title: '沒有結束日' }), end: null },
+    { ...row('2026-09-01T00:00', { slug: 'e', title: '今天也有一場' }), end: '2026-12-31' },
+    { ...row('2026-10-09T19:00:00+08:00', { slug: 'e', title: '今天也有一場' }), end: null },
+  ];
+  assert.deepEqual(runningToday(all, NOW).map((d) => d.title), ['熱門展', '展期中']);
 });

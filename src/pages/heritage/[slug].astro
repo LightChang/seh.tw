@@ -72,7 +72,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
 ---
 <Base title={title} description={description} noindex={!indexable} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
-    <Nav />
+    <Nav current="heritage" />
     <article class="her">
       <PageHero kicker={h.level || '文化資產'} title={h.name} icon="roof" tone="forest" art={h.city || ''}>
         <Breadcrumb slot="top" trail={trail} />

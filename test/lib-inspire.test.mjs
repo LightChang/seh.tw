@@ -16,9 +16,9 @@ test('moodsOf：類型與關鍵字對照；比賽徵件不推薦；對不到的�
   assert.deepEqual(moodsOf('其他', '某活動'), ['any']);
 });
 
-test('windowOf：今晚從 18:00（或現在）到午夜；週末取本週六日', () => {
+test('windowOf：今晚從 19:00（或現在）到午夜；週末取本週六日', () => {
   const t = windowOf('tonight', NOW);
-  assert.equal(new Date(t.from).toISOString(), '2026-11-11T10:00:00.000Z');
+  assert.equal(new Date(t.from).toISOString(), '2026-11-11T11:00:00.000Z');
   assert.equal(t.night, true);
   const w = windowOf('weekend', NOW);
   assert.equal(new Date(w.from).toISOString(), '2026-11-13T16:00:00.000Z');   // 台灣 11/14 00:00

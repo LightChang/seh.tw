@@ -63,7 +63,7 @@ const newYearEve = rows.find((d) => /跨年(晚會|夜|演唱會)/.test(d.title)
 ---
 <Base title={`${city}有什麼文化活動｜seh`} description={description} breadcrumbs={trail}>
   <div class="shell">
-    <Nav />
+    <Nav current="city" />
     <PageHero kicker="依縣市探索" icon={'map'} tone="forest">
       <Breadcrumb slot="top" trail={trail} />
       <Fragment slot="title">{city}</Fragment>

@@ -2,6 +2,7 @@
 // 輸出由 src/components/JsonLd.astro（Base.astro 的 <head>）負責。
 // 頁型 → 必須有的類型寫在 jsonld-pages.json，建置時由驗證器檢查（docs/AEO.md）。
 import { SITE, SCHEMA, absUrl, isHttpUrl, ldDate, postalAddress, geoOf } from './common.mjs';
+import { sourceLabel } from '../source-names.mjs';
 
 // ---------- 首頁：Organization＋WebSite ----------
 
@@ -92,7 +93,7 @@ export function eventItemList(rows, name) {
       const address = postalAddress({ city: d.city });
       const citation = (d.sources ?? [])
         .filter((s) => isHttpUrl(s.url))
-        .map((s) => ({ '@type': 'CreativeWork', name: s.sourceName || s.id, url: s.url }));
+        .map((s) => ({ '@type': 'CreativeWork', name: sourceLabel(s), url: s.url }));
       const event = startDate && address ? {
         '@type': 'Event',
         name: d.title,

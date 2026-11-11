@@ -30,7 +30,7 @@ const title = PERFORM.has(cat) ? `${cat}節目表｜${year} 台灣近期${cat}�
 const cities = [...rows.reduce((m, d) => (d.city ? m.set(d.city, (m.get(d.city) ?? 0) + 1) : m), new Map())]
   .sort((a, b) => b[1] - a[1]).slice(0, 8);
 // 麵包屑：畫面與 BreadcrumbList 同一份（src/lib/jsonld/pages.mjs）
-const trail = crumbTrail([{ name: '今天', href: '/today' }], cat);
+const trail = crumbTrail([], cat);
 // 這個類型有年度時間表的話連過去（src/lib/hubs.mjs 的 YEAR_GROUPS）
 const hubs = await builtHubs();
 const yearPage = hubs.year.find((p) => !p.city && p.year === hubs.thisYear && p.group.cats.includes(cat));

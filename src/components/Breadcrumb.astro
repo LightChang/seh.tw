@@ -18,9 +18,10 @@ const last = trail.length - 1;
   ))}
 </nav>
 <style>
-  .crumb { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 0.5rem; min-width: 0;
+  .crumb { display: flex; flex-wrap: wrap; align-items: center; gap: 0 0.5rem; min-width: 0;
            font-size: var(--text-sm); color: var(--text-muted); margin-bottom: var(--space-4); }
-  .crumb a { flex: none; text-decoration: none; }
+  /* 手指點得到：至少 44px 高 */
+  .crumb a { flex: none; display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
   .crumb a:hover { color: var(--color-link); }
   .sep { flex: none; }
   /* 本頁名稱就是下面的標題，長的活動名只留一行；窄螢幕排不下就換行，不撐出橫向捲動 */

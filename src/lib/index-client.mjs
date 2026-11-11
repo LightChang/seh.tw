@@ -6,6 +6,8 @@
 //
 // 展開後的每一列就是「一個場次」，欄位名與頁面既有的用法一致。
 
+import { hasClockTime } from './session-time.mjs';
+
 let cache = null;
 
 export async function loadSessions() {
@@ -15,7 +17,8 @@ export async function loadSessions() {
     // 只給日期的場次沒有時刻。補成 T00:00 是為了讓既有的排序與比較能用，
     // 但同時給 dateOnly 讓需要判斷時刻的頁面（今晚、現在）可以排除它們——
     // 把「沒有時刻」當成「凌晨零點」會讓常設展全部擠在早上。
-    const dateOnly = start.length <= 10;
+    // 來源用台灣 00:00 表示「沒給時間」的也算（session-time.mjs），與建置期的 flatSessions 同一個判斷
+    const dateOnly = start.length <= 10 || !hasClockTime(start.replace(' ', 'T'));
     const ev = e[ei] ?? [];
     return {
       slug: ev[0], title: ev[1], cat: ev[2] || '', isFree: ev[3] === 1,

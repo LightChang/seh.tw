@@ -183,7 +183,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
 ---
 <Base title={title} noindex={!indexable} description={description} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
-    <Nav />
+    <Nav current="venues" />
     <PageHero kicker="場館" icon={'building'} tone="sage">
       <Breadcrumb slot="top" trail={trail} />
       <Fragment slot="title">{h1}</Fragment>

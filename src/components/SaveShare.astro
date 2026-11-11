@@ -12,22 +12,24 @@ interface Props {
   endTs?: number | null;
   cat?: string;
   url: string;
+  /** 活動已結束：收藏（會被自動移除）與「揪朋友一起去」都沒意義，只留分享 */
+  ended?: boolean;
 }
-const { kind, slug, title, when = '', place = '', endTs = null, cat = '', url } = Astro.props;
+const { kind, slug, title, when = '', place = '', endTs = null, cat = '', url, ended = false } = Astro.props;
 const enc = encodeURIComponent(url);
 // 揪朋友：LINE 打開就帶好一句邀請，朋友不用點進來也知道是什麼、什麼時候
 const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（${when}）` : ''}${place ? `｜${place}` : ''}\n${url}`);
 ---
 <div class="act-row" data-save-share data-kind={kind} data-slug={slug} data-title={title}
      data-when={when} data-place={place} data-end={endTs ?? ''} data-c={cat} data-url={url}>
-  <button type="button" class="act act-save" aria-pressed="false">
+  {!ended && <button type="button" class="act act-save" aria-pressed="false">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1Z" /></svg>
     <span class="act-label">收藏</span>
-  </button>
-  <a class="act act-line" href={`https://line.me/R/share?text=${invite}`} target="_blank" rel="noopener" data-goal="share" data-method="line_invite">
+  </button>}
+  {!ended && <a class="act act-line" href={`https://line.me/R/share?text=${invite}`} target="_blank" rel="noopener" data-goal="share" data-method="line_invite">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3" /><path d="M3.5 19a5.5 5.5 0 0 1 11 0" /><path d="M17 8v6M14 11h6" /></svg>
     <span>揪朋友一起去</span>
-  </a>
+  </a>}
   <button type="button" class="act act-share">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7.5h14V12" /></svg>
     <span>分享</span>
@@ -49,7 +51,8 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
     const d = row.dataset;
 
     // ── 收藏 ──
-    const save = row.querySelector<HTMLButtonElement>('.act-save')!;
+    const save = row.querySelector<HTMLButtonElement>('.act-save');
+    if (save) {
     const paintSave = (on: boolean) => {
       save.setAttribute('aria-pressed', String(on));
       save.querySelector('.act-label')!.textContent = on ? '已收藏' : '收藏';
@@ -62,6 +65,7 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
       toast(r.saved ? '已加入收藏，可在「收藏」頁查看' : '已從收藏移除');
       gtag('event', r.saved ? 'save_add' : 'save_remove', { item_kind: d.kind });
     });
+    }
 
     // ── 分享 ──
     row.querySelector('.act-share')!.addEventListener('click', async () => {

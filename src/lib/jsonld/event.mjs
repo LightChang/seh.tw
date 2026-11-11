@@ -11,6 +11,7 @@
 import { primarySession, placeLabel, eventFacts } from '../event-meta.mjs';
 import { ticketLink } from '../ticket.mjs';
 import { SCHEMA, absUrl, isHttpUrl, ldDate, postalAddress, geoOf } from './common.mjs';
+import { sourceLabel } from '../source-names.mjs';
 
 /**
  * 活動的地點：代表場次的欄位，場次沒有縣市時退回它連到的場館頁（venue）的欄位。
@@ -84,7 +85,7 @@ export function eventLd(e, { venue } = {}) {
   // 殘缺的 CreativeWork 比沒有 citation 更糟（rules.json#global.absoluteUrls）。
   const citation = (e.sources ?? [])
     .filter((s) => isHttpUrl(s.url))
-    .map((s) => ({ '@type': 'CreativeWork', name: s.sourceName || s.id, url: s.url }));
+    .map((s) => ({ '@type': 'CreativeWork', name: sourceLabel(s), url: s.url }));
   const images = (e.images ?? []).map((i) => i.url).filter(isHttpUrl);
   const geo = geoOf(location.lat, location.lng);
 

@@ -49,6 +49,15 @@
   --seh-shadow-hover: 0 2px 4px oklch(0.247 0.008 95.4 / 0.08), 0 12px 32px oklch(0.247 0.008 95.4 / 0.10);
 }
 
+/* 手機字級：設計系統的正文 24px 在 390px 寬的手機上一行只放得下約 14 個中文字，
+ * 長說明斷句很碎。窄螢幕正文降到 20px（仍高於全站 18px 下限），強調字跟著降一級。 */
+@media (max-width: 520px) {
+  :root {
+    --text-base: 1.25rem;   /* 20px */
+    --text-lg:   1.5rem;    /* 24px */
+  }
+}
+
 @supports not (color: oklch(0 0 0)) {
   :root {
     --bg-base:     #f4ebdd;

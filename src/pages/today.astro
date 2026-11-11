@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
 import { flatSessions, newListings } from '../lib/build-data.mjs';
-import { todaySessions, mergeRuns, leadText } from '../lib/day-lists.mjs';
+import { todaySessions, mergeRuns, leadText, runningToday, startedBy } from '../lib/day-lists.mjs';
 import { hhmm, dateLabel, fmtNum, catVar, WD, midnight } from '../lib/format.mjs';
 import { builtHubs } from '../lib/build-data.mjs';
 import { cityShort } from '../lib/hubs.mjs';
@@ -23,7 +23,12 @@ const timesLabel = (times) => {
 // 下面的 <script> 載入後會用當下時間重畫（build 之後日期就前進了），
 // 兩邊共用 day-lists.mjs，邏輯不會分岔。
 const buildNow = Date.now();
-const rows = todaySessions(await flatSessions(), buildNow);
+const allSessions = await flatSessions();
+const rows = todaySessions(allSessions, buildNow);
+// 展期跨過今天的活動（不是今天才開始，但今天去看得到）。首頁「今天有幾個活動」也是 merged＋running。
+const running = runningToday(allSessions, buildNow);
+const RUN_CAP = 30;
+const endMd = (t) => { const d = new Date(t + 8 * 3600e3); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}`; };
 // 新上架、還沒結束的活動（src/lib/new-listings.mjs）。不受上方類型篩選影響，build 時寫死。
 const fresh = await newListings({ limit: 8, now: buildNow });
 const merged = mergeRuns(rows);
@@ -39,11 +44,12 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
   <div class="shell">
     <Nav current="today" />
     <PageHero kicker="今天想出門" title="今天有什麼活動" icon="sun" tone="sun"
-      sub={`${dateLabel(buildNow)}　${fmtNum(merged.length)} 個活動、${fmtNum(rows.length)} 場次`} subId="sub"
+      sub={`${dateLabel(buildNow)}　今天開始 ${fmtNum(merged.length)} 個活動，另有 ${fmtNum(running.length)} 個展期中`} subId="sub"
       art={`現在 ${hhmm(buildNow)}`} artId="clock"
       stats={[
         { icon: 'compass', n: fmtNum(merged.length), label: '個活動今天開始', id: 'total', main: true },
-        { icon: 'calendar', n: fmtNum(merged.filter((d) => d.dateOnly || d.ts > buildNow).length), label: '還沒開始，來得及', id: 'upcoming' },
+        { icon: 'calendar', n: fmtNum(merged.filter((d) => !startedBy(d, buildNow)).length), label: '還沒開始，來得及', id: 'upcoming' },
+        { icon: 'frame', n: fmtNum(running.length), label: '展期中，今天也看得到', id: 'running', href: '#running' },
         { icon: 'gift', n: fmtNum(merged.filter((d) => d.isFree === true).length), label: '免費', id: 'free', href: '/free' },
       ]}>
       <nav class="chips" id="chips" aria-label="類型篩選"></nav>
@@ -62,6 +68,24 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
       ))}
     </ol>
     <p class="empty-note" id="empty" hidden={merged.length > 0}>今天這個類型沒有活動，<a href="/">看看其他時段</a>。</p>
+    {running.length > 0 && (
+      <section class="fresh" id="running">
+        <h2 class="sec-h">展期中，今天也看得到<span class="tabular badge">{fmtNum(running.length)}</span></h2>
+        <p class="also">不是今天才開始、但展期涵蓋今天的展覽與活動，依關注度排序。出發前請確認場館今天有開。</p>
+        <ol class="ev-list" data-fold="">
+          {running.slice(0, RUN_CAP).map((d) => (
+            <li><a href={`/event/${encodeURIComponent(d.slug)}`}>
+              <span class="ev-lead tabular">展至 {endMd(d.tsEnd)}</span>
+              <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
+                <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+              <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+            </a></li>
+          ))}
+        </ol>
+        {Math.min(running.length, RUN_CAP) > 6 && <button type="button" class="fold-btn" data-fold-btn>顯示另外 {Math.min(running.length, RUN_CAP) - 6} 個</button>}
+        {running.length > RUN_CAP && <p class="also">另有 {fmtNum(running.length - RUN_CAP)} 個，<a href="/explore?time=halfday&mood=now">依你的時間與心情挑</a>。</p>}
+      </section>
+    )}
     <p class="also">還沒決定哪天出門：<a href="/weekend">這週末</a>、<a href="/free">免費活動</a></p>
     <p class="also">各縣市今天：{todayCities.map((c) => <a href={`/today/${c}`}>{cityShort(c)}　</a>)}</p>
 
@@ -85,8 +109,12 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
 
 <script>
   import { relTime, dateLabel, fmtNum, catVar, midnight, hhmm } from '../lib/format.mjs';
-  import { todaySessions, mergeRuns } from '../lib/day-lists.mjs';
+  import { todaySessions, mergeRuns, runningToday, startedBy, todayLead } from '../lib/day-lists.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
+  // 「展期中」清單的「顯示更多」（手機）；放在 await 之前，索引載入失敗也能用
+  for (const b of document.querySelectorAll<HTMLButtonElement>('[data-fold-btn]')) {
+    b.addEventListener('click', () => { b.previousElementSibling?.removeAttribute('data-fold'); b.remove(); });
+  }
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const timesLabel = (times) => {
     if (times.length <= 1) return '';
@@ -99,13 +127,15 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
   // build 時已經畫過一份（日期停在 build 當天），這裡用當下時間重畫
   const today = todaySessions(all, now);
   const merged = mergeRuns(today);
+  const runningN = runningToday(all, now).length;
 
   document.getElementById('sub').textContent =
-    `${dateLabel(midnight(now))}　${fmtNum(merged.length)} 個活動、${fmtNum(today.length)} 場次`;
+    `${dateLabel(midnight(now))}　今天開始 ${fmtNum(merged.length)} 個活動，另有 ${fmtNum(runningN)} 個展期中`;
   // 頁首的時鐘與數字卡也用當下時間重算
   const setStat = (id, n) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = fmtNum(n); };
   setStat('total', merged.length);
-  setStat('upcoming', merged.filter((d) => d.dateOnly || d.ts > now).length);
+  setStat('upcoming', merged.filter((d) => !startedBy(d, now)).length);
+  setStat('running', runningN);
   setStat('free', merged.filter((d) => d.isFree).length);
   const clock = document.getElementById('clock');
   if (clock) clock.textContent = `現在 ${hhmm(now)}`;
@@ -113,21 +143,22 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
   const counts = new Map();
   merged.forEach((d) => counts.set(d.cat, (counts.get(d.cat) ?? 0) + 1));
   const cats = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 8);
+  // pick：null＝全部；其餘是類型字串（未分類是空字串，不能拿空字串當「全部」）
   let pick = null;
 
   function chips() {
     document.getElementById('chips').innerHTML =
-      `<button type="button" class="chip${pick === null ? ' on' : ''}" data-c="">全部 ${merged.length}</button>` +
+      `<button type="button" class="chip${pick === null ? ' on' : ''}" data-all="1">全部 ${merged.length}</button>` +
       cats.map(([c, n]) => `<button type="button" class="chip${pick === c ? ' on' : ''}" data-c="${c}" style="--c:${css(catVar(c))}">${c || '未分類'} ${n}</button>`).join('');
     document.querySelectorAll('#chips .chip').forEach((b) =>
-      b.addEventListener('click', () => { pick = b.dataset.c || null; chips(); draw(); }));
+      b.addEventListener('click', () => { pick = b.dataset.all ? null : (b.dataset.c ?? ''); chips(); draw(); }));
   }
 
   const row = (d) => {
     const extra = d.times.length > 1 ? `<span class="ev-x">${timesLabel(d.times)}</span>` : '';
-    return `<li class="${d.ts <= now ? 'past' : ''}">
+    return `<li class="${startedBy(d, now) ? 'past' : ''}">
       <a href="/event/${encodeURIComponent(d.slug)}">
-        <time class="ev-lead tabular" datetime="${d.at}">${relTime(d.ts, now)}</time>
+        <time class="ev-lead tabular" datetime="${d.at}">${todayLead(d, now, relTime)}</time>
         <span class="ev-body"><span class="ev-t">${d.title}${d.isFree ? '<span class="tag-free">免費</span>' : ''}</span>
           <span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
         <span class="ev-cat" data-cat="${d.cat ?? ''}" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
@@ -136,12 +167,12 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
   };
 
   function draw() {
-    const rows = pick ? merged.filter((d) => d.cat === pick) : merged;
+    const rows = pick === null ? merged : merged.filter((d) => (d.cat || '') === pick);
     document.getElementById('empty').hidden = rows.length > 0;
     let split = false;
     document.getElementById('list').innerHTML = rows.map((d) => {
       let sep = '';
-      if (d.ts <= now && !split) { split = true; sep = `<li class="sep">以下為今天稍早已開始</li>`; }
+      if (startedBy(d, now) && !split) { split = true; sep = `<li class="sep">以下為今天稍早已開始</li>`; }
       return sep + row(d);
     }).join('');
   }

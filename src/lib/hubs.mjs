@@ -39,7 +39,12 @@ export function eventsIn(rows, from, to, keep = () => true) {
     if (ts >= to || end < from || !keep(d.slug)) continue;
     const e = bySlug.get(d.slug) ?? { rep: null, running: false, days: new Set(), times: [] };
     bySlug.set(d.slug, e);
-    if (ts < from) { e.running = true; e.rep ??= { ...d, ts }; continue; }
+    if (ts < from) {
+      e.running = true; e.rep ??= { ...d, ts };
+      // 週六（from 當天）就結束、週日看不到；同一活動有任一段展到週日就不算
+      e.endsSat = (e.endsSat ?? true) && end < from + DAY;
+      continue;
+    }
     e.days.add(twDow(ts));
     if (!d.dateOnly) e.times.push(ts);
     // 代表列取週末內第一場（場地、縣市以它為準）
@@ -47,14 +52,17 @@ export function eventsIn(rows, from, to, keep = () => true) {
   }
   // 週六排在週日前面（getUTCDay 的週日是 0）
   const out = [...bySlug.values()].map((e) => ({
-    ...e.rep, running: e.running && !e.days.size, days: [...e.days].sort((a, b) => ((a + 1) % 7) - ((b + 1) % 7)), times: e.times.sort((a, b) => a - b),
+    ...e.rep, running: e.running && !e.days.size, endsSat: e.running && !e.days.size && e.endsSat === true, days: [...e.days].sort((a, b) => ((a + 1) % 7) - ((b + 1) % 7)), times: e.times.sort((a, b) => a - b),
   }));
   return out.sort((a, b) => (a.running - b.running) || (a.running ? 0 : a.ts - b.ts) || a.title.localeCompare(b.title));
 }
 
-/** 週末清單第一欄：「展期中」「週六 14:30」「週六、週日」 */
+/** 週末清單第一欄：「展期中」「展至週六」「週六 14:30」「週六、週日」 */
 export function weekendLead(e) {
-  if (e.running) return '展期中';
+  if (e.running) {
+    // 週六就結束的展覽週日看不到，不能只寫「展期中」
+    return e.endsSat ? '展至週六' : '展期中';
+  }
   const days = e.days.map((w) => `週${WD[w]}`).join('、');
   if (e.times.length === 1 && e.days.length === 1) return `${days} ${hhmm(e.times[0])}`;
   return days || '展期中';
