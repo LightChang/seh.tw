@@ -1,6 +1,6 @@
 ---
-// 收藏、打卡、分享。活動頁、場館頁、文資頁共用。
-// 收藏與「我去過了」存在瀏覽器（src/lib/saved.mjs）。
+// 收藏、分享。活動頁、場館頁、文資頁共用。
+// 收藏存在瀏覽器（src/lib/saved.mjs）。
 // 分享：手機原生面板（否則複製連結）、LINE 揪朋友（帶好邀請文字）、分享圖（canvas 當場畫，
 // src/lib/share-card.mjs，按了才載入）、Facebook。
 interface Props {
@@ -10,28 +10,19 @@ interface Props {
   when?: string;
   place?: string;
   endTs?: number | null;
-  /** 活動開始時刻（毫秒）。還沒開始的活動不能打卡 */
-  startTs?: number | null;
   cat?: string;
-  city?: string;
-  free?: boolean | null;
   url: string;
 }
-const { kind, slug, title, when = '', place = '', endTs = null, startTs = null, cat = '', city = '', free = null, url } = Astro.props;
+const { kind, slug, title, when = '', place = '', endTs = null, cat = '', url } = Astro.props;
 const enc = encodeURIComponent(url);
 // 揪朋友：LINE 打開就帶好一句邀請，朋友不用點進來也知道是什麼、什麼時候
 const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（${when}）` : ''}${place ? `｜${place}` : ''}\n${url}`);
 ---
 <div class="act-row" data-save-share data-kind={kind} data-slug={slug} data-title={title}
-     data-when={when} data-place={place} data-end={endTs ?? ''} data-start={startTs ?? ''}
-     data-c={cat} data-city={city} data-free={free === null ? '' : String(free)} data-url={url}>
+     data-when={when} data-place={place} data-end={endTs ?? ''} data-c={cat} data-url={url}>
   <button type="button" class="act act-save" aria-pressed="false">
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1Z" /></svg>
     <span class="act-label">收藏</span>
-  </button>
-  <button type="button" class="act act-visit" aria-pressed="false">
-    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6-6.5-11a6.5 6.5 0 0 1 13 0c0 5-6.5 11-6.5 11Z" /><path d="m9.5 10 2 2 3.5-3.5" /></svg>
-    <span class="act-label">我去過了</span>
   </button>
   <a class="act act-line" href={`https://line.me/R/share?text=${invite}`} target="_blank" rel="noopener" data-goal="share" data-method="line_invite">
     <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3" /><path d="M3.5 19a5.5 5.5 0 0 1 11 0" /><path d="M17 8v6M14 11h6" /></svg>
@@ -49,7 +40,7 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
 </div>
 
 <script>
-  import { isSaved, toggleSaved, isVisited, toggleVisited, toast } from '../lib/saved.mjs';
+  import { isSaved, toggleSaved, toast } from '../lib/saved.mjs';
 
   const gtag = (...a: unknown[]) => (window as any).gtag?.(...a);
   const pop = (b: HTMLElement) => { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); };
@@ -70,23 +61,6 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
       paintSave(r.saved); pop(save);
       toast(r.saved ? '已加入收藏，可在「收藏」頁查看' : '已從收藏移除');
       gtag('event', r.saved ? 'save_add' : 'save_remove', { item_kind: d.kind });
-    });
-
-    // ── 我去過了：自己按才算；還沒開始的活動不能打卡 ──
-    const visit = row.querySelector<HTMLButtonElement>('.act-visit')!;
-    const notYet = d.start && Number(d.start) > Date.now();
-    const paintVisit = (on: boolean) => {
-      visit.setAttribute('aria-pressed', String(on));
-      visit.querySelector('.act-label')!.textContent = on ? '去過了' : notYet ? '開始後可打卡' : '我去過了';
-    };
-    paintVisit(isVisited(d.kind!, d.slug!));
-    if (notYet && !isVisited(d.kind!, d.slug!)) visit.disabled = true;
-    visit.addEventListener('click', () => {
-      const r = toggleVisited({ kind: d.kind, slug: d.slug, title: d.title, cat: d.c || '', city: d.city || '', free: d.free === 'true' ? true : d.free === 'false' ? false : null });
-      if (!r.ok) { toast('這個瀏覽器不允許儲存（可能是無痕模式）'); return; }
-      paintVisit(r.visited); pop(visit);
-      gtag('event', r.visited ? 'checkin' : 'checkin_undo', { item_kind: d.kind });
-      toast(r.visited ? '已記錄到「收藏」頁的去過的地方' : '已取消打卡');
     });
 
     // ── 分享 ──
@@ -140,7 +114,6 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
   .act svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
   .act-save[aria-pressed="true"] { color: var(--seh-coral-deep); border-color: var(--seh-coral-deep); background: var(--seh-coral-weak); }
   .act-save[aria-pressed="true"] svg { fill: currentColor; }
-  .act-visit[aria-pressed="true"] { color: var(--seh-card); background: var(--seh-forest); border-color: var(--seh-forest); }
   .act.pop svg { animation: pop 0.35s ease-out; }
   .act-ext { font-weight: 600; color: var(--text-secondary); }
   .act-line { color: var(--seh-ink); background: var(--seh-coral); border-color: var(--seh-coral); }

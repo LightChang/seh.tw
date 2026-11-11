@@ -1,5 +1,5 @@
 ---
-// 收藏：想去的地方、去過的地方。內容全在訪客的瀏覽器（src/lib/saved.mjs），build 時只有外框。
+// 收藏：想去的地方。內容全在訪客的瀏覽器（src/lib/saved.mjs），build 時只有外框。
 // 收藏的活動結束後自動移除（readSaved 會清掉 endTs 已過的）。
 // 每個人看到的不一樣、對搜尋引擎沒有內容，所以 noindex（sitemapNoindex 會把它從 sitemap 拿掉）。
 import Base from '../layouts/Base.astro';
@@ -7,14 +7,15 @@ import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
 import { iconSvg } from '../lib/icons.mjs';
 ---
-<Base title="收藏｜seh" description="你在 seh 收藏的活動、場館與文化資產，以及去過的地方。" noindex={true}>
+<Base title="收藏｜seh" description="你在 seh 收藏的活動、場館與文化資產。" noindex={true}>
   <div class="shell">
     <Nav current="saved" />
     <PageHero kicker="想去的地方" title="收藏" icon="heart" tone="coral"
       sub="只存在這個瀏覽器裡，不需要登入；活動結束後會自動從收藏移除。"
       stats={[
         { icon: 'heart', n: '0', label: '個收藏', id: 'saved', main: true },
-        { icon: 'check', n: '0', label: '個去過的地方', id: 'visited' },
+        { icon: 'calendar', n: '0', label: '個活動', id: 'events' },
+        { icon: 'roof', n: '0', label: '個場館與文化資產', id: 'places' },
       ]} />
 
     <div id="saved-root">
@@ -31,20 +32,17 @@ import { iconSvg } from '../lib/icons.mjs';
     </section>
 
 
-    <div id="visited-root"></div>
   </div>
 </Base>
 
 <script>
-  import { readSaved, removeSaved, readVisited, removeVisited, toast } from '../lib/saved.mjs';
+  import { readSaved, removeSaved, toast } from '../lib/saved.mjs';
   import { CAT_ICON, iconSvg as svg } from '../lib/icons.mjs';
 
   const KIND_ICON: Record<string, string> = { event: 'spark', venue: 'pin', heritage: 'roof' };
   const PATH: Record<string, string> = { event: '/event/', venue: '/venue/', heritage: '/heritage/' };
-  const KIND: Record<string, string> = { event: '活動', venue: '場館', heritage: '文化資產' };
   const TONE: Record<string, string> = { event: 'coral', venue: 'sage', heritage: 'forest' };
   const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
-  const ymd = (t: number) => { const d = new Date(t + 8 * 3600e3); return `${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/${d.getUTCDate()}`; };
   const setStat = (id: string, v: string) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = v; };
   const iconOf = (x: any) => (x.kind === 'event' && x.cat ? (CAT_ICON as any)[x.cat] ?? 'spark' : KIND_ICON[x.kind] ?? 'spark');
 
@@ -58,6 +56,8 @@ import { iconSvg } from '../lib/icons.mjs';
   function render() {
     const list = readSaved();          // 已結束的活動在這裡就被清掉了
     setStat('saved', String(list.length));
+    setStat('events', String(list.filter((x) => x.kind === 'event').length));
+    setStat('places', String(list.filter((x) => x.kind !== 'event').length));
     document.getElementById('empty')!.hidden = list.length > 0;
     root.innerHTML = GROUPS.map((g) => {
       const items = list.filter((x) => x.kind === g.kind).sort((a, b) => (b.savedAt ?? 0) - (a.savedAt ?? 0));
@@ -81,35 +81,13 @@ import { iconSvg } from '../lib/icons.mjs';
     }).join('');
   }
 
-  function renderVisited() {
-    const v = readVisited();
-    setStat('visited', String(v.length));
-    const vr = document.getElementById('visited-root')!;
-    vr.innerHTML = v.length ? `<section class="grp">
-      <h2 class="grp-h"><span class="grp-ico">${svg('pin')}</span>去過的地方<span class="tabular badge">${v.length}</span></h2>
-      <ol class="vs-list">${v.map((x) => `
-        <li>
-          <a class="vs-main" href="${PATH[x.kind] ?? '/'}${encodeURIComponent(x.slug)}">
-            <span class="vs-t">${esc(x.title)}</span>
-            <span class="vs-m">${[x.cat ? `<span class="ev-cat" data-cat="${esc(x.cat)}">${esc(x.cat)}</span>` : esc(KIND[x.kind] ?? ''), esc(x.city), `${ymd(x.visitedAt)} 打卡`].filter(Boolean).join('　')}</span>
-          </a>
-          <button type="button" class="vs-rm" data-kind="${esc(x.kind)}" data-slug="${esc(x.slug)}" aria-label="取消打卡：${esc(x.title)}">取消打卡</button>
-        </li>`).join('')}
-      </ol></section>` : '';
-  }
-
   root.addEventListener('click', (ev) => {
     const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('.sv-rm');
     if (b && removeSaved(b.dataset.kind!, b.dataset.slug!)) { render(); toast('已從收藏移除'); }
   });
-  document.getElementById('visited-root')!.addEventListener('click', (ev) => {
-    const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('.vs-rm');
-    if (b && removeVisited(b.dataset.kind!, b.dataset.slug!)) { renderVisited(); toast('已取消打卡'); }
-  });
-  // 別的分頁收藏或打卡時同步
-  addEventListener('storage', () => { render(); renderVisited(); });
+  // 別的分頁收藏時同步
+  addEventListener('storage', render);
   render();
-  renderVisited();
 </script>
 
 <style is:global>
@@ -141,19 +119,6 @@ import { iconSvg } from '../lib/icons.mjs';
   .sv-rm svg { width: 22px; height: 22px; fill: currentColor; stroke: currentColor; stroke-width: 1.6; }
   .sv-rm:hover { background: var(--seh-coral-weak); }
   .sv-rm:hover svg { fill: none; }
-
-  /* 去過的地方：精簡清單 */
-  .vs-list { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
-  .vs-list li { display: flex; align-items: center; gap: var(--space-4); border-bottom: var(--hairline) solid var(--border-subtle); }
-  .vs-main { flex: 1; min-width: 0; padding: var(--space-4) 0; text-decoration: none; }
-  .vs-main:hover .vs-t { color: var(--color-link); }
-  .vs-t { display: block; font-size: var(--text-sm); font-weight: 700; line-height: 1.45; }
-  .vs-m { display: block; margin-top: 4px; font-size: var(--text-xs); color: var(--text-secondary); }
-  .vs-rm {
-    flex: none; min-height: 44px; padding: 0 0.9rem; font: inherit; font-size: var(--text-xs); cursor: pointer;
-    color: var(--text-secondary); background: var(--seh-card); border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
-  }
-  .vs-rm:hover { color: var(--seh-coral-deep); border-color: var(--seh-coral-deep); }
 
 
   .empty { display: flex; align-items: center; gap: var(--space-5); margin-top: var(--space-6); padding: var(--space-6); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); }

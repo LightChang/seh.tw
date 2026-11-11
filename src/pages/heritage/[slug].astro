@@ -75,7 +75,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
     <article class="her">
       <Breadcrumb trail={trail} />
       <h1>{h.name}</h1>
-      <div class="save-row"><SaveShare kind="heritage" slug={h.slug} title={h.name} city={h.city ?? ''} free={h.isCharge === false ? true : h.isCharge === true ? false : null} place={[h.level, h.city, h.district].filter(Boolean).join('・')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/heritage/${encodeURIComponent(h.slug)}`} /></div>
+      <div class="save-row"><SaveShare kind="heritage" slug={h.slug} title={h.name} place={[h.level, h.city, h.district].filter(Boolean).join('・')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/heritage/${encodeURIComponent(h.slug)}`} /></div>
       {status && (
         <section class="status">
           <h2 class="h-sm">最新現況</h2>

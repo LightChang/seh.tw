@@ -192,7 +192,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
       {parent && <p class="hall-nav">位於 <a href={`/venue/${parent.slug}`}>{parent.name}</a><span class="orig">（全館近期 {parentUpcoming} 場）</span>
         {hallNav.length > 0 && <>　同館：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</>}</p>}
       {!parent && halls.length > 0 && hallNav.length > 0 && <p class="hall-nav">各廳：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</p>}
-      <div class="save-row"><SaveShare kind="venue" slug={v.slug} title={h1} city={v.city ?? ''} place={[v.city, v.district].filter(Boolean).join('')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/venue/${encodeURIComponent(v.slug)}`} /></div>
+      <div class="save-row"><SaveShare kind="venue" slug={v.slug} title={h1} place={[v.city, v.district].filter(Boolean).join('')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/venue/${encodeURIComponent(v.slug)}`} /></div>
     </header>
 
     {!schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}

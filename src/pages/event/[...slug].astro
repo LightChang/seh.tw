@@ -401,8 +401,8 @@ const trail = crumbTrail([
               {srcUrl && <span class="src">出處：{srcNames[0]}</span>}
             </p>
           )}
-          <SaveShare kind="event" slug={e.slug} title={e.title} when={whenText(sessions)} place={place} endTs={evEnd} startTs={evStart}
-            cat={e.category ?? ''} city={loc.city ?? ''} free={e.isFree === true ? true : e.isFree === false ? false : null} url={pageUrl} />
+          <SaveShare kind="event" slug={e.slug} title={e.title} when={whenText(sessions)} place={place} endTs={evEnd}
+            cat={e.category ?? ''} url={pageUrl} />
         </div>
       </aside>
       </div>
