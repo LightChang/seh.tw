@@ -23,8 +23,10 @@ const heading = onlyVenue && venueName ? `${venueName}近期活動` : city ? `${
   </section>
 )}
 <style>
-  .nearby { margin-top: var(--space-7); }
-  .h-near { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; }
+  .nearby { margin-top: var(--space-8); }
+  .h-near { font-family: var(--font-body); font-size: var(--text-lg); font-weight: 800; color: var(--text-primary);
+            border-top: 2px solid var(--seh-ink); padding-top: var(--space-3); }
   .nearby .ev-list { margin: var(--space-4) 0 0; }
   .more-near { margin-top: var(--space-4); font-size: var(--text-sm); }
+  .more-near a { color: var(--color-link); text-decoration: none; font-weight: 700; }
 </style>

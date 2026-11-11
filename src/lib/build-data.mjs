@@ -309,3 +309,25 @@ export async function builtHubs(now = Date.now()) {
   HUBS = { weekend: cities, free: new Set(free), year, thisYear };
   return HUBS;
 }
+
+// ── 活動頁的延伸探索（src/lib/explore-nearby.mjs）。每個活動頁都查，各建一次 ──
+let HER_GRID = null;
+/** 有頁面的文化資產，依座標切格子 */
+export async function heritageGrid() {
+  if (!HER_GRID) {
+    const { placeIndex } = await import('./explore-nearby.mjs');
+    HER_GRID = placeIndex((await allHeritage()).map((h) => ({
+      slug: h.slug, name: h.name, level: h.level ?? h.categoryRaw ?? '', lat: h.lat, lng: h.lng,
+    })));
+  }
+  return HER_GRID;
+}
+let LIVE = null;
+/** 還沒結束、可收錄的活動，一個活動一列（src/lib/home-picks.mjs 的 liveEvents） */
+export async function liveEventList(now = Date.now()) {
+  if (!LIVE) {
+    const { liveEvents } = await import('./home-picks.mjs');
+    LIVE = liveEvents(await flatSessions(), now, await indexableEvent());
+  }
+  return LIVE;
+}
