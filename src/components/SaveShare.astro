@@ -13,6 +13,8 @@ interface Props {
 }
 const { kind, slug, title, when = '', place = '', endTs = null, url } = Astro.props;
 const enc = encodeURIComponent(url);
+// 揪朋友：LINE 打開就帶好一句邀請，朋友不用點進來也知道是什麼、什麼時候
+const invite = encodeURIComponent(`要不要一起去？👉 ${title}${when ? `（${when}）` : ''}${place ? `｜${place}` : ''}\n${url}`);
 ---
 <div class="act-row" data-save-share data-kind={kind} data-slug={slug} data-title={title}
      data-when={when} data-place={place} data-end={endTs ?? ''} data-url={url}>
@@ -24,7 +26,10 @@ const enc = encodeURIComponent(url);
     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7.5h14V12" /></svg>
     <span>分享</span>
   </button>
-  <a class="act act-ext" href={`https://social-plugins.line.me/lineit/share?url=${enc}`} target="_blank" rel="noopener" data-goal="share" data-method="line">LINE</a>
+  <a class="act act-line" href={`https://line.me/R/share?text=${invite}`} target="_blank" rel="noopener" data-goal="share" data-method="line_invite">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3" /><path d="M3.5 19a5.5 5.5 0 0 1 11 0" /><path d="M17 8v6M14 11h6" /></svg>
+    <span>揪朋友一起去</span>
+  </a>
   <a class="act act-ext" href={`https://www.facebook.com/sharer/sharer.php?u=${enc}`} target="_blank" rel="noopener" data-goal="share" data-method="facebook">Facebook</a>
 </div>
 
@@ -81,10 +86,12 @@ const enc = encodeURIComponent(url);
   }
   .act:hover { border-color: var(--seh-ink); }
   .act svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .act-save[aria-pressed="true"] { color: var(--seh-terracotta); border-color: var(--seh-terracotta); background: var(--seh-terracotta-weak); }
+  .act-save[aria-pressed="true"] { color: var(--seh-coral-deep); border-color: var(--seh-coral-deep); background: var(--seh-coral-weak); }
   .act-save[aria-pressed="true"] svg { fill: currentColor; }
   .act-save.pop svg { animation: pop 0.35s ease-out; }
   .act-ext { font-weight: 600; color: var(--text-secondary); }
+  .act-line { color: var(--seh-ink); background: var(--seh-coral); border-color: var(--seh-coral); }
+  .act-line:hover { border-color: var(--seh-ink); }
   @keyframes pop { 0% { transform: scale(1); } 45% { transform: scale(1.35); } 100% { transform: scale(1); } }
 
 </style>

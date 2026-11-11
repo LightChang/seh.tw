@@ -46,6 +46,7 @@ export function liveEvents(rows, now, keep = () => true) {
     out.push({
       slug: e.slug, title: e.title, cat: e.cat, isFree: e.isFree,
       venue: e.rep.venue, city: e.rep.city, cities: [...e.cities], dateOnly: !!e.rep.dateOnly,
+      lat: e.rep.lat ?? null, lng: e.rep.lng ?? null,
       start: e.start, end: e.end, next: e.next ?? e.start,
       running: e.start < t0,
       srcCount: new Set(e.sources.map((s) => s.id)).size || 1,
