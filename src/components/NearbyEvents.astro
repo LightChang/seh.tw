@@ -1,6 +1,7 @@
 ---
 // 活動頁的「同場地／同縣市近期活動」（資料由 src/lib/nearby-events.mjs 挑好）。
 import { catVar } from '../lib/format.mjs';
+import { iconSvg } from '../lib/icons.mjs';
 import { leadText } from '../lib/day-lists.mjs';
 const { items, city, venueName, now } = Astro.props;
 const onlyVenue = items.every((d) => d.near === 'venue');
@@ -8,7 +9,7 @@ const heading = onlyVenue && venueName ? `${venueName}近期活動` : city ? `${
 ---
 {items.length > 0 && (
   <section class="nearby">
-    <h2 class="h-near">{heading}</h2>
+    <h2 class="sec-h h-near"><span class="sec-ico" set:html={iconSvg('compass')} />{heading}<span class="tabular badge">{items.length}</span></h2>
     <ol class="ev-list">
       {items.map((d) => (
         <li><a href={`/event/${d.slug}`}>
@@ -24,9 +25,8 @@ const heading = onlyVenue && venueName ? `${venueName}近期活動` : city ? `${
 )}
 <style>
   .nearby { margin-top: var(--space-8); }
-  .h-near { font-family: var(--font-body); font-size: var(--text-lg); font-weight: 800; color: var(--text-primary);
-            border-top: 2px solid var(--seh-ink); padding-top: var(--space-3); }
-  .nearby .ev-list { margin: var(--space-4) 0 0; }
+  .h-near { margin-top: 0; margin-bottom: var(--space-4); }
+  .nearby .ev-list { margin: 0; }
   .more-near { margin-top: var(--space-4); font-size: var(--text-sm); }
-  .more-near a { color: var(--color-link); text-decoration: none; font-weight: 700; }
+  .more-near a { color: var(--seh-forest); text-decoration: none; font-weight: 700; }
 </style>

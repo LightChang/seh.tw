@@ -5,6 +5,7 @@ import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import NearbyEvents from '../../components/NearbyEvents.astro';
 import SaveShare from '../../components/SaveShare.astro';
+import { iconSvg, catIcon } from '../../lib/icons.mjs';
 import { nearestPlaces, distanceText, similarEvents } from '../../lib/explore-nearby.mjs';
 import { daysLeftText } from '../../lib/home-picks.mjs';
 import { tsOf, tsEndOf, leadText } from '../../lib/day-lists.mjs';
@@ -189,11 +190,18 @@ const nearHer = nearestPlaces(await heritageGrid(), lat, lng, { radiusM: 2000, l
 // 你可能也會喜歡：同類型，排除頁面上已經列出的
 const listed = new Set([e.slug, ...near.map((x) => x.slug), ...editions.map((x) => x.slug)]);
 const similar = similarEvents(await liveEventList(buildNow), { cat: e.category, city: loc.city, exclude: listed, limit: 4 });
+// at／end 帶時區（ISO 的 Z）：不帶的話 hhmm() 會用 build 主機的時區（UTC）解讀，時間錯 8 小時
 const similarRows = similar.map((x) => ({ slug: x.slug, title: x.title, cat: x.cat, isFree: x.isFree, venue: x.venue, city: x.city,
-  at: new Date(x.next + 8 * 3600e3).toISOString().slice(0, 16), end: x.end ? new Date(x.end + 8 * 3600e3).toISOString().slice(0, 16) : null, dateOnly: x.dateOnly }));
+  at: new Date(x.next).toISOString(), end: x.end ? new Date(x.end).toISOString() : null, dateOnly: x.dateOnly }));
 const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const pageUrl = `${site}/event/${encodeURIComponent(e.slug)}`;
 const hoursShort = venue?.openingHours ? venue.openingHours.split('\n').slice(0, 3).join('\n') : '';
+
+// 標題右邊的分類插圖：顏色依類型的氣氛（展覽靜、表演熱鬧、課程講座亮、戶外節慶綠）
+const ART_TONE = { 展覽: 'sage', 電影: 'sage', 音樂: 'coral', 演唱會: 'coral', 獨立音樂: 'coral', 戲劇: 'coral', 舞蹈: 'coral', 綜藝: 'coral', 市集: 'coral',
+  講座: 'sun', 研習課程: 'sun', 親子: 'sun', 節慶活動: 'forest', 遊憩活動: 'forest' };
+const artTone = ART_TONE[e.category] ?? 'plain';
+const fi = (name) => iconSvg(name);
 
 // 麵包屑：畫面與 BreadcrumbList 同一份
 const trail = crumbTrail([
@@ -215,6 +223,7 @@ const trail = crumbTrail([
       <Breadcrumb trail={trail} />
 
       <header class="ev-hd">
+        <div class="ev-art" aria-hidden="true"><span class={`ev-art-c tone-${artTone}`} set:html={iconSvg(catIcon(e.category))} /></div>
         <p class="ev-kick">
           {e.category && (hasCatPage
             ? <a class="tag" data-cat={e.category} href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
@@ -238,28 +247,28 @@ const trail = crumbTrail([
       <div class="ev-main">
 
       <dl class="facts">
-        <div><dt>時間</dt><dd class="tabular">
+        <div class="f-wide"><dt><span class="f-ico" set:html={fi('calendar')} />時間</dt><dd class="tabular">
           {/* 日期、時刻各自不斷行，窄螢幕只在空白處換行（原本會把「（二）」拆到下一行） */}
           {whenText(sessions).split(' ').map((part, i) => <>{i > 0 && ' '}<span class="nw">{part}</span></>)}
           {sessions.length > 1 && <span class="n">　共 {sessions.length} 場次</span>}
         </dd></div>
-        {place && <div><dt>地點</dt><dd>
+        {place && <div class="f-wide"><dt><span class="f-ico" set:html={fi('pin')} />地點</dt><dd>
           {primary.venueSlug && primary.venueNameRaw
             ? <a href={`/venue/${primary.venueSlug}`}>{place}</a>
             : place}
           {primary.venueNameRaw && loc.street && <span class="n">　{loc.street}</span>}
         </dd></div>}
-        {(e.isFree !== undefined || e.priceText) && <div><dt>票價</dt><dd>
+        {(e.isFree !== undefined || e.priceText) && <div><dt><span class="f-ico" set:html={fi(e.isFree === true ? 'gift' : 'ticket')} />票價</dt><dd>
           {e.isFree === true ? '免費' : e.priceText || '售票'}
         </dd></div>}
-        {ticket && <div><dt>{ticket.label}</dt><dd>
+        {ticket && <div><dt><span class="f-ico" set:html={fi('ticket')} />{ticket.label}</dt><dd>
           <a href={ticket.href} target="_blank" rel="nofollow noopener" data-goal="event_detail_click" data-method="ticket">{ticket.platform}</a>
         </dd></div>}
-        {loc.city ? <div><dt>縣市</dt><dd>
+        {loc.city ? <div><dt><span class="f-ico" set:html={fi('map')} />縣市</dt><dd>
           <a href={`/city/${loc.city}`}>{loc.city}</a>{loc.district && <span class="n">　{loc.district}</span>}
           {cityMonth && <span class="n">　<a href={`/city/${loc.city}/${cityMonth}`}>{+cityMonth.slice(5)} 月{loc.city}活動</a></span>}
-        </dd></div> : loc.district && <div><dt>地區</dt><dd>{loc.district}</dd></div>}
-        {(e.category || e.categoryRaw) && <div><dt>類型</dt><dd>
+        </dd></div> : loc.district && <div><dt><span class="f-ico" set:html={fi('map')} />地區</dt><dd>{loc.district}</dd></div>}
+        {(e.category || e.categoryRaw) && <div><dt><span class="f-ico" set:html={fi(catIcon(e.category))} />類型</dt><dd>
           {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，
               連原始值（「2」「特展」）會連到不存在的頁 */}
           {hasCatPage
@@ -268,11 +277,11 @@ const trail = crumbTrail([
                 {e.category ?? e.categoryRaw}{!e.category && <span class="n">　（尚未對照）</span>}
               </span>}
         </dd></div>}
-        {e.minimumAge !== undefined && <div><dt>年齡</dt><dd>{e.minimumAge} 歲以上</dd></div>}
-        {e.performers?.length > 0 && <div><dt>演出者</dt><dd>
+        {e.minimumAge !== undefined && <div><dt><span class="f-ico" set:html={fi('balloon')} />年齡</dt><dd>{e.minimumAge} 歲以上</dd></div>}
+        {e.performers?.length > 0 && <div class="f-wide"><dt><span class="f-ico" set:html={fi('people')} />演出者</dt><dd>
           {e.performers.map((p) => p.nameRaw).join('、')}
         </dd></div>}
-        {e.organizers?.length > 0 && <div><dt>主辦</dt><dd>
+        {e.organizers?.length > 0 && <div class="f-wide"><dt><span class="f-ico" set:html={fi('building')} />主辦</dt><dd>
           {e.organizers.filter((o) => o.role === 'master').map((o) => o.nameRaw).join('、')
             || e.organizers.map((o) => o.nameRaw).join('、')}
         </dd></div>}
@@ -282,14 +291,14 @@ const trail = crumbTrail([
 
       {desc && (
         <section class="sec">
-          <h2 class="h-sec">活動介紹</h2>
+          <h2 class="sec-h"><span class="sec-ico" set:html={fi('chat')} />活動介紹</h2>
           <div class="desc">{desc}</div>
         </section>
       )}
 
       {sessions.length > 1 && (
         <section class="sessions">
-          <h2>所有場次</h2>
+          <h2 class="sec-h"><span class="sec-ico" set:html={fi('calendar')} />所有場次<span class="tabular badge">{sessions.length}</span></h2>
           <ul>{shown.map((t) => (
             <li>
               <time class="tabular" datetime={t.startAt}>
@@ -304,7 +313,7 @@ const trail = crumbTrail([
 
       {editions.length > 0 && (
         <section class="sessions">
-          <h2>其他年份</h2>
+          <h2 class="sec-h"><span class="sec-ico" set:html={fi('star')} />其他年份</h2>
           <ul>{editions.map((x) => (
             <li>
               <time class="tabular" datetime={x.start}>{x.start.slice(0, 4)}</time>
@@ -316,7 +325,7 @@ const trail = crumbTrail([
 
       {(place || mapLinks || venue) && (
         <section class="sec">
-          <h2 class="h-sec">地點與交通</h2>
+          <h2 class="sec-h"><span class="sec-ico" set:html={fi('pin')} />地點與交通</h2>
           <div class="visit">
             <div class="visit-main">
               {place && <p class="visit-name">{primary.venueSlug && primary.venueNameRaw ? <a href={`/venue/${primary.venueSlug}`}>{place}</a> : place}</p>}
@@ -337,7 +346,7 @@ const trail = crumbTrail([
 
       {nearHer.length > 0 && (
         <section class="sec">
-          <h2 class="h-sec">附近的文化資產</h2>
+          <h2 class="sec-h"><span class="sec-ico" set:html={fi('roof')} />附近的文化資產<span class="tabular badge">{nearHer.length}</span></h2>
           <ul class="her-list">
             {nearHer.map((h) => (
               <li><a href={`/heritage/${encodeURIComponent(h.slug)}`}>
@@ -353,7 +362,7 @@ const trail = crumbTrail([
 
       {similarRows.length > 0 && (
         <section class="sec">
-          <h2 class="h-sec">你可能也會喜歡</h2>
+          <h2 class="sec-h"><span class="sec-ico" set:html={fi('heart')} />你可能也會喜歡</h2>
           <ol class="ev-list sim">
             {similarRows.map((d) => (
               <li><a href={`/event/${encodeURIComponent(d.slug)}`} data-goal="event_open" data-method="event_similar">
@@ -369,7 +378,7 @@ const trail = crumbTrail([
       )}
 
       <footer class="prov">
-        <h2>資料來源</h2>
+        <h2><span class="f-ico" set:html={fi('info')} />資料來源</h2>
         <p class="pnote">這一頁由 {e.sources.length} 個來源整理而成。每個欄位各自挑品質最高的來源，落選值也留著。</p>
         <ul class="slist">{e.sources.map((s) => (
           <li>
@@ -518,7 +527,7 @@ const trail = crumbTrail([
   .desc { margin-top: var(--space-6); white-space: pre-wrap; line-height: 1.75; color: var(--text-secondary); }
   .sessions li { display: flex; gap: 1rem; flex-wrap: wrap; }
   .sv { color: var(--text-muted); }
-  .prov h2 { font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; margin: 0; }
+  .prov h2 { display: flex; align-items: center; gap: var(--space-2); font-family: var(--font-body); font-size: var(--text-sm); color: var(--text-secondary); font-weight: 700; margin: 0; }
   .pnote { margin: 0; }
   .slist { list-style: none; margin: 0.4rem 0; padding: 0; display: grid; gap: 0.3rem; }
   .slist li {
@@ -528,5 +537,52 @@ const trail = crumbTrail([
   .sid { color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sp { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .sd { font-family: var(--font-mono); font-size: var(--text-xs); }
+
+  /* ── 2026-11-11 視覺升級（覆寫上面的舊規則）── */
+  .ev-hd { display: grid; grid-template-columns: minmax(0, 1fr) auto; column-gap: var(--space-6); max-width: none; }
+  .ev-hd > * { grid-column: 1; }
+  .ev-hd > .ev-art { grid-column: 2; grid-row: 1 / span 8; align-self: start; }
+  .ev-art-c { display: grid; place-items: center; width: 8.5rem; height: 8.5rem; border-radius: 50%; transform: rotate(-4deg); box-shadow: var(--seh-shadow); }
+  .ev-art-c :global(svg) { width: 64px; height: 64px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .ev-art-c.tone-plain { background: var(--seh-card); color: var(--seh-forest); }
+
+  /* 詳細資訊：白色資訊卡，每項配圖示，兩欄 */
+  .facts { border-top: 0; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); margin-top: 0; }
+  .facts > div {
+    display: grid; grid-template-columns: none; align-content: start; gap: 6px; padding: var(--space-4) var(--space-5);
+    background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); border-bottom: 0;
+  }
+  .facts > .f-wide { grid-column: 1 / -1; }
+  .facts dt { display: flex; align-items: center; gap: var(--space-2); font-size: var(--text-xs); font-weight: 700; color: var(--text-secondary); }
+  .f-ico { display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--bg-surface); color: var(--seh-forest); }
+  .f-ico :global(svg) { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .facts dd { font-size: var(--text-sm); font-weight: 600; line-height: 1.5; }
+  .facts dd a { color: var(--seh-forest); }
+
+  .ev .sec, .ev .sessions { margin-top: var(--space-8); }
+  .ev .sec > .sec-h, .ev .sessions > .sec-h { margin-top: 0; margin-bottom: var(--space-4); }
+  .desc { margin-top: 0; padding: var(--space-5) var(--space-6); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow);
+    color: var(--text-primary); font-size: var(--text-sm); line-height: 1.9; }
+  /* 所有場次：日期膠囊 */
+  .sessions ul { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: 0; }
+  .sessions li { display: inline-flex; align-items: center; gap: var(--space-2); padding: 0.4rem 0.9rem; border-radius: 999px;
+    background: var(--seh-card); box-shadow: var(--seh-shadow); font-size: var(--text-xs); color: var(--text-primary); }
+  .sessions li time { font-weight: 700; color: var(--seh-forest); }
+  .sessions li a { color: var(--text-primary); }
+  .visit { padding: var(--space-5); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); }
+  .her-list a { background: var(--seh-card); border-color: transparent; box-shadow: var(--seh-shadow); }
+  .prov { padding: var(--space-5); border-top: 0; border-radius: var(--seh-radius); background: var(--bg-surface); }
+
+  @media (max-width: 760px) {
+    .ev-hd { column-gap: var(--space-4); }
+    /* 手機：插圖只跟標籤列並排，標題用滿整個寬度 */
+    .ev-hd > .ev-art { grid-row: 1 / span 1; }
+    .ev-hd > h1, .ev-hd > .lead { grid-column: 1 / -1; }
+    .ev-art-c { width: 4.5rem; height: 4.5rem; }
+    .ev-art-c :global(svg) { width: 34px; height: 34px; }
+    .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-2); }
+    .facts > div { grid-template-columns: none; gap: 4px; padding: var(--space-3) var(--space-4); }
+    .desc { padding: var(--space-4); }
+  }
 </style>
 

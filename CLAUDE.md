@@ -60,6 +60,10 @@ npm run links      # build 之後，站內連結不能有壞的
 兩條硬規則由 `test/style-tokens.test.mjs` 擋著：**最小字級 18px 無例外**、
 **寫死的 hex 只能是 tokens.css／brand.css 自己的 fallback 值**（隨手挑的 `#333` 會紅）。
 
+**品牌名寫法** → logo（導覽列、頁尾、分享圖）用「seh.」，點是珊瑚橘；頁面標題（「｜seh」）、內文、
+JSON-LD 的網站名稱一律寫「seh」——句子裡寫「seh.」會和中文標點撞在一起（「打開 seh.。」）。
+「seh.tw」只在指網址時用。網站上不用 emoji，圖示一律用 `src/lib/icons.mjs` 的線條圖示。
+
 **首頁本週編輯選讀** → 填 `overrides/editor-picks.json`（以 ISO 週次為 key，說明寫在檔內）。
 有填才出現在首頁；沒填的週次由「今日靈感」承擔。挑選邏輯在 `src/lib/home-picks.mjs`。
 
