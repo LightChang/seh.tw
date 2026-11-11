@@ -123,7 +123,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
             {ev.here.map((d) => (
               <li><a href={`/event/${d.slug}`}>
                 <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
-                <span class="ev-body"><span class="ev-t">{d.title}</span>{d.venue && <span class="ev-m">{d.venue}</span>}</span>
+                <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>{d.venue && <span class="ev-m">{d.venue}</span>}</span>
                 <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
               </a></li>
             ))}
@@ -149,7 +149,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
             {ev.near.map((d) => (
               <li><a href={`/event/${d.slug}`}>
                 <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
-                <span class="ev-body"><span class="ev-t">{d.title}</span>{d.venue && <span class="ev-m">{d.venue}</span>}</span>
+                <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>{d.venue && <span class="ev-m">{d.venue}</span>}</span>
                 <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
               </a></li>
             ))}

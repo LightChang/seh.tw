@@ -55,7 +55,7 @@ import Nav from '../components/Nav.astro';
     list.innerHTML = hits.slice(0, 40).map((d) => `
       <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
         <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
-        <span class="ev-body"><span class="ev-t">${esc(d.title)}</span>
+        <span class="ev-body"><span class="ev-t">${esc(d.title)}${d.isFree ? '<span class="tag-free">免費</span>' : ''}</span>
           <span class="ev-m">${esc([d.venue, d.city].filter(Boolean).join('　'))}</span></span>
         <span class="ev-cat" data-cat="${esc(d.cat ?? '')}" style="color:${css(catVar(d.cat))}">${esc(d.cat ?? '')}</span>
       </a></li>`).join('');

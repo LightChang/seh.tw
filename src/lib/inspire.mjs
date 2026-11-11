@@ -157,7 +157,7 @@ export function cardHtml({ it, av, dist }, { entry = '', now = Date.now() } = {}
   const tone = TONE[it.m?.find((m) => TONE[m])] ?? 'plain';
   const tags = [
     it.c && `<span class="spot-tag" data-cat="${esc(her ? '文化景點' : it.c)}">${esc(her ? '文化景點' : it.c)}</span>`,
-    it.f === true && '<span class="spot-tag free">免費</span>',
+    it.f === true && '<span class="tag-free">免費</span>',
     dist != null && `<span class="spot-dist">${distText(dist)}</span>`,
   ].filter(Boolean).join('');
   return `<a class="spot" href="${href}" data-goal="event_open" data-method="${esc(entry)}">

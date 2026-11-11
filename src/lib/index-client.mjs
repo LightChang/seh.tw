@@ -1,5 +1,5 @@
 // 前端索引的讀取器。/index.json 由 transform/emit-md.mjs 產生，格式分成兩張表：
-//   e: [[slug, title, categoryRaw]]                        每個活動一列
+//   e: [[slug, title, categoryRaw, 免費?1]]                  每個活動一列（第 4 欄只有免費才有）
 //   s: [[eventIndex, lat, lng, start, end, venue, city]]   每個場次一列
 // 分兩張是為了體積——一個活動平均 1.3 個場次，把 slug 與 title 塞進每個場次列
 // 會重複一遍，實測差 3.6 倍。
@@ -18,7 +18,7 @@ export async function loadSessions() {
     const dateOnly = start.length <= 10;
     const ev = e[ei] ?? [];
     return {
-      slug: ev[0], title: ev[1], cat: ev[2] || '',
+      slug: ev[0], title: ev[1], cat: ev[2] || '', isFree: ev[3] === 1,
       venue: venue || '', city: city || '',
       lat, lng,
       at: dateOnly ? `${start}T00:00` : start.replace(' ', 'T'),

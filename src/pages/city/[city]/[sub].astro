@@ -133,7 +133,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
                 {d.at.slice(5, 10).replace('-', '/')}{d.dateOnly ? '' : ` ${d.at.slice(11, 16)}`}
               </time>
               <span class="ev-body">
-                <span class="ev-t">{d.title}</span>
+                <span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
                 <span class="ev-m">{isMonth ? [d.district, d.venue].filter(Boolean).join('　') : d.venue}</span>
               </span>
               <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
@@ -150,7 +150,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
               <li><a href={`/event/${d.slug}`}>
                 <time class="ev-lead tabular" datetime={d.end}>到 {md(d.end)}</time>
                 <span class="ev-body">
-                  <span class="ev-t">{d.title}</span>
+                  <span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
                   <span class="ev-m">{[d.district, d.venue].filter(Boolean).join('　')}</span>
                 </span>
                 <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>

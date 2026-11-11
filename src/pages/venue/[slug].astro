@@ -210,7 +210,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
               {list.map((d) => (
                 <li><a href={`/event/${d.slug}`}>
                   <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
-                  <span class="ev-body"><span class="ev-t">{d.title}</span>
+                  <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
                     {halls.length > 0 && d.venue && <span class="ev-m">{d.venue}</span>}</span>
                 </a></li>
               ))}
@@ -227,7 +227,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
           {(rows.length ? listRows : past).map((d) => (
             <li><a href={`/event/${d.slug}`}>
               <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
-              <span class="ev-body"><span class="ev-t">{d.title}</span>
+              <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
                 {halls.length > 0 && d.venue && <span class="ev-m">{d.venue}</span>}</span>
               <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
             </a></li>

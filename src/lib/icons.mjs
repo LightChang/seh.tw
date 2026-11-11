@@ -28,6 +28,7 @@ export const ICON = {
   megaphone: '<path d="M4 10v4h3l8 4V6L7 10Z"/><path d="M18.5 9a4 4 0 0 1 0 6M7 14l1.5 5h2.5l-1.3-4.3"/>',
   calendar: '<rect x="4" y="5" width="16" height="15" rx="2"/><path d="M4 10h16M8 3v4M16 3v4"/><circle cx="12" cy="15" r="1.4"/>',
   roof: '<path d="M3 10 12 4l9 6"/><path d="M5 9.5V20h14V9.5M10 20v-5h4v5"/>',
+  gift: '<rect x="4" y="9" width="16" height="11" rx="1.5"/><path d="M3 9h18M12 9v11M12 9c-1.6-3.6-6-4.2-6-1.6 0 1.6 3.8 1.6 6 1.6Zm0 0c1.6-3.6 6-4.2 6-1.6 0 1.6-3.8 1.6-6 1.6Z"/>',
   spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
 };
 

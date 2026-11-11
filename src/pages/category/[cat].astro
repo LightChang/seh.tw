@@ -50,7 +50,7 @@ const yearPage = hubs.year.find((p) => !p.city && p.year === hubs.thisYear && p.
       {rows.slice(0, 40).map((d) => (
         <li><a href={`/event/${d.slug}`}>
           <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
-          <span class="ev-body"><span class="ev-t">{d.title}</span>
+          <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
             <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
         </a></li>
       ))}

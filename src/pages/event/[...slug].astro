@@ -189,7 +189,7 @@ const nearHer = nearestPlaces(await heritageGrid(), lat, lng, { radiusM: 2000, l
 // 你可能也會喜歡：同類型，排除頁面上已經列出的
 const listed = new Set([e.slug, ...near.map((x) => x.slug), ...editions.map((x) => x.slug)]);
 const similar = similarEvents(await liveEventList(buildNow), { cat: e.category, city: loc.city, exclude: listed, limit: 4 });
-const similarRows = similar.map((x) => ({ slug: x.slug, title: x.title, cat: x.cat, venue: x.venue, city: x.city,
+const similarRows = similar.map((x) => ({ slug: x.slug, title: x.title, cat: x.cat, isFree: x.isFree, venue: x.venue, city: x.city,
   at: new Date(x.next + 8 * 3600e3).toISOString().slice(0, 16), end: x.end ? new Date(x.end + 8 * 3600e3).toISOString().slice(0, 16) : null, dateOnly: x.dateOnly }));
 const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
 const pageUrl = `${site}/event/${encodeURIComponent(e.slug)}`;
@@ -220,6 +220,7 @@ const trail = crumbTrail([
             ? <a class="tag" data-cat={e.category} href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
             : <span class="tag" data-cat={e.category} style={`color:var(${catVar(e.category)})`}>{e.category}</span>)}
           {status && <span class={`tag st-${status.tone}`}>{status.text}</span>}
+          {e.isFree === true && <span class="tag-free">免費</span>}
           {loc.city && <span class="ev-city">{loc.city}{loc.district && `・${loc.district}`}</span>}
         </p>
         <h1>{e.title}</h1>
@@ -357,7 +358,7 @@ const trail = crumbTrail([
             {similarRows.map((d) => (
               <li><a href={`/event/${encodeURIComponent(d.slug)}`} data-goal="event_open" data-method="event_similar">
                 <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
-                <span class="ev-body"><span class="ev-t">{d.title}</span>
+                <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
                   <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
                 <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
               </a></li>
@@ -390,7 +391,7 @@ const trail = crumbTrail([
           {sessions.length > 1 && <p class="plan-n">共 {sessions.length} 場次</p>}
           {place && <p class="plan-place">{place}</p>}
           {(e.isFree !== undefined || e.priceText) && (
-            <p class="plan-price">{e.isFree === true ? <span class="tag tag-free">免費</span> : <>票價　{e.priceText || '售票'}</>}</p>
+            <p class="plan-price">{e.isFree === true ? <span class="tag-free">免費</span> : <>票價　{e.priceText || '售票'}</>}</p>
           )}
           {/* 已結束就不推購票，只留官方頁（資料仍以原始出處為準） */}
           {((ticket && !ended) || srcUrl) && (

@@ -49,7 +49,7 @@ import Nav from '../components/Nav.astro';
     document.getElementById('list').innerHTML = rows.slice(0, 30).map((d) => `
       <li><a href="/event/${encodeURIComponent(d.slug)}">
         <span class="ev-lead tabular">${d.km < 1 ? Math.round(d.km * 1000) + ' m' : d.km.toFixed(1) + ' km'}</span>
-        <span class="ev-body"><span class="ev-t">${d.title}</span><span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+        <span class="ev-body"><span class="ev-t">${d.title}${d.isFree ? '<span class="tag-free">免費</span>' : ''}</span><span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
         <span class="ev-x">${relTime(d.ts, now)}</span>
         <span class="ev-cat" data-cat="${d.cat ?? ''}" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
       </a></li>`).join('');

@@ -549,7 +549,8 @@ async function main() {
     // 把 slug 與 title 塞進每個場次列會重複一遍，實測差 3.6 倍體積。
     const ei = indexEvents.length;
     const cat = eventCategory(canonCategory(catSourceOf(c, out), out.categoryRaw), out.title) ?? '';
-    indexEvents.push([c.slug, out.title, cat]);
+    // 第 4 欄：來源標了免費才放 1（不放 0，省體積）。前端列表重畫時靠它保留「免費」標籤
+    indexEvents.push(out.isFree === true ? [c.slug, out.title, cat, 1] : [c.slug, out.title, cat]);
     catSlugPairs.push([c.slug, cat]);
     for (const s of sessions) {
       citySlugPairs.push([c.slug, s.city]);
