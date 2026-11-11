@@ -67,7 +67,7 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
 
     {fresh.length > 0 && (
       <section class="fresh" id="new">
-        <h2 class="h-sm">新上架</h2>
+        <h2 class="sec-h">新上架</h2>
         <ol class="ev-list">
           {fresh.map((d) => (
             <li><a href={`/event/${encodeURIComponent(d.slug)}`}>

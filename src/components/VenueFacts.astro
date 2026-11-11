@@ -32,7 +32,7 @@ const { v, parent, halls, hoursCheckedAt, hoursStale } = Astro.props;
 
 {halls.length > 0 && (
   <section class="halls">
-    <h2 class="h-sm">館內的廳與場地</h2>
+    <h2 class="sec-h">館內的廳與場地</h2>
     <ul>{halls.map((h) => (
       <li><a href={`/venue/${h.slug}`}>{h.name}</a><span class="n tabular">{h.upcoming ? `近期 ${h.upcoming} 場` : ''}</span></li>
     ))}</ul>
@@ -53,4 +53,9 @@ const { v, parent, halls, hoursCheckedAt, hoursStale } = Astro.props;
   .facts .stale { color: var(--color-warn); }
   .halls ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }
   .halls li { display: flex; gap: 1rem; flex-wrap: wrap; align-items: baseline; }
+  /* 資料表：白卡＋細線分隔（2026-11-11 視覺升級） */
+  .facts { padding: 0 var(--space-5); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); border-top: 0 !important; }
+  .facts > div { border-bottom: var(--hairline) solid var(--border-subtle); }
+  .facts > div:last-child { border-bottom: 0; }
+  .facts dt { font-weight: 700; font-size: var(--text-xs); color: var(--text-secondary); }
 </style>

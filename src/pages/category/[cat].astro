@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import PageHero from '../../components/PageHero.astro';
+import { catIcon } from '../../lib/icons.mjs';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar, dateLabel, hhmm } from '../../lib/format.mjs';
@@ -36,11 +38,12 @@ const yearPage = hubs.year.find((p) => !p.city && p.year === hubs.thisYear && p.
 <Base title={title} description={`台灣近期的${cat}活動，共 ${rows.length} 場，可依縣市篩選。`} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <h1 style={`color:var(${catVar(cat)})`}>{cat}</h1>
+    <PageHero kicker="依類型探索" icon={catIcon(cat)} tone="sage">
+      <Breadcrumb slot="top" trail={trail} />
+      <Fragment slot="title">{cat}</Fragment>
+      
       <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期活動{yearPage && <>　<a href={`/year/${yearPage.year}/${yearPage.group.key}`}>{yearPage.year} {yearPage.group.label}時間表</a></>}</p>
-    </header>
+    </PageHero>
 
     {cities.length > 0 && (
       <p class="cityrow">{cities.map(([c, n]) => <a href={catCities.has(`${cat}|${c}`) ? `/category/${cat}/${c}` : `/city/${c}`}>{c}<b class="tabular">{n}</b></a>)}</p>

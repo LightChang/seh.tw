@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import PageHero from '../../components/PageHero.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import HubList from '../../components/HubList.astro';
 import { crumbTrail, eventItemList } from '../../lib/jsonld/index.mjs';
@@ -44,20 +45,21 @@ const ld = eventItemList(shown.slice(0, 100), `${dayLabel} ${city}的文化活�
 <Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
   <div class="shell">
     <Nav />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <h1>{place}今天</h1>
+    <PageHero kicker="今天想出門" icon={'sun'} tone="sun">
+      <Breadcrumb slot="top" trail={trail} />
+      <Fragment slot="title">{place}今天</Fragment>
+      
       <p class="sub">{dayLabel}　<strong class="tabular">{fmtNum(list.length)}</strong> 個活動</p>
       <p class="lead">
         {list.length
           ? <>今天開始的有 {fresh} 個{list.length - fresh ? `，展期跨過今天、現在去都看得到的有 ${list.length - fresh} 個` : ''}{freeN ? `；來源標示免費的 ${freeN} 個` : ''}。清單每天凌晨重建，晚間的場次請以主辦單位公告為準。</>
           : <>{city}今天還沒有收錄到活動，可以看<a href={`/weekend/${city}`}>這週末</a>或<a href={`/city/${city}`}>接下來的活動</a>。</>}
       </p>
-    </header>
+    </PageHero>
 
     {groups.map(([c, l]) => (
       <section class="grp">
-        <h2 class="h-sm"><span style={`color:var(${catVar(c)})`}>{c}</span> <span class="tabular n">{l.length}</span></h2>
+        <h2 class="sec-h"><span style={`color:var(${catVar(c)})`}>{c}</span> <span class="tabular n">{l.length}</span></h2>
         <HubList rows={l.slice(0, CAP)} lead={lead} showCity={false} showCat={false} />
         {l.length > CAP && <p class="more">另有 {l.length - CAP} 個，<a href={`/city/${city}`}>看{city}全部活動</a></p>}
       </section>

@@ -4,6 +4,7 @@
 // 結果由前端依當下時間算（src/lib/inspire.mjs）；build 時先畫「半天 × 都可以」，沒有 JS 也看得到。
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
 import Breadcrumb from '../components/Breadcrumb.astro';
 import InspirePicker from '../components/InspirePicker.astro';
 import { inspirePool } from '../lib/build-data.mjs';
@@ -25,12 +26,12 @@ const trail = crumbTrail([], '探索');
 >
   <div class="shell">
     <Nav current="explore" />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <p class="kicker">探索</p>
-      <h1>今天可以去哪裡？</h1>
+    <PageHero kicker="探索" icon={'compass'} tone="coral" art="時間×心情">
+      <Breadcrumb slot="top" trail={trail} />
+      <Fragment slot="title">今天可以去哪裡？</Fragment>
+      
       <p class="sub">選好時間和心情，剩下的交給 seh。想看離你最近的，可以用位置排序。</p>
-    </header>
+    </PageHero>
     <InspirePicker full ssr={ssr} limit={12} time="halfday" mood="now" weekendHint={weekendOf(buildNow).label} />
   </div>
 </Base>

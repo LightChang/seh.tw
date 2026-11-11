@@ -1,6 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import Nav from '../../../components/Nav.astro';
+import PageHero from '../../../components/PageHero.astro';
+import { catIcon } from '../../../lib/icons.mjs';
 import Breadcrumb from '../../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../../lib/jsonld/index.mjs';
 import { catVar } from '../../../lib/format.mjs';
@@ -44,11 +46,12 @@ const yearPage = hubs.year.find((p) => p.city === city && p.year === hubs.thisYe
 <Base title={title} description={description} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <h1><span style={`color:var(${catVar(cat)})`}>{city}{cat}</span>{isPerform ? '節目表' : '活動'}</h1>
+    <PageHero kicker="依類型探索" icon={catIcon(cat)} tone="sage">
+      <Breadcrumb slot="top" trail={trail} />
+      <Fragment slot="title"><span style={`color:var(${catVar(cat)})`}>{city}{cat}</span>{isPerform ? '節目表' : '活動'}</Fragment>
+      
       <p class="sub"><strong class="tabular">{rows.length}</strong> 場近期{isPerform ? '演出' : '活動'}{yearPage && <>　<a href={`/year/${yearPage.year}/${yearPage.group.key}/${city}`}>{yearPage.year} 全年時間表</a></>}</p>
-    </header>
+    </PageHero>
 
     {venues.length > 0 && (
       <p class="cityrow">{venues.map(([v, e]) => e.slug
@@ -57,7 +60,7 @@ const yearPage = hubs.year.find((p) => p.city === city && p.year === hubs.thisYe
     )}
 
     {(rows.length > 0 || past.length > 0) && (
-      <h2 class="h-sm">{rows.length ? '近期場次' : '最近結束的場次'}</h2>
+      <h2 class="sec-h">{rows.length ? '近期場次' : '最近結束的場次'}</h2>
     )}
     <ol class="ev-list">
       {(rows.length ? rows.slice(0, 60) : past).map((d) => (

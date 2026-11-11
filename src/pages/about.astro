@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
 import stats from '../../public/pipeline-stats.json';
 
 // 這一頁的每個數字都來自 transform/emit-pipeline-stats.mjs 實際算出來的檔案，
@@ -45,15 +46,16 @@ const showcase = [...stats.sources].sort((a, b) =>
 >
   <div class="shell">
     <Nav />
-    <header class="page-hd">
-      <h1>資料從哪來</h1>
+    <PageHero kicker="關於 seh" icon={'info'} tone="sage" art="資料來源">
+      <Fragment slot="title">資料從哪來</Fragment>
+      
       <p class="sub">
         seh 的資料來自 <strong class="tabular">{stats.sources.length}</strong> 個公開來源，
         共 <strong class="tabular">{fmt(totalRecords)}</strong> 筆原始記錄。
         這一頁的每個數字都是實際算出來的，不是估計值。
       </p>
       <p class="gen">最後更新 <time class="tabular">{mdhm(stats.generatedAt)}</time></p>
-    </header>
+    </PageHero>
 
     <!-- 靜態版本必須自己就是完整的：不靠 JS，搜尋引擎與關掉 JS 的人看到一樣的資訊 -->
     <div class="flow" id="flow">

@@ -1,6 +1,7 @@
 ---
 import Base from '../../../../layouts/Base.astro';
 import Nav from '../../../../components/Nav.astro';
+import PageHero from '../../../../components/PageHero.astro';
 import Breadcrumb from '../../../../components/Breadcrumb.astro';
 import { crumbTrail, eventItemList } from '../../../../lib/jsonld/index.mjs';
 import { fmtNum } from '../../../../lib/format.mjs';
@@ -55,21 +56,22 @@ const monthName = (ym) => `${+ym.slice(5)} 月`;
 <Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={noindex}>
   <div class="shell">
     <Nav />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <h1>{year} {place}{group.label}時間表</h1>
+    <PageHero kicker="年度時間表" icon={'calendar'} tone="coral">
+      <Breadcrumb slot="top" trail={trail} />
+      <Fragment slot="title">{year} {place}{group.label}時間表</Fragment>
+      
       <p class="sub"><strong class="tabular">{fmtNum(upcoming.length)}</strong> 個還沒結束・全年共 {fmtNum(total)} 個</p>
       <p class="lead">{year} 年{city || '全台'}收錄的{group.label}，
         {first ? <>接下來最近的是 {spanText(first, year)} 在{first.venue || first.city}的《{first.title}》。</> : '今年的場次都已結束。'}
         {group.key === '演唱會' && '流行演唱會之外也列了音樂會與樂團演出。'}
         清單每天依各機關公開資料重算，改期或新增會在隔天反映。</p>
       {showNextYear && <p class="lead"><a href="/year/2027/演唱會">2027 年演唱會時間表</a>已經上線，{place}的 2027 場次還沒有資料，可以先看全國版。</p>}
-    </header>
+    </PageHero>
 
 
     {upcoming.length > 0 && (
       <section class="grp">
-        <h2 class="h-sm">還沒結束</h2>
+        <h2 class="sec-h">還沒結束</h2>
         <div class="tw">
           <table>
             <thead><tr><th scope="col">日期</th><th scope="col">名稱</th><th scope="col">場地</th><th scope="col">城市</th><th scope="col">票價</th></tr></thead>
@@ -91,14 +93,14 @@ const monthName = (ym) => `${+ym.slice(5)} 月`;
 
     {cityPages.length > 0 && (
       <section class="grp">
-        <h2 class="h-sm">依縣市看</h2>
-        <p class="rowlinks">{cityPages.map((p) => <a href={`/year/${year}/${group.key}/${p.city}`}>{cityShort(p.city)}</a>)}</p>
+        <h2 class="sec-h">依縣市看</h2>
+        <p class="pills">{cityPages.map((p) => <a href={`/year/${year}/${group.key}/${p.city}`}>{cityShort(p.city)}</a>)}</p>
       </section>
     )}
 
     {past.length > 0 && (
       <section class="grp">
-        <h2 class="h-sm">已結束</h2>
+        <h2 class="sec-h">已結束</h2>
         {past.map(([ym, rows]) => (
           <details>
             <summary>{monthName(ym)}<span class="tabular n">{rows.length} 個</span></summary>

@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import SaveShare from '../../components/SaveShare.astro';
+import PageHero from '../../components/PageHero.astro';
 import { heritageNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { allHeritage, sessionsByVenue, indexableEvent, isIndexable } from '../../lib/build-data.mjs';
 import { heritageEvents } from '../../lib/nearby-events.mjs';
@@ -73,12 +74,13 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
   <div class="shell">
     <Nav />
     <article class="her">
-      <Breadcrumb trail={trail} />
-      <h1>{h.name}</h1>
+      <PageHero kicker={h.level || '文化資產'} title={h.name} icon="roof" tone="forest" art={h.city || ''}>
+        <Breadcrumb slot="top" trail={trail} />
+      </PageHero>
       <div class="save-row"><SaveShare kind="heritage" slug={h.slug} title={h.name} place={[h.level, h.city, h.district].filter(Boolean).join('・')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/heritage/${encodeURIComponent(h.slug)}`} /></div>
       {status && (
         <section class="status">
-          <h2 class="h-sm">最新現況</h2>
+          <h2 class="sec-h">最新現況</h2>
           <p class="body">{status.lead}</p>
           <p class="note">依 {status.sources.map((x, i) => <>{i > 0 && '、'}<a href={x.url} target="_blank" rel="nofollow noopener">{x.name}</a></>)} 報導，事件日 <span class="tabular">{status.date}</span>。開放時間與租賃狀況以主管機關（{h.govInstitution ?? '新北市政府'}）公告為準。</p>
         </section>
@@ -90,7 +92,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
         {place && <div><dt>地點</dt><dd>{place}</dd></div>}
       </dl>
 
-      <h2 class="h-sm">參觀資訊</h2>
+      <h2 class="sec-h">參觀資訊</h2>
       <dl class="facts">
         {openText && <div><dt>開放參觀</dt><dd>{openText}</dd></div>}
         {h.openingHours && <div><dt>開放時間</dt><dd>
@@ -113,12 +115,12 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
       </dl>
       {!hasVisit && <p class="note">國家文化資產網沒有提供這處文化資產的開放時間、門票與開放狀態。{h.govInstitution ? `參觀前請先向主管機關（${h.govInstitution}）確認。` : '參觀前請先向主管機關確認。'}</p>}
 
-      <h2 class="h-sm">歷史沿革</h2>
+      <h2 class="sec-h">歷史沿革</h2>
       <p class="body">{h.history}</p>
 
       {ev.here.length > 0 && (
         <section class="evs">
-          <h2 class="h-sm">{ev.herePast ? '在這裡舉辦過的活動' : '在這裡舉辦的活動'}{h.eventCount ? <span class="cnt">　收錄 {h.eventCount} 個</span> : ''}</h2>
+          <h2 class="sec-h">{ev.herePast ? '在這裡舉辦過的活動' : '在這裡舉辦的活動'}{h.eventCount ? <span class="cnt">　收錄 {h.eventCount} 個</span> : ''}</h2>
           <ol class="ev-list">
             {ev.here.map((d) => (
               <li><a href={`/event/${d.slug}`}>
@@ -134,7 +136,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
 
       {nearbyVenues.length > 0 && (
         <section class="near">
-          <h2 class="h-sm">附近的場館</h2>
+          <h2 class="sec-h">附近的場館</h2>
           <ul>{nearbyVenues.map((v) => (
             <li><a href={`/venue/${v.slug}`}>{v.name}</a>
               <span class="n tabular">{km(v.distanceM)}{upcomingAt.get(v.slug) ? `　近期 ${upcomingAt.get(v.slug)} 個活動` : ''}</span></li>
@@ -144,7 +146,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
 
       {ev.near.length > 0 && (
         <section class="evs">
-          <h2 class="h-sm">附近的近期活動</h2>
+          <h2 class="sec-h">附近的近期活動</h2>
           <ol class="ev-list">
             {ev.near.map((d) => (
               <li><a href={`/event/${d.slug}`}>
@@ -162,7 +164,8 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
   </div>
 </Base>
 <style>
-  .her { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
+  .her { padding-block: 0 var(--space-9); }
+  .her > :not(.ph) { max-width: 46rem; }
   h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); letter-spacing: 0; line-height: 1.35; }
   .facts { margin: var(--space-6) 0 0; border-top: var(--hairline) solid var(--border-subtle); }
   .h-sm + .facts { margin-top: var(--space-4); }
@@ -184,4 +187,9 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
           border-top: var(--hairline) solid var(--border-subtle);
           font-size: var(--text-sm); color: var(--text-muted); display: grid; gap: 0.5rem; }
   .save-row { margin-top: var(--space-4); }
+  /* 資料表：白卡＋細線分隔（2026-11-11 視覺升級） */
+  .facts { padding: 0 var(--space-5); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); border-top: 0 !important; }
+  .facts > div { border-bottom: var(--hairline) solid var(--border-subtle); }
+  .facts > div:last-child { border-bottom: 0; }
+  .facts dt { font-weight: 700; font-size: var(--text-xs); color: var(--text-secondary); }
 </style>

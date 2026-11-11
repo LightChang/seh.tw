@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import PageHero from '../../components/PageHero.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import VenueFacts from '../../components/VenueFacts.astro';
 import SaveShare from '../../components/SaveShare.astro';
@@ -183,9 +184,10 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
 <Base title={title} noindex={!indexable} description={description} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
     <Nav />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <h1 class="vname">{h1}</h1>
+    <PageHero kicker="場館" icon={'building'} tone="sage">
+      <Breadcrumb slot="top" trail={trail} />
+      <Fragment slot="title">{h1}</Fragment>
+      
       {aliases.length > 0 && <p class="aka">又稱　{aliases.join('、')}</p>}
       <p class="sub"><strong class="tabular">{rows.length}</strong> 個近期{isPerform ? '節目' : '活動'}<span class="orig">　收錄 {totalEvents} 個</span>
         <span class="orig">{v.origin === 'group' ? `　${halls.length} 個廳與場地` : v.origin === 'derived' ? '　場地資料由活動資料建立' : '　來自場館名錄'}</span></p>
@@ -193,13 +195,13 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
         {hallNav.length > 0 && <>　同館：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</>}</p>}
       {!parent && halls.length > 0 && hallNav.length > 0 && <p class="hall-nav">各廳：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</p>}
       <div class="save-row"><SaveShare kind="venue" slug={v.slug} title={h1} place={[v.city, v.district].filter(Boolean).join('')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/venue/${encodeURIComponent(v.slug)}`} /></div>
-    </header>
+    </PageHero>
 
     {!schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}
 
     {grouped ? (
       <>
-        <h2 class="h-sm">{isPerform ? '近期節目' : '近期活動'}（依類型）</h2>
+        <h2 class="sec-h">{isPerform ? '近期節目' : '近期活動'}（依類型）</h2>
         <p class="catrow">{catGroups.map(([c, list]) => (
           <a href={`#${catId(c)}`} style={`color:var(${catVar(c)})`}>{c}<b class="tabular">{list.length}</b></a>
         ))}</p>
@@ -221,7 +223,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
     ) : (
       <>
         {(rows.length > 0 || past.length > 0) && (
-          <h2 class="h-sm">{rows.length ? (isPerform ? '近期節目' : '近期活動') : '已結束的活動'}</h2>
+          <h2 class="sec-h">{rows.length ? (isPerform ? '近期節目' : '近期活動') : '已結束的活動'}</h2>
         )}
         <ol class="ev-list">
           {(rows.length ? listRows : past).map((d) => (
@@ -246,6 +248,9 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
   .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
   .hall-nav { margin-top: 0.8rem; font-size: var(--text-sm); color: var(--text-secondary); }
+  .hall-nav a { display: inline-flex; align-items: center; min-height: 40px; margin: 2px 0; padding: 0 0.9rem; border-radius: 999px;
+    background: var(--seh-card); border: var(--hairline) solid var(--border-subtle); font-weight: 700; text-decoration: none; color: var(--text-primary); }
+  .hall-nav a:hover { border-color: var(--seh-ink); }
   .catrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); max-width: none; }
   .catrow a { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
   .catrow b { color: var(--text-muted); font-weight: 400; }

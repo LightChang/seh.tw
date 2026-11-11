@@ -4,14 +4,15 @@
 // 數字會由前端用當下時間更新的，給 id：<li data-stat={id}> 裡的 <b> 會被換掉。
 import { iconSvg } from '../lib/icons.mjs';
 interface Stat { icon: string; n: string | number; label: string; id?: string; href?: string; main?: boolean }
-interface Props { kicker: string; title: string; sub?: string; subId?: string; icon: string; tone?: string; art?: string; artId?: string; stats?: Stat[] }
-const { kicker, title, sub = '', subId, icon, tone = 'forest', art = '', artId, stats = [] } = Astro.props;
+interface Props { kicker: string; title?: string; sub?: string; subId?: string; icon: string; tone?: string; art?: string; artId?: string; stats?: Stat[] }
+const { kicker, title = '', sub = '', subId, icon, tone = 'forest', art = '', artId, stats = [] } = Astro.props;
 ---
 <header class="ph">
   <div class="ph-text">
     <slot name="top" />
     <p class="ph-k">{kicker}</p>
-    <h1>{title}</h1>
+    {/* 標題有動態內容（縣市名、分類色）時用 slot="title" 傳進來 */}
+    <h1>{title || <slot name="title" />}</h1>
     {sub && <p class="ph-sub" id={subId}>{sub}</p>}
   </div>
   <div class={`ph-art tone-${tone}`} aria-hidden="true">
