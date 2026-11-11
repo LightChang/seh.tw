@@ -5,7 +5,7 @@
 @import './tokens.css';
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; } /* 錨點（/today#new）不要被頂端固定的導覽蓋住 */
 
 body {
   margin: 0;
@@ -17,13 +17,16 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* 字型：規範堆疊前置中文字體，展場方向的顯示字體用於標題與數字 */
+/* 字型：只用系統內建字型，不載網路字型。
+   西文字型排前面（它們沒有中文字，中文會自動落到後面的中文字型），
+   中文依平台：macOS／iOS 蘋方、Windows 微軟正黑、Android／Linux 思源（Noto）。
+   標題不另換字族，靠字重與字距拉開層級。 */
 :root {
-  --font-body: "Noto Sans TC", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-               "Helvetica Neue", "PingFang TC", Arial, sans-serif;
-  --font-display: "Archivo", "Noto Sans TC", -apple-system, BlinkMacSystemFont,
-                  "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+               "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Noto Sans CJK TC", sans-serif;
+  --font-display: var(--font-body);
+  --font-mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, "Liberation Mono",
+               "PingFang TC", "Microsoft JhengHei", "Noto Sans TC", "Noto Sans CJK TC", monospace;
 
   --space-1: 0.25rem;  --space-2: 0.5rem;  --space-3: 0.75rem;
   --space-4: 1rem;     --space-5: 1.5rem;  --space-6: 2rem;
@@ -107,11 +110,18 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
 }
 .ev-list a:hover { background: var(--bg-surface); }
 .ev-list a:hover .ev-t { color: var(--color-link); }
-.ev-lead { font-size: var(--text-sm); color: var(--color-link); white-space: nowrap; }
-.ev-list .past .ev-lead { color: var(--text-muted); }
+/* 時間是列表的視覺錨點：決定要不要去的第一個問題是「什麼時候」。
+   時間最大最粗、等寬數字直排對齊；標題降一級；場館地點再降一級。
+   這樣往下掃看到的是一排時間，而不是一整片同樣大小的字。 */
+.ev-lead {
+  font-family: var(--font-mono); font-variant-numeric: tabular-nums;
+  font-size: var(--text-base); font-weight: 700; line-height: 1.2;
+  color: var(--color-link); white-space: nowrap;
+}
+.ev-list .past .ev-lead { color: var(--text-muted); font-weight: 400; }
 .ev-body { min-width: 0; }
-.ev-t { display: block; font-size: var(--text-base); }
-.ev-m { display: block; font-size: var(--text-sm); color: var(--text-muted); margin-top: 0.3rem; }
+.ev-t { display: block; font-size: var(--text-sm); font-weight: 600; line-height: 1.45; }
+.ev-m { display: block; font-size: var(--text-xs); color: var(--text-secondary); margin-top: 0.3rem; }
 .ev-cat { font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; }
 .ev-x { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; }
 .ev-list .sep {
