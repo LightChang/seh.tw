@@ -96,7 +96,7 @@ export async function openDecide({ time = 'soon', mood = 'now', kind = 'event', 
     yes.hidden = false; share.hidden = false;
     yes.href = href;
     const url = `${location.origin}${href}`;
-    const text = `今天有空嗎？這個好像不錯 👉 ${r.it.t}（${whenLabel(r.av, now)}）\n${url}`;
+    const text = `今天有空嗎？這個好像不錯：${r.it.t}（${whenLabel(r.av, now)}）\n${url}`;
     share.href = `https://line.me/R/share?text=${encodeURIComponent(text)}`;
   };
 

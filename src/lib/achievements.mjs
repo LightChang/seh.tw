@@ -32,12 +32,12 @@ export function weekendStreak(visited) {
 const events = (v) => v.filter((x) => x.kind === 'event');
 
 export const ACHIEVEMENTS = [
-  { key: 'first', icon: 'spark', name: '出發了！', desc: '第一次打卡', goal: 1, count: (v) => v.length },
-  { key: 'city', icon: 'roof', name: '城市探索家', desc: '在 5 個不同縣市打卡', goal: 5, count: (v) => new Set(v.map((x) => x.city).filter(Boolean)).size },
+  { key: 'first', icon: 'compass', name: '出發了！', desc: '第一次打卡', goal: 1, count: (v) => v.length },
+  { key: 'city', icon: 'pin', name: '城市探索家', desc: '在 5 個不同縣市打卡', goal: 5, count: (v) => new Set(v.map((x) => x.city).filter(Boolean)).size },
   { key: 'expo', icon: 'frame', name: '展覽愛好者', desc: '看了 5 場展覽', goal: 5, count: (v) => events(v).filter((x) => x.cat === '展覽').length },
   { key: 'weekend', icon: 'leaf', name: '週末冒險家', desc: '連續 3 個週末出門探索', goal: 3, count: weekendStreak },
-  { key: 'free', icon: 'balloon', name: '免費生活家', desc: '去了 10 個免費活動', goal: 10, count: (v) => events(v).filter((x) => x.free === true).length },
-  { key: 'heritage', icon: 'lantern', name: '文化尋寶家', desc: '走訪 5 處文化資產', goal: 5, count: (v) => v.filter((x) => x.kind === 'heritage').length },
+  { key: 'free', icon: 'gift', name: '免費生活家', desc: '去了 10 個免費活動', goal: 10, count: (v) => events(v).filter((x) => x.free === true).length },
+  { key: 'heritage', icon: 'roof', name: '文化尋寶家', desc: '走訪 5 處文化資產', goal: 5, count: (v) => v.filter((x) => x.kind === 'heritage').length },
   { key: 'variety', icon: 'palette', name: '什麼都想試試', desc: '打卡 5 種不同類型的活動', goal: 5, count: (v) => new Set(events(v).map((x) => x.cat).filter(Boolean)).size },
 ];
 

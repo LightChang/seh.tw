@@ -20,7 +20,7 @@ interface Props {
 const { kind, slug, title, when = '', place = '', endTs = null, startTs = null, cat = '', city = '', free = null, url } = Astro.props;
 const enc = encodeURIComponent(url);
 // 揪朋友：LINE 打開就帶好一句邀請，朋友不用點進來也知道是什麼、什麼時候
-const invite = encodeURIComponent(`要不要一起去？👉 ${title}${when ? `（${when}）` : ''}${place ? `｜${place}` : ''}\n${url}`);
+const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（${when}）` : ''}${place ? `｜${place}` : ''}\n${url}`);
 ---
 <div class="act-row" data-save-share data-kind={kind} data-slug={slug} data-title={title}
      data-when={when} data-place={place} data-end={endTs ?? ''} data-start={startTs ?? ''}
@@ -78,7 +78,7 @@ const invite = encodeURIComponent(`要不要一起去？👉 ${title}${when ? `�
     const notYet = d.start && Number(d.start) > Date.now();
     const paintVisit = (on: boolean) => {
       visit.setAttribute('aria-pressed', String(on));
-      visit.querySelector('.act-label')!.textContent = on ? '去過了 ✓' : notYet ? '開始後可打卡' : '我去過了';
+      visit.querySelector('.act-label')!.textContent = on ? '去過了' : notYet ? '開始後可打卡' : '我去過了';
     };
     paintVisit(isVisited(d.kind!, d.slug!));
     if (notYet && !isVisited(d.kind!, d.slug!)) visit.disabled = true;
@@ -89,7 +89,7 @@ const invite = encodeURIComponent(`要不要一起去？👉 ${title}${when ? `�
       gtag('event', r.visited ? 'checkin' : 'checkin_undo', { item_kind: d.kind });
       const got = r.visited ? newlyUnlocked(r.before, r.after) : [];
       if (got.length) {
-        toast(`🏅 解鎖成就「${got.map((a) => a.name).join('」「')}」，到「收藏」頁看看`);
+        toast(`解鎖成就「${got.map((a) => a.name).join('」「')}」，到「收藏」頁看看`);
         got.forEach((a) => gtag('event', 'achievement', { key: a.key }));
       } else {
         toast(r.visited ? '已記錄到你的探索清單' : '已取消打卡');

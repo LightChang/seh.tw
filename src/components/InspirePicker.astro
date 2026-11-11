@@ -4,9 +4,9 @@
 // 沒有 JS 或推薦池還沒載入時看得到東西。
 // full：/explore 用，列全部結果並把選擇寫進網址（?time=&mood=，可分享）。
 import { TIMES, MOODS, iconSvg } from '../lib/inspire.mjs';
+import { MOOD_ICON } from '../lib/icons.mjs';
 interface Props { full?: boolean; ssr?: string; limit?: number; time?: string; mood?: string; weekendHint?: string }
 const { full = false, ssr = '', limit = 6, time = 'soon', mood = 'now', weekendHint = '' } = Astro.props;
-const MOOD_ICON: Record<string, string> = { solo: 'frame', friends: 'note', escape: 'leaf', different: 'hand', now: 'spark' };
 ---
 <section class="picker" data-picker data-full={full ? '1' : ''} data-limit={limit} data-time={time} data-mood={mood}>
   <div class="pk-q">
@@ -34,8 +34,8 @@ const MOOD_ICON: Record<string, string> = { solo: 'frame', friends: 'note', esca
   <div class="pk-bar">
     <p class="pk-count" aria-live="polite"></p>
     <div class="pk-tools">
-      <button type="button" class="pk-loc">📍 用我的位置排序</button>
-      <button type="button" class="btn-go pk-decide" data-entry="picker">🎲 幫我決定！</button>
+      <button type="button" class="pk-loc"><span class="bi" set:html={iconSvg('pin')} /><span class="pk-loc-t">用我的位置排序</span></button>
+      <button type="button" class="btn-go pk-decide" data-entry="picker"><span class="bi" set:html={iconSvg('dice')} />幫我決定！</button>
     </div>
   </div>
 
@@ -63,7 +63,8 @@ const MOOD_ICON: Record<string, string> = { solo: 'frame', friends: 'note', esca
     const more = root.querySelector<HTMLButtonElement>('.pk-showmore');
     const all = root.querySelector<HTMLAnchorElement>('.pk-all');
     const locBtn = root.querySelector<HTMLButtonElement>('.pk-loc')!;
-    if (loc) locBtn.textContent = '📍 已依距離排序';
+    const locT = locBtn.querySelector('.pk-loc-t')!;
+    if (loc) locT.textContent = '已依距離排序';
 
     const check = () => {
       for (const b of root.querySelectorAll<HTMLElement>('[data-time]')) b.setAttribute('aria-checked', String(b.dataset.time === time));
@@ -107,9 +108,9 @@ const MOOD_ICON: Record<string, string> = { solo: 'frame', friends: 'note', esca
     });
     more?.addEventListener('click', () => { shown += step * 2; render(); });
     locBtn.addEventListener('click', async () => {
-      locBtn.textContent = '📍 定位中⋯';
+      locT.textContent = '定位中⋯';
       loc = await askLocation();
-      locBtn.textContent = loc ? '📍 已依距離排序' : '📍 無法取得位置';
+      locT.textContent = loc ? '已依距離排序' : '無法取得位置';
       track('location', { granted: !!loc });
       render();
     });

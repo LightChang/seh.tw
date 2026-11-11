@@ -165,7 +165,7 @@ export function cardHtml({ it, av, dist }, { entry = '', now = Date.now() } = {}
   <span class="spot-body">
     <span class="spot-tags">${tags}</span>
     <span class="spot-t">${esc(it.t)}</span>
-    ${it.b ? `<span class="spot-b">${esc(it.b)}</span>` : ''}
+    <span class="spot-b">${esc(it.b)}</span>
     <span class="spot-p">${esc([it.v, shortCity(it.ci)].filter(Boolean).join('・'))}</span>
   </span>
 </a>`;

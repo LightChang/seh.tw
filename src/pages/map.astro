@@ -44,7 +44,9 @@ import Nav from '../components/Nav.astro';
 
   svg.append('g').selectAll('path').data(geo.features).join('path')
     .attr('d', geoPath(proj)).attr('fill', css('--bg-surface'))
-    .attr('stroke', css('--border-subtle')).attr('stroke-width', 0.8);
+    // 縣市界線跟網站字體一樣粗細感（原本 0.8 太細，像技術圖）
+    .attr('stroke', css('--seh-forest')).attr('stroke-opacity', 0.55)
+    .attr('stroke-width', 2).attr('stroke-linejoin', 'round');
 
   const layer = svg.append('g');
   let pick = null;

@@ -64,7 +64,7 @@ import { iconSvg } from '../lib/icons.mjs';
       if (!li) continue;
       li.classList.toggle('done', a.done);
       li.querySelector<HTMLElement>('.ach-bar span')!.style.width = `${(a.n / a.goal) * 100}%`;
-      li.querySelector('.ach-n')!.textContent = a.done ? '已解鎖 🏅' : `${a.n}／${a.goal}`;
+      li.querySelector('.ach-n')!.textContent = a.done ? '已解鎖' : `${a.n}／${a.goal}`;
     }
     document.getElementById('ach-n')!.textContent = `${p.filter((a) => a.done).length}／${p.length}`;
     // 去過的地方
