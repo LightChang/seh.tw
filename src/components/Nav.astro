@@ -22,20 +22,32 @@ const items = [
   </ul>
 </nav>
 <style>
-  .nav { display: flex; align-items: baseline; gap: var(--space-6); padding-block: 1.1rem;
-         border-bottom: var(--hairline) solid var(--border-subtle); }
+  /* 導覽固定在頂端：列表頁動輒幾十列，捲下去之後還要找得到「今晚／這週末／地圖」。
+     底色不透明，捲動的內容從下面過去時不會透出來。 */
+  .nav {
+    position: sticky; top: 0; z-index: 40;
+    display: flex; align-items: center; gap: var(--space-6);
+    background: var(--bg-base);
+    border-bottom: 2px solid var(--text-primary);
+  }
   .brand { font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg);
-           text-decoration: none; letter-spacing: -0.01em; }
+           text-decoration: none; letter-spacing: -0.01em; flex: none; }
   .brand span { color: var(--text-muted); font-weight: 400; }
-  .nav ul { display: flex; flex-wrap: wrap; row-gap: var(--space-2); gap: var(--space-5); list-style: none; margin: 0; padding: 0; }
-  .nav a { text-decoration: none; font-size: var(--text-sm); color: var(--text-secondary); }
-  .nav a:hover { color: var(--color-link); }
-  .nav a.on { color: var(--text-primary); font-weight: 700; }
+  .nav ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); list-style: none; margin: 0; padding: 0; }
+  .nav ul a {
+    display: flex; align-items: center; min-height: 56px;
+    text-decoration: none; font-size: var(--text-sm); font-weight: 600; color: var(--text-secondary);
+    border-bottom: 4px solid transparent; margin-bottom: -2px; padding-top: 4px;
+  }
+  .nav ul a:hover { color: var(--color-link); border-bottom-color: var(--border-subtle); }
+  /* 目前所在的區塊：粗底線＋主色，一眼看得出「我在哪」 */
+  .nav ul a.on { color: var(--color-link); font-weight: 800; border-bottom-color: var(--color-link); }
   /* 手機上換行會疊成三排、吃掉約四分之一個首屏；改成一排可橫向滑動 */
   @media (max-width: 760px) {
-    .nav { gap: var(--space-4); padding-block: 0.8rem; }
+    .nav { gap: var(--space-4); }
     .nav ul { flex-wrap: nowrap; gap: var(--space-4); min-width: 0; overflow-x: auto; scrollbar-width: none; }
     .nav ul::-webkit-scrollbar { display: none; }
     .nav li { flex: none; }
+    .nav ul a { min-height: 48px; }
   }
 </style>

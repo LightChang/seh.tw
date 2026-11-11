@@ -107,18 +107,29 @@ const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
   };
   const catColor = (n) => css(CAT_COLOR[n] ?? '--text-muted');
 
-  const [s, sessions] = await Promise.all([
+  // 台灣的日期。toISOString() 是 UTC，台灣 00:00–08:00 會變成前一天。
+  const now = new Date();
+  const today = new Date(midnight(now) + 8 * 3600000).toISOString().slice(0, 10);
+
+  // 首頁只抓今天開始的場次（src/pages/day/[date].json.js），不載全部場次的 /index.json。
+  // 那份 gzip 後約 420 KB，首頁只用得到其中一天；它只在使用者開始打字時才載入（見下方搜尋提示）。
+  async function loadToday() {
+    const r = await fetch(`/day/${today}.json`);
+    if (!r.ok) return [];   // 今天沒有任何場次就沒有檔案
+    return (await r.json()).map(([ev, cat, lat, lng, start]) => {
+      const dateOnly = start.length <= 10;
+      return { ev, cat, lat, lng, dateOnly, at: dateOnly ? `${start}T00:00` : start.replace(' ', 'T') };
+    });
+  }
+
+  const [s, up] = await Promise.all([
     (await fetch('/home-stats.json')).json(),
-    loadSessions(),
+    loadToday(),
   ]);
   // 「今天」「今晚」跟當下時間有關，不能是 build 時算好的靜態值——那隔天就過期了。
   // 只有 dateOnly=false 的場次才判得出 19:00 之後（常設展的時刻是不存在不是零點）。
-  const _d0 = new Date(midnight(Date.now()));   // 台灣的今天，不看訪客時區
-  const _d1 = _d0.getTime() + 86400000;
-  const _inToday = (d) => { const t = new Date(d.at).getTime(); return t >= _d0.getTime() && t < _d1; };
-  s.today = new Set(sessions.filter(_inToday).map((d) => d.slug)).size;
-  s.tonight = new Set(sessions.filter((d) => !d.dateOnly && _inToday(d)
-    && twHour(d.at) >= 19).map((d) => d.slug)).size;
+  s.today = new Set(up.map((d) => d.ev)).size;
+  s.tonight = new Set(up.filter((d) => !d.dateOnly && twHour(d.at) >= 19).map((d) => d.ev)).size;
 
   const fmt = (n) => n.toLocaleString('en-US');
   // 這些數字每天都會變，寫死就會過期——實測寫死的「2,376 個場館、70 個來源」
@@ -169,11 +180,7 @@ const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
     return { svg: select(sel).attr('viewBox', `0 0 ${W} ${H}`), W, H };
   }
 
-  const up = await loadSessions();
   const geo = await (await fetch('/tw-counties.json')).json();
-  const now = new Date();
-  // 台灣的日期與時刻。toISOString() 是 UTC，台灣 00:00–08:00 會變成前一天。
-  const today = new Date(midnight(now) + 8 * 3600000).toISOString().slice(0, 10);
   document.getElementById('now-h').textContent = hhmm(now);
   const [nowH, nowM] = hhmm(now).split(':').map(Number);
 
