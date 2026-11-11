@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
+import SaveShare from '../../components/SaveShare.astro';
 import { heritageNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { allHeritage, sessionsByVenue, indexableEvent, isIndexable } from '../../lib/build-data.mjs';
 import { heritageEvents } from '../../lib/nearby-events.mjs';
@@ -74,6 +75,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
     <article class="her">
       <Breadcrumb trail={trail} />
       <h1>{h.name}</h1>
+      <div class="save-row"><SaveShare kind="heritage" slug={h.slug} title={h.name} place={[h.level, h.city, h.district].filter(Boolean).join('・')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/heritage/${encodeURIComponent(h.slug)}`} /></div>
       {status && (
         <section class="status">
           <h2 class="h-sm">最新現況</h2>
@@ -181,4 +183,5 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
   .prov { margin-top: var(--space-8); padding-top: var(--space-5);
           border-top: var(--hairline) solid var(--border-subtle);
           font-size: var(--text-sm); color: var(--text-muted); display: grid; gap: 0.5rem; }
+  .save-row { margin-top: var(--space-4); }
 </style>

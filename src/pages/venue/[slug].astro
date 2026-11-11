@@ -3,6 +3,7 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import VenueFacts from '../../components/VenueFacts.astro';
+import SaveShare from '../../components/SaveShare.astro';
 import { venueNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar, mdShort } from '../../lib/format.mjs';
 import { allVenues, flatSessions, isIndexable, venueNames } from '../../lib/build-data.mjs';
@@ -191,6 +192,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
       {parent && <p class="hall-nav">位於 <a href={`/venue/${parent.slug}`}>{parent.name}</a><span class="orig">（全館近期 {parentUpcoming} 場）</span>
         {hallNav.length > 0 && <>　同館：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</>}</p>}
       {!parent && halls.length > 0 && hallNav.length > 0 && <p class="hall-nav">各廳：{hallNav.map((h) => <><a href={`/venue/${h.slug}`}>{h.name}</a><span class="orig tabular"> {h.upcoming} 場</span>{' '}</>)}</p>}
+      <div class="save-row"><SaveShare kind="venue" slug={v.slug} title={h1} place={[v.city, v.district].filter(Boolean).join('')} url={`${Astro.site?.toString().replace(/\/$/, '') ?? ''}/venue/${encodeURIComponent(v.slug)}`} /></div>
     </header>
 
     {!schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}
@@ -250,4 +252,5 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
   .catsec { margin-top: var(--space-6); }
   .h-cat { font-family: var(--font-body); font-weight: 700; font-size: var(--text-base); letter-spacing: 0; }
   .catsec .ev-list { margin-top: var(--space-3); margin-bottom: 0; }
+  .save-row { margin-top: var(--space-4); }
 </style>

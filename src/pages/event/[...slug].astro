@@ -4,12 +4,17 @@ import Nav from '../../components/Nav.astro';
 import { dateLabel, hhmm, catVar } from '../../lib/format.mjs';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import NearbyEvents from '../../components/NearbyEvents.astro';
+import SaveShare from '../../components/SaveShare.astro';
+import { nearestPlaces, distanceText, similarEvents } from '../../lib/explore-nearby.mjs';
+import { daysLeftText } from '../../lib/home-picks.mjs';
+import { tsOf, tsEndOf, leadText } from '../../lib/day-lists.mjs';
+import { midnight, dayGap } from '../../lib/format.mjs';
 import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { eventTitle, whenText, primarySession, placeLabel, eventLead, LEAD_SLUGS } from '../../lib/event-meta.mjs';
 import { ticketLink } from '../../lib/ticket.mjs';
 import titleAliases from '../../../overrides/event-title-aliases.json';
 import { hasClockTime } from '../../lib/session-time.mjs';
-import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents, cityMonthPages } from '../../lib/build-data.mjs';
+import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents, cityMonthPages, heritageGrid, liveEventList } from '../../lib/build-data.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
@@ -152,6 +157,44 @@ const nearby = await nearbyEvents();
 const ended = !nearby.live.has(e.slug);
 const near = nearby.pick({ venueSlug: primary.venueSlug, city: loc.city, exclude: [e.slug, ...editions.map((x) => x.slug)] });
 const nearProps = { items: near, city: loc.city, venueName: nearby.groupName(primary.venueSlug) ?? primary.venueNameRaw, now: Date.now() };
+// ── 延伸探索（2026-11-11 活動頁改版）─────────────────────────────
+const buildNow = Date.now();
+const t0 = midnight(buildNow);
+// 活動狀態：已結束／即將結束（剩 N 天）／展期中／今天／N 天後
+const spans = sessions.map((x) => {
+  const row = { at: x.granularity === 'date' ? `${x.startAt}T00:00` : x.startAt, end: x.endAt ?? null };
+  const ts = tsOf(row);
+  return { ts, end: tsEndOf(row) ?? ts };
+}).filter((x) => Number.isFinite(x.ts));
+const evStart = spans.length ? Math.min(...spans.map((x) => x.ts)) : null;
+const evEnd = spans.length ? Math.max(...spans.map((x) => x.end)) : null;
+const status = evEnd === null ? null
+  : evEnd < t0 ? { text: '已結束', tone: 'off' }
+  : evStart < t0
+    ? (evEnd - evStart >= 3 * 86400000 && evEnd < t0 + 7 * 86400000
+      ? { text: daysLeftText(Math.round((midnight(evEnd) - t0) / 86400000)), tone: 'urgent' }
+      : { text: '展期中', tone: 'on' })
+  : dayGap(evStart, buildNow) === 0 ? { text: '今天', tone: 'on' }
+  : { text: `${dayGap(evStart, buildNow)} 天後開始`, tone: 'plain' };
+// 交通：有座標用座標，沒有就用地址查
+const lat = primary.lat ?? venue?.lat, lng = primary.lng ?? venue?.lng;
+const addr = loc.street || venue?.address || primary.address || '';
+const mapQuery = typeof lat === 'number' && typeof lng === 'number' ? `${lat},${lng}` : addr ? `${primary.venueNameRaw ?? ''} ${addr}`.trim() : '';
+const mapLinks = mapQuery && {
+  view: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(mapQuery)}`,
+  route: `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(mapQuery)}`,
+};
+// 附近的文化資產（場館本身就在某處文資裡的，那處另外列在場館資訊，不重複）
+const nearHer = nearestPlaces(await heritageGrid(), lat, lng, { radiusM: 2000, limit: 4, exclude: new Set(venue?.heritage ? [venue.heritage.slug] : []) });
+// 你可能也會喜歡：同類型，排除頁面上已經列出的
+const listed = new Set([e.slug, ...near.map((x) => x.slug), ...editions.map((x) => x.slug)]);
+const similar = similarEvents(await liveEventList(buildNow), { cat: e.category, city: loc.city, exclude: listed, limit: 4 });
+const similarRows = similar.map((x) => ({ slug: x.slug, title: x.title, cat: x.cat, venue: x.venue, city: x.city,
+  at: new Date(x.next + 8 * 3600e3).toISOString().slice(0, 16), end: x.end ? new Date(x.end + 8 * 3600e3).toISOString().slice(0, 16) : null, dateOnly: x.dateOnly }));
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+const pageUrl = `${site}/event/${encodeURIComponent(e.slug)}`;
+const hoursShort = venue?.openingHours ? venue.openingHours.split('\n').slice(0, 3).join('\n') : '';
+
 // 麵包屑：畫面與 BreadcrumbList 同一份
 const trail = crumbTrail([
   { name: '今天', href: '/today' },
@@ -171,7 +214,15 @@ const trail = crumbTrail([
     <article class="ev">
       <Breadcrumb trail={trail} />
 
-      <h1>{e.title}</h1>
+      <header class="ev-hd">
+        <p class="ev-kick">
+          {e.category && (hasCatPage
+            ? <a class="tag" href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
+            : <span class="tag" style={`color:var(${catVar(e.category)})`}>{e.category}</span>)}
+          {status && <span class={`tag st-${status.tone}`}>{status.text}</span>}
+          {loc.city && <span class="ev-city">{loc.city}{loc.district && `・${loc.district}`}</span>}
+        </p>
+        <h1>{e.title}</h1>
       {LEAD_SLUGS.has(e.slug) && <p class="lead">{eventLead(e)}</p>}
       {extraLead && <p class="lead">{extraLead}</p>}
       {multiVenueLead && <p class="lead">{multiVenueLead}</p>}
@@ -180,6 +231,10 @@ const trail = crumbTrail([
       {ticketChannelLead && !ended && <p class="lead">{e.title}展出中，購票除奇美博物館官網售票平台，
         也可經 Klook、KKday、ibon、Trip.com 等通路購買；現場售票機僅售當日票，官網另提供「快速入場預約」服務。
         詳見{srcUrl && <a href={srcUrl} target="_blank" rel="noopener">官網購票說明</a>}。</p>}
+      </header>
+
+      <div class="ev-grid">
+      <div class="ev-main">
 
       <dl class="facts">
         <div><dt>時間</dt><dd class="tabular">
@@ -222,18 +277,14 @@ const trail = crumbTrail([
         </dd></div>}
       </dl>
 
-      {/* 購票／報名與原始出處放在說明文字之前：說明常常很長，放後面就掉出首屏 */}
-      {(ticket || srcUrl) && (
-        <p class="cta">
-          {ticket && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener" data-goal="event_detail_click" data-method="ticket">{ticket.label}（{ticket.platform}）</a>}
-          {srcUrl && srcUrl !== ticket?.href && <a class={ticket ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener" data-goal="event_detail_click" data-method="source">前往原始出處</a>}
-          {srcUrl && <span class="src">{srcNames[0]}</span>}
-        </p>
-      )}
-
       {ended && <NearbyEvents {...nearProps} />}
 
-      {desc && <div class="desc">{desc}</div>}
+      {desc && (
+        <section class="sec">
+          <h2 class="h-sec">活動介紹</h2>
+          <div class="desc">{desc}</div>
+        </section>
+      )}
 
       {sessions.length > 1 && (
         <section class="sessions">
@@ -262,7 +313,59 @@ const trail = crumbTrail([
         </section>
       )}
 
+      {(place || mapLinks || venue) && (
+        <section class="sec">
+          <h2 class="h-sec">地點與交通</h2>
+          <div class="visit">
+            <div class="visit-main">
+              {place && <p class="visit-name">{primary.venueSlug && primary.venueNameRaw ? <a href={`/venue/${primary.venueSlug}`}>{place}</a> : place}</p>}
+              {addr && <p class="visit-addr">{addr}</p>}
+              {hoursShort && <p class="visit-hours"><span class="visit-k">開放時間</span>{hoursShort}</p>}
+              {venue?.heritage && <p class="visit-her">這裡是文化資產：<a href={`/heritage/${venue.heritage.slug}`}>{venue.heritage.name}</a></p>}
+            </div>
+            {mapLinks && (
+              <p class="visit-links">
+                <a class="pill" href={mapLinks.route} target="_blank" rel="noopener" data-goal="directions" data-method="google_maps">規劃路線</a>
+                <a class="pill" href={mapLinks.view} target="_blank" rel="noopener">在地圖上看</a>
+                {primary.venueSlug && <a class="pill" href={`/venue/${primary.venueSlug}`}>場館介紹</a>}
+              </p>
+            )}
+          </div>
+        </section>
+      )}
+
+      {nearHer.length > 0 && (
+        <section class="sec">
+          <h2 class="h-sec">附近的文化資產</h2>
+          <ul class="her-list">
+            {nearHer.map((h) => (
+              <li><a href={`/heritage/${encodeURIComponent(h.slug)}`}>
+                <span class="her-name">{h.name}</span>
+                <span class="her-m">{[h.level, distanceText(h.distanceM)].filter(Boolean).join('・')}</span>
+              </a></li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       {!ended && <NearbyEvents {...nearProps} />}
+
+      {similarRows.length > 0 && (
+        <section class="sec">
+          <h2 class="h-sec">你可能也會喜歡</h2>
+          <ol class="ev-list sim">
+            {similarRows.map((d) => (
+              <li><a href={`/event/${encodeURIComponent(d.slug)}`}>
+                <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
+                <span class="ev-body"><span class="ev-t">{d.title}</span>
+                  <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
+                <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+              </a></li>
+            ))}
+          </ol>
+          {hasCatPage && <p class="more-sim"><a href={`/category/${e.category}`}>所有{e.category}活動 →</a></p>}
+        </section>
+      )}
 
       <footer class="prov">
         <h2>資料來源</h2>
@@ -278,13 +381,96 @@ const trail = crumbTrail([
         ))}</ul>
         <p>活動內容以原始出處為準。<a href="/about">資料怎麼來的</a></p>
       </footer>
+      </div>
+
+      <aside class="ev-side" aria-label="出發前">
+        <div class="plan">
+          <p class="plan-k">出發前</p>
+          <p class="plan-when tabular">{whenText(sessions)}</p>
+          {sessions.length > 1 && <p class="plan-n">共 {sessions.length} 場次</p>}
+          {place && <p class="plan-place">{place}</p>}
+          {(e.isFree !== undefined || e.priceText) && (
+            <p class="plan-price">{e.isFree === true ? <span class="tag tag-free">免費</span> : <>票價　{e.priceText || '售票'}</>}</p>
+          )}
+          {/* 已結束就不推購票，只留官方頁（資料仍以原始出處為準） */}
+          {((ticket && !ended) || srcUrl) && (
+            <p class="cta">
+              {ticket && !ended && <a class="btn" href={ticket.href} target="_blank" rel="nofollow noopener" data-goal="event_detail_click" data-method="ticket">{ticket.label}（{ticket.platform}）</a>}
+              {srcUrl && (ended || srcUrl !== ticket?.href) && <a class={ticket && !ended ? 'btn2' : 'btn'} href={srcUrl} target="_blank" rel="noopener" data-goal="event_detail_click" data-method="source">前往官方活動頁</a>}
+              {srcUrl && <span class="src">出處：{srcNames[0]}</span>}
+            </p>
+          )}
+          <SaveShare kind="event" slug={e.slug} title={e.title} when={whenText(sessions)} place={place} endTs={evEnd} url={pageUrl} />
+        </div>
+      </aside>
+      </div>
     </article>
   </div>
 </Base>
 
 <style>
-  .ev { padding-block: var(--space-7) var(--space-9); max-width: 46rem; }
-  h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); line-height: 1.35; letter-spacing: 0; }
+  .ev { padding-block: var(--space-5) var(--space-9); }
+  /* 標題區：分類／狀態標籤＋大標 */
+  .ev-hd { max-width: 54rem; padding-top: var(--space-4); }
+  .ev-kick { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+  .ev-kick a.tag { text-decoration: none; }
+  .ev-city { font-size: var(--text-xs); color: var(--text-secondary); }
+  .st-urgent { color: var(--seh-terracotta); background: var(--seh-terracotta-weak); border-color: transparent; font-weight: 700; }
+  .st-on { color: var(--seh-forest); background: var(--seh-forest-weak); border-color: transparent; font-weight: 700; }
+  .st-plain { color: var(--text-secondary); }
+  .st-off { color: var(--text-muted); background: var(--bg-surface); border-color: transparent; }
+  h1 { margin-top: var(--space-4); font-family: var(--font-body); font-weight: 800;
+       font-size: clamp(2rem, 3.4vw, 2.75rem); line-height: 1.25; letter-spacing: -0.015em; }
+
+  /* 兩欄：左邊內容、右邊「出發前」卡片固定在視窗內 */
+  .ev-grid { display: grid; grid-template-columns: minmax(0, 46rem) minmax(0, 22rem); gap: var(--space-8); align-items: start; justify-content: space-between; margin-top: var(--space-5); }
+  .ev-side { position: sticky; top: 80px; }
+  .plan { border-top: 6px solid var(--seh-terracotta); background: var(--bg-surface); padding: var(--space-5); display: grid; gap: var(--space-2); }
+  .plan-k { font-size: var(--text-xs); font-weight: 700; letter-spacing: 0.08em; color: var(--seh-terracotta); }
+  .plan-when { font-size: var(--text-base); font-weight: 800; line-height: 1.35; }
+  .plan-n, .plan-place, .plan-price { font-size: var(--text-xs); color: var(--text-secondary); }
+  .plan .cta { margin-top: var(--space-3); display: grid; gap: var(--space-2); }
+  .plan .btn, .plan .btn2 { text-align: center; }
+  .plan :global(.act-row) { margin-top: var(--space-3); padding-top: var(--space-4); border-top: var(--hairline) solid var(--border-subtle); }
+
+  /* 內容區塊 */
+  .sec { margin-top: var(--space-8); }
+  .h-sec { font-family: var(--font-body); font-size: var(--text-lg); font-weight: 800; border-top: 2px solid var(--seh-ink); padding-top: var(--space-3); margin-bottom: var(--space-4); }
+  .visit { display: grid; gap: var(--space-4); }
+  .visit-name { font-size: var(--text-sm); font-weight: 700; }
+  .visit-name a { text-decoration-color: var(--seh-terracotta); }
+  .visit-addr, .visit-her { font-size: var(--text-xs); color: var(--text-secondary); margin-top: var(--space-1); }
+  .visit-hours { font-size: var(--text-xs); color: var(--text-secondary); white-space: pre-line; margin-top: var(--space-2); }
+  .visit-k { display: block; font-weight: 700; color: var(--text-primary); }
+  .visit-links { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .pill {
+    display: inline-flex; align-items: center; min-height: 44px; padding: 0 1rem; text-decoration: none;
+    font-size: var(--text-xs); font-weight: 700; color: var(--text-primary);
+    border: var(--hairline) solid var(--border-subtle); border-radius: 999px; background: var(--bg-base);
+  }
+  .pill:first-child { color: var(--bg-base); background: var(--seh-forest); border-color: var(--seh-forest); }
+  .pill:hover { border-color: var(--seh-ink); }
+  .her-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+  .her-list a { display: grid; gap: 4px; height: 100%; padding: var(--space-4); text-decoration: none; border: var(--hairline) solid var(--border-subtle); border-radius: 3px; transition: border-color 0.15s; }
+  .her-list a:hover { border-color: var(--seh-ink); }
+  .her-list a:hover .her-name { color: var(--color-link); }
+  .her-name { font-size: var(--text-sm); font-weight: 700; line-height: 1.4; }
+  .her-m { font-size: var(--text-xs); color: var(--seh-forest); }
+  .sim { margin: 0; }
+  .more-sim { margin-top: var(--space-4); font-size: var(--text-sm); }
+  .more-sim a { color: var(--color-link); text-decoration: none; font-weight: 700; }
+  @media (max-width: 1024px) {
+    .ev-grid { display: flex; flex-direction: column; gap: 0; }
+    .ev-main { order: 2; width: 100%; }
+    .ev-side { order: 1; position: static; width: 100%; margin-bottom: var(--space-5); }
+    /* 窄螢幕卡片排在資料表上面，時間地點票價下面就有，卡片只留行動按鈕 */
+    .plan-when, .plan-n, .plan-place, .plan-price { display: none; }
+    .plan { padding: var(--space-4); }
+  }
+  @media (max-width: 760px) {
+    .her-list { grid-template-columns: minmax(0, 1fr); }
+    .sec { margin-top: var(--space-7); }
+  }
   .facts { margin: var(--space-6) 0 0; display: grid; gap: 0; border-top: var(--hairline) solid var(--border-subtle); }
   .facts > div {
     display: grid; grid-template-columns: 6rem minmax(0, 1fr); gap: 1.5rem;
@@ -297,7 +483,7 @@ const trail = crumbTrail([
   @media (max-width: 760px) {
     .ev { padding-block: var(--space-5) var(--space-8); }
     .facts { margin-top: var(--space-5); }
-    .facts > div { grid-template-columns: 3rem minmax(0, 1fr); gap: 1rem; padding: 0.6rem 0; }
+    .facts > div { grid-template-columns: 5rem minmax(0, 1fr); gap: 0.75rem; padding: 0.6rem 0; }
     .cta { margin-top: var(--space-5); }
   }
   .raw { color: var(--text-secondary); }
@@ -308,14 +494,16 @@ const trail = crumbTrail([
   .more { margin-top: 0.6rem; font-size: var(--text-sm); color: var(--text-muted); }
   .cta { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; margin-top: var(--space-6); }
   .btn {
-    display: inline-block; text-decoration: none; font-weight: 700;
-    background: var(--color-link); color: var(--bg-base);
-    padding: 0.7rem 1.4rem; font-size: var(--text-base);
+    display: inline-flex; align-items: center; justify-content: center; min-height: 52px; text-decoration: none; font-weight: 800;
+    background: var(--seh-terracotta); color: var(--bg-base); border: 2px solid var(--seh-terracotta); border-radius: 2px;
+    padding: 0 1.2rem; font-size: var(--text-sm); transition: background-color 0.15s, border-color 0.15s;
   }
+  .btn:hover { background: var(--seh-ink); border-color: var(--seh-ink); }
   .btn2 {
-    display: inline-block; text-decoration: none; font-weight: 700; font-size: var(--text-base);
-    padding: 0.7rem 1.4rem; border: var(--hairline) solid var(--color-link); color: var(--color-link);
+    display: inline-flex; align-items: center; justify-content: center; min-height: 52px; text-decoration: none; font-weight: 700; font-size: var(--text-sm);
+    padding: 0 1.2rem; border: 2px solid var(--seh-ink); border-radius: 2px; color: var(--text-primary); background: var(--bg-base);
   }
+  .btn2:hover { color: var(--color-link); border-color: var(--seh-terracotta); }
   .src { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); }
   .prov {
     margin-top: var(--space-8); padding-top: var(--space-5);

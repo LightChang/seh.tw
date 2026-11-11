@@ -11,16 +11,28 @@ const items = [
   { k: 'nearby', label: '附近', href: '/nearby' },
   { k: 'map', label: '地圖', href: '/map' },
   { k: 'search', label: '搜尋', href: '/search' },
+  { k: 'saved', label: '收藏', href: '/saved' },
 ];
 ---
 <nav class="nav" aria-label="主要導覽">
   <a class="brand" href="/">seh<span>.tw</span></a>
   <ul>
     {items.map((i) => (
-      <li><a href={i.href} class={current === i.k ? 'on' : ''} aria-current={current === i.k ? 'page' : undefined}>{i.label}</a></li>
+      <li><a href={i.href} class={current === i.k ? 'on' : ''} aria-current={current === i.k ? 'page' : undefined}>{i.label}{i.k === 'saved' && <span class="saved-n tabular" data-saved-n hidden></span>}</a></li>
     ))}
   </ul>
 </nav>
+<script>
+  // 收藏數（src/lib/saved.mjs）。0 就不顯示
+  import { readSaved } from '../lib/saved.mjs';
+  const paint = () => {
+    const n = readSaved().length;
+    for (const el of document.querySelectorAll<HTMLElement>('[data-saved-n]')) { el.textContent = String(n); el.hidden = n === 0; }
+  };
+  paint();
+  addEventListener('seh:saved', paint);
+  addEventListener('storage', paint);
+</script>
 <style>
   /* 導覽固定在頂端：列表頁動輒幾十列，捲下去之後還要找得到「今晚／這週末／地圖」。
      底色不透明，捲動的內容從下面過去時不會透出來。 */
@@ -41,6 +53,8 @@ const items = [
   }
   .nav ul a:hover { color: var(--color-link); border-bottom-color: var(--border-subtle); }
   /* 目前所在的區塊：粗底線＋主色，一眼看得出「我在哪」 */
+  .saved-n { margin-left: 0.3em; padding: 0 0.45em; border-radius: 999px; font-size: var(--text-xs); line-height: 1.4;
+             background: var(--seh-terracotta); color: var(--bg-base); }
   .nav ul a.on { color: var(--color-link); font-weight: 800; border-bottom-color: var(--color-link); }
   /* 手機上換行會疊成三排、吃掉約四分之一個首屏；改成一排可橫向滑動 */
   @media (max-width: 760px) {

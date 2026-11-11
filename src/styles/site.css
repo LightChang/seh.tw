@@ -167,6 +167,15 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
   .ev-x { display: none; }
 }
 
+/* ── 全站共用：短暫提示（src/lib/saved.mjs 的 toast 建立） ── */
+#seh-toast {
+  position: fixed; left: 50%; bottom: 24px; z-index: 100; transform: translate(-50%, 16px);
+  max-width: calc(100vw - 32px); padding: 0.8rem 1.2rem; border-radius: 3px;
+  background: var(--seh-ink); color: var(--bg-base); font-size: var(--text-xs); font-weight: 600;
+  opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s;
+}
+#seh-toast.show { opacity: 1; transform: translate(-50%, 0); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

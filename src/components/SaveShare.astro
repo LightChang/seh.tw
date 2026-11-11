@@ -1,0 +1,90 @@
+---
+// 收藏＋分享按鈕。活動頁、場館頁、文資頁共用。
+// 收藏存在瀏覽器（src/lib/saved.mjs）；分享優先用手機的原生分享面板，
+// 沒有的話複製連結，另外給 LINE（台灣最常用）與 Facebook 的分享連結。
+interface Props {
+  kind: 'event' | 'venue' | 'heritage';
+  slug: string;
+  title: string;
+  when?: string;
+  place?: string;
+  endTs?: number | null;
+  url: string;
+}
+const { kind, slug, title, when = '', place = '', endTs = null, url } = Astro.props;
+const enc = encodeURIComponent(url);
+---
+<div class="act-row" data-save-share data-kind={kind} data-slug={slug} data-title={title}
+     data-when={when} data-place={place} data-end={endTs ?? ''} data-url={url}>
+  <button type="button" class="act act-save" aria-pressed="false">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.1A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1Z" /></svg>
+    <span class="act-label">收藏</span>
+  </button>
+  <button type="button" class="act act-share">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7.5h14V12" /></svg>
+    <span>分享</span>
+  </button>
+  <a class="act act-ext" href={`https://social-plugins.line.me/lineit/share?url=${enc}`} target="_blank" rel="noopener" data-goal="share" data-method="line">LINE</a>
+  <a class="act act-ext" href={`https://www.facebook.com/sharer/sharer.php?u=${enc}`} target="_blank" rel="noopener" data-goal="share" data-method="facebook">Facebook</a>
+</div>
+
+<script>
+  import { isSaved, toggleSaved, toast } from '../lib/saved.mjs';
+
+  for (const row of document.querySelectorAll<HTMLElement>('[data-save-share]')) {
+    const d = row.dataset;
+    const save = row.querySelector<HTMLButtonElement>('.act-save')!;
+    const label = save.querySelector('.act-label')!;
+    const paint = (on: boolean) => {
+      save.setAttribute('aria-pressed', String(on));
+      label.textContent = on ? '已收藏' : '收藏';
+    };
+    paint(isSaved(d.kind!, d.slug!));
+
+    save.addEventListener('click', () => {
+      const r = toggleSaved({
+        kind: d.kind, slug: d.slug, title: d.title, when: d.when, place: d.place,
+        endTs: d.end ? Number(d.end) : null,
+      });
+      if (!r.ok) { toast('這個瀏覽器不允許儲存收藏（可能是無痕模式）'); return; }
+      paint(r.saved);
+      save.classList.remove('pop'); void save.offsetWidth; save.classList.add('pop');
+      toast(r.saved ? '已加入收藏，可在「收藏」頁查看' : '已從收藏移除');
+      (window as any).gtag?.('event', r.saved ? 'save_add' : 'save_remove', { item_kind: d.kind });
+    });
+
+    row.querySelector('.act-share')!.addEventListener('click', async () => {
+      const data = { title: d.title, url: d.url };
+      if (navigator.share) {
+        try { await navigator.share(data); (window as any).gtag?.('event', 'share', { method: 'native' }); } catch { /* 使用者取消 */ }
+        return;
+      }
+      try {
+        await navigator.clipboard.writeText(d.url!);
+        toast('已複製連結');
+        (window as any).gtag?.('event', 'share', { method: 'copy' });
+      } catch {
+        window.prompt('複製這個連結：', d.url);
+      }
+    });
+  }
+</script>
+
+<style>
+  .act-row { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .act {
+    display: inline-flex; align-items: center; gap: 0.4em; min-height: 44px; padding: 0 0.9rem;
+    font: inherit; font-size: var(--text-xs); font-weight: 700; line-height: 1; cursor: pointer;
+    color: var(--text-primary); background: var(--bg-base); text-decoration: none;
+    border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
+    transition: border-color 0.15s, color 0.15s, background-color 0.15s;
+  }
+  .act:hover { border-color: var(--seh-ink); }
+  .act svg { width: 1.15em; height: 1.15em; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .act-save[aria-pressed="true"] { color: var(--seh-terracotta); border-color: var(--seh-terracotta); background: var(--seh-terracotta-weak); }
+  .act-save[aria-pressed="true"] svg { fill: currentColor; }
+  .act-save.pop svg { animation: pop 0.35s ease-out; }
+  .act-ext { font-weight: 600; color: var(--text-secondary); }
+  @keyframes pop { 0% { transform: scale(1); } 45% { transform: scale(1.35); } 100% { transform: scale(1); } }
+
+</style>
