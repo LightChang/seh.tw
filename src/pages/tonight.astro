@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
 import { flatSessions } from '../lib/build-data.mjs';
 import { tonightSessions } from '../lib/day-lists.mjs';
 import { hhmm, dateLabel, fmtNum, catVar } from '../lib/format.mjs';
@@ -11,12 +12,17 @@ const rows = tonightSessions(await flatSessions(), buildNow);
 ---
 <Base title="今晚哪裡有活動｜seh" description="今晚 19:00 之後開始的文化活動。">
   <div class="shell">
-    <Nav />
-    <header class="page-hd">
-      <h1>今晚</h1>
-      <p class="sub" id="sub">{dateLabel(buildNow)} 19:00 之後　{fmtNum(rows.length)} 場</p>
+    <Nav current="tonight" />
+    <PageHero kicker="下班後" title="今晚去哪裡" icon="moon" tone="forest"
+      sub={`${dateLabel(buildNow)} 19:00 之後　${fmtNum(rows.length)} 場`} subId="sub"
+      art="19:00 以後"
+      stats={[
+        { icon: 'moon', n: fmtNum(rows.length), label: '場今晚開演', id: 'total', main: true },
+        { icon: 'compass', n: fmtNum(new Set(rows.map((d) => d.city).filter(Boolean)).size), label: '個縣市', id: 'cities' },
+        { icon: 'gift', n: fmtNum(rows.filter((d) => d.isFree === true).length), label: '免費', id: 'free', href: '/free' },
+      ]}>
       <p class="note">只列出有明確開始時刻的活動。部分來源只提供日期，那些活動無法判斷是否為夜間場次。</p>
-    </header>
+    </PageHero>
     <ol class="ev-list" id="list">
       {rows.map((d) => (
         <li>
@@ -45,6 +51,10 @@ const rows = tonightSessions(await flatSessions(), buildNow);
   document.getElementById('sub').textContent =
     `${dateLabel(midnight(now) + 19 * 3600000)} 19:00 之後　${fmtNum(rows.length)} 場`;
   document.getElementById('empty').hidden = rows.length > 0;
+  const setStat = (id, n) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = fmtNum(n); };
+  setStat('total', rows.length);
+  setStat('cities', new Set(rows.map((d) => d.city).filter(Boolean)).size);
+  setStat('free', rows.filter((d) => d.isFree).length);
   document.getElementById('list').innerHTML = rows.map((d) => `
     <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
       <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
@@ -55,5 +65,6 @@ const rows = tonightSessions(await flatSessions(), buildNow);
 </script>
 <style>
   .also { margin-bottom: var(--space-9); font-size: var(--text-sm); color: var(--text-muted); }
-  .note { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-muted); max-width: var(--measure); }
+  .note { grid-column: 1 / -1; margin-top: var(--space-4); font-size: var(--text-xs); color: var(--text-muted); max-width: var(--measure); }
+  .also a { color: var(--seh-forest); }
 </style>

@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
 import { flatSessions, newListings } from '../lib/build-data.mjs';
 import { todaySessions, mergeRuns, leadText } from '../lib/day-lists.mjs';
 import { hhmm, dateLabel, fmtNum, catVar, WD, midnight } from '../lib/format.mjs';
@@ -37,11 +38,16 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
 <Base title={`今天有什麼活動（${dayLabel}）｜seh`} description={`${dayLabel}台灣各地正在發生的文化活動，依開始時間排列。`} jsonld={todayLd}>
   <div class="shell">
     <Nav current="today" />
-    <header class="page-hd">
-      <h1>今天有什麼活動</h1>
-      <p class="sub" id="sub">{dateLabel(buildNow)}　{fmtNum(merged.length)} 個活動、{fmtNum(rows.length)} 場次</p>
+    <PageHero kicker="今天想出門" title="今天有什麼活動" icon="sun" tone="sun"
+      sub={`${dateLabel(buildNow)}　${fmtNum(merged.length)} 個活動、${fmtNum(rows.length)} 場次`} subId="sub"
+      art={`現在 ${hhmm(buildNow)}`} artId="clock"
+      stats={[
+        { icon: 'compass', n: fmtNum(merged.length), label: '個活動今天開始', id: 'total', main: true },
+        { icon: 'calendar', n: fmtNum(merged.filter((d) => d.dateOnly || d.ts > buildNow).length), label: '還沒開始，來得及', id: 'upcoming' },
+        { icon: 'gift', n: fmtNum(merged.filter((d) => d.isFree === true).length), label: '免費', id: 'free', href: '/free' },
+      ]}>
       <nav class="chips" id="chips" aria-label="類型篩選"></nav>
-    </header>
+    </PageHero>
     <ol class="ev-list" id="list">
       {merged.map((d) => (
         <li>
@@ -96,6 +102,13 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
 
   document.getElementById('sub').textContent =
     `${dateLabel(midnight(now))}　${fmtNum(merged.length)} 個活動、${fmtNum(today.length)} 場次`;
+  // 頁首的時鐘與數字卡也用當下時間重算
+  const setStat = (id, n) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = fmtNum(n); };
+  setStat('total', merged.length);
+  setStat('upcoming', merged.filter((d) => d.dateOnly || d.ts > now).length);
+  setStat('free', merged.filter((d) => d.isFree).length);
+  const clock = document.getElementById('clock');
+  if (clock) clock.textContent = `現在 ${hhmm(now)}`;
 
   const counts = new Map();
   merged.forEach((d) => counts.set(d.cat, (counts.get(d.cat) ?? 0) + 1));
@@ -136,7 +149,10 @@ const dayLabel = `${tw0.getUTCMonth() + 1}/${tw0.getUTCDate()} 週${WD[tw0.getUT
 </script>
 
 <style>
+  #chips { grid-column: 1 / -1; }
   .also { font-size: var(--text-sm); color: var(--text-muted); }
-  .fresh { margin-top: var(--space-8); }
-  .fresh .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .also a { color: var(--seh-forest); }
+  .fresh { margin-top: var(--space-8); scroll-margin-top: 80px; }
+  .fresh .h-sm { display: flex; align-items: center; gap: var(--space-3); padding-top: var(--space-4); border-top: 2px solid var(--seh-ink);
+    font-family: var(--font-body); font-weight: 800; font-size: var(--text-lg); color: var(--text-primary); }
 </style>

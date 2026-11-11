@@ -1,0 +1,33 @@
+---
+// 列表頁的頁首：小標＋大標＋說明、右邊一張插圖（圖示＋一行字）、下面一排數字卡。
+// 今天、今晚、附近、收藏共用；這週末頁有自己的日曆撕頁版本。
+// 數字會由前端用當下時間更新的，給 id：<li data-stat={id}> 裡的 <b> 會被換掉。
+import { iconSvg } from '../lib/icons.mjs';
+interface Stat { icon: string; n: string | number; label: string; id?: string; href?: string; main?: boolean }
+interface Props { kicker: string; title: string; sub?: string; subId?: string; icon: string; tone?: string; art?: string; artId?: string; stats?: Stat[] }
+const { kicker, title, sub = '', subId, icon, tone = 'forest', art = '', artId, stats = [] } = Astro.props;
+---
+<header class="ph">
+  <div class="ph-text">
+    <slot name="top" />
+    <p class="ph-k">{kicker}</p>
+    <h1>{title}</h1>
+    {sub && <p class="ph-sub" id={subId}>{sub}</p>}
+  </div>
+  <div class={`ph-art tone-${tone}`} aria-hidden="true">
+    <span class="ph-ico" set:html={iconSvg(icon)} />
+    {art && <span class="ph-cap tabular" id={artId}>{art}</span>}
+  </div>
+  {stats.length > 0 && (
+    <ul class="ph-stats">
+      {stats.map((s) => (
+        <li class={`ph-stat${s.main ? ' main' : ''}`} data-stat={s.id}>
+          {s.href
+            ? <a href={s.href}><span class="ph-sico" set:html={iconSvg(s.icon)} /><b class="tabular">{s.n}</b><span class="ph-sl">{s.label} →</span></a>
+            : <><span class="ph-sico" set:html={iconSvg(s.icon)} /><b class="tabular">{s.n}</b><span class="ph-sl">{s.label}</span></>}
+        </li>
+      ))}
+    </ul>
+  )}
+  <slot />
+</header>

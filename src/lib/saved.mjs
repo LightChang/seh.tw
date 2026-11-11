@@ -10,13 +10,25 @@
 const KEY = 'seh:saved:v1';
 const MAX = 500;
 
+/**
+ * 讀收藏。活動結束（endTs 已過）的會自動移除並寫回——收藏是「想去的地方」，過期的留著只會擋路。
+ * 場館與文化資產沒有 endTs，不會過期。寫回時不發 seh:saved 事件（避免導覽列重畫又觸發讀取）。
+ */
 export function readSaved() {
+  let v;
   try {
-    const v = JSON.parse(localStorage.getItem(KEY) || '[]');
-    return Array.isArray(v) ? v.filter((x) => x && x.kind && x.slug) : [];
+    v = JSON.parse(localStorage.getItem(KEY) || '[]');
   } catch {
     return [];
   }
+  if (!Array.isArray(v)) return [];
+  const now = Date.now();
+  const valid = v.filter((x) => x && x.kind && x.slug);
+  const alive = valid.filter((x) => !(x.endTs && x.endTs < now));
+  if (alive.length !== valid.length) {
+    try { localStorage.setItem(KEY, JSON.stringify(alive)); } catch { /* 寫不回去就下次再清 */ }
+  }
+  return alive;
 }
 
 function write(list) {

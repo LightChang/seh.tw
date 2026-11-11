@@ -1,23 +1,40 @@
 ---
-// 我的探索：成就、去過的地方、收藏。內容全在訪客的瀏覽器（src/lib/saved.mjs），build 時只有外框。
+// 收藏：想去的地方、探索成就、去過的地方。內容全在訪客的瀏覽器（src/lib/saved.mjs），build 時只有外框。
+// 收藏的活動結束後自動移除（readSaved 會清掉 endTs 已過的）。
 // 成就由 src/lib/achievements.mjs 算，只看使用者自己按的「我去過了」。
 // 每個人看到的不一樣、對搜尋引擎沒有內容，所以 noindex（sitemapNoindex 會把它從 sitemap 拿掉）。
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
 import { ACHIEVEMENTS } from '../lib/achievements.mjs';
 import { iconSvg } from '../lib/icons.mjs';
 ---
-<Base title="我的探索｜seh" description="你在 seh 收藏與去過的活動、場館與文化資產，以及解鎖的探索成就。" noindex={true}>
+<Base title="收藏｜seh" description="你在 seh 收藏的活動、場館與文化資產，以及去過的地方與探索成就。" noindex={true}>
   <div class="shell">
     <Nav current="saved" />
-    <header class="page-hd">
-      <p class="kicker">我的探索</p>
-      <h1>收藏與探索紀錄</h1>
-      <p class="sub" id="sub">收藏與打卡只存在這個瀏覽器裡，不需要登入；換裝置或清除網站資料就會不見。</p>
-    </header>
+    <PageHero kicker="想去的地方" title="收藏" icon="heart" tone="coral"
+      sub="只存在這個瀏覽器裡，不需要登入；活動結束後會自動從收藏移除。"
+      stats={[
+        { icon: 'heart', n: '0', label: '個收藏', id: 'saved', main: true },
+        { icon: 'check', n: '0', label: '個去過的地方', id: 'visited' },
+        { icon: 'medal', n: `0／${ACHIEVEMENTS.length}`, label: '個成就', id: 'ach' },
+      ]} />
 
-    <section class="ach-sec" aria-labelledby="ach-h">
-      <h2 class="grp-h" id="ach-h">探索成就<span class="tabular" id="ach-n"></span></h2>
+    <div id="saved-root">
+      <noscript><p class="empty-note">收藏功能需要開啟 JavaScript。</p></noscript>
+    </div>
+
+    <section class="empty" id="empty" hidden>
+      <span class="empty-ico" set:html={iconSvg('heart')} />
+      <div>
+        <p class="empty-big">還沒有收藏</p>
+        <p>在活動、場館或文化資產頁按「收藏」，就會出現在這裡。</p>
+        <p class="empty-go"><a href="/today">看看今天有什麼 →</a><a href="/weekend">這週末</a><a href="/explore">探索</a></p>
+      </div>
+    </section>
+
+    <section class="grp" aria-labelledby="ach-h">
+      <h2 class="grp-h" id="ach-h"><span class="grp-ico" set:html={iconSvg('medal')} />探索成就</h2>
       <p class="ach-note">在活動、場館或文化資產頁按「我去過了」打卡，累積成就。只有你自己按的才算。</p>
       <ul class="ach-grid">
         {ACHIEVEMENTS.map((a) => (
@@ -33,31 +50,58 @@ import { iconSvg } from '../lib/icons.mjs';
     </section>
 
     <div id="visited-root"></div>
-
-    <div id="saved-root">
-      <noscript><p class="empty-note">收藏功能需要開啟 JavaScript。</p></noscript>
-    </div>
-
-    <section class="empty" id="empty" hidden>
-      <p class="empty-big">還沒有收藏的地方</p>
-      <p>在活動、場館或文化資產頁按「收藏」，就會出現在這裡。</p>
-      <p class="empty-go"><a href="/today">看看今天有什麼 →</a><a href="/weekend">這週末</a><a href="/free">免費活動</a></p>
-    </section>
   </div>
 </Base>
 
 <script>
   import { readSaved, removeSaved, readVisited, removeVisited, toast } from '../lib/saved.mjs';
   import { progress } from '../lib/achievements.mjs';
+  import { CAT_ICON, iconSvg as svg } from '../lib/icons.mjs';
 
+  const KIND_ICON: Record<string, string> = { event: 'spark', venue: 'pin', heritage: 'roof' };
   const PATH: Record<string, string> = { event: '/event/', venue: '/venue/', heritage: '/heritage/' };
   const KIND: Record<string, string> = { event: '活動', venue: '場館', heritage: '文化資產' };
-  const escV = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+  const TONE: Record<string, string> = { event: 'coral', venue: 'sage', heritage: 'forest' };
+  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
   const ymd = (t: number) => { const d = new Date(t + 8 * 3600e3); return `${d.getUTCFullYear()}/${d.getUTCMonth() + 1}/${d.getUTCDate()}`; };
+  const setStat = (id: string, v: string) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = v; };
+  const iconOf = (x: any) => (x.kind === 'event' && x.cat ? (CAT_ICON as any)[x.cat] ?? 'spark' : KIND_ICON[x.kind] ?? 'spark');
+
+  const GROUPS = [
+    { kind: 'event', label: '想去的活動' },
+    { kind: 'venue', label: '想去的場館' },
+    { kind: 'heritage', label: '想去的文化資產' },
+  ];
+  const root = document.getElementById('saved-root')!;
+
+  function render() {
+    const list = readSaved();          // 已結束的活動在這裡就被清掉了
+    setStat('saved', String(list.length));
+    document.getElementById('empty')!.hidden = list.length > 0;
+    root.innerHTML = GROUPS.map((g) => {
+      const items = list.filter((x) => x.kind === g.kind).sort((a, b) => (b.savedAt ?? 0) - (a.savedAt ?? 0));
+      if (!items.length) return '';
+      return `<section class="grp">
+        <h2 class="grp-h"><span class="grp-ico">${svg(KIND_ICON[g.kind])}</span>${g.label}<span class="tabular badge">${items.length}</span></h2>
+        <ol class="sv-grid">${items.map((x) => `
+          <li class="sv">
+            <a class="sv-main" href="${PATH[x.kind]}${encodeURIComponent(x.slug)}">
+              <span class="sv-ico tone-${TONE[x.kind]}">${svg(iconOf(x))}</span>
+              <span class="sv-body">
+                <span class="sv-t">${esc(x.title)}</span>
+                ${x.when ? `<span class="sv-when tabular">${esc(x.when)}</span>` : ''}
+                ${x.place ? `<span class="sv-m">${esc(x.place)}</span>` : ''}
+              </span>
+            </a>
+            <button type="button" class="sv-rm" data-kind="${esc(x.kind)}" data-slug="${esc(x.slug)}" aria-label="從收藏移除：${esc(x.title)}">${svg('heart')}<span>移除</span></button>
+          </li>`).join('')}
+        </ol>
+      </section>`;
+    }).join('');
+  }
 
   function renderVisited() {
     const v = readVisited();
-    // 成就
     const p = progress(v);
     for (const a of p) {
       const li = document.querySelector<HTMLElement>(`[data-ach="${a.key}"]`);
@@ -66,74 +110,79 @@ import { iconSvg } from '../lib/icons.mjs';
       li.querySelector<HTMLElement>('.ach-bar span')!.style.width = `${(a.n / a.goal) * 100}%`;
       li.querySelector('.ach-n')!.textContent = a.done ? '已解鎖' : `${a.n}／${a.goal}`;
     }
-    document.getElementById('ach-n')!.textContent = `${p.filter((a) => a.done).length}／${p.length}`;
-    // 去過的地方
-    const root = document.getElementById('visited-root')!;
-    root.innerHTML = v.length ? `<section class="grp">
-      <h2 class="grp-h">去過的地方<span class="tabular">${v.length}</span></h2>
-      <ol class="saved-list">${v.map((x) => `
+    setStat('visited', String(v.length));
+    setStat('ach', `${p.filter((a) => a.done).length}／${p.length}`);
+    const vr = document.getElementById('visited-root')!;
+    vr.innerHTML = v.length ? `<section class="grp">
+      <h2 class="grp-h"><span class="grp-ico">${svg('pin')}</span>去過的地方<span class="tabular badge">${v.length}</span></h2>
+      <ol class="vs-list">${v.map((x) => `
         <li>
-          <a class="s-main" href="${PATH[x.kind] ?? '/'}${encodeURIComponent(x.slug)}">
-            <span class="s-t">${escV(x.title)}</span>
-            <span class="s-m">${[x.cat ? `<span class="ev-cat" data-cat="${escV(x.cat)}">${escV(x.cat)}</span>` : escV(KIND[x.kind] ?? ''), escV(x.city), `${ymd(x.visitedAt)} 打卡`].filter(Boolean).join('　')}</span>
+          <a class="vs-main" href="${PATH[x.kind] ?? '/'}${encodeURIComponent(x.slug)}">
+            <span class="vs-t">${esc(x.title)}</span>
+            <span class="vs-m">${[x.cat ? `<span class="ev-cat" data-cat="${esc(x.cat)}">${esc(x.cat)}</span>` : esc(KIND[x.kind] ?? ''), esc(x.city), `${ymd(x.visitedAt)} 打卡`].filter(Boolean).join('　')}</span>
           </a>
-          <button type="button" class="s-rm v-rm" data-kind="${escV(x.kind)}" data-slug="${escV(x.slug)}" aria-label="取消打卡：${escV(x.title)}">取消打卡</button>
+          <button type="button" class="vs-rm" data-kind="${esc(x.kind)}" data-slug="${esc(x.slug)}" aria-label="取消打卡：${esc(x.title)}">取消打卡</button>
         </li>`).join('')}
       </ol></section>` : '';
   }
-  document.getElementById('visited-root')!.addEventListener('click', (ev) => {
-    const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('.v-rm');
-    if (b && removeVisited(b.dataset.kind!, b.dataset.slug!)) { renderVisited(); toast('已取消打卡'); }
-  });
-  addEventListener('storage', renderVisited);
-  renderVisited();
-
-  const GROUPS = [
-    { kind: 'event', label: '收藏的活動', path: '/event/' },
-    { kind: 'venue', label: '收藏的場館', path: '/venue/' },
-    { kind: 'heritage', label: '收藏的文化資產', path: '/heritage/' },
-  ];
-  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
-  const root = document.getElementById('saved-root')!;
-
-  function render() {
-    const list = readSaved();
-    const now = Date.now();
-    document.getElementById('empty')!.hidden = list.length > 0;
-    root.innerHTML = GROUPS.map((g) => {
-      // 還沒結束的在前（依收藏時間新到舊），已結束的沉到最後
-      const items = list.filter((x) => x.kind === g.kind)
-        .map((x) => ({ ...x, ended: x.endTs && x.endTs < now }))
-        .sort((a, b) => (Number(a.ended) - Number(b.ended)) || (b.savedAt ?? 0) - (a.savedAt ?? 0));
-      if (!items.length) return '';
-      return `<section class="grp">
-        <h2 class="grp-h">${g.label}<span class="tabular">${items.length}</span></h2>
-        <ol class="saved-list">${items.map((x) => `
-          <li class="${x.ended ? 'ended' : ''}">
-            <a class="s-main" href="${g.path}${encodeURIComponent(x.slug)}">
-              <span class="s-t">${esc(x.title)}</span>
-              <span class="s-m">${[x.ended ? '<span class="tag">已結束</span>' : '', esc(x.when), esc(x.place)].filter(Boolean).join('　')}</span>
-            </a>
-            <button type="button" class="s-rm" data-kind="${esc(x.kind)}" data-slug="${esc(x.slug)}" aria-label="從收藏移除：${esc(x.title)}">移除</button>
-          </li>`).join('')}
-        </ol>
-      </section>`;
-    }).join('');
-  }
 
   root.addEventListener('click', (ev) => {
-    const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('.s-rm');
-    if (!b) return;
-    if (removeSaved(b.dataset.kind!, b.dataset.slug!)) { render(); toast('已從收藏移除'); }
+    const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('.sv-rm');
+    if (b && removeSaved(b.dataset.kind!, b.dataset.slug!)) { render(); toast('已從收藏移除'); }
   });
-  // 別的分頁收藏或移除時同步
-  addEventListener('storage', render);
+  document.getElementById('visited-root')!.addEventListener('click', (ev) => {
+    const b = (ev.target as HTMLElement).closest<HTMLButtonElement>('.vs-rm');
+    if (b && removeVisited(b.dataset.kind!, b.dataset.slug!)) { renderVisited(); toast('已取消打卡'); }
+  });
+  // 別的分頁收藏或打卡時同步
+  addEventListener('storage', () => { render(); renderVisited(); });
   render();
+  renderVisited();
 </script>
 
 <style is:global>
-  .grp { margin-top: var(--space-6); }
-  .ach-sec { margin-top: var(--space-5); }
+  .grp { margin-top: var(--space-7); }
+  .grp-h {
+    display: flex; align-items: center; gap: var(--space-3); padding-top: var(--space-4);
+    border-top: 2px solid var(--seh-ink); font-family: var(--font-body); font-size: var(--text-lg); font-weight: 800;
+  }
+  .grp-ico { display: grid; place-items: center; width: 48px; height: 48px; border-radius: var(--seh-radius-sm); background: var(--seh-card); box-shadow: var(--seh-shadow); color: var(--seh-forest); }
+  .grp-ico svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .badge { padding: 0.1em 0.7em; border-radius: 999px; background: var(--seh-coral-weak); color: var(--seh-coral-deep); font-size: var(--text-xs); font-weight: 800; }
+
+  /* 收藏：白色卡片，左邊分類圖示方塊，一樣高 */
+  .sv-grid { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 22rem), 1fr)); gap: var(--space-3); }
+  .sv { display: flex; align-items: stretch; background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }
+  .sv:hover { box-shadow: var(--seh-shadow-hover); transform: translateY(-2px); }
+  .sv-main { flex: 1; min-width: 0; display: grid; grid-template-columns: 72px minmax(0, 1fr); gap: var(--space-4); align-items: center; padding: var(--space-3); text-decoration: none; color: var(--text-primary); }
+  .sv-main:hover .sv-t { color: var(--color-link); }
+  .sv-ico { display: grid; place-items: center; width: 72px; height: 72px; border-radius: var(--seh-radius-sm); }
+  .sv-ico svg { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .sv-body { display: grid; gap: 2px; min-width: 0; }
+  .sv-t { font-size: var(--text-xs); font-weight: 800; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .sv-when { font-size: var(--text-xs); font-weight: 700; color: var(--seh-coral-deep); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sv-m { font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sv-rm {
+    flex: none; display: grid; place-items: center; align-content: center; gap: 2px; width: 64px; cursor: pointer;
+    font: inherit; font-size: var(--text-xs); color: var(--seh-coral-deep); background: none; border: 0; border-left: var(--hairline) solid var(--border-subtle);
+  }
+  .sv-rm svg { width: 22px; height: 22px; fill: currentColor; stroke: currentColor; stroke-width: 1.6; }
+  .sv-rm:hover { background: var(--seh-coral-weak); }
+  .sv-rm:hover svg { fill: none; }
+
+  /* 去過的地方：精簡清單 */
+  .vs-list { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
+  .vs-list li { display: flex; align-items: center; gap: var(--space-4); border-bottom: var(--hairline) solid var(--border-subtle); }
+  .vs-main { flex: 1; min-width: 0; padding: var(--space-4) 0; text-decoration: none; }
+  .vs-main:hover .vs-t { color: var(--color-link); }
+  .vs-t { display: block; font-size: var(--text-sm); font-weight: 700; line-height: 1.45; }
+  .vs-m { display: block; margin-top: 4px; font-size: var(--text-xs); color: var(--text-secondary); }
+  .vs-rm {
+    flex: none; min-height: 44px; padding: 0 0.9rem; font: inherit; font-size: var(--text-xs); cursor: pointer;
+    color: var(--text-secondary); background: var(--seh-card); border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
+  }
+  .vs-rm:hover { color: var(--seh-coral-deep); border-color: var(--seh-coral-deep); }
+
   .ach-note { margin-top: var(--space-2); font-size: var(--text-xs); color: var(--text-secondary); }
   .ach-grid { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: var(--space-3); }
   .ach { display: grid; gap: 4px; padding: var(--space-4); border-radius: var(--seh-radius); background: var(--seh-card); box-shadow: var(--seh-shadow); color: var(--text-muted); }
@@ -149,25 +198,17 @@ import { iconSvg } from '../lib/icons.mjs';
   .ach.done .ach-name { color: var(--seh-forest); }
   .ach.done .ach-bar span { background: var(--seh-forest); }
   .ach.done .ach-n { color: var(--seh-forest); }
-  .grp-h { display: flex; align-items: baseline; gap: var(--space-3); font-size: var(--text-lg); border-top: 2px solid var(--seh-ink); padding-top: var(--space-3); }
-  .grp-h .tabular { font-size: var(--text-sm); color: var(--seh-coral-deep); }
-  .saved-list { list-style: none; margin: var(--space-3) 0 0; padding: 0; }
-  .saved-list li { display: flex; align-items: center; gap: var(--space-4); border-bottom: var(--hairline) solid var(--border-subtle); }
-  .s-main { flex: 1; min-width: 0; padding: var(--space-4) 0; text-decoration: none; }
-  .s-main:hover .s-t { color: var(--color-link); }
-  .s-t { display: block; font-size: var(--text-sm); font-weight: 700; line-height: 1.45; }
-  .s-m { display: block; margin-top: 4px; font-size: var(--text-xs); color: var(--text-secondary); }
-  .ended .s-t { color: var(--text-muted); }
-  .ended .tag { color: var(--text-muted); }
-  .s-rm {
-    flex: none; min-height: 44px; padding: 0 0.9rem; font: inherit; font-size: var(--text-xs); cursor: pointer;
-    color: var(--text-secondary); background: none; border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
-  }
-  .s-rm:hover { color: var(--seh-coral-deep); border-color: var(--seh-coral-deep); }
-  .empty { margin-top: var(--space-6); padding: var(--space-7) var(--space-6); background: var(--bg-surface); border-radius: 3px; }
+
+  .empty { display: flex; align-items: center; gap: var(--space-5); margin-top: var(--space-6); padding: var(--space-6); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); }
+  .empty[hidden] { display: none; }
+  .empty-ico { flex: none; display: grid; place-items: center; width: 88px; height: 88px; border-radius: 50%; background: var(--seh-coral-weak); color: var(--seh-coral-deep); }
+  .empty-ico svg { width: 44px; height: 44px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
   .empty-big { font-size: var(--text-lg); font-weight: 800; }
   .empty p + p { margin-top: var(--space-2); color: var(--text-secondary); font-size: var(--text-sm); }
   .empty-go { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); }
   .empty-go a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; color: var(--text-secondary); }
-  .empty-go a:first-child { color: var(--color-link); font-weight: 700; }
+  .empty-go a:first-child { color: var(--seh-forest); font-weight: 700; }
+  @media (max-width: 760px) {
+    .empty { flex-direction: column; align-items: flex-start; padding: var(--space-5); }
+  }
 </style>

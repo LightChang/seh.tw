@@ -66,7 +66,7 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
     };
     paintSave(isSaved(d.kind!, d.slug!));
     save.addEventListener('click', () => {
-      const r = toggleSaved({ kind: d.kind, slug: d.slug, title: d.title, when: d.when, place: d.place, endTs: d.end ? Number(d.end) : null });
+      const r = toggleSaved({ kind: d.kind, slug: d.slug, title: d.title, cat: d.c || '', when: d.when, place: d.place, endTs: d.end ? Number(d.end) : null });
       if (!r.ok) { toast('這個瀏覽器不允許儲存收藏（可能是無痕模式）'); return; }
       paintSave(r.saved); pop(save);
       toast(r.saved ? '已加入收藏，可在「收藏」頁查看' : '已從收藏移除');
