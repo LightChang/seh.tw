@@ -73,6 +73,11 @@ npm run links      # build 之後，站內連結不能有壞的
 各階段都讀寫檔案，不能在正式資料上測。`SEH_ROOT` 環境變數換掉資料位置
 （程式位置不變），fixture 產生器在 `test/helpers/fixture.mjs`。
 
+## 提交方式
+
+**改完直接推 main，不開分支、不開 PR**（站主 2026-11-11 指示）。推之前先 `git pull --rebase origin main`
+——台灣端的資料更新每天也會推 main；上面「收手前一定要跑」的檢查要先過。
+
 ## 上線後（2026-09-15 起）
 
 repo `LightChang/seh.tw`，GitHub Pages。**GitHub 不抓資料、沒有排程**——17 支政府來源擋海外 IP。
