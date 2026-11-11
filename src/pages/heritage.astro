@@ -1,6 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import { iconSvg } from '../lib/icons.mjs';
 import raw from '../../public/heritage-index.json';
 import { allHeritage, isIndexable } from '../lib/build-data.mjs';
 // 全部文化資產（含沒有建頁的）只用來算總數：[name, city, type, slug]
@@ -32,22 +34,27 @@ const cid = (c) => `c-${c}`;
 ---
 <Base title="文化資產｜seh" description={`台灣 ${total} 項文化資產：古蹟、歷史建築、民俗與傳統工藝。`}>
   <div class="shell">
-    <Nav />
-    <header class="page-hd">
-      <h1>文化資產</h1>
-      <p class="sub"><strong class="tabular">{total.toLocaleString('en-US')}</strong> 項，下面依縣市列出有詳細沿革的 {pages.length.toLocaleString('en-US')} 項</p>
+    <Nav current="heritage" />
+    <PageHero kicker="文化小旅行" title="文化資產" icon="roof" tone="forest"
+      sub={`${total.toLocaleString('en-US')} 項，下面依縣市列出有詳細沿革的 ${pages.length.toLocaleString('en-US')} 項`}
+      art="古蹟與老屋"
+      stats={[
+        { icon: 'roof', n: total.toLocaleString('en-US'), label: '項文化資產', main: true },
+        { icon: 'frame', n: pages.length.toLocaleString('en-US'), label: '項有詳細沿革' },
+        { icon: 'pin', n: String(cities.filter(([c]) => c !== '其他').length), label: '個縣市' },
+      ]}>
       <p class="intro">這頁依縣市與類別列出全部文化資產頁面的入口，點名稱進去看個別古蹟、歷史建築、民俗與工藝各自的沿革與現況。普查登錄有增減時，這裡的項數會跟著更新。</p>
-    </header>
+    </PageHero>
 
-    <h2 class="hx-h">類別</h2>
-    <p class="hx-row">{byType.map(([t, n]) => <span>{t}<b class="tabular">{n}</b></span>)}</p>
+    <h2 class="mini-h">類別</h2>
+    <p class="pills">{byType.map(([t, n], i) => <span class={i < 3 ? 'top' : ''}>{t}<b class="tabular">{n}</b></span>)}</p>
 
-    <h2 class="hx-h">縣市</h2>
-    <nav class="hx-row" aria-label="依縣市跳到">{cities.map(([c, list]) => <a href={`#${cid(c)}`}>{c}<b class="tabular">{list.length}</b></a>)}</nav>
+    <h2 class="mini-h">縣市</h2>
+    <nav class="pills scroll" aria-label="依縣市跳到">{cities.map(([c, list]) => <a href={`#${cid(c)}`}>{c}<b class="tabular">{list.length}</b></a>)}</nav>
 
     {cities.map(([c, list]) => (
       <section class="hx-city" id={cid(c)}>
-        <h2 class="hx-ch">{c}<span class="tabular">{list.length} 項</span>{c !== '其他' && <a href={`/city/${c}`}>{c}活動</a>}</h2>
+        <h2 class="sec-h"><span class="sec-ico" set:html={iconSvg('roof')} />{c}<span class="tabular badge">{list.length}</span>{c !== '其他' && <a class="hx-go" href={`/city/${c}`}>{c}活動 →</a>}</h2>
         <ul class="hx-list">{list.map((h) => (
           <li><a href={`/heritage/${h.slug}`}>{h.name}</a><span>{[h.district, typeOf(h)].filter(Boolean).join('　')}</span></li>
         ))}</ul>
@@ -57,21 +64,23 @@ const cid = (c) => `c-${c}`;
 </Base>
 <style is:global>
   /* is:global：兩千列若用 scoped style，每個元素都會多一個 data-astro-cid 屬性，整頁多出一百多 KB */
-  .intro { margin-top: 0.6rem; color: var(--text-secondary); font-size: var(--text-sm); max-width: 42rem; }
+  .intro { grid-column: 1 / -1; margin-top: var(--space-4); color: var(--text-muted); font-size: var(--text-xs); max-width: 42rem; }
+  .hx-go { margin-left: auto; font-size: var(--text-xs); font-weight: 700; color: var(--seh-forest); text-decoration: none; }
+  .hx-city { scroll-margin-top: 80px; }
   .hx-h { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
           color: var(--text-secondary); margin-top: var(--space-7); }
   .hx-row { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-4); max-width: none; font-size: var(--text-sm); }
   .hx-row a, .hx-row span { display: inline-flex; gap: 0.5rem; text-decoration: none; }
   .hx-row a:hover { color: var(--color-link); }
   .hx-row b { color: var(--text-muted); font-weight: 400; }
-  .hx-city { margin-top: var(--space-8); }
+  .hx-city { margin-top: var(--space-4); }
   .hx-ch { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 1rem;
            font-family: var(--font-body); font-weight: 700; font-size: var(--text-base); letter-spacing: 0; }
   .hx-ch span, .hx-ch a { font-weight: 400; font-size: var(--text-sm); color: var(--text-muted); }
   .hx-ch a { color: var(--color-link); }
   .hx-list { list-style: none; margin: var(--space-4) 0 0; padding: 0; columns: 20rem; column-gap: 2.5rem; }
-  .hx-list li { break-inside: avoid; padding: 0.35rem 0; border-top: var(--hairline) solid var(--border-subtle); }
-  .hx-list a { display: block; text-decoration: none; }
+  .hx-list li { break-inside: avoid; padding: 0.5rem 0; border-top: var(--hairline) solid var(--border-subtle); }
+  .hx-list a { display: block; text-decoration: none; font-weight: 700; }
   .hx-list a:hover { color: var(--color-link); }
   .hx-list span { display: block; font-size: var(--text-sm); color: var(--text-muted); }
 </style>

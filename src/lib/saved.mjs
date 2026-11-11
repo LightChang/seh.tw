@@ -79,7 +79,7 @@ export function toast(msg) {
 }
 
 // ── 去過的地方（探索紀錄）────────────────────────────────
-// 使用者自己按「我去過了」才記，點開頁面不算。成就由 src/lib/achievements.mjs 計算。
+// 使用者自己按「我去過了」才記，點開頁面不算。
 // 一筆：{ kind, slug, title, cat, city, free, visitedAt }
 const VISIT_KEY = 'seh:visited:v1';
 
@@ -104,13 +104,13 @@ function writeVisited(list) {
 
 export const isVisited = (kind, slug) => readVisited().some((x) => same(x, { kind, slug }));
 
-/** 打卡或取消打卡。回傳 { visited, ok, before, after }，before／after 給成就比對用 */
+/** 打卡或取消打卡。回傳 { visited, ok } */
 export function toggleVisited(item) {
   const before = readVisited();
   const after = before.filter((x) => !same(x, item));
   const visited = after.length === before.length;
   if (visited) after.unshift({ ...item, visitedAt: Date.now() });
-  return { visited, ok: writeVisited(after), before, after };
+  return { visited, ok: writeVisited(after) };
 }
 
 export function removeVisited(kind, slug) {

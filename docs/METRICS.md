@@ -22,7 +22,6 @@ GA4 的設定與帳號見 `analytics.md`；事件由 `src/layouts/Base.astro`（
 | `save_add`／`save_remove` | 收藏／取消收藏 | `item_kind` |
 | `share` | 原生分享、複製連結、揪朋友、分享圖、Facebook | `method`（native／copy／line_invite／image／facebook／line）、`entry`、`result`（分享圖：shared／downloaded／cancel） |
 | `checkin`／`checkin_undo` | 按「我去過了」／取消 | `item_kind` |
-| `achievement` | 打卡後解鎖成就 | `key`（first／city／expo／weekend／free／heritage／variety） |
 | `location` | 按「用我的位置排序」 | `granted` |
 | `nav` | 首頁上「我自己挑」、主題卡片 | `method` |
 

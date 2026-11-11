@@ -1,26 +1,48 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
+import PageHero from '../../components/PageHero.astro';
 import cityStats from '../../../public/city-stats.json';
 ---
 <Base title="全部縣市｜seh" description="台灣 22 縣市正在發生的文化活動數量。">
   <div class="shell">
-    <Nav />
-    <header class="page-hd"><h1>台灣各地</h1><p class="sub">點縣市看當地活動</p></header>
-    <ul class="grid">
-      {cityStats.map(([name, n]) => (
-        <li><a href={`/city/${name}`}><span class="n">{name}</span><span class="v tabular">{n.toLocaleString('en-US')}</span></a></li>
+    <Nav current="city" />
+    <PageHero kicker="依縣市探索" title="台灣各地" icon="map" tone="forest" art={`${cityStats.length} 個縣市`}
+      sub="點縣市看當地正在發生的活動、這週末與免費活動。"
+      stats={[
+        { icon: 'compass', n: cityStats.reduce((a, [, n]) => a + n, 0).toLocaleString('en-US'), label: '個活動', main: true },
+        { icon: 'map', n: String(cityStats.length), label: '個縣市' },
+        { icon: 'star', n: cityStats[0]?.[0] ?? '—', label: '活動最多' },
+      ]} />
+    <ul class="cgrid">
+      {cityStats.map(([name, n], i) => (
+        <li><a href={`/city/${name}`} class={i < 3 ? 'top' : ''}>
+          <span class="cg-n">{name}</span>
+          <span class="cg-v tabular">{n.toLocaleString('en-US')}<small>個活動</small></span>
+          <span class="cg-bar" aria-hidden="true"><span style={`width:${Math.max(4, Math.round((n / cityStats[0][1]) * 100))}%`}></span></span>
+        </a></li>
       ))}
     </ul>
   </div>
 </Base>
 <style>
-  .grid { list-style: none; margin: 0; padding: 0 0 var(--space-9);
-          display: grid; grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 0 4%; }
-  .grid li { border-top: var(--hairline) solid var(--border-subtle); }
-  .grid a { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;
-            padding: 0.9rem 0; text-decoration: none; }
-  .grid a:hover .n { color: var(--color-link); }
-  .n { font-size: var(--text-base); }
-  .v { color: var(--text-muted); font-size: var(--text-sm); }
+  .cgrid { list-style: none; margin: var(--space-6) 0 0; padding: 0 0 var(--space-9);
+           display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr)); gap: var(--space-3); }
+  .cgrid a {
+    display: grid; gap: var(--space-1); height: 100%; padding: var(--space-4) var(--space-5); text-decoration: none;
+    background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .cgrid a:hover { box-shadow: var(--seh-shadow-hover); transform: translateY(-2px); }
+  .cgrid a:hover .cg-n { color: var(--color-link); }
+  .cg-n { font-size: var(--text-lg); font-weight: 800; }
+  .cg-v { font-size: var(--text-sm); font-weight: 800; color: var(--seh-forest); }
+  .cg-v small { margin-left: 0.3em; font-size: var(--text-xs); font-weight: 400; color: var(--text-muted); }
+  .cg-bar { height: 8px; margin-top: var(--space-2); border-radius: 999px; background: var(--bg-surface); overflow: hidden; }
+  .cg-bar span { display: block; height: 100%; border-radius: 999px; background: var(--seh-sage); }
+  .cgrid a.top { background: var(--seh-forest); color: var(--seh-card); }
+  .cgrid a.top .cg-v { color: var(--seh-sun); }
+  .cgrid a.top .cg-v small { color: var(--seh-forest-weak); }
+  .cgrid a.top .cg-bar { background: oklch(1 0 0 / 0.14); }
+  .cgrid a.top .cg-bar span { background: var(--seh-coral); }
+  .cgrid a.top:hover .cg-n { color: var(--seh-sun); }
 </style>

@@ -1,15 +1,13 @@
 ---
-// 收藏：想去的地方、探索成就、去過的地方。內容全在訪客的瀏覽器（src/lib/saved.mjs），build 時只有外框。
+// 收藏：想去的地方、去過的地方。內容全在訪客的瀏覽器（src/lib/saved.mjs），build 時只有外框。
 // 收藏的活動結束後自動移除（readSaved 會清掉 endTs 已過的）。
-// 成就由 src/lib/achievements.mjs 算，只看使用者自己按的「我去過了」。
 // 每個人看到的不一樣、對搜尋引擎沒有內容，所以 noindex（sitemapNoindex 會把它從 sitemap 拿掉）。
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
-import { ACHIEVEMENTS } from '../lib/achievements.mjs';
 import { iconSvg } from '../lib/icons.mjs';
 ---
-<Base title="收藏｜seh" description="你在 seh 收藏的活動、場館與文化資產，以及去過的地方與探索成就。" noindex={true}>
+<Base title="收藏｜seh" description="你在 seh 收藏的活動、場館與文化資產，以及去過的地方。" noindex={true}>
   <div class="shell">
     <Nav current="saved" />
     <PageHero kicker="想去的地方" title="收藏" icon="heart" tone="coral"
@@ -17,7 +15,6 @@ import { iconSvg } from '../lib/icons.mjs';
       stats={[
         { icon: 'heart', n: '0', label: '個收藏', id: 'saved', main: true },
         { icon: 'check', n: '0', label: '個去過的地方', id: 'visited' },
-        { icon: 'medal', n: `0／${ACHIEVEMENTS.length}`, label: '個成就', id: 'ach' },
       ]} />
 
     <div id="saved-root">
@@ -33,21 +30,6 @@ import { iconSvg } from '../lib/icons.mjs';
       </div>
     </section>
 
-    <section class="grp" aria-labelledby="ach-h">
-      <h2 class="grp-h" id="ach-h"><span class="grp-ico" set:html={iconSvg('medal')} />探索成就</h2>
-      <p class="ach-note">在活動、場館或文化資產頁按「我去過了」打卡，累積成就。只有你自己按的才算。</p>
-      <ul class="ach-grid">
-        {ACHIEVEMENTS.map((a) => (
-          <li class="ach" data-ach={a.key}>
-            <span class="ach-icon" set:html={iconSvg(a.icon)} />
-            <span class="ach-name">{a.name}</span>
-            <span class="ach-desc">{a.desc}</span>
-            <span class="ach-bar" aria-hidden="true"><span></span></span>
-            <span class="ach-n tabular">0／{a.goal}</span>
-          </li>
-        ))}
-      </ul>
-    </section>
 
     <div id="visited-root"></div>
   </div>
@@ -55,7 +37,6 @@ import { iconSvg } from '../lib/icons.mjs';
 
 <script>
   import { readSaved, removeSaved, readVisited, removeVisited, toast } from '../lib/saved.mjs';
-  import { progress } from '../lib/achievements.mjs';
   import { CAT_ICON, iconSvg as svg } from '../lib/icons.mjs';
 
   const KIND_ICON: Record<string, string> = { event: 'spark', venue: 'pin', heritage: 'roof' };
@@ -102,16 +83,7 @@ import { iconSvg } from '../lib/icons.mjs';
 
   function renderVisited() {
     const v = readVisited();
-    const p = progress(v);
-    for (const a of p) {
-      const li = document.querySelector<HTMLElement>(`[data-ach="${a.key}"]`);
-      if (!li) continue;
-      li.classList.toggle('done', a.done);
-      li.querySelector<HTMLElement>('.ach-bar span')!.style.width = `${(a.n / a.goal) * 100}%`;
-      li.querySelector('.ach-n')!.textContent = a.done ? '已解鎖' : `${a.n}／${a.goal}`;
-    }
     setStat('visited', String(v.length));
-    setStat('ach', `${p.filter((a) => a.done).length}／${p.length}`);
     const vr = document.getElementById('visited-root')!;
     vr.innerHTML = v.length ? `<section class="grp">
       <h2 class="grp-h"><span class="grp-ico">${svg('pin')}</span>去過的地方<span class="tabular badge">${v.length}</span></h2>
@@ -183,21 +155,6 @@ import { iconSvg } from '../lib/icons.mjs';
   }
   .vs-rm:hover { color: var(--seh-coral-deep); border-color: var(--seh-coral-deep); }
 
-  .ach-note { margin-top: var(--space-2); font-size: var(--text-xs); color: var(--text-secondary); }
-  .ach-grid { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr)); gap: var(--space-3); }
-  .ach { display: grid; gap: 4px; padding: var(--space-4); border-radius: var(--seh-radius); background: var(--seh-card); box-shadow: var(--seh-shadow); color: var(--text-muted); }
-  .ach-icon { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: var(--bg-surface); margin-bottom: var(--space-2); }
-  .ach-icon svg { width: 30px; height: 30px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-  .ach-name { font-size: var(--text-sm); font-weight: 800; color: var(--text-secondary); }
-  .ach-desc { font-size: var(--text-xs); }
-  .ach-bar { height: 8px; margin-top: var(--space-2); border-radius: 999px; background: var(--bg-surface); overflow: hidden; }
-  .ach-bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--seh-coral); transition: width 0.4s; }
-  .ach-n { font-size: var(--text-xs); font-weight: 700; }
-  .ach.done { color: var(--text-primary); }
-  .ach.done .ach-icon { background: var(--seh-sun); color: var(--seh-ink); }
-  .ach.done .ach-name { color: var(--seh-forest); }
-  .ach.done .ach-bar span { background: var(--seh-forest); }
-  .ach.done .ach-n { color: var(--seh-forest); }
 
   .empty { display: flex; align-items: center; gap: var(--space-5); margin-top: var(--space-6); padding: var(--space-6); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); }
   .empty[hidden] { display: none; }

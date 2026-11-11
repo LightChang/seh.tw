@@ -3,6 +3,8 @@ import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import HubList from '../../components/HubList.astro';
+import PageHero from '../../components/PageHero.astro';
+import { iconSvg } from '../../lib/icons.mjs';
 import { crumbTrail, eventItemList } from '../../lib/jsonld/index.mjs';
 import { fmtNum, mdShort } from '../../lib/format.mjs';
 import { flatSessions, builtHubs, indexableEvent } from '../../lib/build-data.mjs';
@@ -45,23 +47,31 @@ const cityCounts = city ? [] : [...soon.reduce((m, e) => (e.city ? m.set(e.city,
 ---
 <Base title={title} description={description} breadcrumbs={trail} jsonld={ld} noindex={thin}>
   <div class="shell">
-    <Nav />
-    <header class="page-hd">
-      <Breadcrumb trail={trail} />
-      <h1>{place}免費活動</h1>
-      <p class="sub"><strong class="tabular">{fmtNum(soon.length)}</strong> 個活動接下來 30 天看得到{later.length > 0 && `，之後還有 ${later.length} 個`}</p>
+    <Nav current="free" />
+    <PageHero kicker="不花錢也很好玩" title={`${place}免費活動`} icon="gift" tone="sage"
+      sub={`${fmtNum(soon.length)} 個活動接下來 30 天看得到${later.length > 0 ? `，之後還有 ${later.length} 個` : ''}`}
+      art="免費入場"
+      stats={[
+        { icon: 'gift', n: fmtNum(soon.length), label: '個 30 天內看得到', main: true },
+        { icon: 'calendar', n: fmtNum(later.length), label: '個 30 天之後' },
+        { icon: 'pin', n: fmtNum(city ? 1 : cityCounts.length), label: city ? place : '個縣市有免費活動' },
+      ]}>
+      <Breadcrumb slot="top" trail={trail} />
       <p class="lead">只列資料來源明確寫「免費」的活動。很多主辦單位不標免費與否，實際不用錢的活動比這裡多，
         進活動頁可以看到票價原文與來源連結。找{place}今天所有活動（不限免費）看<a href={city ? `/today/${city}` : '/today'}>今天</a>。</p>
-    </header>
+    </PageHero>
 
     {cityCounts.length > 0 && (
-      <p class="rowlinks">{cityCounts.map(([c, n]) => hubs.free.has(c)
-        ? <a href={`/free/${c}`}>{cityShort(c)}<b class="tabular">{n}</b></a>
-        : <span>{cityShort(c)}<b class="tabular">{n}</b></span>)}</p>
+      <>
+        <h2 class="mini-h">依縣市</h2>
+        <p class="pills scroll">{cityCounts.map(([c, n], i) => hubs.free.has(c)
+          ? <a class={i < 3 ? 'top' : ''} href={`/free/${c}`}>{cityShort(c)}<b class="tabular">{n}</b></a>
+          : <span>{cityShort(c)}<b class="tabular">{n}</b></span>)}</p>
+      </>
     )}
 
     <section class="grp">
-      <h2 class="h-sm">接下來 30 天</h2>
+      <h2 class="sec-h"><span class="sec-ico" set:html={iconSvg('gift')} />接下來 30 天<span class="tabular badge">{soon.length}</span></h2>
       {soon.length ? <HubList rows={soon.slice(0, CAP)} lead={lead} showCity={!city} />
         : <p class="empty-note">接下來 30 天沒有收錄到標示免費的活動。</p>}
       {soon.length > CAP && <p class="more">另有 {soon.length - CAP} 個，<a href={city ? `/city/${city}` : '/today'}>看其他近期活動</a></p>}
@@ -69,7 +79,7 @@ const cityCounts = city ? [] : [...soon.reduce((m, e) => (e.city ? m.set(e.city,
 
     {later.length > 0 && (
       <section class="grp">
-        <h2 class="h-sm">30 天之後</h2>
+        <h2 class="sec-h"><span class="sec-ico" set:html={iconSvg('calendar')} />30 天之後<span class="tabular badge">{later.length}</span></h2>
         <HubList rows={later.slice(0, 40)} lead={lead} showCity={!city} />
       </section>
     )}
@@ -83,15 +93,11 @@ const cityCounts = city ? [] : [...soon.reduce((m, e) => (e.city ? m.set(e.city,
   </div>
 </Base>
 <style>
-  .lead { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--text-secondary); max-width: var(--measure); }
-  .rowlinks { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; }
-  .rowlinks a, .rowlinks span { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
-  .rowlinks span { color: var(--text-secondary); }
-  .rowlinks b { color: var(--text-muted); font-weight: 400; }
-  .grp { margin-top: var(--space-7); }
-  .grp .ev-list { margin-bottom: var(--space-4); }
-  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm); color: var(--text-secondary); }
+  .lead { grid-column: 1 / -1; margin-top: var(--space-4); font-size: var(--text-xs); color: var(--text-muted); max-width: var(--measure); }
+  .lead a { color: var(--seh-forest); }
+  .grp .ev-list { margin: var(--space-3) 0 var(--space-4); }
   .more { font-size: var(--text-sm); color: var(--text-muted); }
+  .more a { color: var(--seh-forest); font-weight: 700; }
   .also { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin: var(--space-8) 0 var(--space-9);
           padding-top: var(--space-5); border-top: var(--hairline) solid var(--border-subtle); font-size: var(--text-sm); }
 </style>

@@ -1,6 +1,6 @@
 ---
 // 收藏、打卡、分享。活動頁、場館頁、文資頁共用。
-// 收藏與「我去過了」存在瀏覽器（src/lib/saved.mjs），成就由 src/lib/achievements.mjs 算。
+// 收藏與「我去過了」存在瀏覽器（src/lib/saved.mjs）。
 // 分享：手機原生面板（否則複製連結）、LINE 揪朋友（帶好邀請文字）、分享圖（canvas 當場畫，
 // src/lib/share-card.mjs，按了才載入）、Facebook。
 interface Props {
@@ -50,7 +50,6 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
 
 <script>
   import { isSaved, toggleSaved, isVisited, toggleVisited, toast } from '../lib/saved.mjs';
-  import { newlyUnlocked } from '../lib/achievements.mjs';
 
   const gtag = (...a: unknown[]) => (window as any).gtag?.(...a);
   const pop = (b: HTMLElement) => { b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); };
@@ -87,13 +86,7 @@ const invite = encodeURIComponent(`要不要一起去？\n${title}${when ? `（$
       if (!r.ok) { toast('這個瀏覽器不允許儲存（可能是無痕模式）'); return; }
       paintVisit(r.visited); pop(visit);
       gtag('event', r.visited ? 'checkin' : 'checkin_undo', { item_kind: d.kind });
-      const got = r.visited ? newlyUnlocked(r.before, r.after) : [];
-      if (got.length) {
-        toast(`解鎖成就「${got.map((a) => a.name).join('」「')}」，到「收藏」頁看看`);
-        got.forEach((a) => gtag('event', 'achievement', { key: a.key }));
-      } else {
-        toast(r.visited ? '已記錄到你的探索清單' : '已取消打卡');
-      }
+      toast(r.visited ? '已記錄到「收藏」頁的去過的地方' : '已取消打卡');
     });
 
     // ── 分享 ──

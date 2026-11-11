@@ -1,17 +1,22 @@
 ---
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
+import PageHero from '../components/PageHero.astro';
+import { iconSvg } from '../lib/icons.mjs';
+// 不知道要打什麼的人，給幾個常見的起點
+const SUGGEST = ['台中歌劇院', '展覽', '親子', '市集', '音樂會', '手作', '免費', '高雄'];
 ---
 <Base title="搜尋｜seh" description="搜尋台灣的文化活動、場館與城市。" noindex={true}>
   <div class="shell">
     <Nav current="search" />
-    <header class="page-hd">
-      <h1>搜尋</h1>
+    <PageHero kicker="已經知道要找什麼" title="搜尋" icon="search" tone="sun" art="活動・場館">
       <form class="sform" id="f" role="search" action="/search" method="get">
+        <span class="s-ico" set:html={iconSvg('search')} />
         <input id="q" name="q" type="search" autocomplete="off" placeholder="活動名稱、場館、城市⋯" aria-label="搜尋" />
       </form>
-      <p class="sub" id="sub">輸入關鍵字開始搜尋</p>
-    </header>
+      <p class="ssub" id="sub">輸入關鍵字開始搜尋</p>
+      <p class="suggest"><span>試試看</span>{SUGGEST.map((w) => <a href={`/search?q=${encodeURIComponent(w)}`} data-q={w}>{w}</a>)}</p>
+    </PageHero>
     <ul class="vlist" id="vlist" aria-label="場館"></ul>
     <ol class="ev-list" id="list"></ol>
   </div>
@@ -82,6 +87,9 @@ import Nav from '../components/Nav.astro';
     else timer = setTimeout(() => track(term, count), 1200);
   }
   q.addEventListener('input', () => update(q.value.trim()));
+  document.querySelectorAll<HTMLAnchorElement>('.suggest a').forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault(); q.value = a.dataset.q!; update(q.value, { push: true, now: true });
+  }));
   document.getElementById('f').addEventListener('submit', (e) => {
     e.preventDefault();
     update(q.value.trim(), { push: true, now: true });
@@ -97,13 +105,23 @@ import Nav from '../components/Nav.astro';
 </script>
 
 <style>
-  .sform { margin-top: var(--space-5); }
+  .sform { grid-column: 1 / -1; position: relative; margin-top: var(--space-5); }
+  .s-ico { position: absolute; left: 1.2rem; top: 50%; transform: translateY(-50%); color: var(--seh-forest); pointer-events: none; display: flex; }
+  .s-ico :global(svg) { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
   .sform input {
-    width: 100%; font: inherit; font-size: var(--text-lg); padding: 0.8rem 1.1rem;
-    background: var(--bg-surface); border: var(--hairline) solid var(--border-subtle); color: var(--text-primary);
+    width: 100%; min-height: 68px; font: inherit; font-size: var(--text-lg); padding: 0 1.4rem 0 3.6rem;
+    background: var(--seh-card); border: 2px solid var(--border-subtle); border-radius: 999px; color: var(--text-primary);
+    box-shadow: var(--seh-shadow);
   }
+  .ssub { grid-column: 1 / -1; margin-top: var(--space-3); font-size: var(--text-sm); color: var(--text-secondary); }
+  .ssub :global(strong) { font-size: var(--text-lg); color: var(--seh-forest); }
+  .suggest { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); margin-top: var(--space-3); max-width: none; }
+  .suggest span { font-size: var(--text-xs); color: var(--text-muted); margin-right: var(--space-1); }
+  .suggest a { display: inline-flex; align-items: center; min-height: 40px; padding: 0 0.9rem; font-size: var(--text-xs); font-weight: 700;
+    text-decoration: none; color: var(--seh-forest); background: var(--seh-forest-weak); border-radius: 999px; }
+  .suggest a:hover { background: var(--seh-forest); color: var(--seh-card); }
   .vlist { list-style: none; padding: 0; margin: var(--space-4) 0 0; display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; }
   .vlist a { font-size: var(--text-sm); }
   .vlist .vl { font-size: var(--text-sm); color: var(--text-muted); }
-  .sform input:focus { outline: 2px solid var(--color-link); outline-offset: 2px; }
+  .sform input:focus { outline: 3px solid var(--seh-coral-weak); outline-offset: 0; border-color: var(--seh-coral); }
 </style>
