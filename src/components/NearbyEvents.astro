@@ -15,7 +15,7 @@ const heading = onlyVenue && venueName ? `${venueName}近期活動` : city ? `${
           <time class="ev-lead tabular" datetime={d.at}>{leadText(d, now)}</time>
           <span class="ev-body"><span class="ev-t">{d.title}</span>
             {d.venue && <span class="ev-m">{d.near === 'venue' ? d.venue : [d.district, d.venue].filter(Boolean).join('　')}</span>}</span>
-          <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+          <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
         </a></li>
       ))}
     </ol>

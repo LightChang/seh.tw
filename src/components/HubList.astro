@@ -14,7 +14,7 @@ const { rows, lead, showCity = false, showCat = true } = Astro.props;
         <span class="ev-m">{[d.venue, showCity ? d.city : d.district].filter(Boolean).join('　')}</span></span>
       <span class="ev-side">
         {d.isFree === true && <span class="free">免費</span>}
-        {showCat && d.cat && <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>}
+        {showCat && d.cat && <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>}
       </span>
     </a></li>
   ))}

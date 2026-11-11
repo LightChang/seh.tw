@@ -217,8 +217,8 @@ const trail = crumbTrail([
       <header class="ev-hd">
         <p class="ev-kick">
           {e.category && (hasCatPage
-            ? <a class="tag" href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
-            : <span class="tag" style={`color:var(${catVar(e.category)})`}>{e.category}</span>)}
+            ? <a class="tag" data-cat={e.category} href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
+            : <span class="tag" data-cat={e.category} style={`color:var(${catVar(e.category)})`}>{e.category}</span>)}
           {status && <span class={`tag st-${status.tone}`}>{status.text}</span>}
           {loc.city && <span class="ev-city">{loc.city}{loc.district && `・${loc.district}`}</span>}
         </p>
@@ -359,7 +359,7 @@ const trail = crumbTrail([
                 <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
                 <span class="ev-body"><span class="ev-t">{d.title}</span>
                   <span class="ev-m">{[d.venue, d.city].filter(Boolean).join('　')}</span></span>
-                <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+                <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
               </a></li>
             ))}
           </ol>
@@ -400,7 +400,8 @@ const trail = crumbTrail([
               {srcUrl && <span class="src">出處：{srcNames[0]}</span>}
             </p>
           )}
-          <SaveShare kind="event" slug={e.slug} title={e.title} when={whenText(sessions)} place={place} endTs={evEnd} url={pageUrl} />
+          <SaveShare kind="event" slug={e.slug} title={e.title} when={whenText(sessions)} place={place} endTs={evEnd} startTs={evStart}
+            cat={e.category ?? ''} city={loc.city ?? ''} free={e.isFree === true ? true : e.isFree === false ? false : null} url={pageUrl} />
         </div>
       </aside>
       </div>

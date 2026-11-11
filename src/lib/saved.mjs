@@ -65,3 +65,42 @@ export function toast(msg) {
   clearTimeout(el._t);
   el._t = setTimeout(() => el.classList.remove('show'), 2400);
 }
+
+// ── 去過的地方（探索紀錄）────────────────────────────────
+// 使用者自己按「我去過了」才記，點開頁面不算。成就由 src/lib/achievements.mjs 計算。
+// 一筆：{ kind, slug, title, cat, city, free, visitedAt }
+const VISIT_KEY = 'seh:visited:v1';
+
+export function readVisited() {
+  try {
+    const v = JSON.parse(localStorage.getItem(VISIT_KEY) || '[]');
+    return Array.isArray(v) ? v.filter((x) => x && x.kind && x.slug && x.visitedAt) : [];
+  } catch {
+    return [];
+  }
+}
+
+function writeVisited(list) {
+  try {
+    localStorage.setItem(VISIT_KEY, JSON.stringify(list.slice(0, 2000)));
+  } catch {
+    return false;
+  }
+  window.dispatchEvent(new CustomEvent('seh:visited'));
+  return true;
+}
+
+export const isVisited = (kind, slug) => readVisited().some((x) => same(x, { kind, slug }));
+
+/** 打卡或取消打卡。回傳 { visited, ok, before, after }，before／after 給成就比對用 */
+export function toggleVisited(item) {
+  const before = readVisited();
+  const after = before.filter((x) => !same(x, item));
+  const visited = after.length === before.length;
+  if (visited) after.unshift({ ...item, visitedAt: Date.now() });
+  return { visited, ok: writeVisited(after), before, after };
+}
+
+export function removeVisited(kind, slug) {
+  return writeVisited(readVisited().filter((x) => !same(x, { kind, slug })));
+}

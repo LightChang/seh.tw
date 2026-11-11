@@ -136,7 +136,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
                 <span class="ev-t">{d.title}</span>
                 <span class="ev-m">{isMonth ? [d.district, d.venue].filter(Boolean).join('　') : d.venue}</span>
               </span>
-              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
+              <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
             </a></li>
           ))}
         </ol>
@@ -153,7 +153,7 @@ const trail = crumbTrail([{ name: '全部縣市', href: '/city' }, { name: city,
                   <span class="ev-t">{d.title}</span>
                   <span class="ev-m">{[d.district, d.venue].filter(Boolean).join('　')}</span>
                 </span>
-                <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
+                <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat || ''}</span>
               </a></li>
             ))}
           </ol>

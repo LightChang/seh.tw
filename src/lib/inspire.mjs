@@ -10,6 +10,8 @@
 import { midnight, hhmm, WD, dayGap } from './format.mjs';
 import { weekendOf } from './hubs.mjs';
 import { distanceM } from './explore-nearby.mjs';
+import { iconSvg, catIcon } from './icons.mjs';
+export { iconSvg };
 
 const MIN = 60000;
 const HOUR = 60 * MIN;
@@ -139,25 +141,7 @@ export const distText = (m) => (m == null ? '' : m < 1000 ? `${Math.round(m / 50
 // ── 卡片 ───────────────────────────────────────────────
 // 沒有活動照片（授權未確認）：主視覺是類型色塊＋線條圖示＋大字時間。
 // 之後有照片時放進 .spot-visual，其餘不變。
-const ICON = {
-  frame: '<rect x="4" y="4" width="16" height="16" rx="2"/><path d="m4 16 4.5-4.5 3 3L15 11l5 5"/><circle cx="9" cy="9" r="1.6"/>',
-  note: '<path d="M9 18V6l10-2v12"/><circle cx="6.5" cy="18" r="2.5"/><circle cx="16.5" cy="16" r="2.5"/>',
-  mask: '<path d="M4 5h16v6a8 8 0 0 1-16 0Z"/><path d="M8.5 10h.01M15.5 10h.01M9 14.5c1.7 1.3 4.3 1.3 6 0"/>',
-  chat: '<path d="M5 5h14v10H9l-4 4Z"/><path d="M9 10h6"/>',
-  film: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/>',
-  hand: '<path d="M7 11V6.5a1.5 1.5 0 0 1 3 0V11m0-5.5V5a1.5 1.5 0 0 1 3 0v6m0-4.5a1.5 1.5 0 0 1 3 0V13m0-3.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1a6 6 0 0 1-5.2-3L5 14.6a1.5 1.5 0 0 1 2-2.1Z"/>',
-  bag: '<path d="M5 8h14l-1 12H6Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
-  flag: '<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
-  leaf: '<path d="M5 19c0-8 5-13 14-14-1 9-6 14-14 14Z"/><path d="M5 19 13 11"/>',
-  roof: '<path d="M3 10 12 4l9 6"/><path d="M5 9.5V20h14V9.5M10 20v-5h4v5"/>',
-  spark: '<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/>',
-};
-const CAT_ICON = {
-  展覽: 'frame', 音樂: 'note', 演唱會: 'note', 獨立音樂: 'note', 戲劇: 'mask', 舞蹈: 'mask', 綜藝: 'mask',
-  講座: 'chat', 電影: 'film', 研習課程: 'hand', 市集: 'bag', 節慶活動: 'flag', 遊憩活動: 'leaf', 親子: 'spark',
-};
 const TONE = { solo: 'sage', friends: 'coral', escape: 'forest', different: 'sun' };
-export const iconSvg = (name) => `<svg viewBox="0 0 24 24" aria-hidden="true">${ICON[name] ?? ICON.spark}</svg>`;
 
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const shortCity = (c = '') => (/^(新竹|嘉義)/.test(c) ? c : c.replace(/[市縣]$/, ''));
@@ -169,10 +153,10 @@ const shortCity = (c = '') => (/^(新竹|嘉義)/.test(c) ? c : c.replace(/[市�
 export function cardHtml({ it, av, dist }, { entry = '', now = Date.now() } = {}) {
   const her = it.k === 'heritage';
   const href = her ? `/heritage/${encodeURIComponent(it.s)}` : `/event/${encodeURIComponent(it.s)}`;
-  const icon = her ? 'roof' : CAT_ICON[it.c] ?? 'spark';
+  const icon = her ? 'roof' : catIcon(it.c);
   const tone = TONE[it.m?.find((m) => TONE[m])] ?? 'plain';
   const tags = [
-    it.c && `<span class="spot-tag">${esc(her ? '文化景點' : it.c)}</span>`,
+    it.c && `<span class="spot-tag" data-cat="${esc(her ? '文化景點' : it.c)}">${esc(her ? '文化景點' : it.c)}</span>`,
     it.f === true && '<span class="spot-tag free">免費</span>',
     dist != null && `<span class="spot-dist">${distText(dist)}</span>`,
   ].filter(Boolean).join('');
