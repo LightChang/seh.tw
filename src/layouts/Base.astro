@@ -37,7 +37,8 @@ const url = canonical ?? `${site}${pathname}`;
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#1e2030" />
+    <!-- 跟頁面底色（--bg-base 的 fallback）一致；原本的深藍會在手機網址列畫出一條不搭的深色帶 -->
+    <meta name="theme-color" content="#f5f6f8" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />

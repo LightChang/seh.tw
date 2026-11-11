@@ -328,15 +328,18 @@ const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
 </script>
 
 <style>
+  /* 視窗夠高時剛好一個畫面；不夠高就往下長、可以捲動。
+     原本是 height:100dvh＋overflow:hidden＋列高百分比，內容比視窗高時直接被切掉：
+     2026-11-11 實測 1366×768 頁尾壓到四個門上 23px、頁尾底超出視窗；
+     手機 390×844 四個門被擠成 14px 高、疊在一起，搜尋鈕被推出畫面。 */
   .page {
-    height: 100vh; height: 100dvh;
+    min-height: 100vh; min-height: 100dvh;
     display: grid;
-    grid-template-columns: 44% 1fr;
-    grid-template-rows: 33% minmax(0, 1fr) 25%;
+    grid-template-columns: minmax(0, 44%) minmax(0, 1fr);
+    grid-template-rows: auto minmax(18rem, 1fr) auto;
     grid-template-areas: "ask ask" "doors qs" "ft ft";
     column-gap: 5%;
     padding-inline: 4%;
-    overflow: hidden;
   }
 
   /* ── 上：問題與輸入 ─────────────────────────── */
@@ -401,7 +404,7 @@ const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
     font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
     letter-spacing: 0; color: var(--text-secondary);
   }
-  .qwrap { grid-area: qs; align-self: stretch; min-width: 0; min-height: 0; overflow: hidden; }
+  .qwrap { grid-area: qs; align-self: stretch; min-width: 0; }
   .qs { list-style: none; margin: 0.7rem 0 0; padding: 0; }
   .qs :global(li) { border-top: var(--hairline) solid var(--border-subtle); }
   .qs :global(a) {
@@ -443,19 +446,31 @@ const yearPages = hubs.year.filter((p) => !p.city && p.year === hubs.thisYear);
   }
   .about a { color: var(--text-secondary); white-space: nowrap; margin-left: auto; }
 
-  /* 窄螢幕：問句層讓位給四個門，三段高度重新分配，門完整顯示不裁切 */
+  /* 窄螢幕：四段由上往下自然排列、整頁捲動。
+     每個門給高度下限，不再跟頁尾搶同一個視窗高度；
+     問句清單也保留——拿掉的話 /venues、/tonight 在手機首頁就沒有入口。 */
   @media (max-width: 960px) {
     .page {
-      grid-template-columns: 1fr;
-      grid-template-rows: auto minmax(0, 1fr) auto;
-      grid-template-areas: "ask" "doors" "ft";
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto auto auto;
+      grid-template-areas: "ask" "doors" "qs" "ft";
     }
-    .ask { padding-block: 4% 2%; }
-    .qwrap { display: none; }
-    .doors { grid-template-rows: 1fr 1fr; }
+    .ask { padding-block: 1.5rem 1rem; }
+    .doors { grid-template-rows: auto auto; }
+    .door { min-height: 8.5rem; }
+    .door-d { white-space: normal; }
     .viz { inset: 0 0 0 40%; }
+    .qwrap { padding-block: 1.5rem 0.5rem; }
+    .search button { flex: none; }
+    .new-link { white-space: normal; }
 
-    .ft-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+    /* 手指點的連結至少 44px 高（WCAG 2.5.5） */
+    .qs :global(a) { min-height: 44px; align-items: center; }
+    .cities :global(a), .cats :global(a) { min-height: 44px; align-items: center; }
+    .ft { gap: 1rem; padding-block: 1.5rem 2rem; }
+    .ft-row { flex-direction: column; align-items: flex-start; gap: 0.2rem; }
     .ft-row .h-sm { width: auto; }
+    .cities, .cats { gap: 0 1.4rem; }
+    .about a { margin-left: 0; min-height: 44px; display: inline-flex; align-items: center; }
   }
 </style>
