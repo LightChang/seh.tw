@@ -82,7 +82,7 @@ const newYearEve = rows.find((d) => /跨年(晚會|夜|演唱會)/.test(d.title)
             <li><a href={`/event/${d.slug}`}>
               <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
               <span class="ev-body"><span class="ev-t">{d.title}</span><span class="ev-m">{d.venue}</span></span>
-              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+              <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
             </a></li>
           ))}
         </ol>
@@ -95,7 +95,7 @@ const newYearEve = rows.find((d) => /跨年(晚會|夜|演唱會)/.test(d.title)
             <li><a href={`/event/${d.slug}`}>
               <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
               <span class="ev-body"><span class="ev-t">{d.title}</span><span class="ev-m">{[ d.venue].filter(Boolean).join('・')}　{+d.listedAt.slice(5, 7)}/{+d.listedAt.slice(8)} 上架</span></span>
-              <span class="ev-cat" style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
+              <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
             </a></li>
           ))}
           </ol>
