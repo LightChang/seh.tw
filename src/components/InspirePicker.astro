@@ -47,7 +47,7 @@ const { full = false, ssr = '', limit = 6, time = 'soon', mood = 'now', weekendH
 </section>
 
 <script>
-  import { loadPool, results, knownLocation, askLocation, openDecide, track } from '../lib/inspire-client.mjs';
+  import { loadPool, results, knownLocation, askLocation, quietLocation, openDecide, track } from '../lib/inspire-client.mjs';
   import { cardHtml } from '../lib/inspire.mjs';
 
   for (const root of document.querySelectorAll<HTMLElement>('[data-picker]')) {
@@ -116,6 +116,8 @@ const { full = false, ssr = '', limit = 6, time = 'soon', mood = 'now', weekendH
     });
     root.querySelector('.pk-decide')!.addEventListener('click', () => openDecide({ time, mood, entry: full ? 'explore' : 'home_picker' }));
     render();
+    // 以前允許過定位的，不用再按一次：直接依距離排（不會跳詢問）
+    if (!loc) quietLocation().then((l) => { if (l && !loc) { loc = l; locT.textContent = '已依距離排序'; render(); } });
   }
 </script>
 

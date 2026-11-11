@@ -182,3 +182,18 @@ export function blurbOf(text = '') {
   const pick = first.length >= 8 ? first : s;
   return pick.length > 48 ? `${pick.slice(0, 46)}…` : pick;
 }
+
+/**
+ * 幫我決定用：有位置時盡量只挑附近的。從近到遠試每個半徑，
+ * 第一個「至少有 min 個」的半徑就用它（太少的話「再換一個」會一直是同一個）。
+ * 回傳 { list（依距離排、已補 dist）, radius }；最遠的半徑內都不夠就 { list: [], radius: null }。
+ */
+export const NEAR_TIERS = [3000, 8000, 20000];
+export function nearbyTier(list, loc, { tiers = NEAR_TIERS, min = 3 } = {}) {
+  const near = byDistance(list, loc.lat, loc.lng).filter((r) => r.dist != null);
+  for (const radius of tiers) {
+    const l = near.filter((r) => r.dist <= radius);
+    if (l.length >= min) return { list: l, radius };
+  }
+  return { list: [], radius: null };
+}

@@ -1,5 +1,5 @@
 // 前端共用：推薦池、訪客位置、「幫我決定」對話框。首頁與 /explore 用。
-import { match, byDistance, pickOne, cardHtml, whenLabel, windowOf } from './inspire.mjs';
+import { match, byDistance, pickOne, cardHtml, whenLabel, windowOf, nearbyTier } from './inspire.mjs';
 
 let poolPromise = null;
 /** /inspire.json（src/pages/inspire.json.js），一頁只抓一次 */
@@ -11,7 +11,7 @@ export function knownLocation() {
   try { const v = JSON.parse(sessionStorage.getItem(LOC_KEY) || 'null'); return v && typeof v.lat === 'number' ? v : null; } catch { return null; }
 }
 /** 請求定位。拒絕或不支援回 null，不會一直問。 */
-export function askLocation() {
+export function askLocation(timeout = 8000) {
   return new Promise((resolve) => {
     if (!navigator.geolocation) return resolve(null);
     navigator.geolocation.getCurrentPosition(
@@ -21,9 +21,23 @@ export function askLocation() {
         resolve(v);
       },
       () => resolve(null),
-      { timeout: 8000, maximumAge: 10 * 60 * 1000 },
+      { timeout, maximumAge: 10 * 60 * 1000 },
     );
   });
+}
+
+/**
+ * 不打擾地取得位置：這次瀏覽已經有就用；瀏覽器記得「已允許」就直接讀（不會跳詢問）；
+ * 其他情況（沒問過、拒絕過、不支援）回 null，不主動問。
+ */
+export async function quietLocation() {
+  const known = knownLocation();
+  if (known) return known;
+  try {
+    const st = await navigator.permissions?.query({ name: 'geolocation' });
+    if (st?.state === 'granted') return await askLocation(3000);
+  } catch { /* 不支援 permissions API */ }
+  return null;
 }
 
 export const track = (name, params = {}) => { try { window.gtag?.('event', name, params); } catch { /* GA 沒載 */ } };
@@ -69,13 +83,30 @@ export async function openDecide({ time = 'soon', mood = 'now', kind = 'event', 
     dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });   // 點背景關閉
   }
 
-  const loc = knownLocation();
+  // 已經設定過定位的人只挑附近的（3 → 8 → 20 公里），附近都沒有才放寬
+  const loc = await quietLocation();
   const draw = () => {
-    let r = null, usedTime = state.time;
+    let r = null, usedTime = state.time, radius = null, farthest = false;
     const list = (t) => results(pool.filter((it) => it.k === state.kind), { time: t, mood: state.kind === 'heritage' ? 'now' : state.mood, loc: null, now });
-    for (const t of [state.time, ...WIDEN.slice(WIDEN.indexOf(state.time) + 1)]) {
+    const times = [state.time, ...WIDEN.slice(WIDEN.indexOf(state.time) + 1)];
+    for (const t of times) {
       const l = list(t);
-      if (l.length) { r = pickOne(loc ? byDistance(l, loc.lat, loc.lng) : l, { avoid: seen, top: loc ? 15 : 40 }); usedTime = t; break; }
+      if (!l.length) continue;
+      if (loc) {
+        const near = nearbyTier(l, loc);
+        if (!near.list.length) continue;
+        r = pickOne(near.list, { avoid: seen, top: near.list.length });
+        radius = near.radius;
+      } else {
+        r = pickOne(l, { avoid: seen, top: 40 });
+      }
+      usedTime = t;
+      break;
+    }
+    // 有位置但 20 公里內這幾天都沒有：挑全部裡最近的幾個
+    if (!r && loc) {
+      const l = byDistance(list(times.at(-1)), loc.lat, loc.lng);
+      if (l.length) { r = pickOne(l, { avoid: seen, top: 8 }); usedTime = times.at(-1); farthest = true; }
     }
     for (const b of dlg.querySelectorAll('[data-kind]')) b.setAttribute('aria-selected', String(b.dataset.kind === state.kind));
     const note = dlg.querySelector('.decide-note');
@@ -89,8 +120,12 @@ export async function openDecide({ time = 'soon', mood = 'now', kind = 'event', 
       return;
     }
     seen.add(r.it.s);
-    note.textContent = usedTime !== state.time ? '你選的時段沒有符合的，幫你放寬了時間。' : '';
-    if (loc && typeof r.it.la === 'number') r = byDistance([r], loc.lat, loc.lng)[0];
+    note.textContent = [
+      radius && `依你的位置，從 ${radius / 1000} 公里內挑的。`,
+      farthest && '附近 20 公里內這幾天沒有，幫你找了最近的。',
+      usedTime !== state.time && '你選的時段沒有符合的，幫你放寬了時間。',
+    ].filter(Boolean).join('');
+    if (loc && typeof r.it.la === 'number' && r.dist == null) r = byDistance([r], loc.lat, loc.lng)[0];
     card.innerHTML = cardHtml(r, { entry: 'decide', now });
     const href = card.querySelector('a').getAttribute('href');
     yes.hidden = false; share.hidden = false;

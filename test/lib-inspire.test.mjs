@@ -71,3 +71,15 @@ test('blurbOf：取第一句、清掉標籤與實體、過長截斷；cardHtml �
   const html = cardHtml({ it: { k: 'event', s: 'a b', t: '<script>', c: '展覽', m: ['solo'], f: true }, av: { kind: 'open' } }, { entry: 'picker' });
   assert.ok(html.includes('&lt;script&gt;') && html.includes('/event/a%20b') && html.includes('data-method="picker"') && html.includes('免費'));
 });
+
+test('nearbyTier：從近到遠找第一個夠多的半徑；都不夠就空', async () => {
+  const { nearbyTier } = await import('../src/lib/inspire.mjs');
+  const at = (s, dLat) => ({ it: { s, la: 25 + dLat, ln: 121.5 } });   // 緯度 0.01° ≈ 1.1 km
+  const list = [at('a', 0.01), at('b', 0.02), at('c', 0.05), at('d', 0.06), at('e', 0.07), at('far', 1), { it: { s: 'nocoord' } }];
+  const loc = { lat: 25, lng: 121.5 };
+  const r = nearbyTier(list, loc);
+  assert.equal(r.radius, 8000, '3 公里內只有 2 個，不夠 3 個，放寬到 8 公里');
+  assert.deepEqual(r.list.map((x) => x.it.s), ['a', 'b', 'c', 'd', 'e']);
+  assert.equal(nearbyTier(list, loc, { min: 2 }).radius, 3000);
+  assert.deepEqual(nearbyTier([at('far', 1)], loc), { list: [], radius: null });
+});
