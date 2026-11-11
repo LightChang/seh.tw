@@ -1,26 +1,44 @@
 ---
+// 全站導覽。依「探索行為」排：先探索、再依時間（今天／今晚／週末）、附近、收藏；
+// 資料型的入口（縣市、場館、文化資產、地圖、免費、搜尋）收進「更多」——內容都還在，
+// 只是退到第二層，讓還不知道要去哪的人先看到推薦。
 const { current } = Astro.props;
 const items = [
+  { k: 'explore', label: '探索', href: '/explore' },
   { k: 'today', label: '今天', href: '/today' },
   { k: 'tonight', label: '今晚', href: '/tonight' },
   { k: 'weekend', label: '這週末', href: '/weekend' },
-  { k: 'free', label: '免費活動', href: '/free' },
-  { k: 'city', label: '縣市', href: '/city' },
-  { k: 'venues', label: '場館', href: '/venues' },
-  { k: 'heritage', label: '文化資產', href: '/heritage' },
   { k: 'nearby', label: '附近', href: '/nearby' },
-  { k: 'map', label: '地圖', href: '/map' },
-  { k: 'search', label: '搜尋', href: '/search' },
   { k: 'saved', label: '收藏', href: '/saved' },
 ];
+const more = [
+  { k: 'free', label: '免費活動', href: '/free' },
+  { k: 'map', label: '地圖', href: '/map' },
+  { k: 'city', label: '依縣市', href: '/city' },
+  { k: 'venues', label: '場館', href: '/venues' },
+  { k: 'heritage', label: '文化資產', href: '/heritage' },
+  { k: 'search', label: '搜尋', href: '/search' },
+];
+const inMore = more.some((i) => i.k === current);
 ---
 <nav class="nav" aria-label="主要導覽">
-  <a class="brand" href="/">seh<span>.tw</span></a>
+  <a class="brand" href="/" aria-label="seh 首頁">seh<span>.</span></a>
   <ul>
     {items.map((i) => (
       <li><a href={i.href} class={current === i.k ? 'on' : ''} aria-current={current === i.k ? 'page' : undefined}>{i.label}{i.k === 'saved' && <span class="saved-n tabular" data-saved-n hidden></span>}</a></li>
     ))}
   </ul>
+  <details class="more">
+    <summary class={inMore ? 'on' : ''}>更多</summary>
+    <ul class="more-list">
+      {more.map((i) => (
+        <li><a href={i.href} class={current === i.k ? 'on' : ''} aria-current={current === i.k ? 'page' : undefined}>{i.label}</a></li>
+      ))}
+    </ul>
+  </details>
+  <a class="nav-search" href="/search" aria-label="搜尋">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5" /><path d="m16 16 4.5 4.5" /></svg>
+  </a>
 </nav>
 <script>
   // 收藏數（src/lib/saved.mjs）。0 就不顯示
@@ -32,36 +50,57 @@ const items = [
   paint();
   addEventListener('seh:saved', paint);
   addEventListener('storage', paint);
+  // 「更多」點外面就收起來
+  document.addEventListener('click', (e) => {
+    for (const d of document.querySelectorAll<HTMLDetailsElement>('.nav details.more[open]')) if (!d.contains(e.target as Node)) d.open = false;
+  });
 </script>
 <style>
-  /* 導覽固定在頂端：列表頁動輒幾十列，捲下去之後還要找得到「今晚／這週末／地圖」。
-     底色不透明，捲動的內容從下面過去時不會透出來。 */
+  /* 導覽固定在頂端：列表頁動輒幾十列，捲下去之後還要找得到「今晚／這週末」。 */
   .nav {
     position: sticky; top: 0; z-index: 40;
     display: flex; align-items: center; gap: var(--space-6);
     background: var(--bg-base);
-    border-bottom: 2px solid var(--seh-ink);
+    border-bottom: 1px solid var(--border-subtle);
   }
-  .brand { font-family: var(--font-display); font-weight: 800; font-size: var(--text-lg);
-           text-decoration: none; letter-spacing: -0.01em; flex: none; }
-  .brand span { color: var(--seh-terracotta); font-weight: 400; }
-  .nav ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-5); list-style: none; margin: 0; padding: 0; }
-  .nav ul a {
-    display: flex; align-items: center; min-height: 56px;
-    text-decoration: none; font-size: var(--text-sm); font-weight: 600; color: var(--text-secondary);
-    border-bottom: 4px solid transparent; margin-bottom: -2px; padding-top: 4px;
+  .brand { font-family: var(--font-display); font-weight: 800; font-size: var(--text-xl); line-height: 1;
+           text-decoration: none; letter-spacing: -0.04em; flex: none; color: var(--seh-forest); }
+  .brand span { color: var(--seh-coral); }
+  .nav > ul { display: flex; gap: 0 var(--space-5); list-style: none; margin: 0; padding: 0; min-width: 0; }
+  .nav ul a, .more summary {
+    display: flex; align-items: center; min-height: 60px; cursor: pointer;
+    text-decoration: none; font-size: var(--text-sm); font-weight: 700; color: var(--text-secondary);
+    border-bottom: 4px solid transparent; margin-bottom: -1px; padding-top: 4px; white-space: nowrap;
   }
-  .nav ul a:hover { color: var(--color-link); border-bottom-color: var(--border-subtle); }
-  /* 目前所在的區塊：粗底線＋主色，一眼看得出「我在哪」 */
+  .nav ul a:hover, .more summary:hover { color: var(--color-link); }
+  .nav > ul a.on, .more summary.on { color: var(--seh-forest); font-weight: 800; border-bottom-color: var(--seh-coral); }
   .saved-n { margin-left: 0.3em; padding: 0 0.45em; border-radius: 999px; font-size: var(--text-xs); line-height: 1.4;
-             background: var(--seh-terracotta); color: var(--bg-base); }
-  .nav ul a.on { color: var(--color-link); font-weight: 800; border-bottom-color: var(--color-link); }
-  /* 手機上換行會疊成三排、吃掉約四分之一個首屏；改成一排可橫向滑動 */
+             background: var(--seh-coral); color: var(--seh-ink); }
+
+  .more { position: relative; margin-left: auto; }
+  .more summary { list-style: none; }
+  .more summary::-webkit-details-marker { display: none; }
+  .more summary::after { content: '▾'; margin-left: 0.3em; }
+  .more-list {
+    position: absolute; right: 0; top: calc(100% + 4px); z-index: 50; min-width: 11rem;
+    list-style: none; margin: 0; padding: var(--space-2); display: grid;
+    background: var(--seh-card); border-radius: var(--seh-radius-sm); box-shadow: var(--seh-shadow-hover);
+  }
+  .more-list a { min-height: 44px; padding: 0 var(--space-3); border: 0; margin: 0; border-radius: 6px; font-weight: 600; }
+  .more-list a:hover { background: var(--bg-surface); }
+  .more-list a.on { color: var(--seh-forest); font-weight: 800; }
+  .nav-search { display: inline-grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; color: var(--text-secondary); flex: none; }
+  .nav-search:hover { background: var(--bg-surface); color: var(--seh-forest); }
+  .nav-search svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
+
+  /* 手機：主要項目一排橫向滑動，「更多」與搜尋固定在右邊 */
   @media (max-width: 760px) {
-    .nav { gap: var(--space-4); }
-    .nav ul { flex-wrap: nowrap; gap: var(--space-4); min-width: 0; overflow-x: auto; scrollbar-width: none; }
-    .nav ul::-webkit-scrollbar { display: none; }
+    .nav { gap: var(--space-3); }
+    .nav > ul { flex: 1; flex-wrap: nowrap; gap: var(--space-4); overflow-x: auto; scrollbar-width: none; }
+    .nav > ul::-webkit-scrollbar { display: none; }
     .nav li { flex: none; }
-    .nav ul a { min-height: 48px; }
+    .nav ul a, .more summary { min-height: 52px; }
+    .more { margin-left: 0; }
+    .nav-search { display: none; }
   }
 </style>

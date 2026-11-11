@@ -8,6 +8,9 @@ import { getCollection } from 'astro:content';
 import { hasClockTime } from './session-time.mjs';
 import { YEAR_GROUPS, YEAR_MIN, YEAR_FIRST, FREE_MIN, yearCount } from './hubs.mjs';
 import { resolveGroups, parentOf, aliasesOf } from './venue-names.mjs';
+import { moodsOf, HERITAGE_MOODS, blurbOf } from './inspire.mjs';
+import { tsOf, tsEndOf } from './day-lists.mjs';
+import { midnight } from './format.mjs';
 
 /**
  * 收錄與否由 transform/score-pages.mjs 每天重算，存在 data/page-state.ndjson。
@@ -330,4 +333,50 @@ export async function liveEventList(now = Date.now()) {
     LIVE = liveEvents(await flatSessions(), now, await indexableEvent());
   }
   return LIVE;
+}
+
+// ── 推薦池（src/pages/inspire.json.js 輸出、首頁 SSR 共用）。欄位說明見 inspire.json.js ──
+let POOL = null;
+export async function inspirePool(now = Date.now()) {
+  if (POOL) return POOL;
+  const t0 = midnight(now);
+  const horizon = t0 + 10 * 86400000;
+  const live = (await liveEventList(now)).filter((e) => e.next < horizon);
+  const bySlug = new Map(live.map((e) => [e.slug, e]));
+  const desc = new Map((await allEvents()).map((e) => [e.slug, e.description]));
+
+  const sessions = new Map();
+  for (const d of await flatSessions()) {
+    if (!bySlug.has(d.slug)) continue;
+    const ts = tsOf(d), end = tsEndOf(d);
+    if (ts >= horizon || (end ?? ts) < t0) continue;
+    const list = sessions.get(d.slug) ?? [];
+    if (list.length < 12) list.push([Math.round(ts / 60000), end ? Math.round(end / 60000) : 0, d.dateOnly ? 1 : 0]);
+    sessions.set(d.slug, list);
+  }
+
+  const items = [];
+  for (const e of live) {
+    const x = sessions.get(e.slug);
+    if (!x?.length) continue;
+    const m = moodsOf(e.cat, e.title);
+    if (!m.length) continue;
+    items.push({
+      k: 'event', s: e.slug, t: e.title, c: e.cat || '', m, ci: e.city || '', v: e.venue || '',
+      la: e.lat, ln: e.lng,
+      f: e.isFree === true ? true : e.isFree === false ? false : null,
+      b: blurbOf(desc.get(e.slug)), sc: Math.round(e.score * 100) / 100, x,
+    });
+  }
+  for (const h of await allHeritage()) {
+    if (h.isOpenVisit !== true || typeof h.lat !== 'number') continue;
+    items.push({
+      k: 'heritage', s: h.slug, t: h.name, c: h.level ?? h.categoryRaw ?? '文化資產', m: HERITAGE_MOODS,
+      ci: h.city || '', v: h.district || '', la: h.lat, ln: h.lng,
+      f: h.isCharge === false ? true : h.isCharge === true ? false : null,
+      b: '', sc: 0, x: [],
+    });
+  }
+  POOL = items;
+  return POOL;
 }

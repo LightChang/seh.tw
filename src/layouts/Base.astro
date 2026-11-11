@@ -38,7 +38,7 @@ const url = canonical ?? `${site}${pathname}`;
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
     <!-- 跟頁面底色（brand.css 的 --bg-base fallback）一致；原本的深藍會在手機網址列畫出一條不搭的深色帶 -->
-    <meta name="theme-color" content="#f9f6f1" />
+    <meta name="theme-color" content="#f4ebdd" />
 
     <!-- 不載網路字型：全用系統字（src/styles/site.css 的 --font-*）。
          原本的 Google Fonts CSS 是一個擋渲染的外部請求，而 Archivo 沒有中文字，標題實際上一直是中文字型在撐。 -->
@@ -67,10 +67,15 @@ const url = canonical ?? `${site}${pathname}`;
           s.async = true;
           s.src = 'https://www.googletagmanager.com/gtag/js?id=' + gaId;
           document.head.appendChild(s);
-          // 目標事件：帶 data-goal 的連結被點時送出，比 GA 自動的外連 click 準（那個連頁尾連結也算）
+          // 目標事件：帶 data-goal 的連結被點時送出，比 GA 自動的外連 click 準（那個連頁尾連結也算）。
+          // method 是入口（例：home_tonight、decide），用來比較各推薦入口的轉換率；
+          // seconds_since_load 是「進站到找到活動」花的秒數（指標定義見 docs/METRICS.md）。
           document.addEventListener('click', function (ev) {
             var a = ev.target.closest && ev.target.closest('[data-goal]');
-            if (a) window.gtag('event', a.dataset.goal, { method: a.dataset.method, link_url: a.href, transport_type: 'beacon' });
+            if (a) window.gtag('event', a.dataset.goal, {
+              method: a.dataset.method, link_url: a.href, page_type: location.pathname === '/' ? 'home' : location.pathname.split('/')[1],
+              seconds_since_load: Math.round(performance.now() / 1000), transport_type: 'beacon',
+            });
           });
         }
       </script>

@@ -53,14 +53,20 @@ npm run links      # build 之後，站內連結不能有壞的
 
 **改設計 token** → 改上游（`agent.system-integration-quality-control/templates/styles.css`），
 再 `npm run sync:tokens`。不要直接改 `src/styles/tokens.css`，那是副本。
-**seh 的品牌色**（暖紙白、墨黑、陶土橘、森林綠、石灰灰；2026-11-11 起）在
-`src/styles/brand.css`，疊在 tokens 之上，只覆寫背景／文字／連結／邊框並加 `--seh-*`。
+**seh 的品牌色**（生活探索誌：暖象牙、森林綠、珊瑚橘、陽光黃、鼠尾草；2026-11-11 起）在
+`src/styles/brand.css`，疊在 tokens 之上，覆寫背景／文字／連結／邊框並加 `--seh-*`。
 改品牌色只改這支，oklch 為主、hex 只放在檔尾 `@supports not` 的 fallback，文字色對底色要 ≥ 4.5:1。
+**珊瑚橘、陽光黃、鼠尾草只能當底色**（對象牙底 < 2.2:1），橘色的字用 `--seh-coral-deep`。
 兩條硬規則由 `test/style-tokens.test.mjs` 擋著：**最小字級 18px 無例外**、
 **寫死的 hex 只能是 tokens.css／brand.css 自己的 fallback 值**（隨手挑的 `#333` 會紅）。
 
 **首頁本週編輯選讀** → 填 `overrides/editor-picks.json`（以 ISO 週次為 key，說明寫在檔內）。
-沒填的週次依關注度自動挑。挑選邏輯在 `src/lib/home-picks.mjs`。
+有填才出現在首頁；沒填的週次由「今日靈感」承擔。挑選邏輯在 `src/lib/home-picks.mjs`。
+
+**推薦（時間 × 心情、今日靈感、幫我決定）** → 邏輯在 `src/lib/inspire.mjs`（有測試），
+推薦池 `/inspire.json` 由 `inspirePool()`（`src/lib/build-data.mjs`）在 build 時產生。
+心情是「類型＋標題關鍵字」的寫死對照（`MOODS`），不是模型判斷；資料沒有的（活動要多久、距離）不猜。
+改版成效看 `docs/METRICS.md` 的六個指標，不看瀏覽量。
 
 ## 隔離測試
 

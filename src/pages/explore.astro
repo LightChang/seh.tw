@@ -1,0 +1,41 @@
+---
+// 探索：依「有多少時間」×「想要什麼感覺」列出現在可以去的地方，可依距離排序。
+// 選擇寫在網址（/explore?time=tonight&mood=friends），可以直接分享給朋友。
+// 結果由前端依當下時間算（src/lib/inspire.mjs）；build 時先畫「半天 × 都可以」，沒有 JS 也看得到。
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import InspirePicker from '../components/InspirePicker.astro';
+import { inspirePool } from '../lib/build-data.mjs';
+import { match, cardHtml } from '../lib/inspire.mjs';
+import { weekendOf } from '../lib/hubs.mjs';
+import { midnight } from '../lib/format.mjs';
+import { crumbTrail } from '../lib/jsonld/index.mjs';
+
+const buildNow = Date.now();
+const snap = Math.max(buildNow, midnight(buildNow) + 11 * 3600e3);
+const pool = await inspirePool(buildNow);
+const ssr = match(pool, { time: 'halfday', mood: 'now', now: snap }).slice(0, 12).map((r) => cardHtml(r, { entry: 'explore_halfday_now', now: snap })).join('');
+const trail = crumbTrail([], '探索');
+---
+<Base
+  title="今天可以去哪裡？依時間與心情探索｜seh"
+  description="有 3 小時、今晚、半天還是整個週末？選一種心情，seh 推薦台灣各地現在可以去的展覽、表演、市集、手作與文化小旅行。"
+  breadcrumbs={trail}
+>
+  <div class="shell">
+    <Nav current="explore" />
+    <header class="page-hd">
+      <Breadcrumb trail={trail} />
+      <p class="kicker">探索</p>
+      <h1>今天可以去哪裡？</h1>
+      <p class="sub">選好時間和心情，剩下的交給 seh。想看離你最近的，可以用位置排序。</p>
+    </header>
+    <InspirePicker full ssr={ssr} limit={12} time="halfday" mood="now" weekendHint={weekendOf(buildNow).label} />
+  </div>
+</Base>
+
+<style>
+  .kicker { color: var(--seh-coral-deep); margin-top: var(--space-4); }
+  .page-hd h1 { margin-top: var(--space-2); }
+</style>

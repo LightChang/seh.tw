@@ -1,0 +1,172 @@
+---
+// 「你現在有多少時間？今天想要什麼感覺？」——首頁與 /explore 共用。
+// 結果由前端依當下時間算（src/lib/inspire.mjs）；ssr 是 build 時先畫好的卡片，
+// 沒有 JS 或推薦池還沒載入時看得到東西。
+// full：/explore 用，列全部結果並把選擇寫進網址（?time=&mood=，可分享）。
+import { TIMES, MOODS, iconSvg } from '../lib/inspire.mjs';
+interface Props { full?: boolean; ssr?: string; limit?: number; time?: string; mood?: string; weekendHint?: string }
+const { full = false, ssr = '', limit = 6, time = 'soon', mood = 'now', weekendHint = '' } = Astro.props;
+const MOOD_ICON: Record<string, string> = { solo: 'frame', friends: 'note', escape: 'leaf', different: 'hand', now: 'spark' };
+---
+<section class="picker" data-picker data-full={full ? '1' : ''} data-limit={limit} data-time={time} data-mood={mood}>
+  <div class="pk-q">
+    <p class="pk-label" id="pk-time-l"><span class="pk-n">1</span>你現在有多少時間？</p>
+    <div class="pk-times" role="radiogroup" aria-labelledby="pk-time-l">
+      {TIMES.map((t) => (
+        <button type="button" role="radio" aria-checked={String(t.key === time)} data-time={t.key}>
+          <b>{t.label}</b><span>{t.key === 'weekend' && weekendHint ? weekendHint : t.hint}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+  <div class="pk-q">
+    <p class="pk-label" id="pk-mood-l"><span class="pk-n">2</span>今天想要什麼感覺？</p>
+    <div class="pk-moods" role="radiogroup" aria-labelledby="pk-mood-l">
+      {MOODS.map((m) => (
+        <button type="button" role="radio" aria-checked={String(m.key === mood)} data-mood={m.key} class={`mood-${m.key}`}>
+          <span class="pk-icon" set:html={iconSvg(MOOD_ICON[m.key])} />
+          <b>{m.label}</b><span>{m.hint}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <div class="pk-bar">
+    <p class="pk-count" aria-live="polite"></p>
+    <div class="pk-tools">
+      <button type="button" class="pk-loc">📍 用我的位置排序</button>
+      <button type="button" class="btn-go pk-decide" data-entry="picker">🎲 幫我決定！</button>
+    </div>
+  </div>
+
+  <div class={full ? 'spot-grid pk-results' : 'spot-grid pk-results'} set:html={ssr} />
+  <p class="pk-more">
+    {full ? <button type="button" class="btn-ghost pk-showmore" hidden>顯示更多</button>
+          : <a class="btn-ghost pk-all" href="/explore">看全部推薦 →</a>}
+  </p>
+</section>
+
+<script>
+  import { loadPool, results, knownLocation, askLocation, openDecide, track } from '../lib/inspire-client.mjs';
+  import { cardHtml } from '../lib/inspire.mjs';
+
+  for (const root of document.querySelectorAll<HTMLElement>('[data-picker]')) {
+    const full = !!root.dataset.full;
+    const step = Number(root.dataset.limit) || 6;
+    let shown = step;
+    const qs = new URLSearchParams(location.search);
+    let time = (full && qs.get('time')) || root.dataset.time || 'soon';
+    let mood = (full && qs.get('mood')) || root.dataset.mood || 'now';
+    let loc = knownLocation();
+    const out = root.querySelector('.pk-results')!;
+    const count = root.querySelector('.pk-count')!;
+    const more = root.querySelector<HTMLButtonElement>('.pk-showmore');
+    const all = root.querySelector<HTMLAnchorElement>('.pk-all');
+    const locBtn = root.querySelector<HTMLButtonElement>('.pk-loc')!;
+    if (loc) locBtn.textContent = '📍 已依距離排序';
+
+    const check = () => {
+      for (const b of root.querySelectorAll<HTMLElement>('[data-time]')) b.setAttribute('aria-checked', String(b.dataset.time === time));
+      for (const b of root.querySelectorAll<HTMLElement>('[data-mood]')) b.setAttribute('aria-checked', String(b.dataset.mood === mood));
+      if (all) all.href = `/explore?time=${time}&mood=${mood}`;
+    };
+
+    const render = async () => {
+      check();
+      out.setAttribute('aria-busy', 'true');
+      const pool = await loadPool();
+      const list = results(pool, { time, mood, loc });
+      const now = Date.now();
+      out.innerHTML = list.length
+        ? list.slice(0, shown).map((r) => cardHtml(r, { entry: full ? `explore_${time}_${mood}` : `home_picker_${time}_${mood}`, now })).join('')
+        : '<p class="spot-empty">這個時段剛好沒有符合的。換個時間或心情，或讓 seh 幫你決定？</p>';
+      out.removeAttribute('aria-busy');
+      count.textContent = list.length ? `找到 ${list.length.toLocaleString('en-US')} 個現在可以去的地方` : '';
+      if (more) more.hidden = list.length <= shown;
+      if (full) history.replaceState(null, '', `?time=${time}&mood=${mood}`);
+    };
+
+    root.addEventListener('click', async (ev) => {
+      const t = (ev.target as HTMLElement).closest<HTMLElement>('[data-time],[data-mood]');
+      if (t) {
+        if (t.dataset.time) time = t.dataset.time;
+        if (t.dataset.mood) mood = t.dataset.mood;
+        shown = step;
+        track('picker_select', { time, mood, page: full ? 'explore' : 'home' });
+        render();
+      }
+    });
+    // 方向鍵在同一組選項間移動（radiogroup 的鍵盤操作）
+    root.addEventListener('keydown', (ev) => {
+      const b = (ev.target as HTMLElement).closest<HTMLElement>('[role="radio"]');
+      if (!b || !['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(ev.key)) return;
+      const sib = [...b.parentElement!.querySelectorAll<HTMLElement>('[role="radio"]')];
+      const i = sib.indexOf(b) + (ev.key === 'ArrowLeft' || ev.key === 'ArrowUp' ? -1 : 1);
+      const n = sib[(i + sib.length) % sib.length];
+      n.focus(); n.click(); ev.preventDefault();
+    });
+    more?.addEventListener('click', () => { shown += step * 2; render(); });
+    locBtn.addEventListener('click', async () => {
+      locBtn.textContent = '📍 定位中⋯';
+      loc = await askLocation();
+      locBtn.textContent = loc ? '📍 已依距離排序' : '📍 無法取得位置';
+      track('location', { granted: !!loc });
+      render();
+    });
+    root.querySelector('.pk-decide')!.addEventListener('click', () => openDecide({ time, mood, entry: full ? 'explore' : 'home_picker' }));
+    render();
+  }
+</script>
+
+<style>
+  .picker { display: grid; gap: var(--space-5); }
+  .pk-label { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-base); font-weight: 800; }
+  .pk-n { display: inline-grid; place-items: center; width: 1.6em; height: 1.6em; border-radius: 50%; background: var(--seh-forest); color: var(--seh-card); font-size: var(--text-xs); }
+  .pk-times, .pk-moods { display: grid; gap: var(--space-3); margin-top: var(--space-3); }
+  .pk-times { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pk-moods { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .pk-times button, .pk-moods button {
+    display: grid; align-content: start; gap: 2px; text-align: left; min-height: 44px; padding: var(--space-3) var(--space-4);
+    font: inherit; cursor: pointer; color: var(--text-primary); background: var(--seh-card);
+    border: 2px solid transparent; border-radius: var(--seh-radius-sm); box-shadow: var(--seh-shadow);
+    transition: border-color 0.15s, background-color 0.15s, transform 0.15s;
+  }
+  .pk-times button:hover, .pk-moods button:hover { transform: translateY(-2px); }
+  .pk-times b, .pk-moods b { font-size: var(--text-sm); font-weight: 800; }
+  .pk-times span, .pk-moods span:not(.pk-icon) { font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.4; }
+  .pk-times button[aria-checked="true"] { border-color: var(--seh-forest); background: var(--seh-forest-weak); }
+  .pk-icon :global(svg) { width: 36px; height: 36px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+  .pk-icon { display: block; margin-bottom: var(--space-2); }
+  .pk-moods button[aria-checked="true"] { border-color: var(--seh-ink); }
+  .mood-solo[aria-checked="true"] { background: var(--seh-sage); }
+  .mood-friends[aria-checked="true"] { background: var(--seh-coral); }
+  .mood-escape[aria-checked="true"] { background: var(--seh-forest); color: var(--seh-card); }
+  .mood-escape[aria-checked="true"] span:not(.pk-icon) { color: var(--seh-card); }
+  .mood-different[aria-checked="true"] { background: var(--seh-sun); }
+  .mood-now[aria-checked="true"] { background: var(--seh-coral-weak); }
+  .mood-solo[aria-checked="true"] span:not(.pk-icon), .mood-friends[aria-checked="true"] span:not(.pk-icon),
+  .mood-different[aria-checked="true"] span:not(.pk-icon), .mood-now[aria-checked="true"] span:not(.pk-icon) { color: var(--seh-ink); }
+
+  .pk-bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+  .pk-count { font-size: var(--text-xs); color: var(--text-secondary); font-weight: 700; }
+  .pk-tools { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+  .pk-loc {
+    min-height: 44px; padding: 0 1rem; font: inherit; font-size: var(--text-xs); font-weight: 700; cursor: pointer;
+    color: var(--seh-forest); background: var(--seh-card); border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
+  }
+  .pk-results[aria-busy="true"] { opacity: 0.6; }
+  .pk-more { display: flex; justify-content: center; }
+  .pk-more [hidden] { display: none; }
+
+  @media (max-width: 1024px) {
+    .pk-moods { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 760px) {
+    .pk-times { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pk-moods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .pk-moods .mood-now { grid-column: 1 / -1; }
+    .pk-icon :global(svg) { width: 28px; height: 28px; }
+    .pk-tools { width: 100%; }
+    .pk-tools > * { flex: 1; }
+  }
+</style>
