@@ -2,6 +2,7 @@
 //
 //   1. 最小字級 18px，無例外
 //   2. 顏色只能用 token 或 oklch()；寫死的 hex 只允許設計系統自己的 fallback 值
+//      （tokens.css 與 seh 品牌色層 brand.css 的 @supports fallback）
 //
 // tokens.css 是上游同步過來的副本（npm run sync:tokens），不在這裡改；
 // 但它同步進來的值一樣要守規矩，所以也一起檢查。
@@ -14,6 +15,7 @@ import { fileURLToPath } from 'node:url';
 
 const SRC = path.resolve(fileURLToPath(import.meta.url), '..', '..', 'src');
 const TOKENS = path.join(SRC, 'styles', 'tokens.css');
+const BRAND = path.join(SRC, 'styles', 'brand.css');
 const MIN_REM = 1.125;   // 18px
 
 async function* walk(dir) {
@@ -74,13 +76,13 @@ test('寫死的 hex 只能是設計系統自己的 fallback 值', async () => {
   // oklch() 在舊瀏覽器不支援，tokens.css 用 @supports not 給 hex fallback。
   // 頁面上的 JS 讀不到 CSS 變數時也需要同一組值兜底——但只能用那一組，
   // 隨手挑的 #333 / #666 不行。
-  const allowed = new Set(
-    (await readFile(TOKENS, 'utf-8')).match(/#[0-9a-fA-F]{6}\b/g)?.map((h) => h.toLowerCase()) ?? []);
+  const hexIn = async (f) => (await readFile(f, 'utf-8')).match(/#[0-9a-fA-F]{6}\b/g)?.map((h) => h.toLowerCase()) ?? [];
+  const allowed = new Set([...await hexIn(TOKENS), ...await hexIn(BRAND)]);
   assert.ok(allowed.size > 10, 'tokens.css 應該有一整組 hex fallback');
 
   const bad = [];
   for (const f of await files()) {
-    if (f === TOKENS) continue;
+    if (f === TOKENS || f === BRAND) continue;
     const src = await readFile(f, 'utf-8');
     for (const m of src.matchAll(/#[0-9a-fA-F]{3,8}\b/g)) {
       const hex = m[0].toLowerCase();
@@ -88,4 +90,12 @@ test('寫死的 hex 只能是設計系統自己的 fallback 值', async () => {
     }
   }
   assert.deepEqual(bad, [], `不在設計系統裡的顏色：\n${bad.join('\n')}`);
+});
+
+test('brand.css 的 hex 只能出現在 @supports not (oklch) 的 fallback 裡', async () => {
+  const src = await readFile(BRAND, 'utf-8');
+  const at = src.indexOf('@supports not');
+  assert.ok(at > 0, 'brand.css 要有 @supports not (color: oklch(...)) fallback');
+  const before = src.slice(0, at).replace(/\/\*[\s\S]*?\*\//g, '');
+  assert.deepEqual(before.match(/#[0-9a-fA-F]{3,8}\b/g) ?? [], [], 'fallback 以外不准寫 hex');
 });

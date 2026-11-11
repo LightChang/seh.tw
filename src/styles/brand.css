@@ -1,0 +1,61 @@
+/* ============================================================
+ * seh.tw 品牌色層
+ *
+ * tokens.css 是統一設計系統的副本（不在這裡改）。seh.tw 的定位是「台灣文化探索」，
+ * 2026-11-11 站主決定在設計系統之上另設一層品牌色：暖紙白底、墨黑字、陶土橘強調、
+ * 森林綠與石灰灰輔助。只覆寫背景／文字／連結／邊框這幾個 token，其餘（字級、
+ * 分類色、狀態色）照用設計系統的值。
+ *
+ * 規則（test/style-tokens.test.mjs 檢查）：
+ *   - 只有 tokens.css 與本檔可以定義顏色值；其他檔一律用 var(--…)
+ *   - 本檔的 hex 只能出現在下方 @supports 的 fallback 裡，數值由 oklch 換算而來
+ *
+ * 對比（WCAG，對 --bg-base）：text-primary 15.7、secondary 7.6、muted 5.6、
+ * link／陶土橘 5.2（皆 ≥ 4.5，AA 正文）。石灰灰 3.4，只用於裝飾，不放文字。
+ * ============================================================ */
+
+:root {
+  /* 背景：暖紙白 */
+  --bg-base:     oklch(0.975 0.008 85);
+  --bg-surface:  oklch(0.945 0.012 80);
+  --bg-overlay:  oklch(0.90 0.016 78);
+  --bg-hover:    oklch(0.93 0.014 80);
+
+  /* 文字：墨黑 */
+  --text-primary:   oklch(0.23 0.012 60);
+  --text-secondary: oklch(0.43 0.014 60);
+  --text-muted:     oklch(0.50 0.012 60);
+
+  /* 強調：陶土橘（連結、目前位置、重點數字） */
+  --color-link:     oklch(0.53 0.135 42);
+
+  --border-subtle:  oklch(0.86 0.016 75);
+
+  /* 品牌專用 */
+  --seh-ink:              oklch(0.23 0.012 60);    /* 墨黑，粗線與主標 */
+  --seh-terracotta:       oklch(0.53 0.135 42);    /* 陶土橘 */
+  --seh-terracotta-weak:  oklch(0.93 0.03 50);     /* 陶土橘淡底 */
+  --seh-forest:           oklch(0.45 0.075 155);   /* 森林綠 */
+  --seh-forest-weak:      oklch(0.93 0.025 150);   /* 森林綠淡底 */
+  --seh-stone:            oklch(0.62 0.01 75);     /* 石灰灰，只做裝飾線 */
+}
+
+@supports not (color: oklch(0 0 0)) {
+  :root {
+    --bg-base:     #f9f6f1;
+    --bg-surface:  #f1ece4;
+    --bg-overlay:  #e4ddd3;
+    --bg-hover:    #ede7de;
+    --text-primary:   #211c17;
+    --text-secondary: #564e48;
+    --text-muted:     #69625d;
+    --color-link:     #aa4c23;
+    --border-subtle:  #d7d0c6;
+    --seh-ink:              #211c17;
+    --seh-terracotta:       #aa4c23;
+    --seh-terracotta-weak:  #f9e3d7;
+    --seh-forest:           #2f6243;
+    --seh-forest-weak:      #ddeddf;
+    --seh-stone:            #8a8580;
+  }
+}

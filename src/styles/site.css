@@ -1,8 +1,9 @@
 /* seh.tw 站台樣式
-   token 一律取自 tokens.css（統一設計系統），此檔只放排版與站台專用元件，
-   不得重新定義任何 --token，也不得直接寫顏色值或低於 --text-xs 的字級。 */
+   顏色 token 取自 tokens.css（統一設計系統）＋ brand.css（seh 品牌色層），
+   此檔只放排版與站台專用元件，不得定義顏色值，也不得用低於 --text-xs 的字級。 */
 
 @import './tokens.css';
+@import './brand.css';
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-padding-top: 5rem; } /* 錨點（/today#new）不要被頂端固定的導覽蓋住 */
@@ -77,18 +78,36 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
 .section { padding-block: var(--space-9); }
 .section + .section { border-top: var(--hairline) solid var(--border-subtle); }
 
-/* ── 全站共用：頁首 ─────────────────────────── */
+/* ── 全站共用：小標（區塊或頁首上方的一行分類字） ── */
+.kicker {
+  display: inline-block; font-size: var(--text-xs); font-weight: 700;
+  letter-spacing: 0.08em; color: var(--seh-terracotta);
+}
+
+/* ── 全站共用：標籤（分類、免費、狀態） ─────────────
+   顏色用 currentColor：分類色由呼叫端的 style="color:var(--color-…)" 決定，框線跟著同色。 */
+.tag {
+  display: inline-flex; align-items: center; gap: 0.35em;
+  font-size: var(--text-xs); line-height: 1.2; white-space: nowrap;
+  padding: 0.15em 0.6em; border: var(--hairline) solid currentColor; border-radius: 2px;
+}
+.tag-free { color: var(--seh-forest); background: var(--seh-forest-weak); border-color: transparent; }
+.tag-urgent { color: var(--seh-terracotta); background: var(--seh-terracotta-weak); border-color: transparent; font-weight: 700; }
+
+/* ── 全站共用：頁首 ─────────────────────────────
+   雜誌式：上方粗墨線、大標、說明一行。 */
 .page-hd { padding-block: var(--space-7) var(--space-5); }
-.page-hd h1 { font-size: var(--text-3xl); }
+.page-hd h1 { font-size: var(--text-3xl); letter-spacing: -0.02em; }
 .page-hd .sub { margin-top: 0.8rem; color: var(--text-secondary); font-size: var(--text-sm); }
 .page-hd .sub strong { font-family: var(--font-display); font-size: var(--text-xl); color: var(--text-primary); }
 
 /* ── 全站共用：類型／範圍篩選鈕 ───────────────── */
 .chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--space-5); }
 .chip {
-  font: inherit; font-size: var(--text-xs); font-family: var(--font-mono); line-height: 1.2;
-  background: none; border: var(--hairline) solid var(--border-subtle);
-  color: var(--text-secondary); padding: 0.35rem 0.8rem; cursor: pointer;
+  font: inherit; font-size: var(--text-xs); line-height: 1.2;
+  background: var(--bg-base); border: var(--hairline) solid var(--border-subtle); border-radius: 999px;
+  color: var(--text-secondary); padding: 0.5rem 1rem; min-height: 44px; cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background-color 0.15s;
 }
 .chip:hover { border-color: var(--c, var(--color-link)); color: var(--c, var(--color-link)); }
 .chip.on { background: var(--c, var(--color-link)); border-color: var(--c, var(--color-link)); color: var(--bg-base); }
@@ -104,10 +123,12 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
      category/venue/city 放「日期（週幾） 時間」時讓欄位長到放得下。寫死 8rem ＋ .ev-lead 的
      nowrap 會讓長字串直接壓到標題上（2026-09-18 實測 /category/展覽 的 06/03（三） 00:00
      蓋住標題）；欄位長不夠時 nowrap 不會換行，只會溢出，所以要改的是欄寬不是 nowrap。 */
-  display: grid; grid-template-columns: minmax(8rem, max-content) minmax(0, 1fr) auto;
+  /* 時間改大字之後「2小時13分後」約 9.5rem，8rem 會讓每列欄寬不同、標題對不齊，下限改 10.5rem */
+  display: grid; grid-template-columns: minmax(10.5rem, max-content) minmax(0, 1fr) auto;
   gap: 1.5rem; align-items: baseline;
   padding: 1rem 0.6rem; margin-inline: -0.6rem; text-decoration: none;
 }
+.ev-list a { transition: background-color 0.15s; }
 .ev-list a:hover { background: var(--bg-surface); }
 .ev-list a:hover .ev-t { color: var(--color-link); }
 /* 時間是列表的視覺錨點：決定要不要去的第一個問題是「什麼時候」。
@@ -122,8 +143,14 @@ code, kbd, samp { font-family: var(--font-mono); font-size: var(--text-sm); back
 .ev-body { min-width: 0; }
 .ev-t { display: block; font-size: var(--text-sm); font-weight: 600; line-height: 1.45; }
 .ev-m { display: block; font-size: var(--text-xs); color: var(--text-secondary); margin-top: 0.3rem; }
-.ev-cat { font-family: var(--font-mono); font-size: var(--text-xs); white-space: nowrap; }
+.ev-cat {
+  font-size: var(--text-xs); line-height: 1.2; white-space: nowrap;
+  padding: 0.15em 0.6em; border: var(--hairline) solid currentColor; border-radius: 2px;
+}
+.ev-cat:empty { display: none; }
 .ev-x { font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted); white-space: nowrap; }
+/* 第四個欄位（例如「10:00、10:05 等 61 場」）放在標題下方，不要掉到時間欄 */
+.ev-list:not(.cols-4) a > .ev-x:nth-child(4) { grid-column: 2 / -1; margin-top: -0.75rem; }
 .ev-list .sep {
   padding: var(--space-5) 0 var(--space-3);
   font-family: var(--font-mono); font-size: var(--text-xs); color: var(--text-muted);

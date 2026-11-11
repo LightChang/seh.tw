@@ -8,19 +8,21 @@
 // 不會每天產生不同的建置產物，也不會因為某天沒重建就整份過期。
 // 某天沒有任何場次就沒有檔案（404），首頁當作 0 場。
 //
-// 格式：[[活動序號, 類型, lat, lng, 開始]]。活動序號只拿來算「幾個不同的活動」，
-// 開始只給日期（沒有時刻）的場次 start 長度是 10。
+// 格式：[[活動序號, 類型, lat, lng, 開始, slug, 標題, 場館, 縣市]]。
+// 活動序號用來算「幾個不同的活動」；開始只給日期（沒有時刻）的場次 start 長度是 10。
+// slug／標題／場館／縣市給首頁「今日值得探索」列清單用。
 import { readFile } from 'node:fs/promises';
 
 export async function getStaticPaths() {
   // getStaticPaths 看不到模組層級的常數，路徑要寫在這裡面
   const { e, s } = JSON.parse(await readFile(`${process.cwd()}/public/index.json`, 'utf-8'));
   const byDay = new Map();
-  for (const [ei, lat, lng, start] of s) {
+  for (const [ei, lat, lng, start, , venue, city] of s) {
     const day = String(start).slice(0, 10);
     if (!/^\d{4}-\d{2}-\d{2}$/.test(day)) continue;
     if (!byDay.has(day)) byDay.set(day, []);
-    byDay.get(day).push([ei, e[ei]?.[2] || '', lat, lng, start]);
+    const [slug = '', title = '', cat = ''] = e[ei] ?? [];
+    byDay.get(day).push([ei, cat, lat, lng, start, slug, title, venue || '', city || '']);
   }
   return [...byDay].map(([date, rows]) => ({ params: { date }, props: { rows } }));
 }

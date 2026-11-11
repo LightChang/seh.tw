@@ -37,8 +37,8 @@ const url = canonical ?? `${site}${pathname}`;
     <link rel="icon" href="/favicon.ico" sizes="48x48" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <!-- 跟頁面底色（--bg-base 的 fallback）一致；原本的深藍會在手機網址列畫出一條不搭的深色帶 -->
-    <meta name="theme-color" content="#f5f6f8" />
+    <!-- 跟頁面底色（brand.css 的 --bg-base fallback）一致；原本的深藍會在手機網址列畫出一條不搭的深色帶 -->
+    <meta name="theme-color" content="#f9f6f1" />
 
     <!-- 不載網路字型：全用系統字（src/styles/site.css 的 --font-*）。
          原本的 Google Fonts CSS 是一個擋渲染的外部請求，而 Archivo 沒有中文字，標題實際上一直是中文字型在撐。 -->

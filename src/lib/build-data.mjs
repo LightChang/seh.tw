@@ -132,7 +132,7 @@ export async function flatSessions() {
       const dateOnly = !hasClockTime(s.startAt, s.granularity);
       out.push({
         slug: e.slug, title: e.title, cat: e.category ?? '', catRaw: e.categoryRaw ?? '',
-        isFree: e.isFree, popularity: e.popularity,
+        isFree: e.isFree, popularity: e.popularity, status: e.status ?? 'scheduled',
         venue: s.venueNameRaw ?? '', venueSlug: s.venueSlug,
         city: s.city ?? '', district: s.district ?? '',
         lat: s.lat ?? null, lng: s.lng ?? null,

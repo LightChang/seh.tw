@@ -53,8 +53,14 @@ npm run links      # build 之後，站內連結不能有壞的
 
 **改設計 token** → 改上游（`agent.system-integration-quality-control/templates/styles.css`），
 再 `npm run sync:tokens`。不要直接改 `src/styles/tokens.css`，那是副本。
+**seh 的品牌色**（暖紙白、墨黑、陶土橘、森林綠、石灰灰；2026-11-11 起）在
+`src/styles/brand.css`，疊在 tokens 之上，只覆寫背景／文字／連結／邊框並加 `--seh-*`。
+改品牌色只改這支，oklch 為主、hex 只放在檔尾 `@supports not` 的 fallback，文字色對底色要 ≥ 4.5:1。
 兩條硬規則由 `test/style-tokens.test.mjs` 擋著：**最小字級 18px 無例外**、
-**寫死的 hex 只能是設計系統自己的 fallback 值**（隨手挑的 `#333` 會紅）。
+**寫死的 hex 只能是 tokens.css／brand.css 自己的 fallback 值**（隨手挑的 `#333` 會紅）。
+
+**首頁本週編輯選讀** → 填 `overrides/editor-picks.json`（以 ISO 週次為 key，說明寫在檔內）。
+沒填的週次依關注度自動挑。挑選邏輯在 `src/lib/home-picks.mjs`。
 
 ## 隔離測試
 
