@@ -1,8 +1,8 @@
 // 首頁各區塊要列哪些活動。純函式，輸入是 flatSessions() 的列（一個場次一列），
 // 時間一律以台灣時間切日界（同 day-lists.mjs）。首頁只負責排版。
 //
-// 區塊：本週編輯選讀（overrides/editor-picks.json，沒填就自動挑）、熱門展覽、
-// 近期即將結束、依縣市探索。
+// 區塊：本週編輯選讀（overrides/editor-picks.json，只有人工挑的才出）、近期即將結束。
+// liveEvents 另外給活動頁的「你可能也會喜歡」（explore-nearby.mjs）用。
 //
 // 「熱門」沒有站內瀏覽數據可用。來源給的 popularity 幾乎只有文化部一家有、
 // 而且各家尺度不同，直接比大小會變成「文化部的活動永遠最熱門」。所以關注度 =
@@ -80,29 +80,7 @@ function withNotability(list) {
   return list;
 }
 
-const byScore = (a, b) => b.score - a.score || a.next - b.next || a.title.localeCompare(b.title);
 
-/** 依序挑，同一個 key 最多 max 個（避免一整區都是同一縣市或同一類型）。 */
-function diverse(list, key, max, limit) {
-  const n = new Map(), out = [];
-  for (const e of list) {
-    const k = key(e) || '';
-    if ((n.get(k) ?? 0) >= max) continue;
-    n.set(k, (n.get(k) ?? 0) + 1);
-    out.push(e);
-    if (out.length >= limit) break;
-  }
-  return out;
-}
-
-/** 現在看得到、或 days 天內開始的 */
-const activeWithin = (e, now, days) => e.next < midnight(now) + days * DAY;
-
-/** 熱門展覽：展覽類、進行中或 30 天內開幕，依關注度；同縣市最多 2 檔。 */
-export function popularExhibitions(events, now, { limit = 6 } = {}) {
-  const list = events.filter((e) => e.cat === '展覽' && activeWithin(e, now, 30)).sort(byScore);
-  return diverse(list, (e) => e.city, 2, limit);
-}
 
 /**
  * 近期即將結束：已經開始、展期至少 3 天（單日活動不算「即將結束」）、
@@ -132,50 +110,17 @@ export function isoWeek(now) {
 
 /**
  * 本週編輯選讀。overrides/editor-picks.json 有本週（ISO 週次）就用人工挑的，
- * 挑到的活動已結束或不存在就略過；一筆都不剩、或本週沒填，就自動挑：
- * 7 天內看得到的活動依關注度，每個類型最多 1 檔，共 limit 檔。
- * 回傳 { curated, title, intro, items: [{ ...event, note }] }。
+ * 挑到的活動已結束或不存在就略過。一筆都不剩、或本週沒填就回 null——首頁不顯示這一區，
+ * 由「今日靈感」承擔（CLAUDE.md）。回傳 { week, title, intro, items: [{ ...event, note }] }。
  */
 export function editorPicks(events, config, now, { limit = 4 } = {}) {
   const week = isoWeek(now);
   const entry = config?.weeks?.[week];
+  if (!entry?.picks?.length) return null;
   const bySlug = new Map(events.map((e) => [e.slug, e]));
-  if (entry?.picks?.length) {
-    const items = entry.picks
-      .map((p) => bySlug.get(p.slug) && { ...bySlug.get(p.slug), note: p.note ?? '' })
-      .filter(Boolean)
-      .slice(0, limit);
-    if (items.length) return { curated: true, week, title: entry.title ?? '', intro: entry.intro ?? '', items };
-  }
-  const pool = events.filter((e) => activeWithin(e, now, 7)).sort(byScore);
-  return { curated: false, week, title: '', intro: '', items: diverse(pool, (e) => e.cat, 1, limit).map((e) => ({ ...e, note: '' })) };
+  const items = entry.picks
+    .map((p) => bySlug.get(p.slug) && { ...bySlug.get(p.slug), note: p.note ?? '' })
+    .filter(Boolean)
+    .slice(0, limit);
+  return items.length ? { week, title: entry.title ?? '', intro: entry.intro ?? '', items } : null;
 }
-
-/**
- * 依縣市探索：7 天內看得到的活動數最多的縣市，每個縣市附一檔代表活動（關注度最高）。
- * 巡演會同時出現在好幾個縣市，代表活動盡量不重複——前面縣市用過的就往下挑。
- */
-export function cityHighlights(events, now, { limit = 6 } = {}) {
-  const m = new Map();
-  for (const e of events) {
-    if (!activeWithin(e, now, 7)) continue;
-    for (const c of e.cities) {
-      if (!m.has(c)) m.set(c, []);
-      m.get(c).push(e);
-    }
-  }
-  const used = new Set();
-  return [...m]
-    .map(([city, list]) => ({ city, n: list.length, list }))
-    .sort((a, b) => b.n - a.n || a.city.localeCompare(b.city))
-    .slice(0, limit)
-    .map(({ city, n, list }) => {
-      const sorted = list.sort(byScore);
-      const top = sorted.find((e) => !used.has(e.slug)) ?? sorted[0];
-      used.add(top.slug);
-      return { city, n, top };
-    });
-}
-
-/** 7 天內看得到的活動數（首頁大數字用） */
-export const countActive = (events, now, days = 7) => events.filter((e) => activeWithin(e, now, days)).length;

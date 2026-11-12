@@ -4,7 +4,7 @@
 //
 // 輸入是 flatSessions()／loadSessions() 的列（一個場次一列），兩邊欄位名一致。
 // 時間一律以台灣時間判斷日界，不看執行環境或訪客的時區。
-import { midnight, dateLabel, hhmm } from './format.mjs';
+import { midnight, dateLabel, hhmm, relTime } from './format.mjs';
 
 /**
  * 場次開始時刻的 epoch 毫秒。
@@ -102,12 +102,23 @@ export const startedBy = (d, now) => !d.dateOnly && d.ts <= now;
  * 已開始的有結束時刻且還沒結束才說「進行中」，否則只說「HH:MM 已開始」——
  * 晚上十點還說下午兩點那場「進行中」，其實早就散場了。
  */
-export function todayLead(d, now, relTime) {
+export function todayLead(d, now) {
   if (d.dateOnly) return '整天';
   if (d.ts > now) return relTime(d.ts, now);
   const end = d.tsEnd ?? tsEndOf(d);
   if (end && end > now && end - d.ts < 86400000) return '進行中';
   return `${hhmm(d.ts)} 已開始`;
+}
+
+/**
+ * 同一場地同一檔活動合併後（mergeRuns）的場次說明，例「14:00、16:00 等 5 場」。
+ * 只列前兩場時刻＋總場次數，搜尋摘要常截斷，時刻要排在最前面才看得到。只有一場回空字串。
+ */
+export function timesLabel(times) {
+  if (times.length <= 1) return '';
+  const sorted = [...times].sort((a, b) => a - b);
+  if (sorted.length === 2) return sorted.map(hhmm).join('、');
+  return `${sorted.slice(0, 2).map(hhmm).join('、')} 等 ${sorted.length} 場`;
 }
 
 /**

@@ -40,10 +40,10 @@ const rows = tonightSessions(await flatSessions(), buildNow);
   </div>
 </Base>
 <script>
-  import { relTime, dateLabel, fmtNum, catVar, midnight } from '../lib/format.mjs';
-  import { tonightSessions } from '../lib/day-lists.mjs';
+  import { dateLabel, fmtNum, catVar, midnight, esc } from '../lib/format.mjs';
+  import { tonightSessions, startedBy, todayLead } from '../lib/day-lists.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
-  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  import { cssVar, setStat } from '../lib/dom.mjs';
   const all = await loadSessions();
   const now = Date.now();
   // build 時已經畫過一份（日期停在 build 當天），這裡用當下時間重畫
@@ -51,16 +51,15 @@ const rows = tonightSessions(await flatSessions(), buildNow);
   document.getElementById('sub').textContent =
     `${dateLabel(midnight(now) + 19 * 3600000)} 19:00 之後　${fmtNum(rows.length)} 場`;
   document.getElementById('empty').hidden = rows.length > 0;
-  const setStat = (id, n) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = fmtNum(n); };
-  setStat('total', rows.length);
-  setStat('cities', new Set(rows.map((d) => d.city).filter(Boolean)).size);
-  setStat('free', rows.filter((d) => d.isFree).length);
+  setStat('total', fmtNum(rows.length));
+  setStat('cities', fmtNum(new Set(rows.map((d) => d.city).filter(Boolean)).size));
+  setStat('free', fmtNum(rows.filter((d) => d.isFree).length));
   document.getElementById('list').innerHTML = rows.map((d) => `
-    <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
-      <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
-      <span class="ev-body"><span class="ev-t">${d.title}${d.isFree ? '<span class="tag-free">免費</span>' : ''}</span>
-        <span class="ev-m">${[d.venue, d.city].filter(Boolean).join('　')}</span></span>
-      <span class="ev-cat" data-cat="${d.cat ?? ''}" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</span>
+    <li class="${startedBy(d, now) ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
+      <time class="ev-lead tabular" datetime="${d.at}">${todayLead(d, now)}</time>
+      <span class="ev-body"><span class="ev-t">${esc(d.title)}${d.isFree ? '<span class="tag-free">免費</span>' : ''}</span>
+        <span class="ev-m">${esc([d.venue, d.city].filter(Boolean).join('　'))}</span></span>
+      <span class="ev-cat" data-cat="${esc(d.cat)}" style="color:${cssVar(catVar(d.cat))}">${esc(d.cat)}</span>
     </a></li>`).join('');
 </script>
 <style>

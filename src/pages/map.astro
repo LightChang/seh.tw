@@ -13,7 +13,7 @@ import Nav from '../components/Nav.astro';
         <div class="mhd">
           <p class="mk">文化探索地圖</p>
           <h1>看看哪裡最熱鬧</h1>
-          <p class="mstat"><b class="tabular" id="n">—</b><span>個活動有座標，點類型篩選</span></p>
+          <p class="mstat"><b class="tabular" id="n">—</b><span>個 30 天內看得到的活動，點類型篩選</span></p>
           <nav class="chips" id="chips" aria-label="類型篩選"></nav>
         </div>
         <div class="sel" id="sel"><p class="hint">滑過地圖上的點看活動</p></div>
@@ -23,18 +23,22 @@ import Nav from '../components/Nav.astro';
 </Base>
 
 <script>
-  import { select, pointer } from 'd3-selection';
+  import { select } from 'd3-selection';
   import { geoMercator, geoPath } from 'd3-geo';
-  import { relTime, catVar } from '../lib/format.mjs';
+  import { relTime, catVar, esc } from '../lib/format.mjs';
+  import { upcomingSessions } from '../lib/day-lists.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
-
-  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  import { cssVar } from '../lib/dom.mjs';
   const [geo, all] = await Promise.all([
     fetch('/tw-counties.json').then((r) => r.json()),
     loadSessions(),
   ]);
   const now = Date.now();
-  const pts = all.filter((d) => d.lat && d.lng).map((d) => ({ ...d, ts: new Date(d.at).getTime() }));
+  // 「正在發生」：還沒結束、30 天內看得到的場次，一個活動一個點（以前連 1998 年的展覽都畫上去）。
+  // upcomingSessions 一律以台灣時間解析（new Date(d.at) 會用訪客時區）。
+  const seen = new Set();
+  const pts = upcomingSessions(all.filter((d) => d.lat && d.lng), now)
+    .filter((d) => d.ts < now + 30 * 86400000 && !seen.has(d.slug) && seen.add(d.slug));
   document.getElementById('n').textContent = pts.length.toLocaleString('en-US');
 
   const el = document.getElementById('map');
@@ -46,22 +50,23 @@ import Nav from '../components/Nav.astro';
   const proj = geoMercator().fitExtent([[20, 16], [W - 20, H - 16]], main);
 
   svg.append('g').selectAll('path').data(geo.features).join('path')
-    .attr('d', geoPath(proj)).attr('fill', css('--bg-surface'))
+    .attr('d', geoPath(proj)).attr('fill', cssVar('--bg-surface'))
     // 縣市界線跟網站字體一樣粗細感（原本 0.8 太細，像技術圖）
-    .attr('stroke', css('--seh-forest')).attr('stroke-opacity', 0.55)
+    .attr('stroke', cssVar('--seh-forest')).attr('stroke-opacity', 0.55)
     .attr('stroke-width', 2).attr('stroke-linejoin', 'round');
 
   const layer = svg.append('g');
+  // pick：null＝全部；未分類是空字串，不能拿空字串當「全部」
   let pick = null;
   function draw() {
-    const rows = pick ? pts.filter((d) => d.cat === pick) : pts;
-    layer.selectAll('circle').data(rows, (d) => d.at + d.title).join(
+    const rows = pick === null ? pts : pts.filter((d) => (d.cat || '') === pick);
+    layer.selectAll('circle').data(rows, (d) => d.slug).join(
       (en) => en.append('circle').attr('r', 0),
       (up) => up, (ex) => ex.remove()
     )
       .attr('cx', (d) => proj([d.lng, d.lat])?.[0] ?? -9)
       .attr('cy', (d) => proj([d.lng, d.lat])?.[1] ?? -9)
-      .attr('fill', (d) => css(catVar(d.cat)))
+      .attr('fill', (d) => cssVar(catVar(d.cat)))
       .attr('fill-opacity', 0.6).attr('r', 4)
       .style('cursor', 'pointer')
       .on('mouseenter', (e, d) => show(d))
@@ -71,10 +76,10 @@ import Nav from '../components/Nav.astro';
 
   function show(d) {
     document.getElementById('sel').innerHTML = `
-      <p class="cat" style="color:${css(catVar(d.cat))}">${d.cat ?? ''}</p>
-      <p class="tt">${d.title}</p>
-      <p class="meta">${[d.venue, d.city].filter(Boolean).join('　')}</p>
-      <p class="time tabular">${relTime(d.ts, now)}</p>
+      <p class="cat" style="color:${cssVar(catVar(d.cat))}">${esc(d.cat)}</p>
+      <p class="tt">${esc(d.title)}</p>
+      <p class="meta">${esc([d.venue, d.city].filter(Boolean).join('　'))}</p>
+      <p class="time tabular">${d.ts > now ? relTime(d.ts, now) : '展期中'}</p>
       <p><a href="/event/${encodeURIComponent(d.slug)}">看活動 →</a></p>`;
   }
 
@@ -83,10 +88,10 @@ import Nav from '../components/Nav.astro';
   const cats = [...counts.entries()].sort((a, b) => b[1] - a[1]).slice(0, 7);
   function chips() {
     document.getElementById('chips').innerHTML =
-      `<button type="button" class="chip${pick === null ? ' on' : ''}" data-c="">全部</button>` +
-      cats.map(([c, n]) => `<button type="button" class="chip${pick === c ? ' on' : ''}" data-c="${c}" style="--c:${css(catVar(c))}">${c || '未分類'} ${n}</button>`).join('');
+      `<button type="button" class="chip${pick === null ? ' on' : ''}" data-all="1">全部</button>` +
+      cats.map(([c, n]) => `<button type="button" class="chip${pick === c ? ' on' : ''}" data-c="${esc(c)}" style="--c:${cssVar(catVar(c))}">${esc(c || '未分類')} ${n}</button>`).join('');
     document.querySelectorAll('#chips .chip').forEach((b) =>
-      b.addEventListener('click', () => { pick = b.dataset.c || null; chips(); draw(); }));
+      b.addEventListener('click', () => { pick = b.dataset.all ? null : (b.dataset.c ?? ''); chips(); draw(); }));
   }
   chips(); draw();
 </script>

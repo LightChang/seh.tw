@@ -24,9 +24,8 @@ const folded = rows.length > fold + 2;
 </ol>
 {folded && <button type="button" class="fold-btn" data-fold-btn>顯示另外 {rows.length - fold} 個</button>}
 <script>
-  for (const b of document.querySelectorAll<HTMLButtonElement>('[data-fold-btn]')) {
-    b.addEventListener('click', () => { b.previousElementSibling?.removeAttribute('data-fold'); b.remove(); });
-  }
+  import { bindFold } from '../lib/dom.mjs';
+  bindFold();
 </script>
 <style>
   .ev-side { display: inline-flex; gap: 0.8rem; align-items: baseline; }

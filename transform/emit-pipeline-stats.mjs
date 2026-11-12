@@ -82,7 +82,6 @@ for (const [oid, r] of obs) {
   }
 }
 // 場地：名錄來的算來源自己的，活動長出來的算給提供那個場次的來源
-const venueById = new Map(venues.map((v) => [v.id, v]));
 for (const rel of relations) {
   if (rel.predicate !== 'heldAt' || !rel.toId) continue;
   const sid = String(rel.fromObservation ?? '').split(':')[0];
@@ -173,7 +172,6 @@ const countDir = async (d) => {
 const heritageIndex = await readJson(path.join(ROOT, 'public', 'heritage-index.json'), []);
 const cityStats = await readJson(path.join(ROOT, 'public', 'city-stats.json'), []);
 const homeStats = await readJson(path.join(ROOT, 'public', 'home-stats.json'), { catsAll: {} });
-const monthCount = new Set([...obs.values()].flatMap((r) => (r.sessions ?? []).map((s) => String(s.startAt).slice(0, 7)))).size;
 
 const derivedVenues = venues.filter((v) => v.origin === 'derived').length;
 const topBySource = (key) => sources.filter((s) => s.producesUrls[key] > 0)

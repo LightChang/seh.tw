@@ -18,9 +18,6 @@ export function taiVariants(name) {
   return [...out];
 }
 
-/** 比對用：臺台視為同字、去空白。 */
-export const foldName = (s) => String(s ?? '').replaceAll('臺', '台').replace(/\s+/g, '');
-
 /**
  * 館區 → 底下的廳。
  * @param {object} config  overrides/venue-names.json

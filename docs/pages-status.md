@@ -39,7 +39,6 @@ custom domain `seh.tw`，強制 HTTPS。`.github/workflows/deploy.yml` 在 push 
 | `/year/{年}/{類型組}[/{縣市}]` | 42 | 今年起 | 年度時間表（表格），該年 ≥10 個活動才建 |
 | `/404`、`robots.txt`、`sitemap` | — | — | |
 
-`/demo/*` 是先前評估過的首頁版本，保留供對照，皆 noindex。
 
 ---
 

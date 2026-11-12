@@ -57,7 +57,7 @@ fi
 "$NODE" --test "test/**/*.test.mjs" > /dev/null 2>&1 || {
   log "npm test 沒過，還原，不 commit"; git checkout -- . ; git clean -fdq -- src/data; exit 1; }
 
-git add overrides/venue-hours.json src/data data public/pipeline-stats.json public/page-state.json
+git add overrides/venue-hours.json src/data data public/pipeline-stats.json
 if [ $code -eq 0 ]; then msg="data: 場館開放時間每週查核（$(TZ=Asia/Taipei date +%F)）"
 else msg="data: 場館開放時間查核失敗，保留上一版並標 stale（$(TZ=Asia/Taipei date +%F)）"; fi
 git commit -q -m "$msg" || { log "commit 失敗"; exit 1; }

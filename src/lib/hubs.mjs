@@ -2,7 +2,7 @@
 // 時間一律以台灣時間切日界（同 day-lists.mjs）。頁面只負責排版，篩選與分組都在這裡。
 //
 // 2026-09-28 站主同意開這三種頁型，對應的搜尋需求見 docs/GROWTH.md「搜尋需求頁」。
-import { midnight, WD, hhmm } from './format.mjs';
+import { midnight, WD, hhmm, mdShort as md } from './format.mjs';
 import { tsOf, tsEndOf } from './day-lists.mjs';
 
 const DAY = 86400000;
@@ -10,7 +10,6 @@ const TW = 8 * 3600e3;
 const twDate = (t) => new Date(t + TW);
 /** 台灣時間的星期幾（0＝日） */
 const twDow = (t) => twDate(t).getUTCDay();
-const md = (t) => { const d = twDate(t); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}`; };
 const ymd = (t) => twDate(t).toISOString().slice(0, 10);
 
 /**

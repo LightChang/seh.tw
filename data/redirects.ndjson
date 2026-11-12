@@ -78,3 +78,6 @@
 {"from":"/venue/高雄兒童美術館","to":"/venue/兒童美術館","reason":"merged","at":"2026-10-10"}
 {"from":"/venue/高雄市政府文化局〔高雄市文化中心〕","to":"/venue/高雄市文化中心","reason":"merged","at":"2026-10-29"}
 {"from":"/venue/高雄市駁二藝術特區","to":"/venue/駁二藝術特區","reason":"merged","at":"2026-10-10"}
+{"from":"/demo/map","to":"/","reason":"retired","at":"2026-11-12"}
+{"from":"/demo/next","to":"/","reason":"retired","at":"2026-11-12"}
+{"from":"/demo/timeline","to":"/","reason":"retired","at":"2026-11-12"}

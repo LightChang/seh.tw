@@ -22,14 +22,14 @@ import { editorPicks, endingSoon, daysLeftText } from '../lib/home-picks.mjs';
 import { match, cardHtml, MOODS, whenLabel } from '../lib/inspire.mjs';
 import { iconSvg, catIcon, MOOD_ICON } from '../lib/icons.mjs';
 import { weekendOf, cityShort } from '../lib/hubs.mjs';
-import { fmtNum, midnight, WD } from '../lib/format.mjs';
+import { fmtNum, midnight, WD, mdShort } from '../lib/format.mjs';
 
 const buildNow = Date.now();
 const t0 = midnight(buildNow);
 const root = process.cwd();
 const stats = JSON.parse(await readFile(`${root}/public/home-stats.json`, 'utf-8'));
 let pickConfig = {};
-try { pickConfig = JSON.parse(await readFile(`${root}/overrides/editor-picks.json`, 'utf-8')); } catch { /* 全自動 */ }
+try { pickConfig = JSON.parse(await readFile(`${root}/overrides/editor-picks.json`, 'utf-8')); } catch { /* 沒有設定檔：不出編輯選讀 */ }
 
 const pool = await inspirePool(buildNow);
 const live = await liveEventList(buildNow);
@@ -77,7 +77,6 @@ const todayCount = mergeRuns(todaySessions(allSessions, buildNow)).length + runn
 
 const cards = (list, entry) => list.map((r) => cardHtml(r, { entry, now: snap })).join('');
 const href = (slug) => `/event/${encodeURIComponent(slug)}`;
-const md = (t) => { const d = new Date(t + 8 * 3600e3); return `${d.getUTCMonth() + 1}/${d.getUTCDate()}`; };
 
 const themes = [
   { k: '一個人也很好', d: '看展、電影、書店、散步', u: '/explore?mood=solo&time=halfday', tone: 'sage', icon: MOOD_ICON.solo },
@@ -158,7 +157,7 @@ const themes = [
     )}
 
     <!-- 本週編輯選讀：只有人工挑的才出（自動挑的由今日靈感承擔） -->
-    {picks.curated && (
+    {picks && (
       <section class="sec editor" aria-labelledby="ed-h">
         <div class="sec-hd">
           <p class="kicker">本週編輯選讀</p>
@@ -187,7 +186,7 @@ const themes = [
             <li><a href={href(e.slug)} data-goal="event_open" data-method="home_ending">
               <span class="end-left">{daysLeftText(e.daysLeft)}</span>
               <span class="end-t">{e.title}</span>
-              <span class="end-p">{[e.venue, e.city && cityShort(e.city)].filter(Boolean).join('・')}・展至 {md(e.end)}</span>
+              <span class="end-p">{[e.venue, e.city && cityShort(e.city)].filter(Boolean).join('・')}・展至 {mdShort(e.end)}</span>
             </a></li>
           ))}
         </ul>

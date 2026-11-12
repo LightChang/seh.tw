@@ -23,23 +23,25 @@ const SUGGEST = ['台中歌劇院', '展覽', '親子', '市集', '音樂會', '
 </Base>
 
 <script>
-  import { relTime, fmtNum, catVar } from '../lib/format.mjs';
+  import { fmtNum, catVar, esc } from '../lib/format.mjs';
   import { loadSessions } from '../lib/index-client.mjs';
-  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  import { upcomingSessions, pastSessions, leadText } from '../lib/day-lists.mjs';
+  import { cssVar } from '../lib/dom.mjs';
   // 臺／台視為同一個字：來源兩種都寫，搜尋的人也兩種都打
   const fold = (s) => String(s ?? '').replaceAll('臺', '台').replace(/\s+/g, '').toLowerCase();
-  const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
   const [sessions, names] = await Promise.all([
     loadSessions(),
     fetch('/venue-names.json').then((r) => r.json()).catch(() => []),
   ]);
-  const all = sessions
-    .map((d) => ({ ...d, ts: new Date(d.at).getTime(), hay: fold(`${d.title}${d.venue ?? ''}${d.city ?? ''}${d.cat ?? ''}`) }));
+  const now = Date.now();
+  // 結果順序：進行中與還沒開始的在前（快結束、快開始的先），已結束的放後面（最近結束的先）。
+  // 以前依開始時刻由舊到新，前 40 筆常是多年前的展覽。
+  const all = [...upcomingSessions(sessions, now), ...pastSessions(sessions, now)]
+    .map((d) => ({ ...d, hay: fold(`${d.title}${d.venue ?? ''}${d.city ?? ''}${d.cat ?? ''}`) }));
   // 別名 → 正式名稱：「台中歌劇院」要找得到場地寫成「臺中國家歌劇院大劇院」的場次
   const aliasPairs = names.flatMap(([name, , aliases]) => aliases.map((a) => [fold(a), fold(name)]))
     .sort((a, b) => b[0].length - a[0].length);
   const venues = names.map(([name, slug, aliases]) => ({ name, slug, keys: [name, ...aliases].map(fold) }));
-  const now = Date.now();
   const q = document.getElementById('q'), sub = document.getElementById('sub'),
     list = document.getElementById('list'), vlist = document.getElementById('vlist');
 
@@ -53,16 +55,16 @@ const SUGGEST = ['台中歌劇院', '展覽', '親子', '市集', '音樂會', '
     const v = fold(raw);
     if (!v) { sub.textContent = '輸入關鍵字開始搜尋'; list.innerHTML = ''; vlist.innerHTML = ''; return 0; }
     const vs = variants(v);
-    const hits = all.filter((d) => vs.some((x) => d.hay.includes(x))).sort((a, b) => a.ts - b.ts);
+    const hits = all.filter((d) => vs.some((x) => d.hay.includes(x)));
     const vhits = venues.filter((x) => x.keys.some((k) => k.includes(v) || (v.length >= 2 && v.includes(k)))).slice(0, 6);
     vlist.innerHTML = (vhits.length ? '<li class="vl">相關場館</li>' : '') + vhits.map((x) => `<li><a href="/venue/${encodeURIComponent(x.slug)}">${esc(x.name)}</a></li>`).join('');
     sub.innerHTML = hits.length ? `找到 <strong class="tabular">${fmtNum(hits.length)}</strong> 場` : `找不到「${esc(raw)}」的活動，換個說法試試`;
     list.innerHTML = hits.slice(0, 40).map((d) => `
-      <li class="${d.ts <= now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
-        <time class="ev-lead tabular">${relTime(d.ts, now)}</time>
+      <li class="${(d.tsEnd ?? d.ts) < now ? 'past' : ''}"><a href="/event/${encodeURIComponent(d.slug)}">
+        <time class="ev-lead tabular" datetime="${d.at}">${leadText(d, now)}</time>
         <span class="ev-body"><span class="ev-t">${esc(d.title)}${d.isFree ? '<span class="tag-free">免費</span>' : ''}</span>
           <span class="ev-m">${esc([d.venue, d.city].filter(Boolean).join('　'))}</span></span>
-        <span class="ev-cat" data-cat="${esc(d.cat ?? '')}" style="color:${css(catVar(d.cat))}">${esc(d.cat ?? '')}</span>
+        <span class="ev-cat" data-cat="${esc(d.cat ?? '')}" style="color:${cssVar(catVar(d.cat))}">${esc(d.cat ?? '')}</span>
       </a></li>`).join('');
     return hits.length;
   }

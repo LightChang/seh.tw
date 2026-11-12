@@ -302,7 +302,6 @@ export function withTime(parsed, timeInput) {
   return t ? dateTime(parsed.value, t.h, t.mi) : parsed;
 }
 
-const RANGE_SEP = /\s*(?:～|~|〜|—|–|至|to|-{1,2})\s*/;
 
 /**
  * 解析區間字串。回傳 { start, end }，兩邊都是 { value, granularity }。
@@ -506,18 +505,6 @@ export function applyDefaultVenue(session, defaultVenue, hallName) {
     out.addressPrecision ??= defaultVenue.district ? 'district' : 'venue-name-only';
   }
   return out;
-}
-
-/** meta.defaultVenue.hallField 可以是 'a.b' 這種巢狀路徑，統一從這裡取值。 */
-export function pickPath(obj, pathExpr) {
-  if (!obj || !pathExpr) return undefined;
-  return String(pathExpr).split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
-}
-
-/** 已經是 datetime 但時刻不可信時，降級回 date（ntch 的 startFrom 就是這種）。 */
-export function toDateOnly(parsed) {
-  if (!parsed) return null;
-  return { value: parsed.value.slice(0, 10), granularity: 'date' };
 }
 
 // ── 輸出 ────────────────────────────────────────────────────────────

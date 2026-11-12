@@ -39,7 +39,8 @@ try {
   const next = new Map(rows.map((r) => [r.from, r.to]));
   const isLive = (p) => { const f = mdOf(p); return f ? existsSync(f) : true; };
   for (const r of rows) {
-    if (isLive(r.from)) continue;
+    // retired：頁面程式已從 src/pages 刪掉（例如評估用的 /demo/*），mdOf 判斷不了，一律轉
+    if (r.reason !== 'retired' && isLive(r.from)) continue;
     let to = r.to;
     for (let i = 0; i < 10 && !isLive(to) && next.has(to); i++) to = next.get(to);
     if (isLive(to)) redirects[r.from] = to;
@@ -57,14 +58,12 @@ export default defineConfig({
   integrations: [
     sitemap({
       // 只收錄內容足夠的頁面。搜尋與定位頁沒有自己的內容（結果由前端即時算），
-      // demo 是評估過的首頁版本，都不收錄。
       // 分類頁 2026-09-12 起收錄——對照表改為依官方文件建立（文化部 OpenAPI 的
       // category enum、觀光資料標準 V2.1 §16），對不到的值不給 category。
       // sitemap 給的是完整網址且路徑是 percent-encoded，page-state 存的是原字元，
       // 要解碼過才比得起來——中文 slug 全站都是。
       filter: (page) =>
         !notIndexable.has(decodeURIComponent(new URL(page).pathname).replace(/\/$/, '')) &&
-        !page.includes('/demo/') &&
         !page.includes('/search') &&
         !page.includes('/nearby') &&
         !page.includes('/map'),

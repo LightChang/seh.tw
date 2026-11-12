@@ -9,7 +9,6 @@
 //   node transform/emit-md.mjs --stats  只印統計
 
 import { readdir, readFile, writeFile, mkdir, unlink } from 'node:fs/promises';
-import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { parseOpeningHours } from '../src/lib/opening-hours.mjs';
@@ -443,7 +442,6 @@ async function main() {
   // 是來源根本沒有內容，建了也永遠是空頁。
   const eventClusters = clusters.filter((c) => c.entityKind === 'event');
   const heritageClusters = clusters.filter((c) => c.entityKind === 'heritage');
-  const activeVenueIds = new Set(eventsAtVenue.keys());
 
   const emitHeritage = heritageClusters.filter((c) =>
     c.members.some((m) => (obs.get(m.observationId)?.history?.length ?? 0) >= HERITAGE_MIN_HISTORY));

@@ -27,7 +27,6 @@ const statusCount = Object.fromEntries(
   Object.keys(STATUS).map((k) => [k, stats.sources.filter((s) => s.status === k).length]));
 
 const fmt = (n) => (n ?? 0).toLocaleString('en-US');
-const hhmm = (t) => (t ? String(t).slice(11, 16) : '—');
 const mdhm = (t) => (t ? `${String(t).slice(5, 10)} ${String(t).slice(11, 16)}` : '—');
 
 const totalRecords = stats.sources.reduce((a, s) => a + s.records, 0);
@@ -247,8 +246,8 @@ const showcase = [...stats.sources].sort((a, b) =>
 </Base>
 
 <script>
-  import { select } from 'd3-selection';
   import { timer } from 'd3-timer';
+  import { cssVar } from '../lib/dom.mjs';
 
   const flow = document.getElementById('flow');
   const canvas = document.getElementById('fx');
@@ -271,7 +270,6 @@ const showcase = [...stats.sources].sort((a, b) =>
 
   // ── 粒子：用單一 canvas，不是每個粒子一個 SVG 元素 ─────────────
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
   if (!reduce && canvas) {
     const ctx = canvas.getContext('2d');
@@ -326,8 +324,8 @@ const showcase = [...stats.sources].sort((a, b) =>
     }
 
     let running = true;
-    let colorPass = css('--color-pass') || '#1e8050';
-    let colorLink = css('--color-link') || '#1e5ab8';
+    let colorPass = cssVar('--color-pass') || '#1e8050';
+    let colorLink = cssVar('--color-link') || '#1e5ab8';
 
     const tick = timer((el) => {
       if (!running) return;
@@ -426,7 +424,6 @@ const showcase = [...stats.sources].sort((a, b) =>
   .st-num i { color: var(--text-muted); font-style: normal; }
   .st-say { font-size: var(--text-xs); color: var(--text-secondary); line-height: 1.6; }
   .st-sub { font-size: var(--text-xs); color: var(--text-muted); line-height: 1.6; }
-  .st-todo { color: var(--color-warn); }
   .merge-eg { margin-top: var(--space-6); }
   .merge-eg p { font-size: var(--text-sm); color: var(--text-secondary); line-height: 1.7; margin: 0.5rem 0 0; }
   .eg-n { color: var(--text-muted) !important; }

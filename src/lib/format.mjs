@@ -1,6 +1,8 @@
 // 時間與活動的共用格式化，頁面與前端腳本共用。
 export const WD = ['日', '一', '二', '三', '四', '五', '六'];
 export const fmtNum = (n) => Number(n).toLocaleString('en-US');
+/** 放進 innerHTML 前一律跳脫：標題、場館名都是來源給的文字 */
+export const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 
 // 一律以台灣時間（UTC+8，無日光節約）計算，不看執行環境的時區。
 // build 主機是 UTC、訪客可能在海外，用 getHours() 會把 19:30 的場次寫成 11:30。
@@ -9,7 +11,6 @@ const TW_OFFSET = 8 * 3600e3;
 const tw = (t) => new Date(new Date(t).getTime() + TW_OFFSET);
 const pad = (n) => String(n).padStart(2, '0');
 
-export const twHour = (t) => tw(t).getUTCHours();
 export const hhmm = (t) => {
   const d = tw(t);
   return `${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;

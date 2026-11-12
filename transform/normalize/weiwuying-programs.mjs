@@ -48,7 +48,6 @@ function stripHtml(input) {
     .trim();
 }
 
-const pad = (n) => String(n).padStart(2, '0');
 /** unix 秒 → 臺北時間的 { date:'YYYY-MM-DD', time:'HH:MM:SS' }。 */
 function tw(unix) {
   if (!Number.isFinite(Number(unix))) return null;

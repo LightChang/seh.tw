@@ -3,7 +3,6 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
 import { iconSvg } from '../lib/icons.mjs';
-import { catVar } from '../lib/format.mjs';
 import { allVenues } from '../lib/build-data.mjs';
 const venues = (await allVenues()).sort((a, b) => b.eventCount - a.eventCount || a.name.localeCompare(b.name));
 const withGeo = venues.filter((v) => v.lat).length;
@@ -78,9 +77,8 @@ const idleByCity = [...idle.reduce((m, v) => { const c = v.city || '其他'; if 
   </div>
 </Base>
 <script>
-  for (const b of document.querySelectorAll<HTMLButtonElement>('[data-fold-btn]')) {
-    b.addEventListener('click', () => { b.previousElementSibling?.removeAttribute('data-fold'); b.remove(); });
-  }
+  import { bindFold } from '../lib/dom.mjs';
+  bindFold();
 </script>
 
 <style is:global>

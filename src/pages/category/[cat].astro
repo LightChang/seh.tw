@@ -5,7 +5,6 @@ import PageHero from '../../components/PageHero.astro';
 import { catIcon } from '../../lib/icons.mjs';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import { crumbTrail } from '../../lib/jsonld/index.mjs';
-import { catVar, dateLabel, hhmm } from '../../lib/format.mjs';
 import { flatSessions, countBy, CATEGORY_MIN, builtCatCities, builtHubs } from '../../lib/build-data.mjs';
 import { upcomingSessions, leadText } from '../../lib/day-lists.mjs';
 
@@ -62,8 +61,6 @@ const yearPage = hubs.year.find((p) => !p.city && p.year === hubs.thisYear && p.
   </div>
 </Base>
 <style>
-  .warn { margin-top: var(--space-4); font-size: var(--text-sm); color: var(--color-warn);
-          background: var(--bg-surface); padding: 0.7rem 1rem; max-width: var(--measure); }
   .cityrow { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-top: var(--space-5); max-width: none; }
   .cityrow a { display: inline-flex; gap: 0.5rem; text-decoration: none; font-size: var(--text-sm); }
   .cityrow b { color: var(--text-muted); font-weight: 400; }

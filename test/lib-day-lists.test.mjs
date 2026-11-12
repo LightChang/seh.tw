@@ -79,24 +79,27 @@ test('upcomingSessions：進行中的依結束日排，快結束的先；leadTex
   assert.equal(leadText(past[0], NOW), '2025/05/05');
 });
 
-test('todayLead／startedBy：整天型不算已開始；散場後不說「進行中」', async () => {
-  const { todayLead, startedBy, tsOf } = await import('../src/lib/day-lists.mjs');
+test('todayLead／startedBy／timesLabel：整天型不算已開始；散場後不說「進行中」', async () => {
+  const { todayLead, startedBy, tsOf, timesLabel } = await import('../src/lib/day-lists.mjs');
   const NOW = Date.parse('2026-10-09T22:00:00+08:00');
-  const rel = () => 'REL';
   const allDay = { at: '2026-10-09T00:00', dateOnly: true, end: null };
   allDay.ts = tsOf(allDay);
   assert.equal(startedBy(allDay, NOW), false);
-  assert.equal(todayLead(allDay, NOW, rel), '整天');
+  assert.equal(todayLead(allDay, NOW), '整天');
   const afternoon = { at: '2026-10-09T14:00:00+08:00', end: '2026-10-09T16:00:00+08:00', dateOnly: false };
   afternoon.ts = tsOf(afternoon);
   assert.equal(startedBy(afternoon, NOW), true);
-  assert.equal(todayLead(afternoon, NOW, rel), '14:00 已開始');
+  assert.equal(todayLead(afternoon, NOW), '14:00 已開始');
   const show = { at: '2026-10-09T21:00:00+08:00', end: '2026-10-09T23:00:00+08:00', dateOnly: false };
   show.ts = tsOf(show);
-  assert.equal(todayLead(show, NOW, rel), '進行中');
+  assert.equal(todayLead(show, NOW), '進行中');
   const later = { at: '2026-10-09T23:30:00+08:00', end: null, dateOnly: false };
   later.ts = tsOf(later);
-  assert.equal(todayLead(later, NOW, rel), 'REL');
+  assert.equal(todayLead(later, NOW), '1小時30分後');
+  const t = (hm) => Date.parse(`2026-10-09T${hm}:00+08:00`);
+  assert.equal(timesLabel([t('14:00')]), '');
+  assert.equal(timesLabel([t('16:00'), t('14:00')]), '14:00、16:00');
+  assert.equal(timesLabel([t('19:00'), t('14:00'), t('16:00')]), '14:00、16:00 等 3 場');
 });
 
 test('runningToday：展期跨過今天才算，今天才開始的不重複、已結束的不算', async () => {

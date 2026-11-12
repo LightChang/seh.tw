@@ -38,12 +38,12 @@ import { iconSvg } from '../lib/icons.mjs';
 <script>
   import { readSaved, removeSaved, toast } from '../lib/saved.mjs';
   import { CAT_ICON, iconSvg as svg } from '../lib/icons.mjs';
+  import { esc } from '../lib/format.mjs';
+  import { setStat } from '../lib/dom.mjs';
 
   const KIND_ICON: Record<string, string> = { event: 'spark', venue: 'pin', heritage: 'roof' };
   const PATH: Record<string, string> = { event: '/event/', venue: '/venue/', heritage: '/heritage/' };
   const TONE: Record<string, string> = { event: 'coral', venue: 'sage', heritage: 'forest' };
-  const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
-  const setStat = (id: string, v: string) => { const b = document.querySelector(`[data-stat="${id}"] b`); if (b) b.textContent = v; };
   const iconOf = (x: any) => (x.kind === 'event' && x.cat ? (CAT_ICON as any)[x.cat] ?? 'spark' : KIND_ICON[x.kind] ?? 'spark');
 
   const GROUPS = [

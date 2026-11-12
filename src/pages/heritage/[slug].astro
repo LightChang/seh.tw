@@ -9,6 +9,7 @@ import { allHeritage, sessionsByVenue, indexableEvent, isIndexable } from '../..
 import { heritageEvents } from '../../lib/nearby-events.mjs';
 import { leadText, upcomingSessions } from '../../lib/day-lists.mjs';
 import { catVar } from '../../lib/format.mjs';
+import { distText } from '../../lib/inspire.mjs';
 import { toSchemaSpec } from '../../lib/opening-hours.mjs';
 import { HERITAGE_STATUS } from '../../lib/heritage-status.mjs';
 
@@ -68,7 +69,6 @@ const upcomingAt = new Map(nearbyVenues.map((v) => [v.slug,
 const hoursFromOther = h.openingHoursSource && h.openingHoursSource.name !== '國家文化資產網';
 // 同地場館依名稱長短排過（emit-md），前幾個就是主館名；其餘多半是「本館3樓自然教室」這種廳室
 const SITE_SHOW = 3;
-const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`);
 ---
 <Base title={title} description={description} noindex={!indexable} jsonld={ld} breadcrumbs={trail}>
   <div class="shell">
@@ -139,7 +139,7 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
           <h2 class="sec-h">附近的場館</h2>
           <ul>{nearbyVenues.map((v) => (
             <li><a href={`/venue/${v.slug}`}>{v.name}</a>
-              <span class="n tabular">{km(v.distanceM)}{upcomingAt.get(v.slug) ? `　近期 ${upcomingAt.get(v.slug)} 個活動` : ''}</span></li>
+              <span class="n tabular">{distText(v.distanceM)}{upcomingAt.get(v.slug) ? `　近期 ${upcomingAt.get(v.slug)} 個活動` : ''}</span></li>
           ))}</ul>
         </section>
       )}
@@ -168,7 +168,6 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
   .her > :not(.ph) { max-width: 46rem; }
   h1 { font-family: var(--font-body); font-weight: 700; font-size: var(--text-xl); letter-spacing: 0; line-height: 1.35; }
   .facts { margin: var(--space-6) 0 0; border-top: var(--hairline) solid var(--border-subtle); }
-  .h-sm + .facts { margin-top: var(--space-4); }
   .facts > div { display: grid; grid-template-columns: 5rem minmax(0, 1fr); gap: 1.5rem;
                  padding: 0.8rem 0; border-bottom: var(--hairline) solid var(--border-subtle); }
   .facts dt { color: var(--text-muted); font-size: var(--text-sm); }
@@ -177,8 +176,6 @@ const km = (m) => (m >= 1000 ? `${(m / 1000).toFixed(1)} 公里` : `${m} 公尺`
   .hours { white-space: pre-line; }
   .cnt { color: var(--text-muted); font-weight: 400; }
   .note { margin-top: var(--space-4); color: var(--text-secondary); font-size: var(--text-sm); }
-  .h-sm { font-family: var(--font-body); font-weight: 700; font-size: var(--text-sm);
-          color: var(--text-secondary); margin-top: var(--space-7); }
   .body { margin-top: var(--space-4); line-height: 1.9; }
   .evs .ev-list { margin: var(--space-4) 0 0; }
   .near ul { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: 0.4rem; }

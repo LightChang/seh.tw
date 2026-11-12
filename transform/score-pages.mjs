@@ -274,6 +274,4 @@ if (process.argv.includes('--why')) {
 
 if (process.argv.includes('--stats')) process.exit(0);
 await writeFile(DATA('page-state.ndjson'), out.map((r) => JSON.stringify(r)).join('\n') + '\n', 'utf-8');
-await writeFile(path.join(ROOT, 'public', 'page-state.json'),
-  JSON.stringify(Object.fromEntries(out.filter((r) => r.indexable).map((r) => [r.path, 1]))), 'utf-8');
-console.log('寫入 data/page-state.ndjson、public/page-state.json');
+console.log('寫入 data/page-state.ndjson');

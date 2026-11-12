@@ -83,8 +83,7 @@ async function listedAt() {
 
 /** 新上架、還沒結束、可收錄的活動（src/lib/new-listings.mjs）。city 有給就只看該縣市的場次。 */
 export async function newListings({ city, limit = 10, days = 30, now = Date.now() } = {}) {
-  const [rows, listed, st] = await Promise.all([flatSessions(), listedAt(), pageState()]);
-  const keep = (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
+  const [rows, listed, keep] = await Promise.all([flatSessions(), listedAt(), indexableEvent()]);
   return newlyListed(city ? rows.filter((d) => d.city === city) : rows, listed, now, { limit, days, keep });
 }
 
@@ -92,8 +91,7 @@ export async function newListings({ city, limit = 10, days = 30, now = Date.now(
 let NEARBY = null;
 export async function nearbyEvents() {
   if (NEARBY) return NEARBY;
-  const [rows, st, vn] = await Promise.all([flatSessions(), pageState(), venueNames()]);
-  const keep = (slug) => st.size === 0 || st.get(`/event/${slug}`)?.indexable !== 0;
+  const [rows, keep, vn] = await Promise.all([flatSessions(), indexableEvent(), venueNames()]);
   NEARBY = nearbyIndex(rows, Date.now(), { keep, venueKey: (s) => vn.parent.get(s) ?? s });
   // 廳併到館區時，標題用館區名（「衛武營國家藝術文化中心」而不是其中一個廳）
   NEARBY.groupName = (s) => vn.groups.get(vn.parent.get(s))?.name;

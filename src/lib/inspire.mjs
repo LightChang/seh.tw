@@ -7,8 +7,8 @@
 //   - 距離：只有訪客同意定位才算。
 //   - 展期型活動（展覽、常設展）的每日開放時間資料沒有，標「展期中」並提醒以館方為準，
 //     而且不放進「今晚」——晚上多半沒開。
-import { midnight, hhmm, WD, dayGap } from './format.mjs';
-import { weekendOf } from './hubs.mjs';
+import { midnight, hhmm, WD, dayGap, esc } from './format.mjs';
+import { weekendOf, cityShort } from './hubs.mjs';
 import { distanceM } from './explore-nearby.mjs';
 import { iconSvg, catIcon } from './icons.mjs';
 export { iconSvg };
@@ -143,8 +143,6 @@ export const distText = (m) => (m == null ? '' : m < 1000 ? `${Math.round(m / 50
 // 之後有照片時放進 .spot-visual，其餘不變。
 const TONE = { solo: 'sage', friends: 'coral', escape: 'forest', different: 'sun' };
 
-const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-const shortCity = (c = '') => (/^(新竹|嘉義)/.test(c) ? c : c.replace(/[市縣]$/, ''));
 
 /**
  * 卡片 HTML。entry 是推薦入口（GA 事件的 method，用來比較各入口的轉換）。
@@ -166,7 +164,7 @@ export function cardHtml({ it, av, dist }, { entry = '', now = Date.now() } = {}
     <span class="spot-tags">${tags}</span>
     <span class="spot-t">${esc(it.t)}</span>
     <span class="spot-b">${esc(it.b)}</span>
-    <span class="spot-p">${esc([it.v, shortCity(it.ci)].filter(Boolean).join('・'))}</span>
+    <span class="spot-p">${esc([it.v, cityShort(it.ci ?? '')].filter(Boolean).join('・'))}</span>
   </span>
 </a>`;
 }
