@@ -2,7 +2,7 @@
 // 桃園觀光導覽網 觀光行事曆。實測 65 筆。桃園市文化局在該平台沒有任何資料集，
 // 這是桃園唯一可用的活動來源（ingest 註解有記）。
 import { readRaw, writeStaged, compact, parseDateTime, parseAddress,
-         fetchedAtOf, latLng } from './_lib.mjs';
+         fetchedAtOf, latLng, isSentinelTimeRange } from './_lib.mjs';
 
 const SOURCE = 'taoyuan-tourism-events';
 
@@ -13,9 +13,8 @@ export async function normalize(fetchedAt) {
     if (!start) return null;
     const end = parseDateTime(r.end);
     // 實測 65/65 筆的起訖時刻剛好是 00:00:00 與 23:59:59，那是「整天」的編碼，
-    // 不是真的午夜開演到深夜結束，照 L1-FORMAT §2 降成 date，不假裝有時刻精度。
-    const allDay = String(r.start).slice(11) === '00:00:00'
-      && String(r.end).slice(11) === '23:59:59';
+    // 不是真的午夜開演到深夜結束，照 L1-FORMAT §2 降成 date，不假裝有時刻精度（_lib 的 isSentinelTimeRange）。
+    const allDay = isSentinelTimeRange(String(r.start).slice(11), String(r.end ?? '').slice(11));
 
     return compact({
       _source: SOURCE,

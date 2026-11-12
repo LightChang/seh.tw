@@ -14,7 +14,7 @@
 // **沒有地址的 43 筆不補臺北市**——實測第 30 筆是彰化縣鹿港鎮的活動（縣市政府互相轉知的公告），
 // 發布單位是臺北市的機關不代表活動辦在臺北。
 import { readRaw, writeObservations, compact, parseDateTime, parseAddress,
-         organizers, normUrl, externalIdsFromUrls, fetchedAtOf } from './_lib.mjs';
+         organizers, normUrl, externalIdsFromUrls, fetchedAtOf, isSentinelTimeRange } from './_lib.mjs';
 
 const SOURCE = 'taipei-gov-hot-events';
 
@@ -31,14 +31,8 @@ function stripHtml(input) {
     .trim();
 }
 
+// 時刻不可信的兩種型態（見檔頭 (a)(b)）由 _lib 的 isSentinelTimeRange 統一判斷，只取出時刻部分給它。
 const tod = (v) => String(v ?? '').slice(11, 19);
-/** 時刻不可信的兩種型態，見檔頭 (a)(b)。 */
-function timeIsBogus(rawStart, rawEnd) {
-  const a = tod(rawStart), b = tod(rawEnd);
-  if (!a || !b) return false;
-  if (a === b) return true;                       // (a) 上架時戳被複製到兩端
-  return a === '00:00:00' && b === '23:59:00';    // (b) 整日哨兵
-}
 
 const urlsOf = (v) => (Array.isArray(v) ? v : []).map((x) => x?.url).filter(Boolean);
 
@@ -61,7 +55,7 @@ export async function normalize(fetchedAt) {
     let start = parseDateTime(rawStart);
     if (!start) return null;
     let end = parseDateTime(rawEnd);
-    if (timeIsBogus(rawStart, rawEnd)) {
+    if (isSentinelTimeRange(tod(rawStart), tod(rawEnd))) {
       start = { value: start.value.slice(0, 10), granularity: 'date' };
       if (end) end = { value: end.value.slice(0, 10), granularity: 'date' };
     }

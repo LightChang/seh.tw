@@ -14,14 +14,11 @@
 //    可以分辨。這裡照 CONTRACT 用 applyDefaultVenue 補管理處位置，所以少數活動的
 //    city／address 會指到管理處而不是實際據點。要修得在 ingest 端補地點欄位。
 import { readRaw, writeObservations, compact, parseDateTime, withTime,
-         applyDefaultVenue, fetchedAtOf } from './_lib.mjs';
+         applyDefaultVenue, fetchedAtOf, isSentinelTimeRange } from './_lib.mjs';
 import { meta } from '../../ingest/sources/ysnp-activities.mjs';
 
 const SOURCE = 'ysnp-activities';
 const DV = meta.defaultVenue;
-
-/** 「00:00 ~ 23:59」是整天的哨兵值，不是時刻。 */
-const allDay = (s, e) => /^0?0:00$/.test(String(s ?? '').trim()) && /^23:59$/.test(String(e ?? '').trim());
 
 export async function normalize(fetchedAt) {
   const raw = await readRaw(SOURCE);
@@ -29,7 +26,8 @@ export async function normalize(fetchedAt) {
     const startDate = parseDateTime(r.startDate);
     if (!startDate) return null;
     const endDate = parseDateTime(r.endDate);
-    const sentinel = allDay(r.startTime, r.endTime);
+    // 「00:00 ~ 23:59」這類整日哨兵不是時刻（_lib 的 isSentinelTimeRange，各來源共用一個判斷）
+    const sentinel = isSentinelTimeRange(r.startTime, r.endTime);
     const start = sentinel ? startDate : withTime(startDate, r.startTime);
     const end = !endDate ? null : sentinel ? endDate : withTime(endDate, r.endTime);
 

@@ -2,7 +2,7 @@
 // 交通部觀光署 觀光資訊資料庫－活動（Event）。實測 1,061 筆，一筆一場次。
 // 座標與 PostalAddress 結構化欄位 100% 有值，是全站少數城市／行政區代碼可直接沿用的來源。
 import { readRaw, writeStaged, compact, parseAddress, normalizeCity,
-         fetchedAtOf, latLng } from './_lib.mjs';
+         fetchedAtOf, latLng, isSentinelTimeRange } from './_lib.mjs';
 
 const SOURCE = 'twtourism-events';
 
@@ -26,6 +26,8 @@ const shift8h = (iso) => {
 
 // 來源沒有 granularity 概念，全部塞成 datetime。實測 00:00:00 起、23:59:59 或 00:00:00 訖
 // 佔 655 筆，那是「整天」的編碼不是真的午夜開演，照實標成 date 才不會假裝有精度。
+// 整日哨兵與「起訖時刻相同」（上架時戳被複製到兩端，實測 16:39→16:39、跨數月的 04:00→04:00）
+// 由 _lib 的 isSentinelTimeRange 判斷；本來源另有「00:00 起、沒有訖」也是整天。
 function sessionTimes(r) {
   const agency = String(r.EventID ?? '').split('_')[1];
   let start = r.StartDateTime;
@@ -37,7 +39,7 @@ function sessionTimes(r) {
   if (!start) return null;
   const st = start.slice(11, 19);
   const et = end ? end.slice(11, 19) : '';
-  const allDay = st === '00:00:00' && (et === '' || et === '23:59:59' || et === '00:00:00');
+  const allDay = (st === '00:00:00' && !et) || isSentinelTimeRange(st, et);
   if (allDay) {
     return { startAt: start.slice(0, 10), endAt: end?.slice(0, 10), granularity: 'date' };
   }

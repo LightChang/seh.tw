@@ -391,7 +391,9 @@ export function externalIdsFromUrls(...inputs) {
 }
 
 /**
- * 起訖時刻是不是「假的」。實測三種，yunlin / taipei-gov / ysnp 都踩到：
+ * 起訖時刻是不是「假的」。實測三種，yunlin / taipei-gov / ysnp 都踩到
+ * （taipei-gov-hot-events、ysnp-activities、twtourism-events、taoyuan-tourism-events 共用；
+ *   別在 normalizer 裡另寫一份）：
  *   00:00~23:59、00:00~24:00   整日哨兵，不是真的活動時刻
  *   起訖完全相同               公告上架時戳被複製到兩端（10:50→10:50）
  * 這種要降級成 date，不然「9月20日上午10時」的活動會顯示成 10:50。

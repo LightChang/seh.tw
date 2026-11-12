@@ -60,6 +60,12 @@ test('isSentinelTimeRange：假的時刻要認得出來', () => {
   assert.equal(isSentinelTimeRange('10:50', '10:50'), true, '上架時戳被複製到兩端');
   assert.equal(isSentinelTimeRange('14:00', '16:00'), false, '真的時段');
   assert.equal(isSentinelTimeRange('09:00', '17:30'), false);
+  // 觀光署、桃園、市府熱門活動傳的是帶秒數的時刻
+  assert.equal(isSentinelTimeRange('00:00:00', '23:59:59'), true);
+  assert.equal(isSentinelTimeRange('00:00:00', '23:59:00'), true);
+  assert.equal(isSentinelTimeRange('16:39:00', '16:39:00'), true);
+  assert.equal(isSentinelTimeRange('19:30:00', '21:30:00'), false);
+  assert.equal(isSentinelTimeRange('00:00:00', ''), false, '沒有訖時刻不算（twtourism 另外處理）');
 });
 
 test('externalIdsFromUrls：年代售票的 PRODUCT_ID 跨站共用', () => {
