@@ -4,7 +4,7 @@ slug: "樂高動力機械-SPM_馬戲團摩托車-僅1梯"
 title: "樂高動力機械-SPM_馬戲團摩托車--僅1梯"
 category: "研習課程"
 categoryRaw: "2026假日科學饗宴-秋季班"
-status: "scheduled"
+status: "cancelled"
 isFree: false
 sessions: 
   - startAt: "2026-11-21T13:30:00+08:00"
@@ -26,6 +26,11 @@ sources:
     provides: 
       - "title"
       - "categoryRaw"
+      - "status"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "e8a8238f4cff7d6c"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
 ---

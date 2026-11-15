@@ -16,6 +16,19 @@ const DV = meta.defaultVenue;
 // _sourceRecordId：欄位不變就穩定，改了就換一筆，比用序號安全（序號會隨排序漂移）。
 const rid = (r) => createHash('sha1').update(JSON.stringify(r)).digest('hex').slice(0, 16);
 
+// 取消的場次：來源不刪，而是在活動名稱尾巴加「(人數不足取消)」（2026-11 實測 9 筆，
+// 全形／半形括號都可能）。整筆雜湊會因此換成新 id → 另開一頁、舊頁照樣寫如期舉行
+// （實測 11 組重複頁，站主 2026-11-15 決定改正）。所以：
+//   - 標題去掉這段，status 標 'cancelled'（同 weiwuying-programs 的「節目取消」做法）
+//   - id 用「去掉這段之後」的原始列算，跟取消前同一筆——實測 9/9 筆算出來就是取消前的 id，
+//     取消只是同一頁的狀態變更，不會再生出新頁
+export const CANCEL_MARK = /\s*[（(]\s*人數不足取消\s*[)）]\s*$/;
+export function splitCancel(r) {
+  const name = String(r['活動名稱'] ?? '');
+  if (!CANCEL_MARK.test(name)) return { row: r, cancelled: false };
+  return { row: { ...r, 活動名稱: name.replace(CANCEL_MARK, '') }, cancelled: true };
+}
+
 export async function normalize(fetchedAt) {
   const raw = await readRaw(SOURCE);
 
@@ -23,7 +36,8 @@ export async function normalize(fetchedAt) {
   const seen = new Set();
   const out = [];
 
-  for (const r of raw) {
+  for (const original of raw) {
+    const { row: r, cancelled } = splitCancel(original);
     const id = rid(r);
     if (seen.has(id)) continue;
     seen.add(id);
@@ -72,6 +86,7 @@ export async function normalize(fetchedAt) {
 
       title: r['活動名稱'],
       categoryRaw: r['活動系列'],
+      status: cancelled ? 'cancelled' : undefined,
       // 報名費用實測 191/191 都是數字，0 = 免費（23 筆）。金額本身不是原文票價說明，
       // 硬組成「350元」是我在造字串，所以只輸出 isFree，不輸出 priceText。
       isFree: typeof r['報名費用'] === 'number' ? r['報名費用'] === 0 : undefined,

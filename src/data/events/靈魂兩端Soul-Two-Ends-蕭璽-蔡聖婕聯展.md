@@ -22,12 +22,12 @@ sessions:
 sources: 
   - id: "nantou-arts-events"
     recordId: "195"
+    provides: []
+  - id: "nantou-arts-events"
+    recordId: "94~3"
     provides: 
       - "title"
       - "categoryRaw"
       - "organizers"
       - "sessions"
-  - id: "nantou-arts-events"
-    recordId: "94~3"
-    provides: []
 ---

@@ -4,7 +4,7 @@ slug: "程式設計-Python動畫創作-僅1梯"
 title: "程式設計-Python動畫創作--僅1梯"
 category: "研習課程"
 categoryRaw: "2026假日科學饗宴-秋季班"
-status: "scheduled"
+status: "cancelled"
 isFree: false
 sessions: 
   - startAt: "2026-11-21T09:00:00+08:00"
@@ -26,6 +26,11 @@ sources:
     provides: 
       - "title"
       - "categoryRaw"
+      - "status"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "a0d7379eab04134f"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
 ---

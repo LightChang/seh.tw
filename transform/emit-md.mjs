@@ -15,6 +15,7 @@ import { parseOpeningHours } from '../src/lib/opening-hours.mjs';
 import { HERITAGE_NEARBY_M, HERITAGE_NEARBY_MAX } from '../src/lib/nearby-events.mjs';
 import { resolveGroups, parentOf } from '../src/lib/venue-names.mjs';
 import { retirePages, liveSet } from './redirects.mjs';
+import { isCancelled } from '../src/lib/home-picks.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
 // 各階段都讀寫檔案，不能在正式資料上測——測試會改到 data/ 與 src/data/。
@@ -321,13 +322,55 @@ function frontmatter(obj) {
  *
  * 所以：跨來源挑贏家，同來源取聯集。依 (startAt, venueNameRaw) 去重。
  */
-function unionSessions(members, winner) {
+// 被取代的舊版記錄：同一群裡同來源已有現行記錄（沒消失），而這筆是「活動還沒結束就從來源消失」。
+// 沒有識別碼的來源（nstm-activities 用整筆雜湊當 id）改了時刻、地址或標題就換一筆，
+// 舊的那筆若照樣提供欄位與場次，頁面會同時列出新舊兩種說法（實測：深藍巨變冬令營
+// 同時列 09:00 哨船街 32 號與 10:00 哨船街 75-21 號）。活動結束後才下架的照常保留——
+// 活動當天或結束後才下架的照常保留（多場次活動的過去場次）。2026-11-15 起。
+const lastDay = (m) => (m.sessions ?? []).map((s) => String(s.endAt ?? s.startAt ?? '').slice(0, 10))
+  .filter(Boolean).sort().at(-1) ?? '';
+export function currentMembers(members) {
+  const gone = (m) => m._observation?.disappearedAt;
+  const liveSources = new Set(members.filter((m) => !gone(m)).map((m) => m._source));
+  return members.filter((m) => !(gone(m) && liveSources.has(m._source)
+    && lastDay(m) > String(gone(m)).slice(0, 10)));
+}
+
+// 一筆一場次的來源，同一頁裡只有部分場次取消（科工館「二胡研習班」十幾場只取消一場）：
+// 取消的那幾場不列，整頁也不標取消——否則整個系列都會被說成取消。
+// 場次全部取消才整頁標取消（含標題寫了取消、沒有 status 的舊記錄）。
+// 只看同來源，跨來源（A 說取消、B 沒寫）照舊由 pickField 決定。2026-11-15 起。
+const sessionKey = (s) => `${s.startAt}|${s.venueNameRaw ?? ''}`;
+export function dropPartialCancels(members) {
+  const bySource = new Map();
+  for (const m of members) {
+    if (!bySource.has(m._source)) bySource.set(m._source, []);
+    bySource.get(m._source).push(m);
+  }
+  const drop = new Set();
+  const dropKeys = new Set();
+  const allCancelled = new Set();   // 這個來源的場次全部取消
+  for (const [src, ms] of bySource) {
+    const off = ms.filter((m) => isCancelled(m));
+    if (!off.length) continue;
+    const offKeys = new Set(off.flatMap((m) => (m.sessions ?? []).map(sessionKey)));
+    const allKeys = new Set(ms.flatMap((m) => (m.sessions ?? []).map(sessionKey)));
+    if ([...allKeys].every((k) => offKeys.has(k))) { allCancelled.add(src); continue; }
+    for (const m of ms) {
+      if ((m.sessions ?? []).every((s) => offKeys.has(sessionKey(s)))) drop.add(m);
+    }
+    for (const k of offKeys) dropKeys.add(k);
+  }
+  return { members: members.filter((m) => !drop.has(m)), dropKeys, allCancelled };
+}
+
+function unionSessions(members, winner, dropKeys = new Set()) {
   const out = new Map();
   for (const m of members) {
     if (m._source !== winner._source) continue;
     for (const s of m.sessions ?? []) {
-      const k = `${s.startAt}|${s.venueNameRaw ?? ''}`;
-      if (!out.has(k)) out.set(k, s);
+      const k = sessionKey(s);
+      if (!out.has(k) && !dropKeys.has(k)) out.set(k, s);
     }
   }
   return [...out.values()].sort((a, b) => String(a.startAt).localeCompare(String(b.startAt)));
@@ -458,11 +501,14 @@ async function main() {
 
   function project(c, fields, { trackVerified = false } = {}) {
     const members = membersOf(c);
+    // 欄位值只取現行版本；sources 清單（含轉址用的 observation 對照）仍列全部成員
+    const { members: valueFrom, dropKeys, allCancelled } = c.entityKind === 'event'
+      ? dropPartialCancels(currentMembers(members)) : { members, dropKeys: undefined, allCancelled: new Set() };
     const out = {}, provides = new Map(), rejected = new Map();
     for (const f of fields) {
-      const p = pickField(members, f);
+      const p = pickField(valueFrom, f);
       if (!p) continue;
-      out[f] = f === 'sessions' ? unionSessions(members, p.from) : p.value;
+      out[f] = f === 'sessions' ? unionSessions(valueFrom, p.from, dropKeys) : p.value;
       const sid = p.from._id;
       if (!provides.has(sid)) provides.set(sid, []);
       provides.get(sid).push(f);
@@ -471,6 +517,13 @@ async function main() {
         if (!rejected.has(r.m._id)) rejected.set(r.m._id, {});
         rejected.get(r.m._id)[f] = typeof r.v === 'string' ? r.v.slice(0, 120) : r.v;
       }
+    }
+    // 頁面場次的來源整個取消了（含只在標題寫取消、沒有 status 的舊記錄）→ 整頁標取消
+    if (c.entityKind === 'event' && out.status !== 'cancelled' && out.sessions?.length
+        && allCancelled.has(pickField(valueFrom, 'sessions')?.from._source)) out.status = 'cancelled';
+    // 已標取消就不必在標題重複寫（科工館 2026-11-15 前取消的舊記錄標題帶這段；新的在 normalize 就拿掉了）
+    if (out.status === 'cancelled' && typeof out.title === 'string') {
+      out.title = out.title.replace(/\s*[（(]\s*人數不足取消\s*[)）]\s*$/, '');
     }
     // 確認日不進 md：來源每次重抓都會變，放進 md 就是幾千個檔案的 diff，
     // 也會讓 emit-state 的 changedAt（sitemap lastmod）跟著說謊。另存 verified-state。

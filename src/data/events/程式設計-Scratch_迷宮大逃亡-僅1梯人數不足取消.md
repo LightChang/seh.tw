@@ -1,10 +1,10 @@
 ---
 clusterId: "evt_nstm-activities_4cc0ddde0c324432"
 slug: "程式設計-Scratch_迷宮大逃亡-僅1梯人數不足取消"
-title: "程式設計-Scratch_迷宮大逃亡--僅1梯(人數不足取消)"
+title: "程式設計-Scratch_迷宮大逃亡--僅1梯"
 category: "研習課程"
 categoryRaw: "2026假日科學饗宴-秋季班"
-status: "scheduled"
+status: "cancelled"
 isFree: false
 sessions: 
   - startAt: "2026-10-31T13:30:00+08:00"
@@ -28,4 +28,10 @@ sources:
       - "categoryRaw"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "bc47fd089558691c"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
+    rejected: 
+      title: "程式設計-Scratch_迷宮大逃亡--僅1梯"
 ---

@@ -26,4 +26,12 @@ sources:
       - "categoryRaw"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "4ddfa95c7b4c8ee5"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
+  - id: "nstm-activities"
+    recordId: "f7575aff045bf23a"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
 ---

@@ -14,7 +14,13 @@ import { tsOf, tsEndOf } from './day-lists.mjs';
 const DAY = 86400000;
 // 來源沒改 status、只在標題寫「取消」的公告（實測：「【節目取消公告】鋼琴合作藝術聲樂篇…」）。
 // 首頁是推薦，寧可漏掉也不要把取消的節目推出去。
-const CANCELLED_TITLE = /取消公告|【取消】|（取消）|\(取消\)|停演|延期公告/;
+// 「(人數不足取消)」是科工館的寫法；2026-11-15 前取消的那幾筆 observation 已凍結、沒有 status，靠這條補上。
+const CANCELLED_TITLE = /取消公告|【取消】|（取消）|\(取消\)|[（(]\s*人數不足取消\s*[)）]|停演/;
+// 延期不是取消：首頁照樣不推，但活動頁與 JSON-LD 不能標成取消
+const POSTPONED_TITLE = /延期公告/;
+
+/** 這個活動取消了嗎：來源給的 status，或只寫在標題上的取消公告。活動頁的標籤、JSON-LD、emit-md 共用。 */
+export const isCancelled = (e) => e?.status === 'cancelled' || CANCELLED_TITLE.test(String(e?.title ?? ''));
 const TW = 8 * 3600e3;
 
 /**
@@ -25,7 +31,7 @@ export function liveEvents(rows, now, keep = () => true) {
   const t0 = midnight(now);
   const by = new Map();
   for (const d of rows) {
-    if (d.status === 'cancelled' || CANCELLED_TITLE.test(d.title) || !keep(d.slug)) continue;
+    if (isCancelled(d) || POSTPONED_TITLE.test(d.title) || !keep(d.slug)) continue;
     const ts = tsOf(d);
     const end = tsEndOf(d) ?? ts;
     let e = by.get(d.slug);

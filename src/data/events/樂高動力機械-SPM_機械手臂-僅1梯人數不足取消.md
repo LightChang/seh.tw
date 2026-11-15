@@ -1,10 +1,10 @@
 ---
 clusterId: "evt_nstm-activities_7d672bd03f167836"
 slug: "樂高動力機械-SPM_機械手臂-僅1梯人數不足取消"
-title: "樂高動力機械-SPM_機械手臂--僅1梯(人數不足取消)"
+title: "樂高動力機械-SPM_機械手臂--僅1梯"
 category: "研習課程"
 categoryRaw: "2026假日科學饗宴-秋季班"
-status: "scheduled"
+status: "cancelled"
 isFree: false
 sessions: 
   - startAt: "2026-11-14T13:30:00+08:00"
@@ -28,4 +28,10 @@ sources:
       - "categoryRaw"
       - "isFree"
       - "sessions"
+  - id: "nstm-activities"
+    recordId: "b54eb4e7839cc533"
+    sourceName: "國立科學工藝博物館 推廣教育活動訊息"
+    provides: []
+    rejected: 
+      title: "樂高動力機械-SPM_機械手臂--僅1梯"
 ---
