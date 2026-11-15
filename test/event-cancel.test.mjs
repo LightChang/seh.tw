@@ -5,7 +5,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { splitCancel } from '../transform/normalize/nstm-activities.mjs';
 import { currentMembers, dropPartialCancels } from '../transform/emit-md.mjs';
-import { isCancelled, liveEvents } from '../src/lib/home-picks.mjs';
+import { isCancelled, isPostponed, liveEvents } from '../src/lib/home-picks.mjs';
 import { eventLd } from '../src/lib/jsonld/index.mjs';
 import {
   makeRoot, cleanup, runStage, readMd, obs, event, dayOffset,
@@ -74,6 +74,21 @@ test('延期公告不是取消；只寫在標題的取消照樣算', () => {
   const now = Date.parse(`${dayOffset(0)}T08:00:00+08:00`);
   const r = (slug, title) => ({ slug, title, at: `${dayOffset(3)}T10:00`, sources: [] });
   assert.deepEqual(liveEvents([r('a', 'X (颱風延期公告)'), r('b', 'Y')], now).map((x) => x.slug), ['b']);
+});
+
+test('延期：標題寫延期的各種寫法都認得；又取消又延期算取消', () => {
+  for (const t of ['新北藝+1試辦計畫 (颱風延期公告)', '【10/24 延期】2026 SMIMC萬聖節主題營', '延期通知-2026全國古蹟日']) {
+    assert.equal(isPostponed({ title: t }), true, t);
+  }
+  assert.equal(isPostponed({ title: '一般活動', status: 'postponed' }), true);
+  assert.equal(isPostponed({ title: '一般活動' }), false);
+  assert.equal(isPostponed({ title: '延期後取消(取消)' }), false);
+});
+
+test('JSON-LD：延期的活動寫 EventPostponed', () => {
+  const e = { slug: 'x', title: '新北藝+1試辦計畫 (颱風延期公告)',
+    sessions: [{ startAt: '2026-11-21T09:30:00+08:00', granularity: 'datetime', venueNameRaw: '某處', city: '新北市' }] };
+  assert.equal(eventLd(e).ld.eventStatus, 'https://schema.org/EventPostponed');
 });
 
 test('JSON-LD：取消的活動寫 EventCancelled（含只在標題寫取消的）', () => {

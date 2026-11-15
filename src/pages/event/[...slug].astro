@@ -9,7 +9,7 @@ import NearbyEvents from '../../components/NearbyEvents.astro';
 import SaveShare from '../../components/SaveShare.astro';
 import { iconSvg, catIcon } from '../../lib/icons.mjs';
 import { nearestPlaces, distanceText, similarEvents } from '../../lib/explore-nearby.mjs';
-import { daysLeftText, isCancelled } from '../../lib/home-picks.mjs';
+import { daysLeftText, isCancelled, isPostponed } from '../../lib/home-picks.mjs';
 import { tsOf, tsEndOf, leadText } from '../../lib/day-lists.mjs';
 import { midnight, dayGap } from '../../lib/format.mjs';
 import { eventLd, crumbTrail } from '../../lib/jsonld/index.mjs';
@@ -173,8 +173,9 @@ const spans = sessions.map((x) => {
 }).filter((x) => Number.isFinite(x.ts));
 const evStart = spans.length ? Math.min(...spans.map((x) => x.ts)) : null;
 const evEnd = spans.length ? Math.max(...spans.map((x) => x.end)) : null;
-// 取消優先於日期狀態：取消的場次不能寫「3 天後開始」
+// 取消／延期優先於日期狀態：取消的場次不能寫「3 天後開始」
 const status = isCancelled(e) ? { text: '已取消', tone: 'off' }
+  : isPostponed(e) ? { text: '已延期', tone: 'off' }
   : evEnd === null ? null
   : evEnd < t0 ? { text: '已結束', tone: 'off' }
   : evStart < t0

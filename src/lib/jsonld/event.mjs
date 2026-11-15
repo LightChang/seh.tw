@@ -12,7 +12,7 @@ import { primarySession, placeLabel, eventFacts } from '../event-meta.mjs';
 import { ticketLink } from '../ticket.mjs';
 import { SCHEMA, absUrl, isHttpUrl, ldDate, postalAddress, geoOf } from './common.mjs';
 import { sourceLabel } from '../source-names.mjs';
-import { isCancelled } from '../home-picks.mjs';
+import { isCancelled, isPostponed } from '../home-picks.mjs';
 
 /**
  * 活動的地點：代表場次的欄位，場次沒有縣市時退回它連到的場館頁（venue）的欄位。
@@ -98,7 +98,8 @@ export function eventLd(e, { venue } = {}) {
     description,
     startDate,
     ...(endDate ? { endDate } : {}),
-    eventStatus: isCancelled(e) ? `${SCHEMA}/EventCancelled` : `${SCHEMA}/EventScheduled`,
+    eventStatus: isCancelled(e) ? `${SCHEMA}/EventCancelled`
+      : isPostponed(e) ? `${SCHEMA}/EventPostponed` : `${SCHEMA}/EventScheduled`,
     // eventAttendanceMode 不輸出：2025-06-05 官方移除線上活動屬性（rules.json#types.Event.removedProperties）
     location: {
       '@type': 'Place',

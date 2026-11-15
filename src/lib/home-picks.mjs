@@ -16,11 +16,16 @@ const DAY = 86400000;
 // 首頁是推薦，寧可漏掉也不要把取消的節目推出去。
 // 「(人數不足取消)」是科工館的寫法；2026-11-15 前取消的那幾筆 observation 已凍結、沒有 status，靠這條補上。
 const CANCELLED_TITLE = /取消公告|【取消】|（取消）|\(取消\)|[（(]\s*人數不足取消\s*[)）]|停演/;
-// 延期不是取消：首頁照樣不推，但活動頁與 JSON-LD 不能標成取消
-const POSTPONED_TITLE = /延期公告/;
+// 延期不是取消：首頁照樣不推，活動頁標「已延期」、JSON-LD 寫 EventPostponed（站主 2026-11-15）。
+// 實測寫法：「(颱風延期公告)」「【10/24 延期】」「延期通知-…」——標題有「延期」就算。
+const POSTPONED_TITLE = /延期/;
 
 /** 這個活動取消了嗎：來源給的 status，或只寫在標題上的取消公告。活動頁的標籤、JSON-LD、emit-md 共用。 */
 export const isCancelled = (e) => e?.status === 'cancelled' || CANCELLED_TITLE.test(String(e?.title ?? ''));
+
+/** 延期了嗎（取消優先：又取消又延期的算取消）。來源給的 status，或標題寫了延期。 */
+export const isPostponed = (e) => !isCancelled(e)
+  && (e?.status === 'postponed' || POSTPONED_TITLE.test(String(e?.title ?? '')));
 const TW = 8 * 3600e3;
 
 /**
@@ -31,7 +36,7 @@ export function liveEvents(rows, now, keep = () => true) {
   const t0 = midnight(now);
   const by = new Map();
   for (const d of rows) {
-    if (isCancelled(d) || POSTPONED_TITLE.test(d.title) || !keep(d.slug)) continue;
+    if (isCancelled(d) || isPostponed(d) || !keep(d.slug)) continue;
     const ts = tsOf(d);
     const end = tsEndOf(d) ?? ts;
     let e = by.get(d.slug);
