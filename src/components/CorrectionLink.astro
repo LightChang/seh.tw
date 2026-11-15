@@ -1,0 +1,9 @@
+---
+// 頁尾的「回報資料錯誤」mailto 連結：內文帶本頁正式網址（與 Base.astro 的 canonical 同一套算法）。
+import { correctionMailto } from '../lib/correction.mjs';
+
+const site = Astro.site?.toString().replace(/\/$/, '') ?? '';
+// build.format 是 'file'，Astro.url.pathname 會帶 `.html`；對外網址不帶副檔名。
+const pathname = Astro.url.pathname.replace(/(?:^\/index)?\.html$/, '') || '/';
+---
+<a href={correctionMailto(`${site}${pathname}`)} rel="nofollow">回報資料錯誤</a>

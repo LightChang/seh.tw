@@ -1,4 +1,5 @@
 ---
+import CorrectionLink from '../../components/CorrectionLink.astro';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import PageHero from '../../components/PageHero.astro';
@@ -263,7 +264,7 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
     )}
     {schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}
     {derivedFrom && derivedFrom.names.length > 0 && (
-      <footer class="prov">場地資料由活動資料建立，來自{derivedFrom.names.join('、')}{derivedFrom.last && <>；最後更新 <time class="tabular" datetime={derivedFrom.last}>{derivedFrom.last}</time></>}。<a href="/about">資料怎麼來的</a></footer>
+      <footer class="prov">場地資料由活動資料建立，來自{derivedFrom.names.join('、')}{derivedFrom.last && <>；最後更新 <time class="tabular" datetime={derivedFrom.last}>{derivedFrom.last}</time></>}。<a href="/about">資料怎麼來的</a>　<CorrectionLink /></footer>
     )}
   </div>
 </Base>

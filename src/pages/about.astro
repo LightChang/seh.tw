@@ -2,6 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import PageHero from '../components/PageHero.astro';
+import CorrectionLink from '../components/CorrectionLink.astro';
+import { CORRECTION_EMAIL } from '../lib/correction.mjs';
 import stats from '../../public/pipeline-stats.json';
 
 // 這一頁的每個數字都來自 transform/emit-pipeline-stats.mjs 實際算出來的檔案，
@@ -241,6 +243,7 @@ const showcase = [...stats.sources].sort((a, b) =>
         <li>免費與否只有少數來源標得可靠，所以沒有做「免費活動」的專頁。</li>
         <li>所有來源、授權條款與抓取狀況都列在上面，沒有隱藏的資料來源。</li>
       </ul>
+      <p class="say">發現資料有誤，請來信 {CORRECTION_EMAIL}，附上頁面網址與正確來源（<CorrectionLink />）。活動、場館、文化資產頁的頁尾也有這個連結，會自動帶上該頁網址。</p>
     </section>
   </div>
 </Base>

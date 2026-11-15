@@ -1,4 +1,5 @@
 ---
+import CorrectionLink from '../../components/CorrectionLink.astro';
 import Base from '../../layouts/Base.astro';
 import Nav from '../../components/Nav.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
@@ -189,7 +190,7 @@ const SITE_SHOW = 3;
         </section>
       )}
 
-      <footer class="prov"><p>資料來源：文化部文化資產局{hoursFromOther ? `；開放時間：${h.openingHoursSource.name}` : ''}。{(ev.here.length > 0 || ev.near.length > 0) && '活動來自各機關的開放資料。'}</p><p><a href="/about">資料怎麼來的</a></p></footer>
+      <footer class="prov"><p>資料來源：文化部文化資產局{hoursFromOther ? `；開放時間：${h.openingHoursSource.name}` : ''}。{(ev.here.length > 0 || ev.near.length > 0) && '活動來自各機關的開放資料。'}</p><p><a href="/about">資料怎麼來的</a>　<CorrectionLink /></p></footer>
     </article>
   </div>
 </Base>

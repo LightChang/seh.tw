@@ -3,6 +3,8 @@ clusterId: "evt_weiwuying-programs_6ac4a57b7a63f600077244ab"
 slug: "紐約之聲-New-York-Voices-謝幕巡演"
 title: "《紐約之聲 New York Voices 謝幕巡演》"
 status: "scheduled"
+priceText: "NT$ 800、1200、1600、2000、2400、2800、3200"
+ticketUrl: "https://tickets.udnfunlife.com/application/UTK02/UTK0201_.aspx?PRODUCT_ID=P1GLJAYJ"
 description: |-
   走過近四十年音樂旅程，享譽國際的爵士人聲天團「紐約之聲 New York Voices」，將以臺灣作為告別巡演海外最終站，向全球樂迷道別。由達蒙．米德（Darmon Meader）、彼得．埃爾德里奇（Peter Eldridge）、金姆．納札里安（Kim Nazarian）與蘿倫．金漢（Lauren Kinhan）組成，紐約之聲以爵士為核心，融合 R&B、流行、古典與巴西音樂等多元風格，憑藉細膩的多聲部和聲、精巧編曲與絕佳默契，成為當代人聲爵士樂壇極具代表性的組合。本次演出更將攜手臺北爵士大樂隊，以豐厚的銅管聲響交織招牌人聲和聲，展現爵士大樂團的現場魅力。
   
@@ -61,6 +63,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

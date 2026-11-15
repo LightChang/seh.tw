@@ -1,28 +1,36 @@
 {
-  "at": "2026-11-09T04:10:02+08:00",
-  "attempted": 34,
+  "at": "2026-11-15T16:20:31+08:00",
+  "attempted": 51,
   "changed": [
-    "kmfa-events",
+    "hsinchu-county-culture-events",
+    "boch-heritage-arts-crafts",
     "moca-taipei-events",
+    "kmfa-events",
+    "national-public-libraries",
     "moc-emap-poi",
     "ncfta-activities",
+    "boch-heritage-folklore",
     "ncl-events",
     "nmns-exhibitions",
     "nstm-activities",
     "ntch-programs",
+    "nstm-exhibitions",
     "ntpc-culture-events",
-    "ntm-activities",
-    "taipei-culture-events",
-    "taipei-gov-hot-events",
-    "taoyuan-tourism-events",
     "ntt-programs",
-    "twtourism-events"
+    "ntm-activities",
+    "ntmofa-events",
+    "taipei-culture-events",
+    "taoyuan-tourism-events",
+    "taipei-gov-hot-events",
+    "tpac-programs",
+    "tnam-events",
+    "twtourism-events",
+    "weiwuying-programs",
+    "boch-heritage"
   ],
   "failed": [
     "moc-events",
-    "npm-events",
-    "nantou-arts-events",
-    "nantou-culture-venues"
+    "npm-events"
   ],
   "alerting": [
     "moc-community",

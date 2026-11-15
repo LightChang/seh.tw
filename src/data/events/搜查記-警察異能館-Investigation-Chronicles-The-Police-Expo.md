@@ -8,7 +8,7 @@ status: "scheduled"
 sessions: 
   - startAt: "2026-06-30T10:00:00+08:00"
     granularity: "datetime"
-    endAt: "2027-01-10T18:00:00+08:00"
+    endAt: "2027-03-28T18:00:00+08:00"
     venueNameRaw: "臺南市美術館1館1樓展覽室A"
     lat: 22.990977
     lng: 120.205068
