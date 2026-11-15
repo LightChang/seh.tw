@@ -6,12 +6,13 @@ import SaveShare from '../../components/SaveShare.astro';
 import PageHero from '../../components/PageHero.astro';
 import { heritageNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { allHeritage, sessionsByVenue, indexableEvent, isIndexable } from '../../lib/build-data.mjs';
-import { heritageEvents } from '../../lib/nearby-events.mjs';
+import { heritageEvents, HERITAGE_NEARBY_M } from '../../lib/nearby-events.mjs';
 import { leadText, upcomingSessions } from '../../lib/day-lists.mjs';
 import { catVar } from '../../lib/format.mjs';
 import { distText } from '../../lib/inspire.mjs';
 import { toSchemaSpec } from '../../lib/opening-hours.mjs';
 import { HERITAGE_STATUS } from '../../lib/heritage-status.mjs';
+import { heritageReach } from '../../lib/recent-gate.mjs';
 
 export async function getStaticPaths() {
   // md 只為沿革 ≥200 字的產生（emit-md.mjs），所以這裡整個 collection 都建頁
@@ -66,6 +67,13 @@ const ev = heritageEvents(rowsOf, buildNow, {
 });
 const upcomingAt = new Map(nearbyVenues.map((v) => [v.slug,
   new Set(upcomingSessions(rowsOf(v.slug), buildNow).map((d) => d.slug)).size]));
+// 首屏「能不能去、附近有什麼」（站主 2026-11-15）：只用站上既有資料——開放狀態與門票是來源原文，
+// 最近的場館與距離是 md 的 nearbyVenues（emit-md 算的直線距離），近期活動與收錄判準共用 recent-gate.mjs。
+const reach = heritageReach(rowsOf, buildNow, { siteSlugs: siteVenues.map((v) => v.slug), nearbyVenues, keep });
+const near1 = nearbyVenues[0];
+const farText = (m) => (m < 50 ? '不到 50 公尺' : distText(m));
+const visitLine = [openText, openText === '不開放參觀' ? undefined : feeText && (h.isCharge === false ? '免費' : '收費')].filter(Boolean).join('・');
+const hoursLine = h.openingHours?.split('\n')[0];
 const hoursFromOther = h.openingHoursSource && h.openingHoursSource.name !== '國家文化資產網';
 // 同地場館依名稱長短排過（emit-md），前幾個就是主館名；其餘多半是「本館3樓自然教室」這種廳室
 const SITE_SHOW = 3;
@@ -85,6 +93,28 @@ const SITE_SHOW = 3;
           <p class="note">依 {status.sources.map((x, i) => <>{i > 0 && '、'}<a href={x.url} target="_blank" rel="nofollow noopener">{x.name}</a></>)} 報導，事件日 <span class="tabular">{status.date}</span>。開放時間與租賃狀況以主管機關（{h.govInstitution ?? '新北市政府'}）公告為準。</p>
         </section>
       )}
+      <section class="go" aria-label="能不能去、附近有什麼">
+        <dl class="facts">
+          <div><dt>能不能去</dt><dd>
+            {visitLine || hoursLine
+              ? <span>{visitLine}{visitLine && hoursLine && '　'}{hoursLine && <span class="n">{hoursLine}{h.openingHours.includes('\n') && ' 等'}</span>}</span>
+              : <span class="n">來源沒有提供開放狀態與開放時間</span>}
+          </dd></div>
+          {(siteVenues.length > 0 || near1) && <div><dt>最近的場館</dt><dd>
+            {siteVenues.length > 0
+              ? <span><a href={`/venue/${siteVenues[0].slug}`}>{siteVenues[0].name}</a><span class="n">　就在這裡</span></span>
+              : <span><a href={`/venue/${near1.slug}`}>{near1.name}</a><span class="n tabular">　直線 {farText(near1.distanceM)}</span></span>}
+          </dd></div>}
+          <div><dt>近期活動</dt><dd>
+            {reach.here.length > 0
+              ? <span>這裡有 {reach.here.length} 個近期活動：<a href={`/event/${reach.here[0].slug}`}>{reach.here[0].title}</a><span class="n tabular">　{leadText(reach.here[0], buildNow)}</span></span>
+              : reach.nearest
+                ? <span>最近的在直線 <b class="tabular">{farText(reach.nearest.distanceM)}</b> 外的{reach.nearest.name}：<a href={`/event/${reach.nearest.event.slug}`}>{reach.nearest.event.title}</a><span class="n tabular">　{leadText(reach.nearest.event, buildNow)}</span></span>
+                : <span class="n">附近 {HERITAGE_NEARBY_M / 1000} 公里內目前沒有收錄到近期活動</span>}
+          </dd></div>
+        </dl>
+      </section>
+
       <dl class="facts">
         {h.type && <div><dt>類別</dt><dd>{h.type}</dd></div>}
         {h.level && <div><dt>級別</dt><dd>{h.level}</dd></div>}
@@ -184,6 +214,7 @@ const SITE_SHOW = 3;
           border-top: var(--hairline) solid var(--border-subtle);
           font-size: var(--text-sm); color: var(--text-muted); display: grid; gap: 0.5rem; }
   .save-row { margin-top: var(--space-4); }
+  .go dd a { font-weight: 700; }
   /* 資料表：白卡＋細線分隔（2026-11-11 視覺升級） */
   .facts { padding: 0 var(--space-5); background: var(--seh-card); border-radius: var(--seh-radius); box-shadow: var(--seh-shadow); border-top: 0 !important; }
   .facts > div { border-bottom: var(--hairline) solid var(--border-subtle); }

@@ -17,6 +17,7 @@ import { readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { resolveGroups } from '../src/lib/venue-names.mjs';
+import { hasUpcoming, heritageReach, heritageGated } from '../src/lib/recent-gate.mjs';
 
 // SEH_ROOT 讓這一層可以在隔離的資料夾跑（test/pipeline.test.mjs 用）。
 // 各階段都讀寫檔案，不能在正式資料上測——測試會改到 data/ 與 src/data/。
@@ -62,6 +63,19 @@ async function recentImpressions() {
 const gscImp = await recentImpressions();
 
 // ── 讀 md ───────────────────────────────────────────────────────────
+// 頂層清單欄位（sessions、nearbyVenues…）的每一項，只取純量子欄位。
+function listOf(fm, key) {
+  const m = fm.match(new RegExp(`^${key}: *\\n((?: {2}.*\\n?)*)`, 'm'));
+  if (!m) return [];
+  return m[1].split(/^ {2}- /m).slice(1).map((item) => {
+    const o = {};
+    for (const line of ('    ' + item).split('\n')) {
+      const kv = line.match(/^ {4}(\w+): (.*)$/);
+      if (kv) o[kv[1]] = kv[2].replace(/^"|"$/g, '');
+    }
+    return o;
+  });
+}
 // 直接讀 frontmatter，不引 YAML 套件——只需要幾個欄位，用行為判斷就夠。
 async function readCollection(kind) {
   const dir = path.join(ROOT, 'src', 'data', kind);
@@ -100,6 +114,14 @@ async function readCollection(kind) {
       lastSession: [...fm.matchAll(/startAt: "([^"]+)"/g)].map((m) => m[1]).sort().pop(),
       // 活動真正結束的日子：場次有 endAt 的取 endAt（長期展覽 startAt 早就過了，但還在展）
       lastEnd: [...fm.matchAll(/(?:startAt|endAt): "([^"]+)"/g)].map((m) => m[1].slice(0, 10)).sort().pop(),
+      // 近期活動的收錄判準（src/lib/recent-gate.mjs）要的欄位
+      sessions: kind === 'events' ? listOf(fm, 'sessions') : undefined,
+      siteVenues: kind === 'heritage' ? listOf(fm, 'siteVenues') : undefined,
+      nearbyVenues: kind === 'heritage' ? listOf(fm, 'nearbyVenues').map((v) => ({ ...v, distanceM: +v.distanceM })) : undefined,
+      openingHours: get('openingHours'),
+      isOpenVisit: get('isOpenVisit') === 'true' ? true : get('isOpenVisit') === 'false' ? false : undefined,
+      isCharge: get('isCharge') === 'true' ? true : get('isCharge') === 'false' ? false : undefined,
+      openVisitText: get('openVisitText'),
       path: `/${kind === 'events' ? 'event' : kind === 'venues' ? 'venue' : 'heritage'}/${f.slice(0, -3)}`,
     });
   }
@@ -199,11 +221,46 @@ let venueNamesConfig = {};
 try { venueNamesConfig = JSON.parse(await readFile(path.join(ROOT, 'overrides', 'venue-names.json'), 'utf-8')); }
 catch { /* 沒有館區設定 */ }
 
+// 近期活動的收錄判準（站主 2026-11-15，src/lib/recent-gate.mjs）：
+//   場館頁沒有近期活動、文化資產頁附近沒有近期活動也沒有參觀資訊 → 不收錄，不看分數。
+// 「近期」以這次執行的時刻判斷；頁面照建、照連，有新活動或參觀資訊的那天重算就回來。
+// 擋下來的頁在 page-state 記 gated: 1：分數本來就達標，活動一回來當天就恢復，不用再等遲滯。
+const now = Date.now();
+const rowsByVenue = new Map();      // 場館 slug → 場次列（flatSessions 形狀，只取判斷要的欄位）
+const eventIndexable = new Map();   // 這一輪算出來的活動收錄結果（文化資產「附近活動」只算可收錄的活動）
+let venueGroups = new Map();
+const rowsOfVenue = (slug) => {
+  const g = venueGroups.get(slug);
+  if (!g) return rowsByVenue.get(slug) ?? [];
+  return [slug, ...g.children].flatMap((c) => rowsByVenue.get(c) ?? []);
+};
+const gate = {
+  events: () => false,
+  venues: (p) => !hasUpcoming(rowsOfVenue(p.slug), now),
+  heritage: (p) => heritageGated(p, heritageReach((s) => rowsByVenue.get(s) ?? [], now, {
+    siteSlugs: (p.siteVenues ?? []).map((v) => v.slug),
+    nearbyVenues: p.nearbyVenues ?? [],
+    keep: (slug) => eventIndexable.get(slug) === 1,
+  })),
+};
+const gated = {};
+
 for (const k of KINDS) {
   const pages = await readCollection(k.dir);
+  if (k.dir === 'events') {
+    for (const p of pages) {
+      for (const s of p.sessions) {
+        if (!s.venueSlug || !s.startAt) continue;
+        const row = { slug: p.slug, at: s.granularity === 'date' ? `${s.startAt}T00:00` : s.startAt, end: s.endAt ?? null };
+        if (!rowsByVenue.has(s.venueSlug)) rowsByVenue.set(s.venueSlug, []);
+        rowsByVenue.get(s.venueSlug).push(row);
+      }
+    }
+  }
   if (k.dir === 'venues') {
     const bySlug = new Map(pages.map((p) => [p.slug, p]));
     const groups = resolveGroups(venueNamesConfig, pages.map((p) => ({ slug: p.slug, name: p.title, city: p.city })));
+    venueGroups = groups;
     for (const g of groups.values()) {
       const parent = bySlug.get(g.slug);
       if (!parent) continue;
@@ -211,10 +268,13 @@ for (const k of KINDS) {
     }
   }
   let idx = 0;
+  let nGated = 0;
   for (const p of pages) {
     const { score } = k.score(p);
     const old = prev.get(k.prefix + p.slug);
-    const wasIndexable = old?.indexable === 1;
+    // 只因近期活動判準被擋下的頁（gated），分數那一側照「原本在收錄中」算，活動一回來當天就恢復
+    const wasIndexable = old?.indexable === 1 || old?.gated === 1;
+    const blocked = gate[k.dir](p);
 
     // 遲滯：進 index 要連續 ENTER_DAYS 天達標，退出只要低於 EXIT 就立刻退
     let qualifiedSince = score >= ENTER ? (old?.qualifiedSince ?? today) : null;
@@ -230,16 +290,21 @@ for (const k of KINDS) {
       indexable = (score >= ENTER && qualifiedSince
         && (firstRun || isNew || daysBetween(qualifiedSince, today) >= ENTER_DAYS - 1)) ? 1 : 0;
     }
+    const isGated = blocked && indexable === 1;
+    if (isGated) { indexable = 0; nGated += 1; }
+    if (k.dir === 'events') eventIndexable.set(p.slug, indexable);
     if (indexable) idx += 1;
     out.push({
       path: k.prefix + p.slug,
       qualityScore: +score.toFixed(1),
       indexable,
       qualifiedSince,
+      ...(isGated ? { gated: 1 } : {}),
       computedAt: today,
     });
   }
   dist[k.dir] = { total: pages.length, indexable: idx };
+  gated[k.dir] = nGated;
 }
 
 out.sort((a, b) => a.path.localeCompare(b.path));
@@ -251,6 +316,7 @@ const scores = out.map((r) => r.qualityScore).sort((a, b) => a - b);
 const q = (p) => scores[Math.floor(scores.length * p)] ?? 0;
 console.log(`  分數分布  min ${scores[0]}　p25 ${q(0.25)}　中位 ${q(0.5)}　p75 ${q(0.75)}　max ${scores[scores.length - 1]}`);
 console.log(`  門檻：進 ${ENTER}（連續 ${ENTER_DAYS} 天）／退 ${EXIT}`);
+console.log(`  近期活動判準擋下（分數夠、但沒有近期活動／參觀資訊）：場館 ${gated.venues ?? 0}、文化資產 ${gated.heritage ?? 0}`);
 
 // --why <path 片段>：印出單一頁面的加減項，校準門檻時用
 const whyArg = process.argv[process.argv.indexOf('--why') + 1];

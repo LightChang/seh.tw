@@ -214,6 +214,26 @@ test('已結束的活動退出收錄，但網址保留', async () => {
   await cleanup(root);
 });
 
+test('場館沒有近期活動就不收錄，有了就回來（站主 2026-11-15）', async () => {
+  const at = { lat: 25.03, lng: 121.51, address: '臺北市中正區某路1號', addressPrecision: 'street' };
+  const five = (offset) => Object.fromEntries([1, 2, 3, 4, 5].map((i) => [`s${i}`, [obs(event(`s${i}`, '1', { title: `某館第${i}檔演出節目`,
+    sessions: [venueSession('某館', { startAt: `${dayOffset(offset - i)}T19:30:00+08:00`, ...at })] }))]]));
+  const root = await pipeline(five(-400));
+  assert.equal((await runStage(root, 'score-pages.mjs')).code, 0);
+  const venue = (await readNd(root, 'data/page-state.ndjson')).find((r) => r.path.startsWith('/venue/'));
+  assert.ok(venue.qualityScore >= 5, `分數本身達標（${venue.qualityScore}），擋下的是近期活動判準`);
+  assert.equal(venue.indexable, 0, '五檔都是一年多前的');
+
+  await writeFile(path.join(root, 'data', 'observation', 's9.ndjson'), JSON.stringify(obs(event('s9', '1', { title: '某館下週的新節目',
+    sessions: [venueSession('某館', at)] }))) + '\n', 'utf-8');
+  for (const s of ['cluster.mjs', 'resolve-relations.mjs', 'emit-md.mjs', 'score-pages.mjs']) {
+    assert.equal((await runStage(root, s)).code, 0);
+  }
+  const back = (await readNd(root, 'data/page-state.ndjson')).find((r) => r.path === venue.path);
+  assert.equal(back.indexable, 1, '有近期活動當天就回來');
+  await cleanup(root);
+});
+
 test('退出門檻低於進入門檻，避免在 sitemap 裡進進出出', async () => {
   const root = await pipeline({
     'ev': [obs(event('ev', '1', { title: '邊緣分數的活動',

@@ -278,6 +278,15 @@ export async function builtCatCities() {
   return CATCITY;
 }
 
+/** overrides/category-map.json（活動頁「類型」欄逐個代碼對照用，src/lib/event-category.mjs） */
+let CATMAP = null;
+export async function categoryMap() {
+  if (CATMAP) return CATMAP;
+  try { CATMAP = JSON.parse(await readFile(`${process.cwd()}/overrides/category-map.json`, 'utf-8')); }
+  catch { CATMAP = {}; }
+  return CATMAP;
+}
+
 /** 活動頁可不可以收錄（page-state 沒算過就全部算可以）。清單頁只連可收錄的活動時用。 */
 export async function indexableEvent() {
   const st = await pageState();

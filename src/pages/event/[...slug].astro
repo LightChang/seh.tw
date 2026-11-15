@@ -16,7 +16,8 @@ import { eventTitle, whenText, primarySession, placeLabel, eventLead, LEAD_SLUGS
 import { ticketLink } from '../../lib/ticket.mjs';
 import titleAliases from '../../../overrides/event-title-aliases.json';
 import { hasClockTime } from '../../lib/session-time.mjs';
-import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents, cityMonthPages, heritageGrid, liveEventList } from '../../lib/build-data.mjs';
+import { allEvents, venueBySlug, isIndexable, builtCategories, verifiedState, eventSeries, nearbyEvents, cityMonthPages, heritageGrid, liveEventList, categoryMap } from '../../lib/build-data.mjs';
+import { categoryText } from '../../lib/event-category.mjs';
 
 export async function getStaticPaths() {
   return (await allEvents()).map((e) => ({ params: { slug: e.slug }, props: { e } }));
@@ -145,6 +146,7 @@ const shown = sessions.slice(0, 20);
 const indexable = await isIndexable(`/event/${e.slug}`);
 // 分類頁有 ≥5 場的門檻，不檢查就會連到不存在的頁（實測「綜藝」只有 4 場）
 const hasCatPage = e.category && (await builtCategories()).has(e.category);
+const catText = categoryText(e, await categoryMap());
 // 縣市 × 月份頁（/city/<縣市>/<YYYY-MM>）：場次月份裡有建頁的，優先還沒過去的月份
 const cityMonths = await cityMonthPages();
 const monthKeys = loc.city
@@ -269,14 +271,12 @@ const trail = crumbTrail([
           <a href={`/city/${loc.city}`}>{loc.city}</a>{loc.district && <span class="n">　{loc.district}</span>}
           {cityMonth && <span class="n">　<a href={`/city/${loc.city}/${cityMonth}`}>{+cityMonth.slice(5)} 月{loc.city}活動</a></span>}
         </dd></div> : loc.district && <div><dt><span class="f-ico" set:html={fi('map')} />地區</dt><dd>{loc.district}</dd></div>}
-        {(e.category || e.categoryRaw) && <div><dt><span class="f-ico" set:html={fi(catIcon(e.category))} />類型</dt><dd>
+        {catText && <div><dt><span class="f-ico" set:html={fi(catIcon(e.category))} />類型</dt><dd>
           {/* 沒有對照到 canonical 的就不連結——分類頁是用對照後的值建的，
-              連原始值（「2」「特展」）會連到不存在的頁 */}
+              連原始值（「2」「特展」）會連到不存在的頁。對不到的原始代碼不印（event-category.mjs） */}
           {hasCatPage
             ? <a href={`/category/${e.category}`} style={`color:var(${catVar(e.category)})`}>{e.category}</a>
-            : <span class="raw" style={e.category ? `color:var(${catVar(e.category)})` : undefined}>
-                {e.category ?? e.categoryRaw}{!e.category && <span class="n">　（尚未對照）</span>}
-              </span>}
+            : <span class="raw" style={e.category ? `color:var(${catVar(e.category)})` : undefined}>{catText}</span>}
         </dd></div>}
         {e.minimumAge !== undefined && <div><dt><span class="f-ico" set:html={fi('balloon')} />年齡</dt><dd>{e.minimumAge} 歲以上</dd></div>}
         {e.performers?.length > 0 && <div class="f-wide"><dt><span class="f-ico" set:html={fi('people')} />演出者</dt><dd>

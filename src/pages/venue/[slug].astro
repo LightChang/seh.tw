@@ -7,8 +7,9 @@ import VenueFacts from '../../components/VenueFacts.astro';
 import SaveShare from '../../components/SaveShare.astro';
 import { venueNode, crumbTrail } from '../../lib/jsonld/index.mjs';
 import { catVar, mdShort } from '../../lib/format.mjs';
-import { allVenues, flatSessions, isIndexable, venueNames } from '../../lib/build-data.mjs';
+import { allVenues, flatSessions, isIndexable, venueNames, verifiedState } from '../../lib/build-data.mjs';
 import { upcomingSessions, pastSessions, leadText } from '../../lib/day-lists.mjs';
+import { sourceLabel } from '../../lib/source-names.mjs';
 import { toSchemaSpec } from '../../lib/opening-hours.mjs';
 
 export async function getStaticPaths() {
@@ -87,10 +88,27 @@ const { v, rows: allRows, halls, parent, aliases } = Astro.props;
 const buildNow = Date.now();
 const LIMIT = halls.length ? 80 : 40;
 const rows = upcomingSessions(allRows, buildNow).slice(0, LIMIT);
-// 這個站大多數場館手上只有已結束的活動（2026-09-18 實測 10,478 個場館頁有 9,822 個沒有近期活動）。
-// 只列近期會讓那些頁整頁空白，對讀者與搜尋引擎都更糟，所以沒有近期活動時退而列已結束的，
-// 並在標題講清楚是已結束——列表的第一欄會連年份一起印，不會再看起來像今年的活動。
-const past = rows.length ? [] : pastSessions(allRows, buildNow).slice(0, 20);
+// 沒有近期活動時不再列舊活動清單（站主 2026-11-15：兩年前的清單是彙整型薄頁），
+// 只講「最近一次活動是哪個月」，再給同縣市的近期活動入口。這段期間頁面不收錄（score-pages 判，見 recent-gate.mjs）。
+const lastPast = rows.length ? undefined : pastSessions(allRows, buildNow)[0];
+const lastMonth = lastPast?.at.slice(0, 7);
+const cityUpcoming = !rows.length && v.city
+  ? new Set(upcomingSessions((await flatSessions()).filter((d) => d.city === v.city), buildNow).map((d) => d.slug)).size
+  : 0;
+// 由活動資料建出來的場館：地址與座標來自哪幾個活動來源、最後一次確認是哪天
+const verified = v.origin === 'derived' ? await verifiedState() : undefined;
+const derivedFrom = v.origin === 'derived' ? (() => {
+  const names = new Set();
+  let last = '';
+  for (const d of allRows) {
+    for (const s of d.sources ?? []) {
+      names.add(sourceLabel(s));
+      const at = verified.get(`${s.id}:${s.recordId}`);
+      if (at && at > last) last = at;
+    }
+  }
+  return { names: [...names], last };
+})() : undefined;
 // 開放時間的最後查核日期：超過 30 天沒重新查核（每週排程抓不到或看不懂館方頁），
 // 提醒讀者時間可能已變。以建置當下判斷，每次部署都會重算。
 const hoursCheckedAt = v.openingHoursSource?.checkedAt;
@@ -109,7 +127,8 @@ const parentUpcoming = parent ? upcomingSessions(parent.rows, buildNow).length :
 
 // 館區頁（沒有自己 md 的）不在 page-state 裡，isIndexable 會當成可收錄；
 // 有 md 的館區由 score-pages 把底下各廳的活動數一起算進去。
-const indexable = await isIndexable(`/venue/${v.slug}`);
+// 沒有 md 的館區不在 page-state 裡，這裡套同一條「沒有近期活動不收錄」（rows 就是近期場次）。
+const indexable = v.origin === 'group' ? rows.length > 0 : await isIndexable(`/venue/${v.slug}`);
 
 // 表演場地：名稱看得出來，或收錄的活動過半是演出類。這類場地搜尋的人找的是「節目表」。
 const PERFORM_CATS = new Set(['音樂', '戲劇', '舞蹈', '演唱會', '獨立音樂', '綜藝']);
@@ -222,11 +241,9 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
       </>
     ) : (
       <>
-        {(rows.length > 0 || past.length > 0) && (
-          <h2 class="sec-h">{rows.length ? (isPerform ? '近期節目' : '近期活動') : '已結束的活動'}</h2>
-        )}
-        <ol class="ev-list">
-          {(rows.length ? listRows : past).map((d) => (
+        {rows.length > 0 && <h2 class="sec-h">{isPerform ? '近期節目' : '近期活動'}</h2>}
+        {rows.length > 0 && <ol class="ev-list">
+          {listRows.map((d) => (
             <li><a href={`/event/${d.slug}`}>
               <time class="ev-lead tabular" datetime={d.at}>{leadText(d, buildNow)}</time>
               <span class="ev-body"><span class="ev-t">{d.title}{d.isFree === true && <span class="tag-free">免費</span>}</span>
@@ -234,11 +251,20 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
               <span class="ev-cat" data-cat={d.cat || ''} style={`color:var(${catVar(d.cat)})`}>{d.cat}</span>
             </a></li>
           ))}
-        </ol>
+        </ol>}
       </>
     )}
-    {rows.length === 0 && past.length === 0 && <p class="empty-note">目前沒有收錄到這個場館的活動。</p>}
+    {rows.length === 0 && (
+      <section class="none">
+        <h2 class="sec-h">近期活動</h2>
+        <p class="empty-note">{lastMonth ? <>目前沒有近期活動，最近一次活動是 <time class="tabular" datetime={lastMonth}>{lastMonth}</time>。</> : '目前沒有收錄到這個場館的活動。'}</p>
+        {v.city && cityUpcoming > 0 && <p class="city-go"><a href={`/city/${v.city}`}>看{v.city}的近期活動</a><span class="orig tabular">　{cityUpcoming} 個</span></p>}
+      </section>
+    )}
     {schedFirst && <VenueFacts v={v} parent={parent} halls={hallList} hoursCheckedAt={hoursCheckedAt} hoursStale={hoursStale} />}
+    {derivedFrom && derivedFrom.names.length > 0 && (
+      <footer class="prov">場地資料由活動資料建立，來自{derivedFrom.names.join('、')}{derivedFrom.last && <>；最後更新 <time class="tabular" datetime={derivedFrom.last}>{derivedFrom.last}</time></>}。<a href="/about">資料怎麼來的</a></footer>
+    )}
   </div>
 </Base>
 <style>
@@ -255,4 +281,9 @@ const catId = (c) => `t-${encodeURIComponent(c).replace(/%/g, '')}`;
   .h-cat { font-family: var(--font-body); font-weight: 700; font-size: var(--text-base); letter-spacing: 0; }
   .catsec .ev-list { margin-top: var(--space-3); margin-bottom: 0; }
   .save-row { margin-top: var(--space-4); }
+  .none .empty-note { padding-block: var(--space-3) 0; }
+  .city-go { margin-top: var(--space-3); }
+  .city-go a { font-weight: 700; }
+  .prov { margin-top: var(--space-8); padding-top: var(--space-5); border-top: var(--hairline) solid var(--border-subtle);
+          font-size: var(--text-sm); color: var(--text-muted); max-width: 46rem; }
 </style>
