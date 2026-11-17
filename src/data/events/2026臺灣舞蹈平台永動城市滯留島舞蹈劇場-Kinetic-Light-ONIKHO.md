@@ -87,6 +87,8 @@ description: |-
   
   可及性設計｜Laurel LAWSON
   
+  燈光設計&舞台監督｜蔡馨瑩
+  
   作曲、編曲及演奏｜ONIKHO、Angela HSIEH、Holly MEAD、Matthew TORRES
   
   主持人暨製作人｜蕭淑琳
