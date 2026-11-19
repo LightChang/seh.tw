@@ -88,7 +88,9 @@ const decodeEntities = (s) => String(s ?? '').replace(/&(?:#(\d+)|#x([0-9a-f]+)|
 // 場次沒有縣市時，地點退回「地點」欄連過去的場館頁的縣市與地址（eventLocation）。
 const venue = primary.venueSlug ? (await venueBySlug()).get(primary.venueSlug) : undefined;
 const { ld, description: rawDesc, location: loc } = eventLd(e, { venue });
-const metaDesc = decodeEntities(rawDesc);
+const SNIPPET_FACT_SLUGS = new Set(['2026桃園萬聖城']);
+const snippetFact = SNIPPET_FACT_SLUGS.has(e.slug) ? `${e.title}：${whenText(sessions)}在${placeLabel(primary)}。` : '';
+const metaDesc = decodeEntities(snippetFact ? `${snippetFact}${rawDesc}` : rawDesc);
 // ld 為 null：資料裡沒有實體地點或地址，這頁不輸出 Event（理由見 eventLd）
 if (ld) ld.description = metaDesc;
 // 沒有場館名時，比縣市更具體的地址也算地點（「臺東縣成功鎮海濱公園」）
