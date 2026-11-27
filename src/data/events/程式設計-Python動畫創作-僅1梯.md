@@ -24,13 +24,15 @@ sources:
     recordId: "44bc83eed057f439"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: 
-      - "title"
       - "categoryRaw"
       - "status"
       - "isFree"
       - "sessions"
+    rejected: 
+      title: "程式設計-Python動畫創作--僅1梯"
   - id: "nstm-activities"
     recordId: "a0d7379eab04134f"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
-    provides: []
+    provides: 
+      - "title"
 ---

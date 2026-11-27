@@ -3,6 +3,8 @@ clusterId: "evt_weiwuying-programs_6ad7194d86975700089a4a7b"
 slug: "英國Emma-Rice劇團崔斯坦與伊索德"
 title: "英國Emma Rice劇團《崔斯坦與伊索德》"
 status: "scheduled"
+priceText: "NT$ 800、1200、1800、2400、3000"
+ticketUrl: "https://www.opentix.life/event/2120010986401112065"
 description: |-
   「無法自拔地熱愛這齣作品！」——《衛報》★★★★★
   
@@ -103,6 +105,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

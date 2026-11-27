@@ -15,10 +15,6 @@ organizers:
     role: "master"
 description: "林昭緯借唐詩〈金縷衣〉把「空折枝」換成「空折汁」，以漫畫語言翻轉青春的慾望。藏家專屬線上預展 2026.11.12–11.21（邀請制）：11.21 實體展覽開幕前，作品僅在3D線上畫廊展出。實體展 11.21–12.05，開幕活動 11.21（六）15:00；預約參觀 https://www.neverland.gallery/pages/booking ，免費入場。限 18 歲以上。"
 sessions: 
-  - startAt: "2026-11-12T00:00:00+08:00"
-    granularity: "datetime"
-    endAt: "2026-11-21T15:00:00+08:00"
-    venueNameRaw: "藏家專屬線上預展｜3D 線上畫廊（邀請制）"
   - startAt: "2026-11-21T13:00:00+08:00"
     granularity: "datetime"
     endAt: "2026-12-05T18:00:00+08:00"

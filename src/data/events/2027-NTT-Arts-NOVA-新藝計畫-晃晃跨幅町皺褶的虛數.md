@@ -1,0 +1,32 @@
+---
+clusterId: "evt_ntt-programs_c-Rxd1HzejiaS"
+slug: "2027-NTT-Arts-NOVA-新藝計畫-晃晃跨幅町皺褶的虛數"
+title: "2027 NTT Arts NOVA 新藝計畫 晃晃跨幅町《皺褶的虛數》"
+status: "scheduled"
+isFree: false
+priceText: "$800"
+sessions: 
+  - startAt: "2027-05-28"
+    granularity: "date"
+    endAt: "2027-05-30"
+    venueNameRaw: "臺中國家歌劇院小劇場"
+    lat: 24.162649
+    lng: 120.640302
+    city: "臺中市"
+    district: "西屯區"
+    address: "臺中市西屯區惠來路二段101號"
+    addressPrecision: "street"
+    venueId: "ven_derived_臺中國家歌劇院小劇場"
+    venueSlug: "臺中國家歌劇院小劇場"
+sources: 
+  - id: "ntt-programs"
+    recordId: "c-Rxd1HzejiaS"
+    sourceName: "臺中國家歌劇院 節目資料"
+    url: "https://www.npac-ntt.org/program/events/c-Rxd1HzejiaS"
+    provides: 
+      - "title"
+      - "isFree"
+      - "priceText"
+      - "sessions"
+      - "sourceUrl"
+---

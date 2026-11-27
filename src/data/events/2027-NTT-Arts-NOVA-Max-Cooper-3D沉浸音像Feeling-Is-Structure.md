@@ -1,14 +1,14 @@
 ---
-clusterId: "evt_ntt-programs_c-NV3hD0Erg92"
-slug: "水藍-蔣啟真與國臺交"
-title: "水藍、蔣啟真與國臺交"
+clusterId: "evt_ntt-programs_c-OmwdrnIu0Sq"
+slug: "2027-NTT-Arts-NOVA-Max-Cooper-3D沉浸音像Feeling-Is-Structure"
+title: "2027 NTT Arts NOVA Max Cooper 3D沉浸音像《Feeling Is Structure》"
 status: "scheduled"
 isFree: false
-priceText: "100/300/500/800/1000/1500/2000"
+priceText: "800/1000/1400/1800/2300/2500"
 sessions: 
-  - startAt: "2027-01-09"
+  - startAt: "2027-03-27"
     granularity: "date"
-    endAt: "2027-01-09"
+    endAt: "2027-03-27"
     venueNameRaw: "臺中國家歌劇院大劇院"
     lat: 24.162649
     lng: 120.640302
@@ -20,9 +20,9 @@ sessions:
     venueSlug: "臺中國家歌劇院大劇院"
 sources: 
   - id: "ntt-programs"
-    recordId: "c-NV3hD0Erg92"
+    recordId: "c-OmwdrnIu0Sq"
     sourceName: "臺中國家歌劇院 節目資料"
-    url: "https://www.npac-ntt.org/program/events/c-NV3hD0Erg92"
+    url: "https://www.npac-ntt.org/program/events/c-OmwdrnIu0Sq"
     provides: 
       - "title"
       - "isFree"

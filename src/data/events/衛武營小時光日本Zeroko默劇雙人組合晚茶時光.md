@@ -3,6 +3,8 @@ clusterId: "evt_weiwuying-programs_6abe05dd7a63f600076e37ac"
 slug: "衛武營小時光日本Zeroko默劇雙人組合晚茶時光"
 title: "【衛武營小時光】日本Zeroko默劇雙人組合《晚茶時光》"
 status: "scheduled"
+priceText: "NT$ 300、600"
+ticketUrl: "https://www.opentix.life/event/2117518212990480385"
 description: |-
   2019年愛丁堡藝穗節亞洲藝術獎的「最佳喜劇獎」
   
@@ -41,6 +43,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

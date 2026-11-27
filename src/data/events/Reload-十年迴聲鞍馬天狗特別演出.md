@@ -3,6 +3,8 @@ clusterId: "evt_weiwuying-programs_6abf0f417a63f600076e676e"
 slug: "Reload-十年迴聲鞍馬天狗特別演出"
 title: "Reload：十年迴聲《鞍馬天狗》特別演出"
 status: "scheduled"
+priceText: "NT$ 900、1200、1500、1800、2500"
+ticketUrl: "https://www.opentix.life/event/2123221098614030337"
 description: |-
   《鞍馬天狗》正是巧妙地運用了「莫比烏斯環」這樣的結構，表彰了宗房是永恆奮戰的意志，如此不為形式而形式，而是「以形式完成故事、完成角色」，甚至可以說「無此形式則此故事無以完成」，讓人忍不住讚嘆。——官容任
   
@@ -85,8 +87,6 @@ description: |-
   服裝設計｜李育昇
   
   李育昇的劇場服裝設計功力，各種千奇百怪的想法，如陰陽師在「符、印、咒」三者間穿梭自如，風格獨到且變化多端。
-  
-   贊助單位
 sessions: 
   - startAt: "2027-03-13T14:30:00+08:00"
     granularity: "datetime"
@@ -129,6 +129,8 @@ sources:
     provides: 
       - "title"
       - "description"
+      - "priceText"
+      - "ticketUrl"
       - "sessions"
       - "sourceUrl"
       - "sourceUpdatedAt"

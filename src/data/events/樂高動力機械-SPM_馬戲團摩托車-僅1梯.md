@@ -24,13 +24,15 @@ sources:
     recordId: "3ca96ab6eb7b60ce"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
     provides: 
-      - "title"
       - "categoryRaw"
       - "status"
       - "isFree"
       - "sessions"
+    rejected: 
+      title: "樂高動力機械-SPM_馬戲團摩托車--僅1梯"
   - id: "nstm-activities"
     recordId: "e8a8238f4cff7d6c"
     sourceName: "國立科學工藝博物館 推廣教育活動訊息"
-    provides: []
+    provides: 
+      - "title"
 ---
